@@ -18,4 +18,4 @@ assignees: ''
 - [ ] I have assigned a Team label (front-end / node / git / design / gatsby)
 - [ ] I have assigned a Description label (enhancement / bug / etc.)
 - [ ] I have assigned a Project
-- [ ] I have added a milestone (if applicable)
+- [ ] I have added a Milestone (if applicable)
