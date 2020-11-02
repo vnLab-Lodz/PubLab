@@ -21,3 +21,29 @@ Make sure to tick all the checklist items.
 6. Merge your PR
 
 > All of the important actions should cause the issue you assigned to yourself to move to other Kanban columns accordingly. Please make sure that the issue is in the correct column after each step.
+
+## Project directory structure
+Quick guide how to traverse the project.
+
+```sh
++-- public # Entry folder for webpack and electron
++-- src # Folder for fron-end related code
+|    +-- assets 
+|    +-- components
+|         +-- component # Keep components in a separate folders wtih style files
+|         |    +-- component.tsx
+|         |    +-- component.scss
+|         +-- component
+|         |    +-- component.tsx
+|         |    +-- component.scss
+|    +-- constants
++-- utils # Folder for back-end related code
+|   +-- api # Logic that will be called on front-end
+|   +-- git # Logic for interacting with git and GitHub
+|   +-- shell # Logic for calling gatsby-cli, traversing local files adn generating config
+```
+
+The `utils/api` folder will contain logic that implements/combines *git* and *shell* modules to expose functionalities to front-end. For example:
+ * *git* module has logic responsible for looking up remote web publication repositories
+ * *shell* module has logic responsible for looking up local web publication repositories
+ * *api* module combines the result of the two above to provide front-end with cohesive response
