@@ -2,7 +2,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
-  entry: './public/index.ts',
+  entry: './src/main/index.ts',
   module: {
     rules: require('./webpack.rules'),
   },

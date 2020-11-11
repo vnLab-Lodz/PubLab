@@ -46,7 +46,7 @@
               "entryPoints": [
                 {
                   "html": "./public/index.html",
-                  "js": "./public/renderer.tsx",
+                  "js": "./src/renderer/renderer.tsx",
                   "name": "main_window"
                 }
               ]
@@ -66,12 +66,14 @@
     "@electron-forge/plugin-webpack": "6.0.0-beta.54",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.2",
+    "@types/react-redux": "^7.1.11",
     "babel-loader": "^8.1.0",
     "css-loader": "^4.2.1",
     "electron": "10.1.4",
     "fork-ts-checker-webpack-plugin": "^5.0.14",
     "node-loader": "^1.0.1",
     "react-refresh": "^0.9.0",
+    "redux-devtools": "^3.7.0",
     "sass": "^1.27.0",
     "sass-loader": "^10.0.3",
     "style-loader": "^1.2.1",
@@ -79,10 +81,13 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.4.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
+    "electron-redux": "^1.5.4",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2"
   }
 }
