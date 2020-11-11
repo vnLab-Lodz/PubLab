@@ -1,25 +1,23 @@
 import { app, BrowserWindow } from 'electron';
-import configureStore from "../shared/configureStore";
-import {exampleAliasedAction} from "../shared/actions/example";
+import { configStore } from '../shared/configureStore';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
-
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-const store = configureStore('main');
+const store = configStore('main');
 
 const createWindow = (): void => {
-  store.subscribe(() => console.log('action received in main'))
+  store.subscribe(() => console.log('action received in main'));
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     height: 600,
     width: 800,
     webPreferences: {
       enableRemoteModule: true,
-      nodeIntegration: true
+      nodeIntegration: true,
     },
   });
 
@@ -34,9 +32,6 @@ const createWindow = (): void => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
-
-// TODO: delete this exemplary code
-app.on('browser-window-blur', () => store.dispatch(exampleAliasedAction('text')))
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
