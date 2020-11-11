@@ -3,9 +3,10 @@ import './app.scss';
 import '../description/description';
 import Description from '../description/description';
 import { Provider } from 'react-redux';
-import configureStore from "../../../shared/configureStore";
+import { configStore } from '../../../shared/configureStore';
 
-const store = configureStore('renderer');
+
+const store = configStore('renderer');
 store.subscribe(() => console.log('action received in renderer'))
 
 const App = () => {

@@ -1,5 +1,4 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import rootReducer from './reducers';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import {
   forwardToMain,
   forwardToRenderer,
@@ -7,31 +6,25 @@ import {
   replayActionMain,
   replayActionRenderer,
 } from 'electron-redux';
+import rootReducer from './rootReducer';
 
-const initialState = {};
+type Scope = 'main' | 'renderer';
 
-export default function configureStore(scope = 'main') {
+export const configStore = (scope: Scope = 'main') => {
   let middleware: any[] = [];
 
   if (scope === 'renderer') {
-    middleware = [
-      forwardToMain
-    ];
+    middleware = [forwardToMain];
   }
 
   if (scope === 'main') {
-    middleware = [
-      triggerAlias,
-      forwardToRenderer
-    ];
+    middleware = [triggerAlias, forwardToRenderer];
   }
 
-  const enhanced = [
-    applyMiddleware(...middleware),
-  ];
-
-  const enhancer: any = compose(...enhanced);
-  const store = createStore(rootReducer, initialState, enhancer);
+  const store = configureStore({
+    reducer: rootReducer,
+    middleware: [...getDefaultMiddleware(), ...middleware],
+  });
 
   if (scope === 'main') {
     replayActionMain(store);
@@ -40,4 +33,4 @@ export default function configureStore(scope = 'main') {
   }
 
   return store;
-}
+};
