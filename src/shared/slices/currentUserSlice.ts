@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import createActionMain from '../helpers/createActionMain';
 import { RootState } from '../rootReducer';
 
 type DataTypeExample = {
@@ -15,6 +16,11 @@ type CurrentUser = {
 };
 
 const initialState: CurrentUser = { data: { nick: '' } };
+
+// Create action for main process with use of helper
+export const exampleInMain = createActionMain<CurrentUser>(
+  'currentUser/aliasMain'
+);
 
 const currentUserSlice = createSlice({
   name: 'currentuser',
@@ -33,6 +39,15 @@ const currentUserSlice = createSlice({
       prepare: (payload: CurrentUser) => {
         return { payload, meta: { scope: 'local' } };
       },
+    },
+  },
+  extraReducers: {
+    // Reducers for any external actions like the ones that need to only work in main process or for ones created with createAsyncThunk
+    ['currentUser/aliasMain']: (
+      _state: CurrentUser,
+      action: PayloadAction<CurrentUser>
+    ) => {
+      return action.payload;
     },
   },
 });

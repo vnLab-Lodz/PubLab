@@ -1,6 +1,5 @@
 import { app, BrowserWindow } from 'electron';
 import { configStore } from '../shared/configureStore';
-import { example } from '../shared/slices/currentUserSlice';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -33,11 +32,6 @@ const createWindow = (): void => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
-
-// TODO: delete this exemplary code
-app.on('browser-window-blur', () =>
-  store.dispatch(example({ nick: 'currentUser from main' }))
-);
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits

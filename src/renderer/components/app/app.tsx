@@ -5,9 +5,8 @@ import Description from '../description/description';
 import { Provider } from 'react-redux';
 import { configStore } from '../../../shared/configureStore';
 
-
 const store = configStore('renderer');
-store.subscribe(() => console.log('action received in renderer'))
+store.subscribe(() => console.log('action received in renderer'));
 
 const App = () => {
   return (

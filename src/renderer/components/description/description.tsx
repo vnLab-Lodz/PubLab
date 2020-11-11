@@ -3,6 +3,7 @@ import './description.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   example,
+  exampleInMain,
   exampleLocal,
   selectCurrentUser,
 } from '../../../shared/slices/currentUserSlice';
@@ -18,7 +19,9 @@ const Description = () => {
   return (
     <div>
       <p className='description'>Welcome to your Electron application.</p>
-      <button onClick={() => dispatch(example({ nick: 'currentUser from renderer' }))}>
+      <button
+        onClick={() => dispatch(example({ nick: 'currentUser from renderer' }))}
+      >
         Dispatch Example action
       </button>
       <button
@@ -33,6 +36,19 @@ const Description = () => {
         }
       >
         Dispatch Example local action
+      </button>
+      <button
+        onClick={() =>
+          dispatch(
+            exampleInMain({
+              data: {
+                nick: 'currentUser from action executed only in main process',
+              },
+            })
+          )
+        }
+      >
+        Dispatch Example action in main process
       </button>
     </div>
   );
