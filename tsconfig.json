@@ -16,6 +16,8 @@
     "jsx": "react"
   },
   "include": [
-    "src/**/*", "public/renderer.tsx", "public/index.ts"
+    "src/**/*",
+    "src/renderer/renderer.tsx",
+    "src/main/index.ts"
   ]
 }
