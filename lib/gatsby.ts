@@ -1,5 +1,10 @@
 import { exec } from 'child_process';
 
+
+/**
+ * Check if gatsby-cli is installed globally.
+ * @return {Promise<boolean>}
+ */
 function checkForGatsby(): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
     exec('npm list -g gatsby-cli --json', (error, stdout, stderr) => {
@@ -13,6 +18,10 @@ function checkForGatsby(): Promise<boolean> {
   });
 }
 
+/**
+ * Checks if gatsby is already installed globally and if not installs it.
+ * @return {Promise<void>}
+ */
 export function installGatsby(): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     checkForGatsby().then(
