@@ -1,6 +1,5 @@
 import { exec } from 'child_process';
 
-
 /**
  * Check if gatsby-cli is installed globally.
  * @return {Promise<boolean>}
@@ -12,7 +11,11 @@ function checkForGatsby(): Promise<boolean> {
 
       let resultObj: any = JSON.parse(stdout);
 
-      if (Object.keys(resultObj).length === 0 && resultObj.constructor === Object) resolve(false);
+      if (
+        Object.keys(resultObj).length === 0 &&
+        resultObj.constructor === Object
+      )
+        resolve(false);
       else resolve(true);
     });
   });
