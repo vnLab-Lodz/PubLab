@@ -7,13 +7,19 @@ import {
   exampleLocal,
   selectCurrentUser,
 } from '../../../shared/slices/currentUserSlice';
+import {
+  installGatsbyCLI,
+  selectGatsbyInstallStatus,
+} from '../../../shared/slices/gatsbyInstallSlice';
 
 // TODO: delete exemplary buttons from here
 const Description = () => {
   const currentUser = useSelector(selectCurrentUser);
+  const gatsbyInstallStuff = useSelector(selectGatsbyInstallStatus);
 
   // log user to showcase state changes if you don't have Redux Tools
   console.log(currentUser);
+  console.log(gatsbyInstallStuff);
 
   const dispatch = useDispatch();
   return (
@@ -49,6 +55,9 @@ const Description = () => {
         }
       >
         Dispatch Example action in main process
+      </button>
+      <button onClick={() => dispatch(installGatsbyCLI())}>
+        Install gatsby-cli
       </button>
     </div>
   );

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import createActionMain from '../helpers/createActionMain';
+import { createActionMain } from '../helpers/createActionMain';
 import { RootState } from '../rootReducer';
 
 type DataTypeExample = {
