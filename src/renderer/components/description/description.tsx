@@ -57,7 +57,7 @@ const Description = () => {
         Dispatch Example action in main process
       </button>
       <button onClick={() => dispatch(installGatsbyCLI())}>
-        Dispatch Async Action For Main
+        Install gatsby-cli
       </button>
     </div>
   );

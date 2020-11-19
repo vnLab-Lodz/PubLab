@@ -4,7 +4,7 @@ import * as fs from 'fs';
 const logger = fs.createWriteStream('gatsby-cli-install.log', { flags: 'a' });
 const tzOffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
 
-function writeLog(msg: string): void {
+function appendLog(msg: string): void {
   let localISOTime = new Date(Date.now() - tzOffset).toISOString();
   logger.write(localISOTime.replace(/T/, ' ').replace(/\..+/, '') + ' ' + msg + '\n');
 }
@@ -14,7 +14,7 @@ function writeLog(msg: string): void {
  * Rejects the promise if a command execution error occurs or JSON cannot be parsed.
  * @return {Promise<boolean>}
  */
-function checkForGatsby(): Promise<boolean> {
+export function checkForGatsby(): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
     exec('npm list -g gatsby-cli --json', (error, stdout, stderr) => {
       if (error && stdout.trim() !== '{}') reject(error);
@@ -26,37 +26,33 @@ function checkForGatsby(): Promise<boolean> {
         reject(stdout);
       }
 
-      if (Object.keys(resultObj).length === 0 && resultObj.constructor === Object) resolve(false);
-      else resolve(true);
+      if (Object.keys(resultObj).length === 0 && resultObj.constructor === Object) {
+        appendLog('gatsby-cli not installed');
+        resolve(false);
+      } else {
+        appendLog('gatsby-cli is already installed');
+        resolve(true);
+      }
     });
   });
 }
 
 /**
  * Checks if gatsby is already installed globally and if not installs it.
- * Rejects the promise if a command execution error occurs or JSON cannot be parsed.
+ * Rejects the promise if a command execution error occurs.
  * @return {Promise<void>}
  */
 export function installGatsby(): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    checkForGatsby().then(
-      (value) => {
-        if (value) {
-          writeLog('gatsby-cli is already installed. Skipping installation');
-          resolve();
-        } else {
-          writeLog('gatsby-cli not installed. Installing...');
-          exec('npm install -g gatsby-cli --quiet', (error, stdout, stderr) => {
-            if (error) reject(error);
+    appendLog('Installing gatsby-cli...');
 
-            writeLog(`package installer standard output: ${stdout}`);
-            writeLog(`package installer error output: ${stderr}`);
-            writeLog('Finished installation of gatsby-cli');
-            resolve();
-          });
-        }
-      },
-      (reason) => reject(reason)
-    );
+    exec('npm install -g gatsby-cli --quiet', (error, stdout, stderr) => {
+      if (error) reject(error);
+
+      appendLog(`package installer standard output: ${stdout}`);
+      appendLog(`package installer error output: ${stderr}`);
+      appendLog('Finished installation of gatsby-cli');
+      resolve();
+    });
   });
 }
