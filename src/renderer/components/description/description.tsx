@@ -15,11 +15,11 @@ import {
 // TODO: delete exemplary buttons from here
 const Description = () => {
   const currentUser = useSelector(selectCurrentUser);
-  const shit = useSelector(selectGatsbyInstallStatus);
+  const gatsbyInstallStuff = useSelector(selectGatsbyInstallStatus);
 
   // log user to showcase state changes if you don't have Redux Tools
   console.log(currentUser);
-  console.log(shit);
+  console.log(gatsbyInstallStuff);
 
   const dispatch = useDispatch();
   return (
