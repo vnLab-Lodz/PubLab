@@ -7,6 +7,7 @@ import {
   replayActionRenderer,
 } from 'electron-redux';
 import rootReducer from './rootReducer';
+import thunk from 'redux-thunk';
 
 type Scope = 'main' | 'renderer';
 
@@ -23,7 +24,7 @@ export const configStore = (scope: Scope = 'main') => {
 
   const store = configureStore({
     reducer: rootReducer,
-    middleware: [...getDefaultMiddleware(), ...middleware],
+    middleware: [...getDefaultMiddleware(), ...middleware, thunk],
   });
 
   if (scope === 'main') {
