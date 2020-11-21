@@ -62,6 +62,8 @@ const result = await GitProcess.exec([ 'push', 'origin', 'master' ], path, optio
 
 
 
-
+export function funkcja(): void {
+    console.log('asdasasd')
+}
 
 
