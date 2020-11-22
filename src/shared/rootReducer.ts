@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import currentUserReducer from './slices/currentUserSlice';
 import gatsbyInstallReducer from './slices/gatsbyInstallSlice';
-import currentPageReducer from './slices/currentPageSlice';
+import currentViewReducer from './slices/currentViewSlice';
 
 const rootReducer = combineReducers({
   currentUser: currentUserReducer,
   gatsbyInstall: gatsbyInstallReducer,
-  currentPage: currentPageReducer
+  currentView: currentViewReducer
 });
 
 // export state to use with selectors

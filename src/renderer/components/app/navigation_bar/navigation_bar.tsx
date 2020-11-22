@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { COMPONENTS_LIST } from '../../../constants/componentsEnum';
-import { updateCurrentPage } from '../../../../shared/slices/currentPageSlice';
+import { updateCurrentView } from '../../../../shared/slices/currentViewSlice';
 import './navigation_bar.scss';
 
 
@@ -14,8 +14,7 @@ const NavigationBar = () => {
   const dispatch = useDispatch();
 
   const onNavigationButtonClick = (buttonKey: string) => () => {
-    console.log(buttonKey);
-    dispatch(updateCurrentPage(buttonKey))
+    dispatch(updateCurrentView(buttonKey))
   }
   
   const renderListOfButtons = () => {
