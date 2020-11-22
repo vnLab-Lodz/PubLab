@@ -27,25 +27,7 @@ const CustomRouter = () => {
     }
   }
 
-  const switchPage = (pageName: string) => {
-    switch(pageName) {
-      case COMPONENTS_LIST.COMPONENT1:
-        dispatch(updateCurrentPage(COMPONENTS_LIST.COMPONENT1))
-        break;
-      case COMPONENTS_LIST.COMPONENT2:
-        dispatch(updateCurrentPage(COMPONENTS_LIST.COMPONENT2))
-        break;
-      case COMPONENTS_LIST.COMPONENT3:
-        dispatch(updateCurrentPage(COMPONENTS_LIST.COMPONENT3))
-        break;
-      default:
-        return;
-    }
-  }
-
   const currentPage = useSelector(selectCurrentPage);
-
-  const dispatch = useDispatch();
 
   return (
     <div className="router">
