@@ -8,6 +8,7 @@ import ErrorComponent from '../error_component/error_component';
 import { COMPONENTS_LIST } from '../../../constants/componentsEnum';
 import { selectCurrentPage, updateCurrentPage } from '../../../../shared/slices/currentPageSlice';
 import NavigationBar from '../navigation_bar/navigation_bar';
+import Description from '../router_components/description/description';
 
 const CustomRouter = () => {
 
@@ -19,6 +20,8 @@ const CustomRouter = () => {
         return <Component2/>
       case COMPONENTS_LIST.COMPONENT3:
         return <Component3/>
+      case COMPONENTS_LIST.DESCRIPTION:
+        return <Description/>
       default:
         return <ErrorComponent/>
     }
@@ -48,13 +51,14 @@ const CustomRouter = () => {
   const dispatch = useDispatch();
 
   return (
-    <>
-      <>{getRenderedPage(currentPage.page)}</>
-      <button onClick={() => switchPage(COMPONENTS_LIST.COMPONENT1)}>Go to Page 1</button>
-      <button onClick={() => switchPage(COMPONENTS_LIST.COMPONENT2)}>Go to Page 2</button>
-      <button onClick={() => switchPage(COMPONENTS_LIST.COMPONENT3)}>Go to Page 3</button>
-      <NavigationBar/>
-    </>
+    <div className="router">
+      <div className="sideBar">
+        <NavigationBar />
+      </div>
+      <div className="content">
+        <>{getRenderedPage(currentPage.page)}</>
+      </div>
+    </div>
   );
 };
 
