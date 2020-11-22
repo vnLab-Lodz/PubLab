@@ -7,6 +7,7 @@ import Component3 from '../router_components/component3/component3';
 import ErrorComponent from '../error_component/error_component';
 import { COMPONENTS_LIST } from '../../../constants/componentsEnum';
 import { selectCurrentPage, updateCurrentPage } from '../../../../shared/slices/currentPageSlice';
+import NavigationBar from '../navigation_bar/navigation_bar';
 
 const CustomRouter = () => {
 
@@ -52,6 +53,7 @@ const CustomRouter = () => {
       <button onClick={() => switchPage(COMPONENTS_LIST.COMPONENT1)}>Go to Page 1</button>
       <button onClick={() => switchPage(COMPONENTS_LIST.COMPONENT2)}>Go to Page 2</button>
       <button onClick={() => switchPage(COMPONENTS_LIST.COMPONENT3)}>Go to Page 3</button>
+      <NavigationBar/>
     </>
   );
 };
