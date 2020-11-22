@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { COMPONENTS_LIST } from '../../../constants/componentsEnum';
-import { selectCurrentPage, updateCurrentPage } from '../../../../shared/slices/currentPageSlice';
+import { updateCurrentPage } from '../../../../shared/slices/currentPageSlice';
 import './navigation_bar.scss';
 
 
@@ -17,8 +17,6 @@ const NavigationBar = () => {
     console.log(buttonKey);
     dispatch(updateCurrentPage(buttonKey))
   }
-  
-  
   
   const renderListOfButtons = () => {
     var listOfButtons:JSX.Element[] = [];

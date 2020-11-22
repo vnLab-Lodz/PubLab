@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './custom_router.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import Component1 from '../router_components/component1/component1';
@@ -44,9 +44,6 @@ const CustomRouter = () => {
   }
 
   const currentPage = useSelector(selectCurrentPage);
-
-  // log user to showcase state changes if you don't have Redux Tools
-  console.log(currentPage);
 
   const dispatch = useDispatch();
 

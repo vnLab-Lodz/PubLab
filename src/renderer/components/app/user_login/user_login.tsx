@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './user_login.scss';
-import { useDispatch, useSelector } from 'react-redux';
 import CustomRouter from '../custom_router/custom_router';
 import LoginComponent from '../login_component/login_component';
 
 const UserLogin = () => {
 
   const isUserLoggedIn = () => {
+    //TODO: check if user is logged in
     return true;
   }
 

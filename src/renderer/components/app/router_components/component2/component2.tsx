@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './component2.scss';
-import { useDispatch, useSelector } from 'react-redux';
 
 const Component2 = () => {
 
