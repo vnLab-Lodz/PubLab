@@ -4,7 +4,7 @@ import '../description/description';
 import Description from '../description/description';
 import { Provider } from 'react-redux';
 import { configStore } from '../../../shared/configureStore';
-import {postAccessToken, authorizeWithGithub, createNewRepository} from "../../../main/git";
+import {postAccessToken, authorizeWithGithub, createNewRepository, getUserRepositories} from "../../../main/git";
 import ReadOnlyDict = NodeJS.ReadOnlyDict;
 
 const store = configStore('renderer');
@@ -30,7 +30,7 @@ class App extends React.Component <AppProps>{
             <Provider store={store}>
                 <h1 className='hello'>Hello World!</h1>
                 <button onClick={()=>authorizeWithGithub()}> Odpal git</button>
-                <button onClick={()=>createNewRepository()}> tworz repo</button>
+                <button onClick={()=>getUserRepositories('as')}> tworz repo</button>
                 <Description />
             </Provider>
         );

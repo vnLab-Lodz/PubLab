@@ -25,15 +25,15 @@ export async function postAccessToken(codeParam : string) : Promise<AxiosRespons
 
 export function createNewRepository(accessToken: string, repoName: string, description?: string):  void{
     axios({
-        method: 'post',
+        method: 'POST',
          headers: {
              'Content-Type': 'application/json',
-             'Authorization': 'token' + accessToken
+             'Authorization': 'token ' + accessToken
          },
          url: "https://api.github.com/user/repos",
          data: {
             "name": repoName,
-            "description": "" + description,
+            "description": description,
             "homepage": "https://github.com",
             "private": true,
             "has_issues": true,
@@ -43,6 +43,33 @@ export function createNewRepository(accessToken: string, repoName: string, descr
     }).then(data => {
         console.log(data);
     });
+}
+
+export interface Repository {
+    name: string,
+    author: string,
+    url: string
+}
+
+/**
+ * return array of objects with name of repository, author of repository and url to repository
+ **/
+export function getUserRepositories(accessToken: string): Repository[] {
+    const repositories: Repository[] = []
+    axios({
+        method: 'GET',
+        headers: {
+            'Authorization': 'token ' + accessToken
+        },
+        url: "https://api.github.com/user/repos",
+    }).then(data => {
+        console.log(data)
+        data.data.forEach((repo: any) => {
+            repositories.push({name: repo.name, author: repo.owner.login, url: repo.url} as Repository)
+        })
+        console.log(repositories)
+    });
+    return repositories;
 }
 
 function buildAuthorizeEndpoint() : string {
