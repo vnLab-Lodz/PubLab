@@ -11,6 +11,7 @@ import {
   installGatsbyCLI,
   selectGatsbyInstallStatus,
 } from '../../../shared/slices/gatsbyInstallSlice';
+import {performClone} from "../../../main/git/clone";
 
 // TODO: delete exemplary buttons from here
 const Description = () => {
@@ -59,6 +60,9 @@ const Description = () => {
       <button onClick={() => dispatch(installGatsbyCLI())}>
         Install gatsby-cli
       </button>
+        <button onClick={() => dispatch(performClone())}>
+            Sklonuj to gówno
+        </button>
 
     </div>
   );

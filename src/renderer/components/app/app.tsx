@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { configStore } from '../../../shared/configureStore';
 import {postAccessToken, authorizeWithGithub} from "../../../main/git";
 import ReadOnlyDict = NodeJS.ReadOnlyDict;
+import {performClone} from "../../../main/git/clone";
 
 const store = configStore('renderer');
 store.subscribe(() => console.log('action received in renderer'));
@@ -30,6 +31,7 @@ class App extends React.Component <AppProps>{
             <Provider store={store}>
                 <h1 className='hello'>Hello World!</h1>
                 <button onClick={()=>authorizeWithGithub()}> Odpal git</button>
+                <button onClick={()=>performClone()}> Sklonuj to gówno</button>
                 <Description />
             </Provider>
         );
