@@ -2,29 +2,11 @@ import {GitProcess, IGitExecutionOptions} from 'dugite'
 import axios, {AxiosResponse} from 'axios'
 import {ChildProcess} from "child_process";
 
-//For creating new project
-
-const { exec } = require("child_process");
 const client_id = "6d941531c2e642fadf62";
 const client_secret = "1100c9fb26028bb083b029e84248312a57066b84 ";
 const redirect_uri = "http://localhost:3000/main_window"
 const authorize_url = "https://github.com/login/oauth/authorize";
 const access_token_url = "https://github.com/login/oauth/access_token";
-
-//Create repo
-exec("curl -u 'vnlab-test' https://api.github.com/user/repos -d \'{\"name\":\"testRepo\"}\'", (error: any, stdout: any, stderr: any) => {
-    if (error) {
-        console.log(`error: ${error.message}`);
-        return;
-    }
-    if (stderr) {
-        console.log(`stderr: ${stderr}`);
-        return;
-    }
-    console.log(`stdout: ${stdout}`);
-
-    //Then, paste presonal acces token
-});
 
 export function authorizeWithGithub() : void {
     axios.get(buildAuthorizeEndpoint()).then(data => {
@@ -41,9 +23,27 @@ export async function postAccessToken(codeParam : string) : Promise<AxiosRespons
     });
 }
 
-
-
-
+export function createNewRepository(accessToken: string, repoName: string, description?: string):  void{
+    axios({
+        method: 'post',
+         headers: {
+             'Content-Type': 'application/json',
+             'Authorization': 'token' + accessToken
+         },
+         url: "https://api.github.com/user/repos",
+         data: {
+            "name": repoName,
+            "description": "" + description,
+            "homepage": "https://github.com",
+            "private": true,
+            "has_issues": true,
+            "has_projects": true,
+            "has_wiki": true
+        }
+    }).then(data => {
+        console.log(data);
+    });
+}
 
 function buildAuthorizeEndpoint() : string {
     let clientIdParam = "?client_id=" + client_id;
@@ -79,10 +79,6 @@ const options: IGitExecutionOptions = {
 const result = await GitProcess.exec([ 'push', 'origin', 'master' ], path, options)*/
 
 
-
-export function funkcja(): void {
-    console.log('asdasasd')
-}
 
 /////////////////////////////////////////////////////////////////////
 //CLONE
