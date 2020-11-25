@@ -31,7 +31,7 @@ class App extends React.Component <AppProps>{
             <Provider store={store}>
                 <h1 className='hello'>Hello World!</h1>
                 <button onClick={()=>authorizeWithGithub()}> Odpal git</button>
-                <button onClick={()=>clone("C:/dupa", "https://github.com/jedrekszor/vnlab-test")}> Sklonuj dupe na C:</button>
+                <button onClick={()=>clone("C:/vnlab-tool", "https://github.com/jedrekszor/vnlab-test")}> Clone </button>
                 <Description />
             </Provider>
         );
