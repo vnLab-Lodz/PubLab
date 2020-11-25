@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { COMPONENTS_LIST } from '../../renderer/constants/RouterComponents';
+import { COMPONENTS_LIST } from '../../renderer/constants/ComponentsList';
 import { RootState } from '../rootReducer';
 
 type CurrentView = {

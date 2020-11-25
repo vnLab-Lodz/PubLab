@@ -1,6 +1,5 @@
 import React from 'react';
 import './app.scss';
-import '../RouterComponents/Description/Description';
 import { Provider } from 'react-redux';
 import { configStore } from '../../../shared/configureStore';
 import UserLogin from '../UserLogin/UserLogin';

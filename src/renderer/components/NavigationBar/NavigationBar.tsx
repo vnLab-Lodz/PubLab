@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { COMPONENTS_LIST } from '../../constants/RouterComponents';
+import { COMPONENTS_LIST } from '../../constants/ComponentsList';
 import { updateCurrentView } from '../../../shared/slices/currentViewSlice';
 import './NavigationBar.scss';
 

@@ -2,6 +2,7 @@ import Component1 from "../components/RouterComponents/Component1/Component1";
 import Component2 from "../components/RouterComponents/Component2/Component2";
 import Component3 from "../components/RouterComponents/Component3/Component3";
 import Description from "../components/RouterComponents/Description/Description";
+import { COMPONENTS_LIST } from "../constants/ComponentsList"
 
 
 export type RouterComponents = {
@@ -11,12 +12,6 @@ export type RouterComponents = {
   };
 };
 
-export const COMPONENTS_LIST = {
-  COMPONENT1: 'component1',
-  COMPONENT2: 'component2',
-  COMPONENT3: 'component3',
-  DESCRIPTION: 'description'
-}
 
 export const components: RouterComponents = {
   description: {
