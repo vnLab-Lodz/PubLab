@@ -14,3 +14,11 @@ export enum EndPointParameters {
     CLIENT_ID = "client_id",
     REDIRECT_URI ="redirect_uri"
 }
+
+export enum BranchNames {
+    PROGRAMISTA = "programista",
+    REDAKTOR_MAIN = "redaktor/main",
+    REDAKTOR_SLAVE = "redaktor/"
+}
+
+export const WEB_PUB_REPO_NAME = "WEB_PUB"
