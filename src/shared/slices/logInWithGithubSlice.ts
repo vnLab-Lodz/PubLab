@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../rootReducer';
-import { getAccessToken } from '../../main/git/index';
+import { getAccessToken } from '../../main/git/gitAuthorization';
 import { createAsyncActionMain } from '../helpers/createActionMain';
 
 type GithubLogIn = {

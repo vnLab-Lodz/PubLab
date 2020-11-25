@@ -4,7 +4,7 @@ import '../description/description';
 import Description from '../description/description';
 import { Provider } from 'react-redux';
 import { configStore } from '../../../shared/configureStore';
-import {postAccessToken, authorizeWithGithub, createNewRepository, getUserRepositories} from "../../../main/git";
+import {postAccessToken, authorizeWithGithub, createNewRepository, getUserRepositories} from "../../../main/git/gitAuthorization";
 import ReadOnlyDict = NodeJS.ReadOnlyDict;
 import {clone} from "../../../main/git/gitOperations";
 
