@@ -59,7 +59,6 @@ const Description = () => {
       <button onClick={() => dispatch(installGatsbyCLI())}>
         Install gatsby-cli
       </button>
-
     </div>
   );
 };
