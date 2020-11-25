@@ -1,6 +1,5 @@
 import axios from "axios";
 import {BranchNames, Repository, WEB_PUB_REPO_NAME} from "./gitTypes";
-import {Repository} from "./gitTypes";
 import {File} from "./gitTypes";
 
 const git = require('isomorphic-git')
