@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { COMPONENTS_LIST } from '../../../constants/componentsEnum';
+import { components } from '../../../constants/RouterComponents';
 import { updateCurrentView } from '../../../../shared/slices/currentViewSlice';
 import './navigation_bar.scss';
 
@@ -18,13 +18,15 @@ const NavigationBar = () => {
   }
   
   const renderListOfButtons = () => {
-    var listOfButtons:JSX.Element[] = [];
-    Object.keys(COMPONENTS_LIST).forEach((key) => {
-      const buttonKey = getKeyValue(key)(COMPONENTS_LIST);
-      listOfButtons.push(<button onClick={onNavigationButtonClick(buttonKey)}>{buttonKey}</button>)
-    })
-    return listOfButtons;
-  }
+    return Object.keys(components).map((key) => {
+      const buttonKey = getKeyValue(key)(components);
+      return (
+        <button key={key} onClick={onNavigationButtonClick(buttonKey)}>
+          {buttonKey}
+        </button>
+      );
+    });
+  };
 
   return (
     <div className='navbar'>

@@ -1,9 +1,8 @@
 import React from 'react';
 import './user_login.scss';
-import CustomRouter from '../custom_router/custom_router';
 import LoginComponent from '../login_component/login_component';
 
-const UserLogin = () => {
+const UserLogin = ({children} : any) => {
 
   const isUserLoggedIn = () => {
     //TODO: check if user is logged in
@@ -11,10 +10,10 @@ const UserLogin = () => {
   }
 
   const getRenderedComponent = () => {
-      return isUserLoggedIn() ? <CustomRouter/> : <LoginComponent/>;
+      return isUserLoggedIn() ? <>{children}</> : <LoginComponent/>;
   }
   return (
-      <>{getRenderedComponent()}</>
+      getRenderedComponent()
   );
 };
 

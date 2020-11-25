@@ -1,18 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { COMPONENTS_LIST } from '../../renderer/constants/componentsEnum';
+import { components } from '../../renderer/constants/RouterComponents';
 import { RootState } from '../rootReducer';
 
 type CurrentView = {
-  view: string;
+  component: React.FC,
+  view: string
 };
 
-const initialState: CurrentView = { view: COMPONENTS_LIST.DESCRIPTION };
+const initialState: CurrentView = { component: components["description"].component, view: "description" };
 
 const CurrentViewSlice = createSlice({
   name: 'CurrentView',
   initialState: initialState,
   reducers: {
     updateCurrentView: (state: CurrentView, action: PayloadAction<string>) => {
+      state.component = components[action.payload].component;
       state.view = action.payload;
     },
   },
