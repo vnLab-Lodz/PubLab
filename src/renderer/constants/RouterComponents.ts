@@ -1,7 +1,7 @@
-import Component1 from "../components/app/router_components/component1/component1";
-import Component2 from "../components/app/router_components/component2/component2";
-import Component3 from "../components/app/router_components/component3/component3";
-import Description from "../components/app/router_components/description/description";
+import Component1 from "../components/RouterComponents/Component1/Component1";
+import Component2 from "../components/RouterComponents/Component2/Component2";
+import Component3 from "../components/RouterComponents/Component3/Component3";
+import Description from "../components/RouterComponents/Description/Description";
 
 
 export type RouterComponents = {
@@ -11,21 +11,28 @@ export type RouterComponents = {
   };
 };
 
+export const COMPONENTS_LIST = {
+  COMPONENT1: 'component1',
+  COMPONENT2: 'component2',
+  COMPONENT3: 'component3',
+  DESCRIPTION: 'description'
+}
+
 export const components: RouterComponents = {
   description: {
-    view: 'description',
+    view: COMPONENTS_LIST.DESCRIPTION,
     component: Description,
   },
   component1: {
-    view: 'component1',
+    view: COMPONENTS_LIST.COMPONENT1,
     component: Component1,
   },
   component2: {
-    view: 'component2',
+    view: COMPONENTS_LIST.COMPONENT2,
     component: Component2,
   },
   component3: {
-    view: 'component3',
+    view: COMPONENTS_LIST.COMPONENT3,
     component: Component3,
   }
 };

@@ -1,11 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { components } from '../../../constants/RouterComponents';
-import { updateCurrentView } from '../../../../shared/slices/currentViewSlice';
-import './navigation_bar.scss';
-
-
-
+import { COMPONENTS_LIST } from '../../constants/RouterComponents';
+import { updateCurrentView } from '../../../shared/slices/currentViewSlice';
+import './NavigationBar.scss';
 
 const getKeyValue = (key: string) => (obj: Record<string, any>) => obj[key];
 
@@ -18,8 +15,8 @@ const NavigationBar = () => {
   }
   
   const renderListOfButtons = () => {
-    return Object.keys(components).map((key) => {
-      const buttonKey = getKeyValue(key)(components);
+    return Object.keys(COMPONENTS_LIST).map((key) => {
+      const buttonKey = getKeyValue(key)(COMPONENTS_LIST);
       return (
         <button key={key} onClick={onNavigationButtonClick(buttonKey)}>
           {buttonKey}

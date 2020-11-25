@@ -1,6 +1,6 @@
 import React from 'react';
-import './user_login.scss';
-import LoginComponent from '../login_component/login_component';
+import './UserLogin.scss';
+import LoginComponent from '../LoginComponent/LoginComponent';
 
 const UserLogin = ({children} : any) => {
 

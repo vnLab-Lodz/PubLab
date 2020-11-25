@@ -1,16 +1,16 @@
 import React from 'react';
-import './description.scss';
+import './Description.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   example,
   exampleInMain,
   exampleLocal,
   selectCurrentUser,
-} from '../../../../../shared/slices/currentUserSlice';
+} from '../../../../shared/slices/currentUserSlice';
 import {
   installGatsbyCLI,
   selectGatsbyInstallStatus,
-} from '../../../../../shared/slices/gatsbyInstallSlice';
+} from '../../../../shared/slices/gatsbyInstallSlice';
 
 // TODO: delete exemplary buttons from here
 const Description = () => {
