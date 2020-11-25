@@ -88,6 +88,7 @@
     "axios": "^0.21.0",
     "byline": "^5.0.0",
     "child_process": "^1.0.2",
+    "dotenv": "^8.2.0",
     "dugite": "^1.92.0",
     "electron-redux": "^1.5.4",
     "electron-squirrel-startup": "^1.0.0",
