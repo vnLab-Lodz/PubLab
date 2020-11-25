@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { configStore } from '../../../shared/configureStore';
 import {postAccessToken, authorizeWithGithub, createNewRepository, getUserRepositories} from "../../../main/git/gitAuthorization";
 import ReadOnlyDict = NodeJS.ReadOnlyDict;
-import {clone} from "../../../main/git/gitOperations";
+import {clone, publish} from "../../../main/git/gitOperations";
 
 const store = configStore('renderer');
 store.subscribe(() => console.log('action received in renderer'));
@@ -33,6 +33,7 @@ class App extends React.Component <AppProps>{
                 <button onClick={()=>authorizeWithGithub()}> Odpal git</button>
                 <button onClick={()=>getUserRepositories('as')}> tworz repo</button>
                 <button onClick={()=>clone("C:/vnlab-tool", "https://github.com/jedrekszor/vnlab-test")}> Clone </button>
+                <button onClick={()=>publish()}> Publish </button>
                 <Description />
             </Provider>
         );
