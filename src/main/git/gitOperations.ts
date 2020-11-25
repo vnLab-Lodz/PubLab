@@ -89,7 +89,8 @@ export function createBranch(dir: string, name: string): void {
         ref: name
     })
 
-    //TODO to tworzy branch lokalnie, teraz trzeba zrobić "git push origin <nazwa-brancha>"
+    // git push origin <branch-name>
+    push(dir, name)
 }
 
 /**
@@ -105,6 +106,7 @@ export function createNewProject(accessToken: string, repoName: string, dir: str
     createBranch(dir, BranchNames.REDAKTOR_MAIN)
     createBranch(dir, BranchNames.REDAKTOR_SLAVE + "1")
 }
+
 //Checkout
 
 function checkout(branchDir: string, branchName: string) {
@@ -168,12 +170,11 @@ function commit(branchName: string, file: File, author: string, message: string)
 
 //Push
 
-function push(dir: string, remoteURL: string, branchName: string): void {
+function push(dir: string, branchName: string): void {
     git.push({
         fs,
         http,
         dir: dir,
-        remote: remoteURL,
         ref: branchName,
     })
 }
