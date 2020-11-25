@@ -4,6 +4,11 @@ export interface Repository {
     url: string
 }
 
+export interface File {
+    filename: string,
+    path: string
+}
+
 export enum Url {
     REDIRECT_URI = "http://localhost:3000/main_window",
     AUTHORIZE_URL = "https://github.com/login/oauth/authorize",

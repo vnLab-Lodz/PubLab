@@ -6,7 +6,8 @@ import { Provider } from 'react-redux';
 import { configStore } from '../../../shared/configureStore';
 import {postAccessToken, authorizeWithGithub } from "../../../main/git/gitAuthorization";
 import ReadOnlyDict = NodeJS.ReadOnlyDict;
-import {clone, createBranch, getUserRepositories} from "../../../main/git/gitOperations";
+import {clone, publish} from "../../../main/git/gitOperations";
+import { createBranch, getUserRepositories} from "../../../main/git/gitOperations";
 
 const store = configStore('renderer');
 store.subscribe(() => console.log('action received in renderer'));
@@ -32,8 +33,10 @@ class App extends React.Component <AppProps>{
                 <h1 className='hello'>Hello World!</h1>
                 <button onClick={()=>authorizeWithGithub()}> Odpal git</button>
                 <button onClick={()=>getUserRepositories('as')}> tworz repo</button>
-                <button onClick={()=>clone("/home/aleksander/Desktop/asd", "https://github.com/aleksanderbrylski/twitterbot")}> Clone </button>
-                <button onClick={()=>createBranch("/home/aleksander/Desktop/asd", "redaktor")}> Clone </button>
+                <button onClick={()=>clone("/home/aleksander/Desktop/asd", "https://github.com/aleksanderbrylski/twitterbot")}> Clone Olek</button>
+                <button onClick={()=>createBranch("/home/aleksander/Desktop/asd", "redaktor")}> branch </button>
+                <button onClick={()=>clone("C:/vnlab-tool", "https://github.com/jedrekszor/vnlab-test")}> Clone Jędrek</button>
+                <button onClick={()=>publish()}> Publish </button>
                 <Description />
             </Provider>
         );
