@@ -1,32 +1,74 @@
-import axios, {AxiosResponse} from 'axios'
-import {EndPointParameters, Url} from "./gitTypes";
+import axios from 'axios';
+import { Url } from './gitTypes';
+import { BrowserWindow } from 'electron';
 
-export function authorizeWithGithub() : void {
-    axios.get(buildAuthorizeEndpoint()).then(data => {
-        document.location.href = data.config.url;
-    });
+/**
+ * Authorizes GitHub user within an external window
+ * @param clientId client_id from GitHub App
+ * @param callback function that is to be executed on authorization success
+ */
+export function authorizeWithGithub(
+  clientId: string,
+  callback: (response: { code: string; error: any }) => void
+): void {
+  const authWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    show: false,
+    webPreferences: { nodeIntegration: false },
+  });
+
+  authWindow.loadURL(
+    `${Url.AUTHORIZE_URL}?client_id=${clientId}&redirect_uri=${Url.REDIRECT_URI}`
+  );
+  authWindow.show();
+
+  const processRedirect = (url: any) => {
+    const rawCode = /code=([^&]*)/.exec(url) || null;
+    const code = rawCode && rawCode.length > 1 ? rawCode[1] : null;
+    const error = /\?error=(.+)$/.exec(url);
+
+    if (code || error) authWindow.close();
+
+    callback({ code, error });
+  };
+
+  authWindow.webContents.on('will-navigate', (_event: any, url: any) => {
+    processRedirect(url);
+  });
+
+  authWindow.webContents.on('will-redirect', (_event: any, url: any) => {
+    processRedirect(url);
+  });
 }
 
 /**
- *
- * @param codeParam
+ * Requests access_token from GitHub API.
+ * @param clientId client_id from GitHub App
+ * @param clientSecret client_secret from GitHub App
+ * @param code code received from GitHub API authorization
+ * @returns object with access_token info or object with error
  */
-export async function postAccessToken(codeParam : string) : Promise<AxiosResponse> {
-    return await axios.post(buildAccessTokenEndpoint(codeParam)).then(data => {
-        const search = data.data.substring(0);
-        const result = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) })
-        return result.access_token;
-    });
-}
+export async function requestAccessToken(
+  clientId: string,
+  clientSecret: string,
+  code: string
+): Promise<any> {
+  const response = await axios.post(
+    Url.ACCESS_TOKEN_URL,
+    {
+      client_id: clientId,
+      client_secret: clientSecret,
+      code: code,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    }
+  );
 
-function buildAuthorizeEndpoint() : string {
-    let clientIdParam = "?"+ EndPointParameters.CLIENT_ID + "=" + process.env.GITHUB_CLIENT_ID;
-    let redirectUriParam = "&"+ EndPointParameters.REDIRECT_URI + "=" + Url.REDIRECT_URI;
-    return Url.AUTHORIZE_URL + clientIdParam + redirectUriParam;
-}
-
-function buildAccessTokenEndpoint(codeParam : string) : string {
-    let clientIdParam = "&client_id=" + process.env.GITHUB_CLIENT_ID;
-    let clientSecretParam = "&client_secret=" + process.env.GITHUB_CLIENT_SECRET;
-    return Url.ACCESS_TOKEN_URL + codeParam + clientIdParam + clientSecretParam;
+  const { data } = response;
+  return data;
 }
