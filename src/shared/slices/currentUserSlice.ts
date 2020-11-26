@@ -1,59 +1,115 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { createActionMain } from '../helpers/createActionMain';
+import {
+  authorizeWithGithub,
+  requestAccessToken,
+} from '../../main/git/gitAuthorization';
+import { createAsyncActionMain } from '../helpers/createActionMain';
 import { RootState } from '../rootReducer';
 
-type DataTypeExample = {
-  nick: string;
+type AccessToken = {
+  value: string;
+  type: string;
+  scope: string;
 };
 
 type CurrentUser = {
-  data: DataTypeExample;
-  // For example extend by tokens
-  // auth: {
-  //   accessToken: string;
-  //   refreshToken: string;
-  // }
+  data: {
+    nick: string;
+  } | null;
+  auth: {
+    code: string | null;
+    accessToken: AccessToken | null;
+    error: any;
+  };
+  loading: boolean;
 };
 
-const initialState: CurrentUser = { data: { nick: '' } };
+const initialState: CurrentUser = {
+  data: null,
+  auth: {
+    code: null,
+    accessToken: null,
+    error: null,
+  },
+  loading: false,
+};
 
-// Create action for main process with use of helper
-export const exampleInMain = createActionMain<CurrentUser>(
-  'currentUser/aliasMain'
+export const authorizeGitHubUserAsync = createAsyncActionMain<string>(
+  'currentUser/authWithGitHub',
+  (clientId) => {
+    return async (dispatch) => {
+      dispatch(authStarted());
+      authorizeWithGithub(clientId, ({ code, error }) => {
+        code ? dispatch(authFulfilled(code)) : dispatch(authRejected(error));
+      });
+    };
+  }
 );
 
+export const requestAccesTokenAsync = createAsyncActionMain<{
+  clientId: string;
+  clientSecret: string;
+  code: string;
+}>('auth/github', ({ clientId, clientSecret, code }) => {
+  return async (dispatch) => {
+    dispatch(tokenRequestStarted());
+    const data = await requestAccessToken(clientId, clientSecret, code);
+    if ('access_token' in data) {
+      dispatch(
+        tokenRequestFulfiled({
+          value: data.access_token,
+          type: data.token_type,
+          scope: data.scope,
+        })
+      );
+    } else {
+      dispatch(tokenRequestRejected(data));
+    }
+  };
+});
+
 const currentUserSlice = createSlice({
-  name: 'currentuser',
+  name: 'currentUser',
   initialState: initialState,
   reducers: {
-    // State in reducers written with Toolkit is not immutable so to mutate single properties you can do this
-    example: (state: CurrentUser, action: PayloadAction<DataTypeExample>) => {
-      state.data = action.payload;
+    authStarted: (state: CurrentUser) => {
+      state.loading = true;
     },
-    // If you want to mutate a whole state simply return the payload
-    exampleLocal: {
-      reducer: (_state: CurrentUser, action: PayloadAction<CurrentUser>) => {
-        return action.payload;
-      },
-      // If you want to create a local action use prepare callback to do specify it in meta
-      prepare: (payload: CurrentUser) => {
-        return { payload, meta: { scope: 'local' } };
-      },
+    authFulfilled: (state: CurrentUser, action: PayloadAction<string>) => {
+      state.loading = false;
+      state.auth.code = action.payload;
     },
-  },
-  extraReducers: {
-    // Reducers for any external actions like the ones that need to only work in main process or for ones created with createAsyncThunk
-    ['currentUser/aliasMain']: (
-      _state: CurrentUser,
-      action: PayloadAction<CurrentUser>
+    authRejected: (state: CurrentUser, action: PayloadAction<any>) => {
+      state.loading = false;
+      state.auth.error = action.payload;
+    },
+    tokenRequestStarted: (state: CurrentUser) => {
+      state.loading = true;
+    },
+    tokenRequestFulfiled: (
+      state: CurrentUser,
+      action: PayloadAction<AccessToken>
     ) => {
-      return action.payload;
+      state.loading = false;
+      state.auth.accessToken = action.payload;
+      state.auth.error = null;
+    },
+    tokenRequestRejected: (state: CurrentUser, action: PayloadAction<any>) => {
+      state.loading = false;
+      state.auth.error = action.payload;
     },
   },
 });
 
 // export actions from slice
-export const { example, exampleLocal } = currentUserSlice.actions;
+export const {
+  authStarted,
+  authFulfilled,
+  authRejected,
+  tokenRequestStarted,
+  tokenRequestFulfiled,
+  tokenRequestRejected,
+} = currentUserSlice.actions;
 
 // selector for current user | note the use of RootState type here, it's necessary as selectors access whole state of the store
 export const selectCurrentUser = (state: RootState) => state.currentUser;
