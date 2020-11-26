@@ -20,6 +20,7 @@ type CurrentUser = {
     code: string | null;
     accessToken: AccessToken | null;
     error: any;
+    attempted: { code: boolean; token: boolean };
   };
   loading: boolean;
 };
@@ -30,21 +31,22 @@ const initialState: CurrentUser = {
     code: null,
     accessToken: null,
     error: null,
+    attempted: { code: false, token: false },
   },
   loading: false,
 };
 
-export const authorizeGitHubUserAsync = createAsyncActionMain<string>(
-  'currentUser/authWithGitHub',
-  (clientId) => {
-    return async (dispatch) => {
-      dispatch(authStarted());
-      authorizeWithGithub(clientId, ({ code, error }) => {
-        code ? dispatch(authFulfilled(code)) : dispatch(authRejected(error));
-      });
-    };
-  }
-);
+export const authorizeGitHubUserAsync = createAsyncActionMain<{
+  clientId: string;
+  silent: boolean;
+}>('currentUser/authWithGitHub', ({ clientId, silent = false }) => {
+  return async (dispatch) => {
+    dispatch(authStarted());
+    authorizeWithGithub(clientId, silent, ({ code, error }) => {
+      code ? dispatch(authFulfilled(code)) : dispatch(authRejected(error));
+    });
+  };
+});
 
 export const requestAccesTokenAsync = createAsyncActionMain<{
   clientId: string;
@@ -78,10 +80,12 @@ const currentUserSlice = createSlice({
     authFulfilled: (state: CurrentUser, action: PayloadAction<string>) => {
       state.loading = false;
       state.auth.code = action.payload;
+      state.auth.attempted.code = true;
     },
     authRejected: (state: CurrentUser, action: PayloadAction<any>) => {
       state.loading = false;
       state.auth.error = action.payload;
+      state.auth.attempted.code = true;
     },
     tokenRequestStarted: (state: CurrentUser) => {
       state.loading = true;
@@ -93,10 +97,12 @@ const currentUserSlice = createSlice({
       state.loading = false;
       state.auth.accessToken = action.payload;
       state.auth.error = null;
+      state.auth.attempted.token = true;
     },
     tokenRequestRejected: (state: CurrentUser, action: PayloadAction<any>) => {
       state.loading = false;
       state.auth.error = action.payload;
+      state.auth.attempted.token = true;
     },
   },
 });

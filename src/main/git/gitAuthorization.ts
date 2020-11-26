@@ -9,6 +9,7 @@ import { BrowserWindow } from 'electron';
  */
 export function authorizeWithGithub(
   clientId: string,
+  silent: boolean,
   callback: (response: { code: string; error: any }) => void
 ): void {
   const authWindow = new BrowserWindow({
@@ -21,7 +22,16 @@ export function authorizeWithGithub(
   authWindow.loadURL(
     `${Url.AUTHORIZE_URL}?client_id=${clientId}&redirect_uri=${Url.REDIRECT_URI}`
   );
-  authWindow.show();
+  if (!silent) {
+    authWindow.show();
+  } else {
+    authWindow.webContents.on('did-finish-load', () => {
+      setTimeout(() => {
+        authWindow.close();
+        callback({ code: null, error: null });
+      }, 1000);
+    });
+  }
 
   const processRedirect = (url: any) => {
     const rawCode = /code=([^&]*)/.exec(url) || null;

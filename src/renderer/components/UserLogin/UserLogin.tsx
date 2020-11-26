@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  authorizeGitHubUserAsync,
   requestAccesTokenAsync,
   selectCurrentUser,
 } from '../../../shared/slices/currentUserSlice';
@@ -13,13 +14,23 @@ const UserLogin = ({ children }: any) => {
 
   useEffect(() => {
     dispatch(
-      requestAccesTokenAsync({
+      authorizeGitHubUserAsync({
         clientId: process.env.GITHUB_CLIENT_ID,
-        clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        code: currentUser.auth.code,
+        silent: true,
       })
     );
-  }, [currentUser.auth.code]);
+  }, []);
+
+  useEffect(() => {
+    if (currentUser.auth.attempted.code)
+      dispatch(
+        requestAccesTokenAsync({
+          clientId: process.env.GITHUB_CLIENT_ID,
+          clientSecret: process.env.GITHUB_CLIENT_SECRET,
+          code: currentUser.auth.code,
+        })
+      );
+  }, [currentUser.auth.code, currentUser.auth.attempted.code]);
 
   //TODO: refactor this to check if user data has been fetched @ProudBloom
   const isUserLoggedIn = currentUser.auth.accessToken !== null;
@@ -27,7 +38,12 @@ const UserLogin = ({ children }: any) => {
   const getRenderedComponent = () => {
     return isUserLoggedIn ? <>{children}</> : <LoginComponent />;
   };
-  return getRenderedComponent();
+
+  return (
+    currentUser.auth.attempted.code &&
+    currentUser.auth.attempted.token &&
+    getRenderedComponent()
+  );
 };
 
 export default UserLogin;
