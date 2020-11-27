@@ -10,7 +10,7 @@ export interface File {
 }
 
 export enum Url {
-  REDIRECT_URI = 'http://localhost:3000/main_window',
+  REDIRECT_URI = 'http://localhost/main_window',
   AUTHORIZE_URL = 'https://github.com/login/oauth/authorize',
   ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token',
 }
