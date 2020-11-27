@@ -7,7 +7,6 @@ import {
   selectGatsbyInstallStatus,
 } from '../../../../shared/slices/gatsbyInstallSlice';
 
-// TODO: delete exemplary buttons from here
 const Description = () => {
   const currentUser = useSelector(selectCurrentUser);
   const gatsbyInstallStuff = useSelector(selectGatsbyInstallStatus);
