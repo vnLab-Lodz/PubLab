@@ -1,17 +1,18 @@
+import React from "react";
 import Description from "../components/RouterComponents/Description/Description";
 import Files from "../components/RouterComponents/Files/Files";
 import Changes from "../components/RouterComponents/Changes/Changes";
 import Settings from "../components/RouterComponents/Settings/Settings";
 import ProjectsList from "../components/RouterComponents/ProjectsList/ProjectsList";
 import AppSettings from "../components/RouterComponents/AppSettings/AppSettings";
-
+import {COMPONENTS} from "./Components";
 
 export type RouterComponents = {
   [key in COMPONENTS]: React.FC;
 };
 
 // This can be changed when we introduce some i18n
-export const COMPONENTS_TRANSLATIONS = {
+export const COMPONENTS_TRANSLATIONS: Record<COMPONENTS, string> = {
   PROJECT: 'Project',
   FILES: 'Files',
   CHANGES: 'Changes',
@@ -19,16 +20,6 @@ export const COMPONENTS_TRANSLATIONS = {
 
   PROJECTS_LIST: 'Projects list',
   APP_SETTINGS: 'App settings',
-}
-
-export enum COMPONENTS {
-  PROJECT = 'PROJECT',
-  FILES = 'FILES',
-  CHANGES = 'CHANGES',
-  SETTINGS = 'SETTINGS',
-
-  PROJECTS_LIST = 'PROJECTS_LIST',
-  APP_SETTINGS = 'APP_SETTINGS',
 }
 
 export const routerComponents: RouterComponents = {

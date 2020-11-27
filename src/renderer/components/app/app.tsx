@@ -14,9 +14,7 @@ const App = () => {
     <Provider store={store}>
       <UserLogin>
         <div className="wrapper">
-          <div className="sideBar">
-            <NavigationBar />
-          </div>
+          <NavigationBar />
           <div className="content">
             <CustomRouter/>
           </div>
