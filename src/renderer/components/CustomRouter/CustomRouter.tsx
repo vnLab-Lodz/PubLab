@@ -2,16 +2,16 @@ import React from 'react';
 import './CustomRouter.scss';
 import { useSelector } from 'react-redux';
 import { selectCurrentView } from '../../../shared/slices/currentViewSlice';
-import { components } from '../../constants/RouterComponents';
+import { routerComponents } from '../../constants/RouterComponents';
 
 const CustomRouter = () => {
 
   const currentView = useSelector(selectCurrentView);
-  const View: React.FC = components[currentView.view].component;
+  const View: React.FC = routerComponents[currentView.view];
 
   return (
     <div className="router">
-      <View/>
+      <View />
     </div>
   );
 };
