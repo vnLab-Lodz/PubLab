@@ -13,12 +13,10 @@ const App = () => {
   return (
     <Provider store={store}>
       <UserLogin>
-        <div className='wrapper'>
-          <div className='sideBar'>
-            <NavigationBar />
-          </div>
-          <div className='content'>
-            <CustomRouter />
+        <div className="wrapper">
+          <NavigationBar />
+          <div className="content">
+            <CustomRouter/>
           </div>
         </div>
       </UserLogin>
