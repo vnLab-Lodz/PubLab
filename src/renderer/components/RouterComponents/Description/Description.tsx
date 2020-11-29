@@ -6,6 +6,7 @@ import {
   installGatsbyCLI,
   selectGatsbyInstallStatus,
 } from '../../../../shared/slices/gatsbyInstallSlice';
+import { getUserData } from '../../../../main/git/gitCurrentuser';
 
 const Description = () => {
   const currentUser = useSelector(selectCurrentUser);
@@ -23,6 +24,7 @@ const Description = () => {
       <button onClick={() => dispatch(installGatsbyCLI())}>
         Install gatsby-cli
       </button>
+      <button onClick={getUserData}>Display user data</button>
     </div>
   );
 };
