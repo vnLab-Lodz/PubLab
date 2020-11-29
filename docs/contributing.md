@@ -22,7 +22,7 @@ Make sure to tick all the checklist items.
 
 > All of the important actions should cause the issue you assigned to yourself to move to other Kanban columns accordingly. Please make sure that the issue is in the correct column after each step.
 
-## Project directory structure
+## Projects directory structure
 Quick guide how to traverse the project.
 
 ```sh

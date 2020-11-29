@@ -1,33 +1,32 @@
-import Component1 from "../components/RouterComponents/Component1/Component1";
-import Component2 from "../components/RouterComponents/Component2/Component2";
-import Component3 from "../components/RouterComponents/Component3/Component3";
+import React from "react";
 import Description from "../components/RouterComponents/Description/Description";
-import { COMPONENTS_LIST } from "../constants/ComponentsList"
-
+import Files from "../components/RouterComponents/Files/Files";
+import Changes from "../components/RouterComponents/Changes/Changes";
+import Settings from "../components/RouterComponents/Settings/Settings";
+import ProjectsList from "../components/RouterComponents/ProjectsList/ProjectsList";
+import AppSettings from "../components/RouterComponents/AppSettings/AppSettings";
+import {COMPONENTS} from "./Components";
 
 export type RouterComponents = {
-  [key: string]: {
-    view: string;
-    component: React.FC;
-  };
+  [key in COMPONENTS]: React.FC;
 };
 
+// This can be changed when we introduce some i18n
+export const COMPONENTS_TRANSLATIONS: Record<COMPONENTS, string> = {
+  PROJECT: 'Project',
+  FILES: 'Files',
+  CHANGES: 'Changes',
+  SETTINGS: 'Settings',
 
-export const components: RouterComponents = {
-  description: {
-    view: COMPONENTS_LIST.DESCRIPTION,
-    component: Description,
-  },
-  component1: {
-    view: COMPONENTS_LIST.COMPONENT1,
-    component: Component1,
-  },
-  component2: {
-    view: COMPONENTS_LIST.COMPONENT2,
-    component: Component2,
-  },
-  component3: {
-    view: COMPONENTS_LIST.COMPONENT3,
-    component: Component3,
-  }
+  PROJECTS_LIST: 'Projects list',
+  APP_SETTINGS: 'App settings',
+}
+
+export const routerComponents: RouterComponents = {
+  [COMPONENTS.PROJECT]: Description,
+  [COMPONENTS.FILES]: Files,
+  [COMPONENTS.CHANGES]: Changes,
+  [COMPONENTS.SETTINGS]: Settings,
+  [COMPONENTS.PROJECTS_LIST]: ProjectsList,
+  [COMPONENTS.APP_SETTINGS]: AppSettings,
 };
