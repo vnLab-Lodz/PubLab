@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getUserData, getUserOctokitData } from '../../main/git/gitCurrentUser';
 import {
   authorizeWithGithub,
   requestAccessToken,
 } from '../../main/git/gitAuthorization';
 import { createAsyncActionMain } from '../helpers/createActionMain';
 import { RootState } from '../rootReducer';
+import { Octokit } from "@octokit/core";
 
 type AccessToken = {
   value: string;
@@ -70,6 +72,15 @@ export const requestAccesTokenAsync = createAsyncActionMain<{
   };
 });
 
+export const getLoggedUser = createAsyncActionMain<{token: string}>('auth/github', (token) =>
+{
+  return async (dispatch) =>
+  {
+    //const data = 
+    dispatch(userReducer(token));
+  }
+})
+
 const currentUserSlice = createSlice({
   name: 'currentUser',
   initialState: initialState,
@@ -98,12 +109,18 @@ const currentUserSlice = createSlice({
       state.auth.accessToken = action.payload;
       state.auth.error = null;
       state.auth.attempted.token = true;
+      //console.log(state.auth.accessToken.value);
+      //getUserOctokitData(state.auth.accessToken.value);
     },
     tokenRequestRejected: (state: CurrentUser, action: PayloadAction<any>) => {
       state.loading = false;
       state.auth.error = action.payload;
       state.auth.attempted.token = true;
     },
+    userReducer: (state: CurrentUser, action: PayloadAction<any>) =>
+    {
+      console.log(state.auth.accessToken.value);
+    }
   },
 });
 
@@ -115,6 +132,7 @@ export const {
   tokenRequestStarted,
   tokenRequestFulfiled,
   tokenRequestRejected,
+  userReducer,
 } = currentUserSlice.actions;
 
 // selector for current user | note the use of RootState type here, it's necessary as selectors access whole state of the store
