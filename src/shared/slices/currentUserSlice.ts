@@ -1,5 +1,5 @@
 import { combineReducers, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getAccessToken, getUserData, getUserOctokitData } from '../../main/git/gitCurrentUser';
+import { getUserOctokitData } from '../../main/git/gitCurrentUser';
 import {
   authorizeWithGithub,
   requestAccessToken,
@@ -16,7 +16,9 @@ type AccessToken = {
 type CurrentUser = {
   data: {
     nick: string;
-  } | null;
+    avatar: string;
+    company: string;
+  }
   auth: {
     code: string | null;
     accessToken: AccessToken | null;
@@ -27,7 +29,11 @@ type CurrentUser = {
 };
 
 const initialState: CurrentUser = {
-  data: null,
+  data: {
+    nick: null,
+    avatar: null,
+    company: null,
+  },
   auth: {
     code: null,
     accessToken: null,
@@ -70,6 +76,15 @@ export const requestAccesTokenAsync = createAsyncActionMain<{
     }
   };
 });
+
+export const displayUserData = createAsyncActionMain<void>('getUser', () => 
+{
+  return async (dispatch) => 
+  {
+    dispatch(userLoggedIn());
+    console.log('displayUserData()');
+  }
+})
 export var acUserToken = "";
 
 const currentUserSlice = createSlice({
@@ -107,6 +122,15 @@ const currentUserSlice = createSlice({
       state.auth.error = action.payload;
       state.auth.attempted.token = true;
     },
+    userLoggedIn: (state: CurrentUser) => {
+       state.data.nick = 'SomeNick';
+       state.data.avatar = 'SomeAvatar';
+       state.data.company = 'SomeCompany';
+       console.log('=====UserLoggedIn=====');
+       console.log('Nick : ' + state.data.nick);
+       console.log('Avatar : ' + state.data.avatar);
+       console.log('Company : ' + state.data.company);
+    },
   },
 });
 
@@ -118,6 +142,7 @@ export const {
   tokenRequestStarted,
   tokenRequestFulfiled,
   tokenRequestRejected,
+  userLoggedIn,
 } = currentUserSlice.actions;
 
 
