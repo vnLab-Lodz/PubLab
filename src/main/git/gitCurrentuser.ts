@@ -2,7 +2,7 @@ import { Octokit } from '@octokit/core';
 
 export async function getUserOctokitData(token: string)
 {    
-    const octokit = new Octokit({ auth: token});
+    const octokit = new Octokit({ auth: token });
     const response = await octokit.request("GET /user");
   
     const  login = response.data.login;

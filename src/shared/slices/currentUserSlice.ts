@@ -13,12 +13,14 @@ type AccessToken = {
   scope: string;
 };
 
-type CurrentUser = {
-  data: {
+type CurrentUserData = {
     nick: string;
     avatar: string;
     company: string;
-  }
+}
+
+type CurrentUser = {
+  data: CurrentUserData;
   auth: {
     code: string | null;
     accessToken: AccessToken | null;
@@ -30,10 +32,10 @@ type CurrentUser = {
 
 const initialState: CurrentUser = {
   data: {
-    nick: null,
-    avatar: null,
-    company: null,
-  },
+    nick: '',
+    avatar: '',
+    company: '',
+},
   auth: {
     code: null,
     accessToken: null,
@@ -81,10 +83,23 @@ export const displayUserData = createAsyncActionMain<void>('getUser', () =>
 {
   return async (dispatch) => 
   {
-    dispatch(userLoggedIn());
-    console.log('displayUserData()');
+    //TODO : Exchange userData object with that fechted from the getUserOctokitData function. (Err: Object is not a function in line 87)
+    //const userData = await getUserOctokitData(acUserToken);
+    const userData = {
+      login: 'ProudBloom',
+      avatar: 'https://avatars2.githubusercontent.com/u/34416677?v=4',
+      company: 'Lodz University of Technology',
+    }
+
+    dispatch(userLoggedIn({
+      nick: userData.login,
+      avatar: userData.avatar,
+      company: userData.company,
+    })
+    );
   }
-})
+});
+
 export var acUserToken = "";
 
 const currentUserSlice = createSlice({
@@ -122,14 +137,10 @@ const currentUserSlice = createSlice({
       state.auth.error = action.payload;
       state.auth.attempted.token = true;
     },
-    userLoggedIn: (state: CurrentUser) => {
-       state.data.nick = 'SomeNick';
-       state.data.avatar = 'SomeAvatar';
-       state.data.company = 'SomeCompany';
-       console.log('=====UserLoggedIn=====');
-       console.log('Nick : ' + state.data.nick);
-       console.log('Avatar : ' + state.data.avatar);
-       console.log('Company : ' + state.data.company);
+    userLoggedIn: (state: CurrentUser, action: PayloadAction<CurrentUserData>) => {
+       state.data.nick = action.payload.nick;
+       state.data.avatar = action.payload.avatar;
+       state.data.company = action.payload.company;
     },
   },
 });
