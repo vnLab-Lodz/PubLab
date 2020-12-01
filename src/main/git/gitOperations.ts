@@ -21,7 +21,7 @@ export function getUserRepositories(accessToken: string): Repository[] {
     }).then(data => {
         console.log(data)
         data.data.forEach((repo: any) => {
-            if(repo.name.indexOf(WEB_PUB_REPO_NAME) !== -1) {
+            if (repo.name.indexOf(WEB_PUB_REPO_NAME) !== -1) {
                 repositories.push({name: repo.name, author: repo.owner.login, url: repo.url} as Repository)
             }
         })
@@ -115,6 +115,8 @@ function checkout(branchDir: string, branchName: string) {
         dir: branchDir,
         ref: branchName
     })
+        .then(() => console.log('Successfully checked out to ' + branchName))
+        .catch(() => console.log('Error occurred while performing checkout to ' + branchName));
 }
 
 //Adding file(s)
@@ -126,7 +128,8 @@ function addFile(file: File): void {
             dir: file.path,
             filepath: file.filename
         })
-        console.log('done');
+            .then(() => console.log('File ' + file.filename + ' successfully added'))
+            .catch(() => console.log('Error occurred while adding ' + file.filename));
     });
 }
 
@@ -143,8 +146,9 @@ function removeFile(file: File): void {
         fs,
         dir: file.path,
         filepath: file.filename
-    });
-    console.log('done');
+    })
+        .then(() => console.log('File ' + file.filename + ' successfully removed'))
+        .catch(() => console.log('Error occurred while removing ' + file.filename));
 }
 
 function removeFiles(files: File[]): void {
@@ -163,9 +167,13 @@ function commit(branchName: string, file: File, author: string, message: string)
         author: {
             name: author,
         },
+        committer: {
+            name: author,
+        },
         message: message
-    });
-    console.log('done');
+    })
+        .then((r: string) => console.log('Commit successfully performed: ' + r))
+        .catch(() => console.log('Error occurred while removing ' + file.filename));
 }
 
 //Push
@@ -177,8 +185,10 @@ function push(dir: string, branchName: string): void {
         dir: dir,
         ref: branchName,
     })
+        .then(() => console.log('Push successfully performed'))
+        .catch(() => console.log('Error occurred while performing push on ' + branchName));
 }
 
 export function publish(): void {
-    addFile({path: '', filename: ''})
+    addFile({path: '', filename: ''});
 }
