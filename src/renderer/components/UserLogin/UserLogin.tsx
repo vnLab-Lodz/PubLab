@@ -1,19 +1,48 @@
-import React from 'react';
-import './UserLogin.scss';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  authorizeGitHubUserAsync,
+  requestAccesTokenAsync,
+  selectCurrentUser,
+} from '../../../shared/slices/currentUserSlice';
 import LoginComponent from '../LoginComponent/LoginComponent';
+import './UserLogin.scss';
 
-const UserLogin = ({children} : any) => {
+const UserLogin = ({ children }: any) => {
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
 
-  const isUserLoggedIn = () => {
-    //TODO: check if user is logged in
-    return true;
-  }
+  useEffect(() => {
+    dispatch(
+      authorizeGitHubUserAsync({
+        clientId: process.env.GITHUB_CLIENT_ID,
+        silent: true,
+      })
+    );
+  }, []);
+
+  useEffect(() => {
+    if (currentUser.auth.attempted.code)
+      dispatch(
+        requestAccesTokenAsync({
+          clientId: process.env.GITHUB_CLIENT_ID,
+          clientSecret: process.env.GITHUB_CLIENT_SECRET,
+          code: currentUser.auth.code,
+        })
+      );
+  }, [currentUser.auth.code, currentUser.auth.attempted.code]);
+
+  //TODO: refactor this to check if user data has been fetched @ProudBloom
+  const isUserLoggedIn = currentUser.auth.accessToken !== null;
 
   const getRenderedComponent = () => {
-      return isUserLoggedIn() ? <>{children}</> : <LoginComponent/>;
-  }
+    return isUserLoggedIn ? <>{children}</> : <LoginComponent />;
+  };
+
   return (
-      getRenderedComponent()
+    currentUser.auth.attempted.code &&
+    currentUser.auth.attempted.token &&
+    getRenderedComponent()
   );
 };
 
