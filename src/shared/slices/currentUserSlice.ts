@@ -6,6 +6,7 @@ import {
 import { createAsyncActionMain } from '../helpers/createActionMain';
 import { RootState } from '../rootReducer';
 import Axios from 'axios';
+import { getUserData } from '../../main/git/gitCurrentuser';
 
 type AccessToken = {
   value: string;
@@ -79,35 +80,12 @@ export const requestAccesTokenAsync = createAsyncActionMain<{
   };
 });
 
-export const displayUserData = createAsyncActionMain<void>('getUser', (token) => 
-{
-  return async (dispatch) => 
-  {
-    try{
-      const response = await Axios.get("https://api.github.com/user", {
-      headers:
-      {
-          Accept: "application/vnd.github.v3+json",
-          Authorization: `token ${token}`,
-      }
-      });
-    
-      const userData = {
-        login: response.data.login,
-        avatar: response.data.avatar_url,
-        company: response.data.company,
-      }
-      //console.log(userData);
-      console.log(userData.login);
-      console.log(userData.avatar);
-      console.log(userData.company);
+export const displayUserData = createAsyncActionMain<string>('getUser', (token) => {
+  return async (dispatch) => {
+    const data = await getUserData(token);
+    dispatch(userLoggedIn(data));
   }
-  catch(error){
-      console.log(error.response);
-   }
-  }
-}
-)
+});
 
 
 const currentUserSlice = createSlice({
