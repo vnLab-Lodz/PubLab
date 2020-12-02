@@ -1,7 +1,7 @@
 import React from 'react';
 import './Description.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { acUserToken, displayUserData, selectCurrentUser } from '../../../../shared/slices/currentUserSlice';
+import { displayUserData, selectCurrentUser } from '../../../../shared/slices/currentUserSlice';
 import { getUserOctokitData } from '../../../../main/git/gitCurrentUser';
 import {
   installGatsbyCLI,
@@ -24,8 +24,7 @@ const Description = () => {
       <button onClick={() => dispatch(installGatsbyCLI())}>
         Install gatsby-cli
       </button>
-      {/* getUserOctokitData(acUserToken) */}
-      { <button onClick={() => dispatch(displayUserData())}>Display user data</button>}
+      { <button onClick={() => dispatch(displayUserData(currentUser.auth.accessToken.value))}>Display user data</button>}
     </div>
   );
 };

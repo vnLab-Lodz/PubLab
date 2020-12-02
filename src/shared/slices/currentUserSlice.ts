@@ -1,11 +1,11 @@
 import { combineReducers, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getUserOctokitData } from '../../main/git/gitCurrentUser';
 import {
   authorizeWithGithub,
   requestAccessToken,
 } from '../../main/git/gitAuthorization';
 import { createAsyncActionMain } from '../helpers/createActionMain';
 import { RootState } from '../rootReducer';
+import Axios from 'axios';
 
 type AccessToken = {
   value: string;
@@ -79,28 +79,36 @@ export const requestAccesTokenAsync = createAsyncActionMain<{
   };
 });
 
-export const displayUserData = createAsyncActionMain<void>('getUser', () => 
+export const displayUserData = createAsyncActionMain<void>('getUser', (token) => 
 {
   return async (dispatch) => 
   {
-    //TODO : Exchange userData object with that fechted from the getUserOctokitData function. (Err: Object is not a function in line 87)
-    //const userData = await getUserOctokitData(acUserToken);
-    const userData = {
-      login: 'ProudBloom',
-      avatar: 'https://avatars2.githubusercontent.com/u/34416677?v=4',
-      company: 'Lodz University of Technology',
-    }
-
-    dispatch(userLoggedIn({
-      nick: userData.login,
-      avatar: userData.avatar,
-      company: userData.company,
-    })
-    );
+    try{
+      const response = await Axios.get("https://api.github.com/user", {
+      headers:
+      {
+          Accept: "application/vnd.github.v3+json",
+          Authorization: `token ${token}`,
+      }
+      });
+    
+      const userData = {
+        login: response.data.login,
+        avatar: response.data.avatar_url,
+        company: response.data.company,
+      }
+      //console.log(userData);
+      console.log(userData.login);
+      console.log(userData.avatar);
+      console.log(userData.company);
   }
-});
+  catch(error){
+      console.log(error.response);
+   }
+  }
+}
+)
 
-export var acUserToken = "";
 
 const currentUserSlice = createSlice({
   name: 'currentUser',
@@ -129,8 +137,7 @@ const currentUserSlice = createSlice({
       state.loading = false;
       state.auth.accessToken = action.payload;
       state.auth.error = null;
-      state.auth.attempted.token = true;
-      acUserToken = state.auth.accessToken.value;
+      state.auth.attempted.token = true
     },
     tokenRequestRejected: (state: CurrentUser, action: PayloadAction<any>) => {
       state.loading = false;
