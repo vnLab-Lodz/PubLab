@@ -1,9 +1,12 @@
-.content{
+.content {
     flex: 1;
-    padding: 2rem;
 }
 
-.wrapper{
+.wrapper {
     display: flex;
     height: 100%;
+}
+
+body {
+    box-sizing: border-box;
 }
