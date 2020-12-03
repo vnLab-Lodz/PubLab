@@ -25,18 +25,49 @@ From command line:
     # HTTPS
     $ git clone https://github.com/karczewskiPiotr/vnlab-tool.git
     ```
-2. Move into directory
+    
+2. Create an OAuth Application
+
+    2a. Enter profile's ***Settings*** section
+    
+    2b. Select ***Developer Settings*** -> ***OAuth Apps*** -> ***New OAuth App***
+    
+    2c. Pick name for the application (it won't affect the project) and specify ***Home page URL*** and ***Authorization callback URL*** and register your application
+    
+        Home page URL: https://github.com/login/oauth/authorize
+        
+        Authorization callback URL: http://localhost/main_window
+        
+    2d. Inside ***Client secrets*** section generate a new client secret
+    
+3. Move into directory
 
     ```bash
     $ cd vnlab-tool
     ```
-3. Install dependecies
+4. Install dependecies
 
     ```bash
     $ yarn install
+    or
+    $ npm i
     ```
-5. Run the app in development environment
+    
+5. Create ***.env*** file inside the project's root directory
+
+6. Inside the ***.env*** file specify client id and secret by pasting the following
+
+    GITHUB_CLIENT_ID=clientid
+    
+    GITHUB_CLIENT_SECRET=clientsecret
+    
+    Where ***clientid*** is accessible through created OAuth App under the ***Client ID*** section, ***clientsecret*** is accessible under the ***Client secrets*** section.
+
+
+7. Run the app in development environment
 
     ```bash
     $ yarn start
+    or
+    $ npm start
     ```
