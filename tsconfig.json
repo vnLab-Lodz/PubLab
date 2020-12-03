@@ -18,6 +18,7 @@
   "include": [
     "src/**/*",
     "src/renderer/renderer.tsx",
-    "src/main/index.ts"
+    "src/main/index.ts",
+    "src/components", "./custom.d.ts"
   ]
 }
