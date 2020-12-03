@@ -1,10 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { combineReducers, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   authorizeWithGithub,
   requestAccessToken,
 } from '../../main/git/gitAuthorization';
 import { createAsyncActionMain } from '../helpers/createActionMain';
 import { RootState } from '../rootReducer';
+import Axios from 'axios';
+import { getUserData } from '../../main/git/gitCurrentuser';
 
 type AccessToken = {
   value: string;
@@ -12,10 +14,14 @@ type AccessToken = {
   scope: string;
 };
 
-type CurrentUser = {
-  data: {
+type CurrentUserData = {
     nick: string;
-  } | null;
+    avatar: string;
+    company: string;
+}
+
+type CurrentUser = {
+  data: CurrentUserData;
   auth: {
     code: string | null;
     accessToken: AccessToken | null;
@@ -26,7 +32,11 @@ type CurrentUser = {
 };
 
 const initialState: CurrentUser = {
-  data: null,
+  data: {
+    nick: '',
+    avatar: '',
+    company: '',
+},
   auth: {
     code: null,
     accessToken: null,
@@ -70,6 +80,14 @@ export const requestAccesTokenAsync = createAsyncActionMain<{
   };
 });
 
+export const displayUserData = createAsyncActionMain<string>('getUser', (token) => {
+  return async (dispatch) => {
+    const data = await getUserData(token);
+    dispatch(userLoggedIn(data));
+  }
+});
+
+
 const currentUserSlice = createSlice({
   name: 'currentUser',
   initialState: initialState,
@@ -97,12 +115,17 @@ const currentUserSlice = createSlice({
       state.loading = false;
       state.auth.accessToken = action.payload;
       state.auth.error = null;
-      state.auth.attempted.token = true;
+      state.auth.attempted.token = true
     },
     tokenRequestRejected: (state: CurrentUser, action: PayloadAction<any>) => {
       state.loading = false;
       state.auth.error = action.payload;
       state.auth.attempted.token = true;
+    },
+    userLoggedIn: (state: CurrentUser, action: PayloadAction<CurrentUserData>) => {
+       state.data.nick = action.payload.nick;
+       state.data.avatar = action.payload.avatar;
+       state.data.company = action.payload.company;
     },
   },
 });
@@ -115,7 +138,9 @@ export const {
   tokenRequestStarted,
   tokenRequestFulfiled,
   tokenRequestRejected,
+  userLoggedIn,
 } = currentUserSlice.actions;
+
 
 // selector for current user | note the use of RootState type here, it's necessary as selectors access whole state of the store
 export const selectCurrentUser = (state: RootState) => state.currentUser;
