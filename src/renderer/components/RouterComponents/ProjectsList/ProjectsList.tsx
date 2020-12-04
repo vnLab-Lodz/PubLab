@@ -64,7 +64,7 @@ const ProjectsList = () => {
     const clone: IProject[] = [];
     displayedProjects.forEach(val => clone.push(Object.assign({}, val)));
     clone.sort(sortOption);
-    return clone.filter(filterOption).filter(s => s.name.includes(searchPhrase))
+    return clone.filter(filterOption).filter(s => s.name.toLowerCase().includes(searchPhrase.toLocaleLowerCase()))
   }
 
   const addNewProject = (project: IProject) => {
