@@ -6,7 +6,7 @@ import currentViewReducer from './slices/currentViewSlice';
 const rootReducer = combineReducers({
   currentUser: currentUserReducer,
   gatsbyInstall: gatsbyInstallReducer,
-  currentView: currentViewReducer
+  currentView: currentViewReducer,
 });
 
 // export state to use with selectors

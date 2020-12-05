@@ -11,7 +11,6 @@ if (require('electron-squirrel-startup')) {
 const store = configStore('main');
 
 const createWindow = (): void => {
-  store.subscribe(() => console.log('action received in main'));
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     height: 600,
