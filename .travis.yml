@@ -5,6 +5,8 @@ cache:
   yarn: true
   directories:
     - node_modules
+notifications:
+  email: false
 branches:
   only:
     - main
@@ -14,6 +16,6 @@ jobs:
   include:
     - stage: lint
       script:
-        - yarn prettier
+        - yarn prettier --check --config .prettierrc ./src
 stages:
   - lint
