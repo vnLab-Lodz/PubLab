@@ -1,11 +1,11 @@
-import React from "react";
-import Description from "../components/RouterComponents/Description/Description";
-import Files from "../components/RouterComponents/Files/Files";
-import Changes from "../components/RouterComponents/Changes/Changes";
-import Settings from "../components/RouterComponents/Settings/Settings";
-import ProjectsList from "../components/RouterComponents/ProjectsList/ProjectsList";
-import AppSettings from "../components/RouterComponents/AppSettings/AppSettings";
-import {COMPONENTS} from "./Components";
+import React from 'react';
+import Description from '../components/RouterComponents/Description/Description';
+import Files from '../components/RouterComponents/Files/Files';
+import Changes from '../components/RouterComponents/Changes/Changes';
+import Settings from '../components/RouterComponents/Settings/Settings';
+import ProjectsList from '../components/RouterComponents/ProjectsList/ProjectsList';
+import AppSettings from '../components/RouterComponents/AppSettings/AppSettings';
+import { COMPONENTS } from './Components';
 
 export type RouterComponents = {
   [key in COMPONENTS]: React.FC;
@@ -20,7 +20,7 @@ export const COMPONENTS_TRANSLATIONS: Record<COMPONENTS, string> = {
 
   PROJECTS_LIST: 'Projects list',
   APP_SETTINGS: 'App settings',
-}
+};
 
 export const routerComponents: RouterComponents = {
   [COMPONENTS.PROJECT]: Description,

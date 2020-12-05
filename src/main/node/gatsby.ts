@@ -6,7 +6,9 @@ const tzOffset = new Date().getTimezoneOffset() * 60000; //offset in millisecond
 
 function appendLog(msg: string): void {
   let localISOTime = new Date(Date.now() - tzOffset).toISOString();
-  logger.write(localISOTime.replace(/T/, ' ').replace(/\..+/, '') + ' ' + msg + '\n');
+  logger.write(
+    localISOTime.replace(/T/, ' ').replace(/\..+/, '') + ' ' + msg + '\n'
+  );
 }
 
 /**
@@ -26,7 +28,10 @@ export function checkForGatsby(): Promise<boolean> {
         reject(stdout);
       }
 
-      if (Object.keys(resultObj).length === 0 && resultObj.constructor === Object) {
+      if (
+        Object.keys(resultObj).length === 0 &&
+        resultObj.constructor === Object
+      ) {
         appendLog('gatsby-cli not installed');
         resolve(false);
       } else {
