@@ -207,7 +207,9 @@ const ProjectsList = () => {
     clone.sort(sortOption);
     return clone
       .filter(filterOption)
-      .filter((s) => s.name.includes(searchPhrase));
+      .filter((s) =>
+        s.name.toLowerCase().includes(searchPhrase.toLocaleLowerCase())
+      );
   };
 
   const addNewProject = (project: IProject) => {
