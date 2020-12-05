@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+  - node
+cache:
+  yarn: true
+  directories:
+    - node_modules
+branches:
+  only:
+    - main
+install:
+  - yarn install
+jobs:
+  include:
+    - stage: lint
+      script:
+        - yarn prettier
+stages:
+  - lint
