@@ -1,20 +1,28 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../rootReducer';
 
-
+type CollaboratorElement = {
+  github_username: string,
+  role: string,
+};
 
 type PublicationListElement = {
-    id: number, 
-    dirPath: string, 
-    publicationName: string
-    };
+  project_name: string,
+  collaborators: [CollaboratorElement],
+  pm_preference: string,
+  description: string,
+  dirPath: string,
+    /*id: number,  
+    publicationName: string*/
+  };
 
 type PublicationList = {
         list: [PublicationListElement]
-    };
+  };
 
 
-  const initialState: PublicationList = {list:[{id: 0, dirPath:"", publicationName: ""}]};
+  const initialState: PublicationList = {list:[{project_name: "",
+   collaborators: [{github_username: "", role: ""}], pm_preference: "", description: "", dirPath:""}]};
 
   const publicationsSlice = createSlice({
     name: 'publications',

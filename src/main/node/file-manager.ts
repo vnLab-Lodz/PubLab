@@ -42,7 +42,9 @@ function recursiveSearch(path: string): void {
     try {
       let rawdata = fs.readFileSync('publication_config.json');
       let dataParsed = JSON.parse(rawdata.toString());
-      dispatch(addPublication({id: dataParsed.id, dirPath: path, publicationName: dataParsed.publicationName}));
+      dispatch(addPublication({project_name: dataParsed.publication_name, 
+        collaborators: dataParsed.collaborators, pm_preference: dataParsed.collaborators,
+         description: dataParsed.description ,dirPath: path}));
     } catch(err) {}
   } else if (!isRepository(path)) {
     const availableDirectories: string[] = getDirectories(path);
