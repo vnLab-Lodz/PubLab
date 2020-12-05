@@ -5,6 +5,7 @@ import {
 } from '../../main/git/gitAuthorization';
 import { createAsyncActionMain } from '../helpers/createActionMain';
 import { RootState } from '../rootReducer';
+import { getUserData } from '../../main/git/gitCurrentuser';
 
 type AccessToken = {
   value: string;
@@ -12,10 +13,14 @@ type AccessToken = {
   scope: string;
 };
 
+type CurrentUserData = {
+  nick: string;
+  avatar: string;
+  company: string;
+};
+
 type CurrentUser = {
-  data: {
-    nick: string;
-  } | null;
+  data: CurrentUserData;
   auth: {
     code: string | null;
     accessToken: AccessToken | null;
@@ -26,7 +31,11 @@ type CurrentUser = {
 };
 
 const initialState: CurrentUser = {
-  data: null,
+  data: {
+    nick: '',
+    avatar: '',
+    company: '',
+  },
   auth: {
     code: null,
     accessToken: null,
@@ -70,6 +79,16 @@ export const requestAccesTokenAsync = createAsyncActionMain<{
   };
 });
 
+export const displayUserData = createAsyncActionMain<string>(
+  'getUser',
+  (token) => {
+    return async (dispatch) => {
+      const data = await getUserData(token);
+      dispatch(userLoggedIn(data));
+    };
+  }
+);
+
 const currentUserSlice = createSlice({
   name: 'currentUser',
   initialState: initialState,
@@ -104,10 +123,17 @@ const currentUserSlice = createSlice({
       state.auth.error = action.payload;
       state.auth.attempted.token = true;
     },
+    userLoggedIn: (
+      state: CurrentUser,
+      action: PayloadAction<CurrentUserData>
+    ) => {
+      state.data.nick = action.payload.nick;
+      state.data.avatar = action.payload.avatar;
+      state.data.company = action.payload.company;
+    },
   },
 });
 
-// export actions from slice
 export const {
   authStarted,
   authFulfilled,
@@ -115,9 +141,9 @@ export const {
   tokenRequestStarted,
   tokenRequestFulfiled,
   tokenRequestRejected,
+  userLoggedIn,
 } = currentUserSlice.actions;
 
-// selector for current user | note the use of RootState type here, it's necessary as selectors access whole state of the store
 export const selectCurrentUser = (state: RootState) => state.currentUser;
 
 export default currentUserSlice.reducer;

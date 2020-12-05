@@ -1,0 +1,129 @@
+.projectList__container {
+  height: calc(100% - 1rem);
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.projectList__list__container {
+  background-color: #53aaf3;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.projectList__search_sort {
+  margin-top: 31px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.projectList__select_filiter {
+  width: 150px;
+  justify-content: flex-end;
+}
+
+.projectList__input {
+  border-radius: 10px;
+  width: 372px;
+  height: 33px;
+  padding-left: 26px;
+  border: none;
+  outline: none;
+}
+
+.projectList__search_icon {
+  position: absolute;
+  left: 3px;
+  margin-top: 7px;
+}
+
+.projectList__select {
+  width: 140px;
+  height: 25px;
+  margin-left: auto;
+}
+
+.projectList__content {
+  padding: 35px;
+  display: flex;
+  flex-direction: column;
+}
+
+.projectList__list {
+  padding-left: 0px;
+  overflow: auto;
+  height: max;
+  margin-right: -35px;
+}
+
+.projectList__list_element {
+  list-style-type: none;
+  display: flex;
+  justify-content: flex-start;
+  margin-right: 15px;
+}
+
+.projectList__button {
+  height: 84px;
+  width: 700px;
+  border-radius: 15px;
+  align-content: end;
+  border: 0px;
+  margin-bottom: 22px;
+  background-color: #b8c5d0;
+  border: none;
+  outline: none;
+}
+
+.projectList__button:focus {
+  background-color: #646a6f;
+}
+
+.projectList__icon {
+  height: 84px;
+  width: 84px;
+  margin-right: 24px;
+  border-radius: 15px;
+}
+
+.projectList__project-details {
+  margin-left: 34px;
+  margin-right: 34px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.projectList_title {
+  width: fit-content;
+  margin-left: 34px;
+  margin-bottom: 7px;
+}
+
+.projectList__tags {
+  margin-left: 25px;
+}
+
+.projectList__add_button {
+  background-color: Transparent;
+  border: none;
+  outline: none;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+
+.projectList__project__info {
+  margin-left: 0.5rem;
+  background-color: #b8c5d0;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.projectList__info_header {
+  text-align: center;
+  margin-top: 25px;
+}
