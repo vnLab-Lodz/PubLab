@@ -1,7 +1,10 @@
 import React from 'react';
 import './Description.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { displayUserData, selectCurrentUser } from '../../../../shared/slices/currentUserSlice';
+import {
+  displayUserData,
+  selectCurrentUser,
+} from '../../../../shared/slices/currentUserSlice';
 import {
   installGatsbyCLI,
   selectGatsbyInstallStatus,
@@ -23,10 +26,20 @@ const Description = () => {
       <button onClick={() => dispatch(installGatsbyCLI())}>
         Install gatsby-cli
       </button>
-      <button onClick={() => dispatch(displayUserData(currentUser.auth.accessToken.value))}>Display user data</button>
-      <p>Welcome <b>{currentUser.data.nick}</b>!</p>
+      <button
+        onClick={() =>
+          dispatch(displayUserData(currentUser.auth.accessToken.value))
+        }
+      >
+        Display user data
+      </button>
+      <p>
+        Welcome <b>{currentUser.data.nick}</b>!
+      </p>
       <img src={currentUser.data.avatar} />
-      <p>Your work in <b>{currentUser.data.company}</b></p>
+      <p>
+        Your work in <b>{currentUser.data.company}</b>
+      </p>
     </div>
   );
 };

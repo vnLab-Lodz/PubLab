@@ -6,9 +6,8 @@ import {
   selectCurrentUser,
 } from '../../../shared/slices/currentUserSlice';
 import LoginComponent from '../LoginComponent/LoginComponent';
-import './UserLogin.scss';
 
-const UserLogin = ({ children }: any) => {
+const Auth = ({ children }: any) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
 
@@ -46,4 +45,4 @@ const UserLogin = ({ children }: any) => {
   );
 };
 
-export default UserLogin;
+export default Auth;

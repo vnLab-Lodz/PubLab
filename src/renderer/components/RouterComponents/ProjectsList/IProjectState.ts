@@ -1,3 +1,4 @@
 export enum State {
-    Cloned, NotCloned
+  Cloned,
+  NotCloned,
 }
