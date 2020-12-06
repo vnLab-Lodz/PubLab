@@ -52,7 +52,7 @@ const initialState: CurrentUser = {
 };
 
 export const authorizeGitHubUserAsync = createAsyncActionMain<boolean>(
-  'currentUser/authWithGitHub',
+  'currentUser/requestAuthCode',
   (silent = false) => {
     return async (dispatch) => {
       dispatch(authStarted());
@@ -64,7 +64,7 @@ export const authorizeGitHubUserAsync = createAsyncActionMain<boolean>(
 );
 
 export const requestAccesTokenAsync = createAsyncActionMain<string>(
-  'auth/github',
+  'currentUser/requestAccessToken',
   (code) => {
     return async (dispatch) => {
       dispatch(tokenRequestStarted());
@@ -86,7 +86,7 @@ export const requestAccesTokenAsync = createAsyncActionMain<string>(
 );
 
 export const fetchUserDataAsync = createAsyncActionMain<string>(
-  'getUser',
+  'currentUser/fetchData',
   (token) => {
     return async (dispatch) => {
       dispatch(fetchUserDataStarted());
