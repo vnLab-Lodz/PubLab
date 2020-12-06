@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Url } from './gitTypes';
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, session } from 'electron';
 
 /**
  * Authorizes GitHub user within an external window
@@ -20,7 +20,7 @@ export function authorizeWithGithub(
   });
 
   authWindow.loadURL(
-    `${Url.AUTHORIZE_URL}?client_id=${clientId}&redirect_uri=${Url.REDIRECT_URI}`
+    `${Url.AUTHORIZE_URL}?client_id=${clientId}&redirect_uri=${Url.REDIRECT_URI}&scope=user%20repo`
   );
   if (!silent) {
     authWindow.show();
@@ -82,3 +82,7 @@ export async function requestAccessToken(
   const { data } = response;
   return data;
 }
+
+export const terminateSession = async (): Promise<void> => {
+  await session.defaultSession.clearStorageData();
+};
