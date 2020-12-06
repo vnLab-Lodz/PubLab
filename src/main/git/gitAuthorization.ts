@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Url } from './gitTypes';
 import { BrowserWindow, session } from 'electron';
+import { appendLog } from '../logger';
 
 /**
  * Authorizes GitHub user within an external window
@@ -20,6 +21,7 @@ export function authorizeWithGithub(
   authWindow.loadURL(
     `${Url.AUTHORIZE_URL}?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${Url.REDIRECT_URI}&scope=user%20repo`
   );
+
   if (!silent) {
     authWindow.show();
   } else {
@@ -56,23 +58,32 @@ export function authorizeWithGithub(
  * @returns object with access_token info or object with error
  */
 export async function requestAccessToken(code: string): Promise<any> {
-  const response = await axios.post(
-    Url.ACCESS_TOKEN_URL,
-    {
-      client_id: process.env.GITHUB_CLIENT_ID,
-      client_secret: process.env.GITHUB_CLIENT_SECRET,
-      code: code,
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+  try {
+    const response = await axios.post(
+      Url.ACCESS_TOKEN_URL,
+      {
+        client_id: process.env.GITHUB_CLIENT_ID,
+        client_secret: process.env.GITHUB_CLIENT_SECRET,
+        code: code,
       },
-    }
-  );
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      }
+    );
 
-  const { data } = response;
-  return data;
+    const { data } = response;
+    return data;
+  } catch (error) {
+    appendLog(
+      `GitHub auth failed with ${error.response.statusText} (${error.response.status})`
+    );
+    appendLog('Check if environmental variables are correctly set up.');
+    appendLog('Request:');
+    appendLog(JSON.stringify(error.response));
+  }
 }
 
 export const terminateSession = async (): Promise<void> => {
