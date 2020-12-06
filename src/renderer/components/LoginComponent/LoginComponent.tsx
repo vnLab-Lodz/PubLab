@@ -12,12 +12,14 @@ const LoginComponent = () => {
       <div>
         <button
           className='button'
-          onClick={dispatch(
-            authorizeGitHubUserAsync({
-              clientId: process.env.GITHUB_CLIENT_ID,
-              silent: false,
-            })
-          )}
+          onClick={() => {
+            dispatch(
+              authorizeGitHubUserAsync({
+                clientId: process.env.GITHUB_CLIENT_ID,
+                silent: false,
+              })
+            );
+          }}
         >
           Login to GitHub <FaGithub />
         </button>
