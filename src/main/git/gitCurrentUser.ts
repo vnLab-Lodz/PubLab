@@ -1,8 +1,6 @@
 import axios from 'axios';
 
-export async function getUserData(token: string) {
-  console.log('TOKEN', token);
-
+export async function fetchUserData(token: string) {
   try {
     const response = await axios.get('https://api.github.com/user', {
       headers: {

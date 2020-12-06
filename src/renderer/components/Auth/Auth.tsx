@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   authorizeGitHubUserAsync,
   AUTH_STATES,
-  fetchUserData,
+  fetchUserDataAsync,
   requestAccesTokenAsync,
   selectCurrentUser,
 } from '../../../shared/slices/currentUserSlice';
@@ -19,24 +19,13 @@ const Auth = ({ children }: any) => {
 
     switch (status) {
       case AUTH_STATES.PRE_AUTHORIZE:
-        dispatch(
-          authorizeGitHubUserAsync({
-            clientId: process.env.GITHUB_CLIENT_ID,
-            silent: true,
-          })
-        );
+        dispatch(authorizeGitHubUserAsync(true));
         break;
       case AUTH_STATES.CODE_REQUESTED:
-        dispatch(
-          requestAccesTokenAsync({
-            clientId: process.env.GITHUB_CLIENT_ID,
-            clientSecret: process.env.GITHUB_CLIENT_SECRET,
-            code: currentUser.auth.code,
-          })
-        );
+        dispatch(requestAccesTokenAsync(currentUser.auth.code));
         break;
       case AUTH_STATES.TOKEN_REQUESTED:
-        dispatch(fetchUserData(currentUser.auth.accessToken.value));
+        dispatch(fetchUserDataAsync(currentUser.auth.accessToken.value));
         break;
     }
   }, [currentUser.status]);

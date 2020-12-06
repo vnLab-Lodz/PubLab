@@ -4,11 +4,9 @@ import { BrowserWindow, session } from 'electron';
 
 /**
  * Authorizes GitHub user within an external window
- * @param clientId client_id from GitHub App
  * @param callback function that is to be executed on authorization success
  */
 export function authorizeWithGithub(
-  clientId: string,
   silent: boolean,
   callback: (response: { code: string; error: any }) => void
 ): void {
@@ -20,7 +18,7 @@ export function authorizeWithGithub(
   });
 
   authWindow.loadURL(
-    `${Url.AUTHORIZE_URL}?client_id=${clientId}&redirect_uri=${Url.REDIRECT_URI}&scope=user%20repo`
+    `${Url.AUTHORIZE_URL}?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${Url.REDIRECT_URI}&scope=user%20repo`
   );
   if (!silent) {
     authWindow.show();
@@ -54,21 +52,15 @@ export function authorizeWithGithub(
 
 /**
  * Requests access_token from GitHub API.
- * @param clientId client_id from GitHub App
- * @param clientSecret client_secret from GitHub App
  * @param code code received from GitHub API authorization
  * @returns object with access_token info or object with error
  */
-export async function requestAccessToken(
-  clientId: string,
-  clientSecret: string,
-  code: string
-): Promise<any> {
+export async function requestAccessToken(code: string): Promise<any> {
   const response = await axios.post(
     Url.ACCESS_TOKEN_URL,
     {
-      client_id: clientId,
-      client_secret: clientSecret,
+      client_id: process.env.GITHUB_CLIENT_ID,
+      client_secret: process.env.GITHUB_CLIENT_SECRET,
       code: code,
     },
     {

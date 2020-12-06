@@ -13,15 +13,10 @@ const LoginComponent = () => {
         <button
           className='button'
           onClick={() => {
-            dispatch(
-              authorizeGitHubUserAsync({
-                clientId: process.env.GITHUB_CLIENT_ID,
-                silent: false,
-              })
-            );
+            dispatch(authorizeGitHubUserAsync(false));
           }}
         >
-          Login to GitHub <FaGithub />
+          Log in with GitHub <FaGithub />
         </button>
       </div>
     </div>

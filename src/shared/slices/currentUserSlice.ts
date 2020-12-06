@@ -6,7 +6,7 @@ import {
 } from '../../main/git/gitAuthorization';
 import { createAsyncActionMain } from '../helpers/createActionMain';
 import { RootState } from '../rootReducer';
-import { getUserData } from '../../main/git/gitCurrentUser';
+import { fetchUserData } from '../../main/git/gitCurrentUser';
 
 export enum AUTH_STATES {
   PRE_AUTHORIZE = 'PRE_AUTHORIZE',
@@ -51,46 +51,46 @@ const initialState: CurrentUser = {
   loading: false,
 };
 
-export const authorizeGitHubUserAsync = createAsyncActionMain<{
-  clientId: string;
-  silent: boolean;
-}>('currentUser/authWithGitHub', ({ clientId, silent = false }) => {
-  return async (dispatch) => {
-    dispatch(authStarted());
-    authorizeWithGithub(clientId, silent, ({ code, error }) => {
-      code ? dispatch(authFulfilled(code)) : dispatch(authRejected(error));
-    });
-  };
-});
+export const authorizeGitHubUserAsync = createAsyncActionMain<boolean>(
+  'currentUser/authWithGitHub',
+  (silent = false) => {
+    return async (dispatch) => {
+      dispatch(authStarted());
+      authorizeWithGithub(silent, ({ code, error }) => {
+        code ? dispatch(authFulfilled(code)) : dispatch(authRejected(error));
+      });
+    };
+  }
+);
 
-export const requestAccesTokenAsync = createAsyncActionMain<{
-  clientId: string;
-  clientSecret: string;
-  code: string;
-}>('auth/github', ({ clientId, clientSecret, code }) => {
-  return async (dispatch) => {
-    dispatch(tokenRequestStarted());
-    const data = await requestAccessToken(clientId, clientSecret, code);
-    if ('access_token' in data) {
-      dispatch(
-        tokenRequestFulfilled({
-          value: data.access_token,
-          type: data.token_type,
-          scope: data.scope,
-        })
-      );
-    } else {
-      dispatch(tokenRequestRejected(data));
-    }
-  };
-});
+export const requestAccesTokenAsync = createAsyncActionMain<string>(
+  'auth/github',
+  (code) => {
+    return async (dispatch) => {
+      dispatch(tokenRequestStarted());
+      const data = await requestAccessToken(code);
 
-export const fetchUserData = createAsyncActionMain<string>(
+      if ('access_token' in data) {
+        dispatch(
+          tokenRequestFulfilled({
+            value: data.access_token,
+            type: data.token_type,
+            scope: data.scope,
+          })
+        );
+      } else {
+        dispatch(tokenRequestRejected(data));
+      }
+    };
+  }
+);
+
+export const fetchUserDataAsync = createAsyncActionMain<string>(
   'getUser',
   (token) => {
     return async (dispatch) => {
       dispatch(fetchUserDataStarted());
-      const data = await getUserData(token);
+      const data = await fetchUserData(token);
 
       if (data) {
         dispatch(fetchUserDataFulfilled(data));
