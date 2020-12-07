@@ -7,6 +7,7 @@ import {
 } from '../../../shared/slices/currentViewSlice';
 import './NavigationBar.scss';
 import { Views } from '../../constants/VIEWS';
+import { terminateSessionAsync } from '../../../shared/slices/currentUserSlice';
 
 const TOP_BUTTONS: Views[] = [
   Views.PROJECT,
@@ -64,7 +65,7 @@ const NavigationBar = () => {
         {renderListOfButtons(BOTTOM_BUTTONS)}
         <button
           className='navbar__button'
-          onClick={() => console.log('TODO: implement logout')}
+          onClick={() => dispatch(terminateSessionAsync())}
         >
           <div className='navbar__button__icon'>L</div>
           <span className='navbar__button__text'>Log out</span>
