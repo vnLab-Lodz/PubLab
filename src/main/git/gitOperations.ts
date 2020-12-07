@@ -93,7 +93,7 @@ export function createBranch(dir: string, name: string): void {
     })
 
     // git push origin <branch-name>
-    push(dir, name)
+    //push(dir, name)
 }
 
 /**
@@ -202,22 +202,29 @@ export function publish(): void {
 
     const file = {filename: 'test.txt', path: 'C:\\Users\\anton\\Desktop'};
 
-
+/*
     fs.writeFile(file.path + '/' + file.filename, 'utf8', <NoParamCallback>function (err: any, result: any) {
         if (err) console.log('error', err);
         else {
             console.log('git adding:');
-            git.add({fs, dir: file.path, filepath: file.filename})
-                .then(() => console.log('Git added.'))
-                .catch((e: any) => console.error('Error: ' + e))
+
         }
-    });
+    });*/
+    git.add({fs, dir: file.path, filepath: file.filename})
+        .then(() => console.log('Git added.'))
+        .catch((e: any) => console.error('Error: ' + e))
+
 
     let sha = git.commit({
         fs,
-        dir: 'C:\\Users\\anton\\Desktop',
-        message: 'Added the a.txt file'
+        dir: "/home/aleksander/Desktop/asd",
+        author: {
+            name: 'Mr. Test',
+            email: 'mrtest@example.com',
+        },
+        message: 'message'
     });
     console.log(sha);
+    push("/home/aleksander/Desktop/asd", "red2123t12or12", token)
 }
 
