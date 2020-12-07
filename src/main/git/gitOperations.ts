@@ -1,6 +1,7 @@
 import axios from "axios";
 import {Author, BranchNames, Repository, WEB_PUB_REPO_NAME} from "./gitTypes";
 import {File} from "./gitTypes";
+import {Octokit} from "@octokit/rest";
 import {Simulate} from "react-dom/test-utils";
 import error = Simulate.error;
 import {NoParamCallback} from "fs";
@@ -8,6 +9,9 @@ import {NoParamCallback} from "fs";
 const git = require('isomorphic-git')
 const http = require('isomorphic-git/http/node')
 const fs = require('fs')
+const octokit = new Octokit({
+    auth: '0bddffbf30f6d1a756979ae7390de728f58ca284',
+})
 
 /**
  * return array of objects with name of repository, author of repository and url to repository
@@ -214,5 +218,13 @@ export function publish(): void {
     addFile(file);
     commit("C:\\Users\\anton\\Desktop", {name: 'Mr. Test', email: 'email@email.com'}, 'good evening');
     push("C:\\Users\\anton\\Desktop", token);
+}
+
+export async function addCollaborator(owner: string, repo: string, username: string): Promise<void> {
+    octokit.repos.addCollaborator({
+        owner,
+        repo,
+        username,
+    });
 }
 

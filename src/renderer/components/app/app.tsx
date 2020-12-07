@@ -6,9 +6,9 @@ import { Provider } from 'react-redux';
 import { configStore } from '../../../shared/configureStore';
 import {postAccessToken, authorizeWithGithub} from "../../../main/git/gitAuthorization";
 import ReadOnlyDict = NodeJS.ReadOnlyDict;
-import {clone, publish} from "../../../main/git/gitOperations";
-import { createBranch, getUserRepositories} from "../../../main/git/gitOperations";
-import {createFoldersInDirectory} from "../../../main/git/gitWebPublication";
+import { createBranch, getUserRepositories, push} from "../../../main/git/gitOperations";
+import {createFoldersInDirectory, createProject} from "../../../main/git/gitWebPublication";
+import {addCollaborator, clone, publish} from "../../../main/git/gitOperations";
 require('dotenv').config();
 
 console.log(process.env);
@@ -45,6 +45,7 @@ class App extends React.Component <AppProps>{
                 <button onClick={()=>createBranch("/home/aleksander/Desktop/asd", "redaktor", "asdasdsa")}> branch </button>
                 <button onClick={()=>clone("C:/vnlab-tool", "https://github.com/jedrekszor/vnlab-test")}> Clone Jędrek</button>
                 <button onClick={()=>publish()}> Publish </button>
+                <button onClick={()=>addCollaborator("jedrekszor", "vnlab-test", "emiliamarkowska")}>Add collaborator</button>
                 <button onClick={()=>createFoldersInDirectory("C:/Users/Admin/Desktop/gunwo")}> Gunwo </button>
                 <Description />
             </Provider>
