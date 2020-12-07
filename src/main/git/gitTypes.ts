@@ -17,7 +17,12 @@ export enum Url {
 
 export enum EndPointParameters {
     CLIENT_ID = "client_id",
-    REDIRECT_URI ="redirect_uri"
+    REDIRECT_URI ="redirect_uri",
+    SCOPE = "scope"
+}
+
+export enum ScopeParamValues {
+    REPO = "repo"
 }
 
 export enum BranchNames {

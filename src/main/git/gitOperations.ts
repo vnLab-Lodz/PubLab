@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 import {BranchNames, Repository, WEB_PUB_REPO_NAME} from "./gitTypes";
 import {File} from "./gitTypes";
 import {Octokit} from "@octokit/rest";
@@ -39,7 +39,7 @@ export function getUserRepositories(accessToken: string): Repository[] {
  * @param repoName - name of the repository
  * @param description - description of repository(optional)
  */
-export function createNewRepository(accessToken: string, repoName: string, description?: string): void {
+export function createNewRepository(accessToken: string, repoName: string, description?: string ) : any {
     axios({
         method: 'POST',
         headers: {
@@ -57,7 +57,7 @@ export function createNewRepository(accessToken: string, repoName: string, descr
             "has_wiki": true
         }
     }).then(data => {
-        console.log(data);
+        return data;
     });
 }
 
