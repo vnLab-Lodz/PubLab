@@ -9,6 +9,11 @@ export interface File {
     path: string
 }
 
+export interface Author {
+    name: string,
+    email: string
+}
+
 export enum Url {
     REDIRECT_URI = "http://localhost:3000/main_window",
     AUTHORIZE_URL = "https://github.com/login/oauth/authorize",

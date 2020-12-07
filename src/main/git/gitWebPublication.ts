@@ -12,6 +12,7 @@ export function createFoldersInDirectory(projectDirectory : string) : void {
 
 export async function createProject(accessToken: string, repoName: string, projectDirectory: string, description?: string) {
     let responseData = await createNewRepository(accessToken, repoName, description);
+    console.log(responseData);
     process.chdir(projectDirectory);
     createFoldersInDirectory(projectDirectory);
     clone(projectDirectory, responseData.data.clone_url, accessToken)
