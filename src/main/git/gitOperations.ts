@@ -205,9 +205,10 @@ function push(dir: string, accessToken: string): void {
         .catch((error: any) => console.error('(git commit) Error: ' + error));
 }
 
+
+
 export function publish(): void {
     const token = '';
-
     const file = {filename: 'test.txt', path: 'C:\\Users\\anton\\Desktop'};
     addFile(file);
     commit("C:\\Users\\anton\\Desktop", {name: 'Mr. Test', email: 'email@email.com'}, 'good evening');
