@@ -95,7 +95,7 @@ export async function getRemoteBranches(dir: string) {
 }
 
 /**
- * creates new branch
+ * creates new branch locally and push it to repository
  * @param dir - path to directory with project
  * @param name - name of the branch
  * @param accessToken
@@ -111,19 +111,6 @@ export async function createBranch(dir: string, name: string, accessToken: strin
     console.log(pushResult)
 }
 
-/**
- *
- * @param accessToken
- * @param repoName
- * @param dir
- * @param description
- */
-export function createNewProject(accessToken: string, repoName: string, dir: string, description?: string): void {
-    createNewRepository(accessToken, repoName, description)
-    createBranch(dir, BranchNames.PROGRAMISTA, accessToken)
-    createBranch(dir, BranchNames.REDAKTOR_MAIN, accessToken)
-    createBranch(dir, BranchNames.REDAKTOR_SLAVE + "1", accessToken)
-}
 
 //Checkout
 
@@ -182,7 +169,6 @@ function removeFiles(files: File[]): void {
 }
 
 //OK Commit
-
 /**
  * Performs commit from local repository
  * @param dir - Current working directory (From which command will be executed)
@@ -205,7 +191,7 @@ function commit(dir: string, author: Author, message: string): void {
 
 //OK Push
 /**
- * Performs push pn remote repository
+ * Performs push on remote repository
  * @param dir - Current working directory (From which command will be executed)
  * @param accessToken - Authentication access token
  */
