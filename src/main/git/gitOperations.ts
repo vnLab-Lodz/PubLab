@@ -191,5 +191,8 @@ function push(dir: string, branchName: string, accessToken: string): void {
 }
 
 export function publish(): void {
+    const token = '153fa32f5f56b517a1b370fa395ee8ee25e13374';
 
+    const file = new File("C:\\Users\\anton\\Desktop", 'test.txt');
+    addFile(file);
 }
