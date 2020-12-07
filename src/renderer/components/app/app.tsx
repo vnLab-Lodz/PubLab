@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { configStore } from '../../../shared/configureStore';
 import {postAccessToken, authorizeWithGithub} from "../../../main/git/gitAuthorization";
 import ReadOnlyDict = NodeJS.ReadOnlyDict;
-import { createBranch, getUserRepositories, push} from "../../../main/git/gitOperations";
+import {createBranch, getUserRepositories, listCollaborators, push} from "../../../main/git/gitOperations";
 import {createFoldersInDirectory, createProject} from "../../../main/git/gitWebPublication";
 import {addCollaborator, clone, publish} from "../../../main/git/gitOperations";
 require('dotenv').config();
@@ -47,6 +47,7 @@ class App extends React.Component <AppProps>{
                 <button onClick={()=>publish()}> Publish </button>
                 <button onClick={()=>addCollaborator("jedrekszor", "vnlab-test", "emiliamarkowska")}>Add collaborator</button>
                 <button onClick={()=>createFoldersInDirectory("C:/Users/Admin/Desktop/gunwo")}> Gunwo </button>
+                <button onClick={()=>listCollaborators("jedrekszor", "vnlab-test")}>list collaborators</button>
                 <Description />
             </Provider>
         );

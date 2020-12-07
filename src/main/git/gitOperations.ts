@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 import {Author, BranchNames, Repository, WEB_PUB_REPO_NAME} from "./gitTypes";
 import {File} from "./gitTypes";
 import {Octokit} from "@octokit/rest";
@@ -10,7 +10,7 @@ const git = require('isomorphic-git')
 const http = require('isomorphic-git/http/node')
 const fs = require('fs')
 const octokit = new Octokit({
-    auth: '0bddffbf30f6d1a756979ae7390de728f58ca284',
+    auth: '2b16c63d908a87d69b8df96b655f693304865cb6',
 })
 
 /**
@@ -220,7 +220,7 @@ export function publish(): void {
     push("C:\\Users\\anton\\Desktop", token);
 }
 
-export async function addCollaborator(owner: string, repo: string, username: string): Promise<void> {
+export function addCollaborator(owner: string, repo: string, username: string): void {
     octokit.repos.addCollaborator({
         owner,
         repo,
@@ -228,3 +228,25 @@ export async function addCollaborator(owner: string, repo: string, username: str
     });
 }
 
+export function removeCollaborator(owner: string, repo: string, username: string): void {
+    octokit.repos.removeCollaborator({
+        owner,
+        repo,
+        username,
+    })
+}
+
+export async function listCollaborators(owner: string, repo: string): Promise<string[]> {
+    const collaborators: string[] = [];
+    octokit.repos.listCollaborators({
+        owner,
+        repo,
+    })
+        .then(data => {
+            data.data.forEach((collaborator: any) => {
+                collaborators.push(collaborator.login)
+            })
+        })
+    console.log(collaborators)
+    return collaborators;
+}
