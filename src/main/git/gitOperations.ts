@@ -1,5 +1,5 @@
 import axios from "axios";
-import {BranchNames, Repository, WEB_PUB_REPO_NAME} from "./gitTypes";
+import {Author, BranchNames, Repository, WEB_PUB_REPO_NAME} from "./gitTypes";
 import {File} from "./gitTypes";
 import {Simulate} from "react-dom/test-utils";
 import error = Simulate.error;
@@ -122,109 +122,95 @@ function checkout(branchDir: string, branchName: string) {
         .catch(() => console.log('Error occurred while performing checkout to ' + branchName));
 }
 
-//Adding file(s)
+//OK Adding file(s)
 
+/**
+ * Adds single file locally
+ * @param file - File passed to be added locally
+ */
 function addFile(file: File): void {
-
-    fs.readFile(file.path + '/' + file.filename, function () {
-        git.add({
-            fs,
-            dir: file.path,
-            filepath: file.filename
-        })
-            .then(() => console.log('File ' + file.filename + ' successfully added'))
-            .catch((e: any) => console.log('Error occurred while adding ' + file.filename + '\n' + e));
-    });
+    git.add({fs, dir: file.path, filepath: file.filename})
+        .then(() => console.log('(git remove) Ok: ' + file.filename))
+        .catch((error: any) => console.error('(git remove) Error: ' + error));
 }
 
+/**
+ * Adds multiple files loccally
+ * @param files - Array of the files needed to be added locally.
+ */
 function addFiles(files: File[]): void {
     files.forEach(file => {
         addFile(file);
     });
 }
 
-//Removing file(s)
+//OK Removing file(s)
 
+/**
+ * Removes single file locally
+ * @param file - File passed to be removed locally
+ */
 function removeFile(file: File): void {
-
-    fs.readFile(file.path + '/' + file.filename, function () {
-        git.remove({
-            fs,
-            dir: file.path,
-            filepath: file.filename
-        })
-            .then(() => console.log('File ' + file.filename + ' successfully removed'))
-            .catch(() => console.log('Error occurred while removing ' + file.filename));
-    });
+    git.remove({fs, dir: file.path, filepath: file.filename})
+        .then(() => console.log('(git add) Ok: ' + file.filename))
+        .catch((error: any) => console.error('(git add) Error: ' + error));
 }
 
+/**
+ * Removes multiple files locally
+ * @param files - Array of the files needed to be removed locally.
+ */
 function removeFiles(files: File[]): void {
     files.forEach(file => {
         removeFile(file);
     });
 }
 
-//Commit
+//OK Commit
 
-function commit(branchName: string, file: File, author: string, message: string): void {
+/**
+ * Performs commit from local repository
+ * @param dir - Current working directory (From which command will be executed)
+ * @param author - Author of the commit
+ * @param message - Message of the commit
+ */
+function commit(dir: string, author: Author, message: string): void {
     git.commit({
         fs,
-        ref: branchName,
-        dir: file.path,
+        dir: dir,
         author: {
-            name: author,
-        },
-        committer: {
-            name: author,
+            name: author.name,
+            email: author.email,
         },
         message: message
     })
-        .then((r: string) => console.log('Commit successfully performed: ' + r))
-        .catch(() => console.log('Error occurred while removing ' + file.filename));
+        .then(() => console.log('(git commit) OK'))
+        .catch((error: any) => console.error('(git commit) Error: ' + error));
 }
 
-//Push
-
-function push(dir: string, branchName: string, accessToken: string): void {
+//OK Push
+/**
+ * Performs push pn remote repository
+ * @param dir - Current working directory (From which command will be executed)
+ * @param accessToken - Authentication access token
+ */
+function push(dir: string, accessToken: string): void {
     git.push({
         fs,
         http,
         dir: dir,
-        ref: branchName,
         onAuth: () => ({username: accessToken})
     })
-        .then(() => console.log('Push successfully performed'))
-        .catch(() => console.log('Error occurred while performing push on ' + branchName));
+        .then(() => console.log('(git push) OK'))
+        .catch((error: any) => console.error('(git commit) Error: ' + error));
 }
 
 export function publish(): void {
-    const token = '153fa32f5f56b517a1b370fa395ee8ee25e13374';
+    const token = '';
 
     const file = {filename: 'test.txt', path: 'C:\\Users\\anton\\Desktop'};
-
-/*
-    fs.writeFile(file.path + '/' + file.filename, 'utf8', <NoParamCallback>function (err: any, result: any) {
-        if (err) console.log('error', err);
-        else {
-            console.log('git adding:');
-
-        }
-    });*/
-    git.add({fs, dir: file.path, filepath: file.filename})
-        .then(() => console.log('Git added.'))
-        .catch((e: any) => console.error('Error: ' + e))
-
-
-    let sha = git.commit({
-        fs,
-        dir: "/home/aleksander/Desktop/asd",
-        author: {
-            name: 'Mr. Test',
-            email: 'mrtest@example.com',
-        },
-        message: 'message'
-    });
-    console.log(sha);
-    push("/home/aleksander/Desktop/asd", "red2123t12or12", token)
+    addFile(file);
+    commit("C:\\Users\\anton\\Desktop", {name: 'Mr. Test', email: 'email@email.com'}, 'good evening');
+    push("C:\\Users\\anton\\Desktop", token);
 }
 
