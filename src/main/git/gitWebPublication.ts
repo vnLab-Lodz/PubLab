@@ -1,4 +1,4 @@
-import {clone, createNewRepository} from "./gitOperations";
+import {addCollaborators, clone, createNewRepository} from "./gitOperations";
 
 const fs = require('fs');
 const path = require('path');
@@ -10,10 +10,15 @@ export function createFoldersInDirectory(projectDirectory : string) : void {
 }
 
 
-export async function createProject(accessToken: string, repoName: string, projectDirectory: string, description?: string) {
+export async function createProject(accessToken: string,
+                                    repoName: string,
+                                    projectDirectory: string,
+                                    collaborators : string[],
+                                    description?: string) {
     let responseData = await createNewRepository(accessToken, repoName, description);
-    console.log(responseData);
-    process.chdir(projectDirectory);
+    addCollaborators(accessToken, responseData.data.owner.login, responseData.data.name, collaborators);
+    //TODO: place for adding collaborators in configuration file, collaborators : string[] will have to be changed to the type containing name and role
     createFoldersInDirectory(projectDirectory);
     clone(projectDirectory, responseData.data.clone_url, accessToken)
+    //TODO: git add, git commit, git push here <----
 }

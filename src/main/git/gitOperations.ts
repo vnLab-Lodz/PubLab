@@ -9,7 +9,7 @@ import {NoParamCallback} from "fs";
 const git = require('isomorphic-git')
 const http = require('isomorphic-git/http/node')
 const fs = require('fs')
-const octokit = new Octokit({
+let octokit = new Octokit({
     auth: '2b16c63d908a87d69b8df96b655f693304865cb6',
 })
 
@@ -222,12 +222,19 @@ export function publish(): void {
     push("C:\\Users\\anton\\Desktop", token);
 }
 
-export function addCollaborator(owner: string, repo: string, username: string): void {
+export function addCollaborator(accessToken :string, owner: string, repo: string, username: string): void {
+    let octokit = new Octokit({
+        auth: accessToken
+    })
     octokit.repos.addCollaborator({
         owner,
         repo,
         username,
     });
+}
+
+export function addCollaborators(accessToken : string, owner : string, repo: string, usernames: string[]) {
+    usernames.forEach((username : string) => addCollaborator(accessToken, owner, repo, username))
 }
 
 export function removeCollaborator(owner: string, repo: string, username: string): void {
@@ -244,7 +251,7 @@ export async function listCollaborators(owner: string, repo: string): Promise<st
         owner,
         repo,
     })
-        .then(data => {
+        .then((data : any) => {
             data.data.forEach((collaborator: any) => {
                 collaborators.push(collaborator.login)
             })
