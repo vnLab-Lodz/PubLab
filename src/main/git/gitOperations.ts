@@ -80,20 +80,35 @@ export function clone(dir: string, url: string): void {
 }
 
 /**
+ * Get list of local branches
+ *
+ */
+export async function getLocalBranches(dir: string) {
+    return await git.listBranches({fs, dir: dir })
+}
+
+/**
+ * Get list of remote branches
+ */
+export async function getRemoteBranches(dir: string) {
+    return await git.listBranches({fs, dir: dir, remote: 'origin'})
+}
+
+/**
  * creates new branch
  * @param dir - path to directory with project
  * @param name - name of the branch
+ * @param accessToken
  */
-export function createBranch(dir: string, name: string): void {
-    git.branch({
+export async function createBranch(dir: string, name: string, accessToken: string) {
+    await git.branch({ fs, dir: dir, ref: name, checkout: true })
+    let pushResult = await git.push({
         fs,
-        dir,
-        corsProxy: 'https://cors.isomorphic-git.org',
-        ref: name
+        http,
+        dir: dir,
+        onAuth: () => ({ username: accessToken}),
     })
-
-    // git push origin <branch-name>
-    push(dir, name)
+    console.log(pushResult)
 }
 
 /**
@@ -105,9 +120,9 @@ export function createBranch(dir: string, name: string): void {
  */
 export function createNewProject(accessToken: string, repoName: string, dir: string, description?: string): void {
     createNewRepository(accessToken, repoName, description)
-    createBranch(dir, BranchNames.PROGRAMISTA)
-    createBranch(dir, BranchNames.REDAKTOR_MAIN)
-    createBranch(dir, BranchNames.REDAKTOR_SLAVE + "1")
+    createBranch(dir, BranchNames.PROGRAMISTA, accessToken)
+    createBranch(dir, BranchNames.REDAKTOR_MAIN, accessToken)
+    createBranch(dir, BranchNames.REDAKTOR_SLAVE + "1", accessToken)
 }
 
 //Checkout
@@ -173,13 +188,16 @@ function commit(branchName: string, file: File, author: string, message: string)
 
 //Push
 
-function push(dir: string, branchName: string): void {
+export function push(dir: string, branchName: string, accessToken: string): void {
     git.push({
         fs,
         http,
         dir: dir,
         ref: branchName,
+        onAuth: () => ({username: accessToken})
     })
+        .then(() => console.log('Push successfully performed'))
+        .catch(() => console.log('Error occurred while performing push on ' + branchName));
 }
 
 export function publish(): void {
