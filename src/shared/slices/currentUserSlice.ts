@@ -2,10 +2,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   authorizeWithGithub,
   requestAccessToken,
+  terminateSession,
 } from '../../main/git/gitAuthorization';
 import { createAsyncActionMain } from '../helpers/createActionMain';
 import { RootState } from '../rootReducer';
-import { getUserData } from '../../main/git/gitCurrentuser';
+import { fetchUserData } from '../../main/git/gitCurrentUser';
+
+export enum AUTH_STATES {
+  PRE_AUTHORIZE = 'PRE_AUTHORIZE',
+  CODE_REQUESTED = 'CODE_REQUESTED',
+  TOKEN_REQUESTED = 'TOKEN_REQUESTED',
+  AUTH_FAILED = 'AUTH_FAILED',
+  AUTHED = 'AUTHED',
+}
 
 type AccessToken = {
   value: string;
@@ -20,71 +29,84 @@ type CurrentUserData = {
 };
 
 type CurrentUser = {
-  data: CurrentUserData;
+  data: CurrentUserData | null;
   auth: {
     code: string | null;
     accessToken: AccessToken | null;
     error: any;
-    attempted: { code: boolean; token: boolean };
   };
+  status: AUTH_STATES;
+
   loading: boolean;
 };
 
 const initialState: CurrentUser = {
-  data: {
-    nick: '',
-    avatar: '',
-    company: '',
-  },
+  data: null,
   auth: {
     code: null,
     accessToken: null,
     error: null,
-    attempted: { code: false, token: false },
   },
+  status: AUTH_STATES.PRE_AUTHORIZE,
   loading: false,
 };
 
-export const authorizeGitHubUserAsync = createAsyncActionMain<{
-  clientId: string;
-  silent: boolean;
-}>('currentUser/authWithGitHub', ({ clientId, silent = false }) => {
-  return async (dispatch) => {
-    dispatch(authStarted());
-    authorizeWithGithub(clientId, silent, ({ code, error }) => {
-      code ? dispatch(authFulfilled(code)) : dispatch(authRejected(error));
-    });
-  };
-});
+export const authorizeGitHubUserAsync = createAsyncActionMain<boolean>(
+  'currentUser/requestAuthCode',
+  (silent = false) => {
+    return async (dispatch) => {
+      dispatch(authStarted());
+      authorizeWithGithub(silent, ({ code, error }) => {
+        code ? dispatch(authFulfilled(code)) : dispatch(authRejected(error));
+      });
+    };
+  }
+);
 
-export const requestAccesTokenAsync = createAsyncActionMain<{
-  clientId: string;
-  clientSecret: string;
-  code: string;
-}>('auth/github', ({ clientId, clientSecret, code }) => {
-  return async (dispatch) => {
-    dispatch(tokenRequestStarted());
-    const data = await requestAccessToken(clientId, clientSecret, code);
-    if ('access_token' in data) {
-      dispatch(
-        tokenRequestFulfiled({
-          value: data.access_token,
-          type: data.token_type,
-          scope: data.scope,
-        })
-      );
-    } else {
-      dispatch(tokenRequestRejected(data));
-    }
-  };
-});
+export const requestAccesTokenAsync = createAsyncActionMain<string>(
+  'currentUser/requestAccessToken',
+  (code) => {
+    return async (dispatch) => {
+      dispatch(tokenRequestStarted());
+      const data = await requestAccessToken(code);
 
-export const displayUserData = createAsyncActionMain<string>(
-  'getUser',
+      if ('access_token' in data) {
+        dispatch(
+          tokenRequestFulfilled({
+            value: data.access_token,
+            type: data.token_type,
+            scope: data.scope,
+          })
+        );
+      } else {
+        dispatch(tokenRequestRejected(data));
+      }
+    };
+  }
+);
+
+export const fetchUserDataAsync = createAsyncActionMain<string>(
+  'currentUser/fetchData',
   (token) => {
     return async (dispatch) => {
-      const data = await getUserData(token);
-      dispatch(userLoggedIn(data));
+      dispatch(fetchUserDataStarted());
+      const data = await fetchUserData(token);
+
+      if (data) {
+        dispatch(fetchUserDataFulfilled(data));
+      } else {
+        dispatch(fetchUserDataRejected());
+      }
+    };
+  }
+);
+
+export const terminateSessionAsync = createAsyncActionMain<void>(
+  'currentUser/terminateSession',
+  () => {
+    return async (dispatch) => {
+      await terminateSession();
+      dispatch(terminateSessionFulfilled());
     };
   }
 );
@@ -99,37 +121,61 @@ const currentUserSlice = createSlice({
     authFulfilled: (state: CurrentUser, action: PayloadAction<string>) => {
       state.loading = false;
       state.auth.code = action.payload;
-      state.auth.attempted.code = true;
+      state.status = AUTH_STATES.CODE_REQUESTED;
     },
     authRejected: (state: CurrentUser, action: PayloadAction<any>) => {
       state.loading = false;
       state.auth.error = action.payload;
-      state.auth.attempted.code = true;
+      state.status = AUTH_STATES.AUTH_FAILED;
     },
     tokenRequestStarted: (state: CurrentUser) => {
       state.loading = true;
     },
-    tokenRequestFulfiled: (
+    tokenRequestFulfilled: (
       state: CurrentUser,
       action: PayloadAction<AccessToken>
     ) => {
       state.loading = false;
       state.auth.accessToken = action.payload;
       state.auth.error = null;
-      state.auth.attempted.token = true;
+      state.status = AUTH_STATES.TOKEN_REQUESTED;
     },
     tokenRequestRejected: (state: CurrentUser, action: PayloadAction<any>) => {
       state.loading = false;
       state.auth.error = action.payload;
-      state.auth.attempted.token = true;
+      state.status = AUTH_STATES.AUTH_FAILED;
     },
-    userLoggedIn: (
+    fetchUserDataStarted: (state: CurrentUser) => {
+      state.loading = true;
+    },
+    fetchUserDataFulfilled: (
       state: CurrentUser,
       action: PayloadAction<CurrentUserData>
     ) => {
-      state.data.nick = action.payload.nick;
-      state.data.avatar = action.payload.avatar;
-      state.data.company = action.payload.company;
+      state.loading = false;
+      state.data = {
+        nick: action.payload.nick,
+        avatar: action.payload.avatar,
+        company: action.payload.company,
+      };
+      state.status = AUTH_STATES.AUTHED;
+    },
+    fetchUserDataRejected: (state: CurrentUser) => {
+      state.loading = false;
+    },
+    terminateSessionFulfilled: () => {
+      const resetState = {
+        ...initialState,
+        auth: {
+          ...initialState.auth,
+          attempted: {
+            code: true,
+            token: true,
+          },
+        },
+      };
+
+      return resetState as CurrentUser;
     },
   },
 });
@@ -139,9 +185,12 @@ export const {
   authFulfilled,
   authRejected,
   tokenRequestStarted,
-  tokenRequestFulfiled,
+  tokenRequestFulfilled,
   tokenRequestRejected,
-  userLoggedIn,
+  fetchUserDataStarted,
+  fetchUserDataFulfilled,
+  fetchUserDataRejected,
+  terminateSessionFulfilled,
 } = currentUserSlice.actions;
 
 export const selectCurrentUser = (state: RootState) => state.currentUser;
