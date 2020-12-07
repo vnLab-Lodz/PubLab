@@ -1,6 +1,9 @@
 import axios, {AxiosResponse} from "axios";
 import {BranchNames, Repository, WEB_PUB_REPO_NAME} from "./gitTypes";
 import {File} from "./gitTypes";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
+import {NoParamCallback} from "fs";
 
 const git = require('isomorphic-git')
 const http = require('isomorphic-git/http/node')
@@ -21,7 +24,7 @@ export function getUserRepositories(accessToken: string): Repository[] {
     }).then(data => {
         console.log(data)
         data.data.forEach((repo: any) => {
-            if(repo.name.indexOf(WEB_PUB_REPO_NAME) !== -1) {
+            if (repo.name.indexOf(WEB_PUB_REPO_NAME) !== -1) {
                 repositories.push({name: repo.name, author: repo.owner.login, url: repo.url} as Repository)
             }
         })
@@ -130,18 +133,22 @@ function checkout(branchDir: string, branchName: string) {
         dir: branchDir,
         ref: branchName
     })
+        .then(() => console.log('Successfully checked out to ' + branchName))
+        .catch(() => console.log('Error occurred while performing checkout to ' + branchName));
 }
 
 //Adding file(s)
 
 function addFile(file: File): void {
-    fs.promises.writeFile(file.path + '/' + file.filename).then(() => {
+
+    fs.readFile(file.path + '/' + file.filename, function () {
         git.add({
             fs,
             dir: file.path,
             filepath: file.filename
         })
-        console.log('done');
+            .then(() => console.log('File ' + file.filename + ' successfully added'))
+            .catch((e: any) => console.log('Error occurred while adding ' + file.filename + '\n' + e));
     });
 }
 
@@ -154,12 +161,16 @@ function addFiles(files: File[]): void {
 //Removing file(s)
 
 function removeFile(file: File): void {
-    git.remove({
-        fs,
-        dir: file.path,
-        filepath: file.filename
+
+    fs.readFile(file.path + '/' + file.filename, function () {
+        git.remove({
+            fs,
+            dir: file.path,
+            filepath: file.filename
+        })
+            .then(() => console.log('File ' + file.filename + ' successfully removed'))
+            .catch(() => console.log('Error occurred while removing ' + file.filename));
     });
-    console.log('done');
 }
 
 function removeFiles(files: File[]): void {
@@ -178,14 +189,18 @@ function commit(branchName: string, file: File, author: string, message: string)
         author: {
             name: author,
         },
+        committer: {
+            name: author,
+        },
         message: message
-    });
-    console.log('done');
+    })
+        .then((r: string) => console.log('Commit successfully performed: ' + r))
+        .catch(() => console.log('Error occurred while removing ' + file.filename));
 }
 
 //Push
 
-export function push(dir: string, branchName: string, accessToken: string): void {
+function push(dir: string, branchName: string, accessToken: string): void {
     git.push({
         fs,
         http,
@@ -198,5 +213,33 @@ export function push(dir: string, branchName: string, accessToken: string): void
 }
 
 export function publish(): void {
-    addFile({path: '', filename: ''})
+    const token = '153fa32f5f56b517a1b370fa395ee8ee25e13374';
+
+    const file = {filename: 'test.txt', path: 'C:\\Users\\anton\\Desktop'};
+
+/*
+    fs.writeFile(file.path + '/' + file.filename, 'utf8', <NoParamCallback>function (err: any, result: any) {
+        if (err) console.log('error', err);
+        else {
+            console.log('git adding:');
+
+        }
+    });*/
+    git.add({fs, dir: file.path, filepath: file.filename})
+        .then(() => console.log('Git added.'))
+        .catch((e: any) => console.error('Error: ' + e))
+
+
+    let sha = git.commit({
+        fs,
+        dir: "/home/aleksander/Desktop/asd",
+        author: {
+            name: 'Mr. Test',
+            email: 'mrtest@example.com',
+        },
+        message: 'message'
+    });
+    console.log(sha);
+    push("/home/aleksander/Desktop/asd", "red2123t12or12", token)
 }
+
