@@ -1,12 +1,13 @@
 .wrapper {
   display: grid;
-  grid-template-columns: auto 1fr 1fr;
+  grid-template-columns: auto minmax(40vw, 1fr) minmax(40vw, 1fr);
   grid-column-gap: 0.5rem;
   height: 100%;
-  margin: 0.5rem;
+  box-sizing: border-box;
+  padding: 0.5rem;
 
   > * {
-    height: calc(100% - 1rem);
+    height: 100%;
     box-sizing: border-box;
   }
 }

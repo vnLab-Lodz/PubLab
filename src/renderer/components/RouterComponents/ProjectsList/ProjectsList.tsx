@@ -1,20 +1,24 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Select from 'react-select';
-import { IProject } from './IProject';
-import { State } from './IProjectState';
+import {IProject} from './IProject';
+import {State} from './IProjectState';
 import add_icon from './add_circle-24px.svg';
 import article_icon from './article-24px.svg';
 import lupka from './search-24px.svg';
 
 import './ProjectsList.scss';
+import {formatDate} from "../../../utils/formatDate";
+import {updateSubview} from '../../../../shared/slices/currentViewSlice';
+import {Subviews} from "../../../constants/Views";
+import {useDispatch} from "react-redux";
 
-const project: IProject[] = [
+const projects: IProject[] = [
   {
     id: 0,
     image: article_icon,
     name: 'Jaś i Małgosia',
-    date_creation: new Date(2018, 10, 31),
-    date_edition: new Date(2018, 10, 31),
+    date_creation: new Date(2018, 10, 31).toString(),
+    date_edition: new Date(2018, 10, 31).toString(),
     tags: ['TAG A', 'TAG B'],
     state: State.Cloned,
     last_modified_by: '',
@@ -26,8 +30,8 @@ const project: IProject[] = [
     id: 1,
     image: article_icon,
     name: 'Epoka Lodowcowa',
-    date_creation: new Date(2018, 12, 31),
-    date_edition: new Date(2018, 10, 31),
+    date_creation: new Date(2018, 12, 31).toString(),
+    date_edition: new Date(2018, 10, 31).toString(),
     tags: ['TAG C', 'TAG A', 'TAG D'],
     state: State.Cloned,
     last_modified_by: '',
@@ -39,8 +43,8 @@ const project: IProject[] = [
     id: 2,
     image: article_icon,
     name: 'Kraina Lodu',
-    date_creation: new Date(1998, 2, 31),
-    date_edition: new Date(2018, 10, 31),
+    date_creation: new Date(1998, 2, 31).toString(),
+    date_edition: new Date(2018, 10, 31).toString(),
     tags: ['TAG C', 'TAG A', 'TAG D'],
     state: State.Cloned,
     last_modified_by: '',
@@ -52,8 +56,8 @@ const project: IProject[] = [
     id: 3,
     image: article_icon,
     name: 'Kraina Lodu',
-    date_creation: new Date(1999, 3, 31),
-    date_edition: new Date(2018, 10, 31),
+    date_creation: new Date(1999, 3, 31).toString(),
+    date_edition: new Date(2018, 10, 31).toString(),
     tags: ['TAG C', 'TAG A', 'TAG D'],
     state: State.Cloned,
     last_modified_by: '',
@@ -65,8 +69,8 @@ const project: IProject[] = [
     id: 4,
     image: article_icon,
     name: 'Epoka Lodowcowa',
-    date_creation: new Date(2018, 12, 31),
-    date_edition: new Date(2018, 10, 31),
+    date_creation: new Date(2018, 12, 31).toString(),
+    date_edition: new Date(2018, 10, 31).toString(),
     tags: ['TAG C', 'TAG A', 'TAG D'],
     state: State.NotCloned,
     last_modified_by: '',
@@ -81,12 +85,14 @@ interface IProps {
 }
 
 const ProjectsList = () => {
+  const dispatch = useDispatch();
+
   const newProjectPlaceHolder = {
     id: 7,
     image: article_icon,
     name: 'New project',
-    date_creation: new Date(2018, 12, 31),
-    date_edition: new Date(2018, 12, 31),
+    date_creation: new Date(2018, 12, 31).toString(),
+    date_edition: new Date(2018, 12, 31).toString(),
     tags: ['TAG C', 'TAG A', 'TAG D'],
     state: State.NotCloned,
     last_modified_by: '',
@@ -169,7 +175,7 @@ const ProjectsList = () => {
   ];
 
   const [displayedProjects, setDisplayedProjects] = useState(
-    project ? project : []
+    projects ? projects : []
   );
 
   const [searchPhrase, setSearchPhrase] = useState('');
@@ -184,8 +190,8 @@ const ProjectsList = () => {
     id: -1,
     image: {},
     name: '',
-    date_creation: new Date(),
-    date_edition: new Date(),
+    date_creation: new Date().toString(),
+    date_edition: new Date().toString(),
     tags: [],
     state: {},
     last_modified_by: '',
@@ -194,12 +200,22 @@ const ProjectsList = () => {
     description: '',
   });
 
-  const formatDate = (date_ob: Date) => {
-    const date = ('0' + date_ob.getDate()).slice(-2);
-    const month = ('0' + (date_ob.getMonth() + 1)).slice(-2);
-    const year = date_ob.getFullYear();
-    return `${year}-${month}-${date}`;
-  };
+  useEffect(() => {
+    if (displayedProjects.length === 0) {
+      dispatch(updateSubview({
+        element: Subviews.NO_PROJECTS
+      }))
+    }
+  }, [displayedProjects])
+
+  useEffect(() => {
+    if (pickedProject.id !== -1) {
+      dispatch(updateSubview({
+        element: Subviews.PROJECT_INFO,
+        props: {project: pickedProject}
+      }))
+    }
+  }, [pickedProject])
 
   const applyAllSortsFilters = () => {
     const clone: IProject[] = [];
@@ -232,8 +248,8 @@ const ProjectsList = () => {
           />
           <div className='projectList__search_sort'>
             <form>
-              <div style={{ position: 'relative' }}>
-                <img src={lupka} className='projectList__search_icon' />
+              <div style={{position: 'relative'}}>
+                <img src={lupka} className='projectList__search_icon'/>
                 <input
                   className='projectList__input'
                   type='text'
@@ -253,7 +269,7 @@ const ProjectsList = () => {
           <ul className='projectList__list'>
             {applyAllSortsFilters().map((project) => (
               <li key={project.id} className='projectList__list_element'>
-                <img className='projectList__icon' src={project.image} />
+                <img className='projectList__icon' src={project.image}/>
                 <button
                   className='projectList__button'
                   onClick={() => {
@@ -265,7 +281,7 @@ const ProjectsList = () => {
                     <div>Created: {formatDate(project.date_creation)}</div>
                     <div>Last modified:{formatDate(project.date_edition)}</div>
                     {project.tags.map((tag) => (
-                      <div className='projectList__tags'>{tag}</div>
+                      <div className='projectList__tags' key={tag}>{tag}</div>
                     ))}
                   </div>
                 </button>
@@ -278,73 +294,10 @@ const ProjectsList = () => {
           >
             <img
               src={add_icon}
-              style={{ width: '60px', height: '60px', borderRadius: '50%' }}
+              style={{width: '60px', height: '60px', borderRadius: '50%'}}
             />
           </button>
         </div>
-      </div>
-      <div className='projectList__project__info'>
-        {pickedProject.id == -1 ? (
-          <div style={{ color: 'white' }}>
-            {displayedProjects.length == 0 ? (
-              <h2
-                style={{
-                  marginLeft: '35px',
-                  marginRight: '35px',
-                  marginTop: '450px',
-                  verticalAlign: 'middle',
-                  textAlign: 'center',
-                }}
-              >
-                Click <img src={add_icon} style={{ borderRadius: '50%' }} /> to
-                create new project
-              </h2>
-            ) : (
-              <div>
-                <h1 className='projectList__info_header'>VNLAB</h1>
-                <div style={{ marginLeft: '35px', marginRight: '35px' }}>
-                  <h2>Info, shortcuts, tips</h2>
-                </div>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div style={{ color: 'white' }}>
-            <h1 className='projectList__info_header'> Project's info</h1>
-            <h2 style={{ marginLeft: '35px', marginRight: '35px' }}>
-              Title: {pickedProject?.name}
-            </h2>
-            <div style={{ marginLeft: '35px', marginRight: '35px' }}>
-              <h3>
-                Date of creation: {formatDate(pickedProject?.date_creation)}
-              </h3>
-              <h3>Last modified: {formatDate(pickedProject?.date_edition)}</h3>
-              <h3>Last modified by: {pickedProject?.last_modified_by}</h3>
-              <h3 style={{ display: 'flex', flexDirection: 'row' }}>
-                {' '}
-                Coauthors:
-                {pickedProject?.coauthors.map((tag) => (
-                  <div className='projectList__tags'>{tag}</div>
-                ))}
-              </h3>
-              <h3 style={{ display: 'flex', flexDirection: 'row' }}>
-                {' '}
-                Technologies:
-                {pickedProject?.technologies.map((tag) => (
-                  <div className='projectList__tags'>{tag}</div>
-                ))}
-              </h3>
-              <h3 style={{ display: 'flex', flexDirection: 'row' }}>
-                {' '}
-                Tags:
-                {pickedProject?.tags.map((tag) => (
-                  <div className='projectList__tags'>{tag}</div>
-                ))}
-              </h3>
-              <h3>Description: {pickedProject?.description}</h3>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

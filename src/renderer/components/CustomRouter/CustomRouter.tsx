@@ -8,16 +8,16 @@ import {Subviews} from "../../constants/Views";
 const CustomRouter = () => {
   const {view, subview} = useSelector(selectCurrentView);
   const View: React.FC = routerComponents[view];
-  const Subview: React.FC = routerComponents[subview];
-
+  const Subview: React.FC = routerComponents[subview.element];
+  
   return (
     <>
       <div className='view'>
         <View/>
       </div>
-      {subview !== Subviews.NONE &&
+      {subview.element !== Subviews.NONE &&
         <div className='subview'>
-          <Subview />
+          <Subview {...(subview.props || {})} />
         </div>
       }
     </>

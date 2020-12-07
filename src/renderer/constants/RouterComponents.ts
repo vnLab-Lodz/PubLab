@@ -7,9 +7,10 @@ import ProjectsList from '../components/RouterComponents/ProjectsList/ProjectsLi
 import AppSettings from '../components/RouterComponents/AppSettings/AppSettings';
 import {Subviews, Views} from './VIEWS';
 import ProjectInfo from "../components/RouterComponents/ProjectInfo/ProjectInfo";
+import NoProjects from "../components/RouterComponents/NoProjects/NoProjects";
 
 export type RouterComponents = {
-  [key in Views | Subviews]: React.FC;
+  [key in Views | Subviews]: React.FC<any>;
 };
 
 // This can be changed when we introduce some i18n
@@ -31,5 +32,6 @@ export const routerComponents: RouterComponents = {
   [Views.PROJECTS_LIST]: ProjectsList,
   [Views.APP_SETTINGS]: AppSettings,
   [Subviews.PROJECT_INFO]: ProjectInfo,
+  [Subviews.NO_PROJECTS]: NoProjects,
   [Subviews.NONE]: function() {return null;}
 };

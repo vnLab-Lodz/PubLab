@@ -2,12 +2,17 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../rootReducer';
 import {Subviews, Views} from '../../renderer/constants/VIEWS';
 
+export interface ISubview {
+  element: Subviews;
+  props?: { [key: string]: any };
+}
+
 export type CurrentView = {
   view: Views;
-  subview: Subviews;
+  subview: ISubview;
 };
 
-const initialState: CurrentView = {view: Views.PROJECT, subview: Subviews.NONE};
+const initialState: CurrentView = {view: Views.PROJECT, subview: {element: Subviews.NONE}};
 
 const CurrentViewSlice = createSlice({
   name: 'CurrentView',
@@ -18,10 +23,10 @@ const CurrentViewSlice = createSlice({
       action: PayloadAction<Views>
     ) => {
       state.view = action.payload;
-      state.subview = Subviews.NONE;
+      state.subview = {element: Subviews.NONE};
     },
-    updateSubview: (state: CurrentView, action: PayloadAction<Subviews>) => {
-      state.subview = action.payload;
+    updateSubview: (state: CurrentView, action: PayloadAction<ISubview>) => {
+      state.subview = {...action.payload};
     }
   },
 });
