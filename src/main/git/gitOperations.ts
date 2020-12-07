@@ -1,10 +1,13 @@
 import axios from "axios";
 import {BranchNames, Repository, WEB_PUB_REPO_NAME} from "./gitTypes";
 import {File} from "./gitTypes";
+import {Octokit} from "@octokit/rest";
 
 const git = require('isomorphic-git')
 const http = require('isomorphic-git/http/node')
 const fs = require('fs')
+const octokit = new Octokit()
+// const octokit = require('@octokit/rest')
 
 /**
  * return array of objects with name of repository, author of repository and url to repository
@@ -181,4 +184,13 @@ function push(dir: string, branchName: string): void {
 
 export function publish(): void {
     addFile({path: '', filename: ''})
+}
+
+//permission can be one of "read", "write", "admin"
+export function addCollaborator(projectId: string, username: string, permission: string): void {
+    octokit.projects.addCollaborator({
+        projectId,
+        username,
+        permission,
+    });
 }
