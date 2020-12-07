@@ -103,7 +103,6 @@ export async function createBranch(dir: string, name: string, accessToken: strin
         fs,
         http,
         dir: dir,
-        corsProxy: 'https://cors.isomorphic-git.org',
         onAuth: () => ({ username: accessToken}),
     })
     console.log(pushResult)
@@ -186,13 +185,16 @@ function commit(branchName: string, file: File, author: string, message: string)
 
 //Push
 
-function push(dir: string, branchName: string): void {
+export function push(dir: string, branchName: string, accessToken: string): void {
     git.push({
         fs,
         http,
         dir: dir,
         ref: branchName,
+        onAuth: () => ({username: accessToken})
     })
+        .then(() => console.log('Push successfully performed'))
+        .catch(() => console.log('Error occurred while performing push on ' + branchName));
 }
 
 export function publish(): void {

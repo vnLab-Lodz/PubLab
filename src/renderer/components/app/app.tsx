@@ -7,7 +7,7 @@ import { configStore } from '../../../shared/configureStore';
 import {postAccessToken, authorizeWithGithub} from "../../../main/git/gitAuthorization";
 import ReadOnlyDict = NodeJS.ReadOnlyDict;
 import {clone, publish} from "../../../main/git/gitOperations";
-import { createBranch, getUserRepositories} from "../../../main/git/gitOperations";
+import { createBranch, getUserRepositories, push} from "../../../main/git/gitOperations";
 import {createFoldersInDirectory, createProject} from "../../../main/git/gitWebPublication";
 require('dotenv').config();
 
@@ -45,8 +45,7 @@ class App extends React.Component <AppProps>{
                 <button onClick={()=>createBranch("/home/aleksander/Desktop/asd", "redaktor")}> branch </button>
                 <button onClick={()=>clone("C:/vnlab-tool", "https://github.com/jedrekszor/vnlab-test")}> Clone Jędrek</button>
                 <button onClick={()=>publish()}> Publish </button>
-                <button onClick={()=>createProject("f468276e755e65e77951f05ff84ce4b6c0afe571",
-                    "repo", "C:/Users/Admin/Desktop/gunwo")}> Gunwo </button>
+                <button onClick={()=>createFoldersInDirectory("C:/Users/Admin/Desktop/gunwo")}> Gunwo </button>
                 <Description />
             </Provider>
         );
