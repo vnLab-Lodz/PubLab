@@ -178,17 +178,18 @@ function commit(branchName: string, file: File, author: string, message: string)
 
 //Push
 
-function push(dir: string, branchName: string): void {
+function push(dir: string, branchName: string, accessToken: string): void {
     git.push({
         fs,
         http,
         dir: dir,
         ref: branchName,
+        onAuth: () => ({username: accessToken})
     })
         .then(() => console.log('Push successfully performed'))
         .catch(() => console.log('Error occurred while performing push on ' + branchName));
 }
 
 export function publish(): void {
-    addFile({path: '', filename: ''});
+
 }
