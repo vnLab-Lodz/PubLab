@@ -6,8 +6,9 @@ import {Octokit} from "@octokit/rest";
 const git = require('isomorphic-git')
 const http = require('isomorphic-git/http/node')
 const fs = require('fs')
-const octokit = new Octokit()
-// const octokit = require('@octokit/rest')
+const octokit = new Octokit({
+    auth: '0bddffbf30f6d1a756979ae7390de728f58ca284',
+})
 
 /**
  * return array of objects with name of repository, author of repository and url to repository
@@ -204,11 +205,10 @@ export function publish(): void {
     addFile({path: '', filename: ''})
 }
 
-//permission can be one of "read", "write", "admin"
-export function addCollaborator(projectId: string, username: string, permission: string): void {
-    octokit.projects.addCollaborator({
-        projectId,
+export async function addCollaborator(owner: string, repo: string, username: string): Promise<void> {
+    octokit.repos.addCollaborator({
+        owner,
+        repo,
         username,
-        permission,
     });
 }
