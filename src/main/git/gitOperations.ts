@@ -1,6 +1,9 @@
 import axios from "axios";
 import {BranchNames, Repository, WEB_PUB_REPO_NAME} from "./gitTypes";
 import {File} from "./gitTypes";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
+import {NoParamCallback} from "fs";
 
 const git = require('isomorphic-git')
 const http = require('isomorphic-git/http/node')
@@ -122,14 +125,15 @@ function checkout(branchDir: string, branchName: string) {
 //Adding file(s)
 
 function addFile(file: File): void {
-    fs.promises.writeFile(file.path + '/' + file.filename).then(() => {
+
+    fs.readFile(file.path + '/' + file.filename, function () {
         git.add({
             fs,
             dir: file.path,
             filepath: file.filename
         })
             .then(() => console.log('File ' + file.filename + ' successfully added'))
-            .catch(() => console.log('Error occurred while adding ' + file.filename));
+            .catch((e: any) => console.log('Error occurred while adding ' + file.filename + '\n' + e));
     });
 }
 
@@ -142,13 +146,16 @@ function addFiles(files: File[]): void {
 //Removing file(s)
 
 function removeFile(file: File): void {
-    git.remove({
-        fs,
-        dir: file.path,
-        filepath: file.filename
-    })
-        .then(() => console.log('File ' + file.filename + ' successfully removed'))
-        .catch(() => console.log('Error occurred while removing ' + file.filename));
+
+    fs.readFile(file.path + '/' + file.filename, function () {
+        git.remove({
+            fs,
+            dir: file.path,
+            filepath: file.filename
+        })
+            .then(() => console.log('File ' + file.filename + ' successfully removed'))
+            .catch(() => console.log('Error occurred while removing ' + file.filename));
+    });
 }
 
 function removeFiles(files: File[]): void {
@@ -193,6 +200,24 @@ function push(dir: string, branchName: string, accessToken: string): void {
 export function publish(): void {
     const token = '153fa32f5f56b517a1b370fa395ee8ee25e13374';
 
-    const file = new File("C:\\Users\\anton\\Desktop", 'test.txt');
-    addFile(file);
+    const file = {filename: 'test.txt', path: 'C:\\Users\\anton\\Desktop'};
+
+
+    fs.writeFile(file.path + '/' + file.filename, 'utf8', <NoParamCallback>function (err: any, result: any) {
+        if (err) console.log('error', err);
+        else {
+            console.log('git adding:');
+            git.add({fs, dir: file.path, filepath: file.filename})
+                .then(() => console.log('Git added.'))
+                .catch((e: any) => console.error('Error: ' + e))
+        }
+    });
+
+    let sha = git.commit({
+        fs,
+        dir: 'C:\\Users\\anton\\Desktop',
+        message: 'Added the a.txt file'
+    });
+    console.log(sha);
 }
+
