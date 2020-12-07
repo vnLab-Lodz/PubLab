@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
-import {EndPointParameters, Url} from "./gitTypes";
+import {EndPointParameters, ScopeParamValues, Url} from "./gitTypes";
 
 export function authorizeWithGithub() : void {
     axios.get(buildAuthorizeEndpoint()).then(data => {
@@ -21,8 +21,9 @@ export async function postAccessToken(codeParam : string) : Promise<AxiosRespons
 
 function buildAuthorizeEndpoint() : string {
     let clientIdParam = "?"+ EndPointParameters.CLIENT_ID + "=" + process.env.GITHUB_CLIENT_ID;
+    let scopeParam = "&" + EndPointParameters.SCOPE + "=" + ScopeParamValues.REPO;
     let redirectUriParam = "&"+ EndPointParameters.REDIRECT_URI + "=" + Url.REDIRECT_URI;
-    return Url.AUTHORIZE_URL + clientIdParam + redirectUriParam;
+    return Url.AUTHORIZE_URL + clientIdParam + scopeParam + redirectUriParam;
 }
 
 function buildAccessTokenEndpoint(codeParam : string) : string {
