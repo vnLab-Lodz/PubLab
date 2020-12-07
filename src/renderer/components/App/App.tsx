@@ -14,9 +14,7 @@ const App = () => {
       <Auth>
         <div className='wrapper'>
           <NavigationBar />
-          <div className='content'>
-            <CustomRouter />
-          </div>
+          <CustomRouter />
         </div>
       </Auth>
     </Provider>

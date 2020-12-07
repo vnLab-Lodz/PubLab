@@ -5,14 +5,16 @@ import Changes from '../components/RouterComponents/Changes/Changes';
 import Settings from '../components/RouterComponents/Settings/Settings';
 import ProjectsList from '../components/RouterComponents/ProjectsList/ProjectsList';
 import AppSettings from '../components/RouterComponents/AppSettings/AppSettings';
-import { COMPONENTS } from './Components';
+import { Subviews, Views } from './Views';
+import ProjectInfo from '../components/RouterComponents/ProjectInfo/ProjectInfo';
+import NoProjects from '../components/RouterComponents/NoProjects/NoProjects';
 
 export type RouterComponents = {
-  [key in COMPONENTS]: React.FC;
+  [key in Views | Subviews]: React.FC<any>;
 };
 
 // This can be changed when we introduce some i18n
-export const COMPONENTS_TRANSLATIONS: Record<COMPONENTS, string> = {
+export const COMPONENTS_TRANSLATIONS: Record<Views, string> = {
   PROJECT: 'Project',
   FILES: 'Files',
   CHANGES: 'Changes',
@@ -23,10 +25,15 @@ export const COMPONENTS_TRANSLATIONS: Record<COMPONENTS, string> = {
 };
 
 export const routerComponents: RouterComponents = {
-  [COMPONENTS.PROJECT]: Description,
-  [COMPONENTS.FILES]: Files,
-  [COMPONENTS.CHANGES]: Changes,
-  [COMPONENTS.SETTINGS]: Settings,
-  [COMPONENTS.PROJECTS_LIST]: ProjectsList,
-  [COMPONENTS.APP_SETTINGS]: AppSettings,
+  [Views.PROJECT]: Description,
+  [Views.FILES]: Files,
+  [Views.CHANGES]: Changes,
+  [Views.SETTINGS]: Settings,
+  [Views.PROJECTS_LIST]: ProjectsList,
+  [Views.APP_SETTINGS]: AppSettings,
+  [Subviews.PROJECT_INFO]: ProjectInfo,
+  [Subviews.NO_PROJECTS]: NoProjects,
+  [Subviews.NONE]: function () {
+    return null;
+  },
 };
