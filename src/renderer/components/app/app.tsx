@@ -8,7 +8,7 @@ import {postAccessToken, authorizeWithGithub} from "../../../main/git/gitAuthori
 import ReadOnlyDict = NodeJS.ReadOnlyDict;
 import {clone, publish} from "../../../main/git/gitOperations";
 import { createBranch, getUserRepositories} from "../../../main/git/gitOperations";
-
+import {createFoldersInDirectory} from "../../../main/git/gitWebPublication";
 require('dotenv').config();
 
 console.log(process.env);
@@ -45,6 +45,7 @@ class App extends React.Component <AppProps>{
                 <button onClick={()=>createBranch("/home/aleksander/Desktop/asd", "redaktor")}> branch </button>
                 <button onClick={()=>clone("C:/vnlab-tool", "https://github.com/jedrekszor/vnlab-test")}> Clone Jędrek</button>
                 <button onClick={()=>publish()}> Publish </button>
+                <button onClick={()=>createFoldersInDirectory("C:/Users/Admin/Desktop/gunwo")}> Gunwo </button>
                 <Description />
             </Provider>
         );
