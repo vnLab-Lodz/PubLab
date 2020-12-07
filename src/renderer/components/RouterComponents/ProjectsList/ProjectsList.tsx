@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
-import {IProject} from './IProject';
-import {State} from './IProjectState';
+import { IProject } from './IProject';
+import { State } from './IProjectState';
 import add_icon from './add_circle-24px.svg';
 import article_icon from './article-24px.svg';
 import lupka from './search-24px.svg';
 
 import './ProjectsList.scss';
-import {formatDate} from "../../../utils/formatDate";
-import {updateSubview} from '../../../../shared/slices/currentViewSlice';
-import {Subviews} from "../../../constants/Views";
-import {useDispatch} from "react-redux";
+import { formatDate } from '../../../utils/formatDate';
+import { updateSubview } from '../../../../shared/slices/currentViewSlice';
+import { Subviews } from '../../../constants/Views';
+import { useDispatch } from 'react-redux';
 
 const projects: IProject[] = [
   {
@@ -202,20 +202,24 @@ const ProjectsList = () => {
 
   useEffect(() => {
     if (displayedProjects.length === 0) {
-      dispatch(updateSubview({
-        element: Subviews.NO_PROJECTS
-      }))
+      dispatch(
+        updateSubview({
+          element: Subviews.NO_PROJECTS,
+        })
+      );
     }
-  }, [displayedProjects])
+  }, [displayedProjects]);
 
   useEffect(() => {
     if (pickedProject.id !== -1) {
-      dispatch(updateSubview({
-        element: Subviews.PROJECT_INFO,
-        props: {project: pickedProject}
-      }))
+      dispatch(
+        updateSubview({
+          element: Subviews.PROJECT_INFO,
+          props: { project: pickedProject },
+        })
+      );
     }
-  }, [pickedProject])
+  }, [pickedProject]);
 
   const applyAllSortsFilters = () => {
     const clone: IProject[] = [];
@@ -248,8 +252,8 @@ const ProjectsList = () => {
           />
           <div className='projectList__search_sort'>
             <form>
-              <div style={{position: 'relative'}}>
-                <img src={lupka} className='projectList__search_icon'/>
+              <div style={{ position: 'relative' }}>
+                <img src={lupka} className='projectList__search_icon' />
                 <input
                   className='projectList__input'
                   type='text'
@@ -269,7 +273,7 @@ const ProjectsList = () => {
           <ul className='projectList__list'>
             {applyAllSortsFilters().map((project) => (
               <li key={project.id} className='projectList__list_element'>
-                <img className='projectList__icon' src={project.image}/>
+                <img className='projectList__icon' src={project.image} />
                 <button
                   className='projectList__button'
                   onClick={() => {
@@ -281,7 +285,9 @@ const ProjectsList = () => {
                     <div>Created: {formatDate(project.date_creation)}</div>
                     <div>Last modified:{formatDate(project.date_edition)}</div>
                     {project.tags.map((tag) => (
-                      <div className='projectList__tags' key={tag}>{tag}</div>
+                      <div className='projectList__tags' key={tag}>
+                        {tag}
+                      </div>
                     ))}
                   </div>
                 </button>
@@ -294,7 +300,7 @@ const ProjectsList = () => {
           >
             <img
               src={add_icon}
-              style={{width: '60px', height: '60px', borderRadius: '50%'}}
+              style={{ width: '60px', height: '60px', borderRadius: '50%' }}
             />
           </button>
         </div>

@@ -14,10 +14,7 @@ const TOP_BUTTONS: Views[] = [
   Views.CHANGES,
   Views.SETTINGS,
 ];
-const BOTTOM_BUTTONS: Views[] = [
-  Views.PROJECTS_LIST,
-  Views.APP_SETTINGS,
-];
+const BOTTOM_BUTTONS: Views[] = [Views.PROJECTS_LIST, Views.APP_SETTINGS];
 
 const NavigationBar = () => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);

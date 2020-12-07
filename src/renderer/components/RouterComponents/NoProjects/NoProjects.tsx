@@ -1,5 +1,5 @@
-import add_icon from "../ProjectsList/add_circle-24px.svg";
-import React from "react";
+import add_icon from '../ProjectsList/add_circle-24px.svg';
+import React from 'react';
 
 const NoProjects = () => (
   <h2
@@ -11,8 +11,8 @@ const NoProjects = () => (
       textAlign: 'center',
     }}
   >
-    Click <img src={add_icon} style={{borderRadius: '50%'}}/> to
-    create new project
+    Click <img src={add_icon} style={{ borderRadius: '50%' }} /> to create new
+    project
   </h2>
 );
 

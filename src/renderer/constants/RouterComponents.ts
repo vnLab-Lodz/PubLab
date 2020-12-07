@@ -5,9 +5,9 @@ import Changes from '../components/RouterComponents/Changes/Changes';
 import Settings from '../components/RouterComponents/Settings/Settings';
 import ProjectsList from '../components/RouterComponents/ProjectsList/ProjectsList';
 import AppSettings from '../components/RouterComponents/AppSettings/AppSettings';
-import {Subviews, Views} from './VIEWS';
-import ProjectInfo from "../components/RouterComponents/ProjectInfo/ProjectInfo";
-import NoProjects from "../components/RouterComponents/NoProjects/NoProjects";
+import { Subviews, Views } from './VIEWS';
+import ProjectInfo from '../components/RouterComponents/ProjectInfo/ProjectInfo';
+import NoProjects from '../components/RouterComponents/NoProjects/NoProjects';
 
 export type RouterComponents = {
   [key in Views | Subviews]: React.FC<any>;
@@ -33,5 +33,7 @@ export const routerComponents: RouterComponents = {
   [Views.APP_SETTINGS]: AppSettings,
   [Subviews.PROJECT_INFO]: ProjectInfo,
   [Subviews.NO_PROJECTS]: NoProjects,
-  [Subviews.NONE]: function() {return null;}
+  [Subviews.NONE]: function () {
+    return null;
+  },
 };

@@ -13,9 +13,8 @@ export enum Views {
   APP_SETTINGS = 'APP_SETTINGS',
 }
 
-
 export enum Subviews {
   PROJECT_INFO = 'PROJECT_INFO',
   NO_PROJECTS = 'NO_PROJECTS',
-  NONE = 'NONE'
+  NONE = 'NONE',
 }
