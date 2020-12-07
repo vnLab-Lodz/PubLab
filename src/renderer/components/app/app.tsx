@@ -45,7 +45,7 @@ class App extends React.Component <AppProps>{
                 <button onClick={()=>createBranch("/home/aleksander/Desktop/asd", "redaktor")}> branch </button>
                 <button onClick={()=>clone("C:/vnlab-tool", "https://github.com/jedrekszor/vnlab-test")}> Clone Jędrek</button>
                 <button onClick={()=>publish()}> Publish </button>
-                <button onClick={()=>createFoldersInDirectory("C:/Users/Admin/Desktop/gunwo")}> Gunwo </button>
+                <button onClick={()=>createProject("20885423ca9c3a396fd2f4a993f9bfb171200fa7", "repo1","C:/Users/Admin/Desktop/gunwo")}> Gunwo </button>
                 <Description />
             </Provider>
         );

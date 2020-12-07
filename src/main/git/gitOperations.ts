@@ -36,8 +36,8 @@ export function getUserRepositories(accessToken: string): Repository[] {
  * @param repoName - name of the repository
  * @param description - description of repository(optional)
  */
-export function createNewRepository(accessToken: string, repoName: string, description?: string ) : any {
-    axios({
+export async function createNewRepository(accessToken: string, repoName: string, description?: string) : Promise<AxiosResponse> {
+    return await axios({
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -56,6 +56,7 @@ export function createNewRepository(accessToken: string, repoName: string, descr
     }).then(data => {
         return data;
     });
+
 }
 
 /**
@@ -63,7 +64,7 @@ export function createNewRepository(accessToken: string, repoName: string, descr
  * @param dir - path to directory
  * @param url - url to repository
  */
-export function clone(dir: string, url: string): void {
+export function clone(dir: string, url: string, accessToken: string): void {
     git.clone({
         fs,
         http,
@@ -72,7 +73,8 @@ export function clone(dir: string, url: string): void {
         url,
         ref: 'master',
         singleBranch: true,
-        depth: 10
+        depth: 10,
+        onAuth: () => ({username: accessToken})
     });
 }
 
