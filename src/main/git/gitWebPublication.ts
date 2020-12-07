@@ -11,8 +11,8 @@ export function createFoldersInDirectory(projectDirectory : string) : void {
 
 
 export function createProject(accessToken : string, repoName : string,  projectDirectory : string, description? : string) {
-    createNewRepository(accessToken, repoName, description);
+    let clone_uri = createNewRepository(accessToken, repoName, description);
     process.chdir(projectDirectory);
-    let clone_uri = createFoldersInDirectory(projectDirectory);
+    createFoldersInDirectory(projectDirectory);
     console.log(clone_uri);
 }
