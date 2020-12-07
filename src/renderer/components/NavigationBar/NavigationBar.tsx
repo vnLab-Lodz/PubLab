@@ -6,7 +6,7 @@ import {
   updateCurrentView,
 } from '../../../shared/slices/currentViewSlice';
 import './NavigationBar.scss';
-import { Views } from '../../constants/VIEWS';
+import { Views } from '../../constants/Views';
 import { terminateSessionAsync } from '../../../shared/slices/currentUserSlice';
 
 const TOP_BUTTONS: Views[] = [

@@ -5,7 +5,7 @@ import Changes from '../components/RouterComponents/Changes/Changes';
 import Settings from '../components/RouterComponents/Settings/Settings';
 import ProjectsList from '../components/RouterComponents/ProjectsList/ProjectsList';
 import AppSettings from '../components/RouterComponents/AppSettings/AppSettings';
-import { Subviews, Views } from './VIEWS';
+import { Subviews, Views } from './Views';
 import ProjectInfo from '../components/RouterComponents/ProjectInfo/ProjectInfo';
 import NoProjects from '../components/RouterComponents/NoProjects/NoProjects';
 
