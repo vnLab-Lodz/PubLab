@@ -2,10 +2,9 @@
   position: relative;
   box-sizing: border-box;
   flex: 0 220px;
-  max-width: 64px;
+  min-width: 68px;
+  max-width: 68px;
   padding: 1rem 4px;
-  height: calc(100% - 1rem);
-  margin: 0.5rem;
   border-radius: 8px;
   overflow: hidden;
 
@@ -14,11 +13,12 @@
   justify-content: space-between;
   align-items: flex-start;
 
-  background: #646A6F;
+  background: #646a6f;
 
   transition: all 0.3s;
 
   &--expanded {
+    min-width: 220px;
     max-width: 220px;
 
     .navbar__button:hover {
@@ -52,7 +52,7 @@
 }
 
 .navbar__button__icon {
-  background: #C4C4C4;
+  background: #c4c4c4;
   min-width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -64,7 +64,7 @@
   justify-content: center;
 
   &--active {
-    background: #53AAF3;
+    background: #53aaf3;
   }
 }
 
