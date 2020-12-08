@@ -6,18 +6,16 @@ import {
   updateCurrentView,
 } from '../../../shared/slices/currentViewSlice';
 import './NavigationBar.scss';
-import { COMPONENTS } from '../../constants/Components';
+import { Views } from '../../constants/Views';
+import { terminateSessionAsync } from '../../../shared/slices/currentUserSlice';
 
-const TOP_BUTTONS: COMPONENTS[] = [
-  COMPONENTS.PROJECT,
-  COMPONENTS.FILES,
-  COMPONENTS.CHANGES,
-  COMPONENTS.SETTINGS,
+const TOP_BUTTONS: Views[] = [
+  Views.PROJECT,
+  Views.FILES,
+  Views.CHANGES,
+  Views.SETTINGS,
 ];
-const BOTTOM_BUTTONS: COMPONENTS[] = [
-  COMPONENTS.PROJECTS_LIST,
-  COMPONENTS.APP_SETTINGS,
-];
+const BOTTOM_BUTTONS: Views[] = [Views.PROJECTS_LIST, Views.APP_SETTINGS];
 
 const NavigationBar = () => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -25,13 +23,13 @@ const NavigationBar = () => {
   const dispatch = useDispatch();
   const currentView = useSelector(selectCurrentView);
 
-  const onNavigationButtonClick = (buttonKey: COMPONENTS) => () => {
+  const onNavigationButtonClick = (buttonKey: Views) => () => {
     dispatch(updateCurrentView(buttonKey));
   };
 
-  const isButtonActive = (key: COMPONENTS) => key === currentView.view;
-  const renderListOfButtons = (buttons: COMPONENTS[]) => {
-    return buttons.map((key: COMPONENTS) => {
+  const isButtonActive = (key: Views) => key === currentView.view;
+  const renderListOfButtons = (buttons: Views[]) => {
+    return buttons.map((key: Views) => {
       const iconClassName = isButtonActive(key)
         ? 'navbar__button__icon navbar__button__icon--active'
         : 'navbar__button__icon';
@@ -67,7 +65,7 @@ const NavigationBar = () => {
         {renderListOfButtons(BOTTOM_BUTTONS)}
         <button
           className='navbar__button'
-          onClick={() => console.log('TODO: implement logout')}
+          onClick={() => dispatch(terminateSessionAsync())}
         >
           <div className='navbar__button__icon'>L</div>
           <span className='navbar__button__text'>Log out</span>
