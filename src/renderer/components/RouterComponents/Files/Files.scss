@@ -1,0 +1,126 @@
+.files {
+    width: 100%;
+    display: flex;
+}
+
+.files__leftSection {
+    background-color: #667077;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.files__leftSection, .files__leftSection-blue {
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    flex: 3;
+}
+
+.files__leftSection-blue {
+    background-color: #53aaf3;
+    text-align: center;
+
+    >img {
+        margin-top: 1rem;
+        width: 3rem;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+}
+
+.files__rightSection {
+    flex: 5;
+}
+
+.files__header {
+    font-size: 2rem;
+    color: white;
+    text-align: center;
+}
+
+.files__othersButton {
+    padding: .4rem 2rem .4rem 2rem;
+    font-size: 1.3rem;
+    background-color: #c4c4c4;
+    color: #89969f;
+
+}
+
+.files__othersButton:hover {
+    color: white;
+    background-color: #a8a8a8;
+}
+
+.files__proceedButton, .files__proceedButton_disabled {
+    padding: .8rem 3rem .8rem 3rem;
+    font-size: 1.6rem;
+}
+
+.files__proceedButton {
+    background-color: #72c850;
+    color: white;
+}
+
+.files__proceedButton_disabled {
+    cursor: not-allowed;
+    color: gray;
+    background-color: rgb(165, 165, 165);
+}
+
+.files__proceedButton:hover {
+    background-color: #5abe32;
+}
+
+.files__proceedButton, .files__othersButton {
+    transition: color .2s ease-in-out, background-color .2s ease-in-out;
+    border:none;
+    cursor: pointer;
+}
+
+.files__lastUsedList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.files__lastUsedHeader {
+    color: white;
+}
+
+.files__selected {
+    color: white;
+    background-color:#606a70;
+    padding: 1rem 2rem 1rem 2rem;
+    border-radius: 1rem;
+    text-align: center;
+}
+
+.files__noDirectories {
+    color: rgb(185, 185, 185);
+}
+
+.files__rightSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.files__right_title {
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+}
+
+.files__right_subtitle {
+    text-align: center;
+    color: lightgray;
+    font-size: 1.5rem;
+
+    >img {
+        border-radius: 50%;
+        margin: 0 .5rem 0 .5rem;
+    }
+}
