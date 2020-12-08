@@ -1,56 +1,57 @@
 .directory {
-    height: 5.2rem;
-    display: flex;
-    align-items: center;
-    margin-top: 2rem;
+  height: 5.2rem;
+  display: flex;
+  align-items: center;
+  margin-top: 2rem;
 
-    width: 90%;
-    cursor: pointer;
+  width: 90%;
+  cursor: pointer;
 }
 
 .directory:hover {
-    >.directory__icon, .directory__content {
-        background-color: #8a97a1;
-    }
+  > .directory__icon,
+  .directory__content {
+    background-color: #8a97a1;
+  }
 }
 
-.directory__icon, .directory__content {
-    background-color: #b8c5d0;
-    height: 100%;
-    padding: .4rem;
-    border-radius: .3rem;
+.directory__icon,
+.directory__content {
+  background-color: #b8c5d0;
+  height: 100%;
+  padding: 0.4rem;
+  border-radius: 0.3rem;
 
-    transition: background-color .2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .directory__icon {
-    margin-right: 1rem;
-    min-width: 5rem;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin-right: 1rem;
+  min-width: 5rem;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    >img {
-        width: 50%;
-        color: white;
-    }
+  > img {
+    width: 50%;
+    color: white;
+  }
 }
 
 .directory__content {
-    flex: 1;
-    text-align: right;
-    overflow: auto;
+  flex: 1;
+  text-align: right;
+  overflow: auto;
 }
 
 .directory__path {
-    color: white;
-    font-size: .9rem;
-    margin-bottom: .1rem;
-    word-break: break-all;
+  color: white;
+  font-size: 0.9rem;
+  margin-bottom: 0.1rem;
+  word-break: break-all;
 }
 
 .directory__lastUsed {
-    color: rgb(235, 235, 235);
-
+  color: rgb(235, 235, 235);
 }

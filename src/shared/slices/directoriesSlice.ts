@@ -2,16 +2,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../rootReducer';
 
 type Directory = {
-    path: string,
-    date: string
-}
-
-type CurrentDirectories = {
-  selectedDirectory: Directory,
-  hasDirectoryBeenSaved: Boolean
+  path: string;
+  date: string;
 };
 
-const initialState: CurrentDirectories = { selectedDirectory: { path: '-', date: undefined}, hasDirectoryBeenSaved: false };
+type CurrentDirectories = {
+  selectedDirectory: Directory;
+  hasDirectoryBeenSaved: Boolean;
+};
+
+const initialState: CurrentDirectories = {
+  selectedDirectory: { path: '-', date: undefined },
+  hasDirectoryBeenSaved: false,
+};
 
 const DirectoriesSlice = createSlice({
   name: 'directories',
@@ -21,23 +24,28 @@ const DirectoriesSlice = createSlice({
       state: CurrentDirectories,
       action: PayloadAction<string>
     ) => {
-        state.selectedDirectory = {
-            path: action.payload,
-            date: new Date().toString()
-        }
+      state.selectedDirectory = {
+        path: action.payload,
+        date: new Date().toString(),
+      };
     },
     setHasDirectoryBeenSaved: (
-        state: CurrentDirectories,
-        action: PayloadAction<boolean>
+      state: CurrentDirectories,
+      action: PayloadAction<boolean>
     ) => {
-        state.hasDirectoryBeenSaved = action.payload
-    }
+      state.hasDirectoryBeenSaved = action.payload;
+    },
   },
 });
 
-export const { updateCurrentDirectory, setHasDirectoryBeenSaved } = DirectoriesSlice.actions;
+export const {
+  updateCurrentDirectory,
+  setHasDirectoryBeenSaved,
+} = DirectoriesSlice.actions;
 
-export const selectCurrentDirectory = (state: RootState) => state.currentDirectory.selectedDirectory;
-export const selectHasDirectoryBeenSaved = (state: RootState) => state.currentDirectory.hasDirectoryBeenSaved;
+export const selectCurrentDirectory = (state: RootState) =>
+  state.currentDirectory.selectedDirectory;
+export const selectHasDirectoryBeenSaved = (state: RootState) =>
+  state.currentDirectory.hasDirectoryBeenSaved;
 
 export default DirectoriesSlice.reducer;

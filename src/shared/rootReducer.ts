@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
   currentUser: currentUserReducer,
   gatsbyInstall: gatsbyInstallReducer,
   currentView: currentViewReducer,
-  currentDirectory: directoriesReducer
+  currentDirectory: directoriesReducer,
 });
 
 // export state to use with selectors
