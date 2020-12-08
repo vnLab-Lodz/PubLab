@@ -3,25 +3,31 @@ import isDirectory from './file-manager';
 import isPublication from './file-manager';
 
 class Collaborator {
-    username: string;
-    role: string;
-    constructor(username: string, role: string) {
-        this.username = username;
-        this.role = role;
+  username: string;
+  role: string;
+  constructor(username: string, role: string) {
+    this.username = username;
+    this.role = role;
   }
 }
 
-let configFileName = "vn-pub.conf";
+let configFileName = 'vn-pub.conf';
 
-export function createConfigFile(path: string, name: string, description: string, collaborators: Collaborator[], 
-                          packageManager: string, tag: string): boolean {
+export function createConfigFile(
+  path: string,
+  name: string,
+  description: string,
+  collaborators: Collaborator[],
+  packageManager: string,
+  tag: string
+): boolean {
   if (isDirectory(path)) {
-    let configContent = { 
-      "name": name,
-      "description": description,
-      "collaborators": collaborators,
-      "package_manager": packageManager,
-      "tag": tag 
+    let configContent = {
+      name: name,
+      description: description,
+      collaborators: collaborators,
+      package_manager: packageManager,
+      tag: tag,
     };
     let configContentJSON = JSON.stringify(configContent);
     fs.writeFileSync(path + '/' + configFileName, configContentJSON);
@@ -37,7 +43,7 @@ export function deleteConfigFile(path: string): boolean {
         fs.unlinkSync(path + '/' + configFileName);
         return true;
       }
-    } catch(err) {
+    } catch (err) {
       console.error(err);
       return false;
     }
@@ -58,7 +64,10 @@ export function modifyName(path: string, newName: string): boolean {
   return false;
 }
 
-export function modifyDescription(path: string, newDescription: string): boolean {
+export function modifyDescription(
+  path: string,
+  newDescription: string
+): boolean {
   if (isDirectory(path) && isPublication(path)) {
     let configContentJSON = fs.readFileSync(path + '/' + configFileName);
     let configContent = JSON.parse(configContentJSON);
@@ -71,7 +80,10 @@ export function modifyDescription(path: string, newDescription: string): boolean
   return false;
 }
 
-export function modifyCollaborators(path: string, newCollaborators: Collaborator[]): boolean {
+export function modifyCollaborators(
+  path: string,
+  newCollaborators: Collaborator[]
+): boolean {
   if (isDirectory(path) && isPublication(path)) {
     let configContentJSON = fs.readFileSync(path + '/' + configFileName);
     let configContent = JSON.parse(configContentJSON);
@@ -84,7 +96,10 @@ export function modifyCollaborators(path: string, newCollaborators: Collaborator
   return false;
 }
 
-export function modifyPackageManager(path: string, newPackageManager: string): boolean {
+export function modifyPackageManager(
+  path: string,
+  newPackageManager: string
+): boolean {
   if (isDirectory(path) && isPublication(path)) {
     let configContentJSON = fs.readFileSync(path + '/' + configFileName);
     let configContent = JSON.parse(configContentJSON);
