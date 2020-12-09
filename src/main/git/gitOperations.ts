@@ -202,13 +202,14 @@ function removeFiles(files: File[]): void {
  * @param author - Author of the commit
  * @param message - Message of the commit
  */
-export async function commit(dir: string, author: Author, message: string): Promise<void> {
+export async function commit(dir: string, author: any, message: string): Promise<void> {
+
+    console.log(author);
     git.commit({
         fs,
         dir: dir,
         author: {
-            name: 'Mr. Test',
-            email: 'a.brylski@gmail.com'
+            name: author.login
         },
         message: message
     })

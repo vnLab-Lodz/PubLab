@@ -44,10 +44,10 @@ export async function createProject(accessToken: string,
                 return addFiles(projectDirectory);
             })
             .then(function (){
-                return commit(projectDirectory, responseData.data.owner.login, "first commit");
+                return commit(projectDirectory, responseData.data.owner, "first commit");
             })
             .then(function () {
-                return createBranch(projectDirectory, "master");
+                return createBranch(projectDirectory,  "master");
             })
             .then(function () {
                 return addRemote(projectDirectory, "origin", responseData.data.clone_url);
