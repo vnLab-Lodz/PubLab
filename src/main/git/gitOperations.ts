@@ -229,7 +229,7 @@ export function commit(dir: string, author: Author, message: string): void {
  * @param dir - Current working directory (From which command will be executed)
  * @param accessToken - Authentication access token
  */
-function push(dir: string, accessToken: string): void {
+export function push(dir: string, accessToken: string): void {
     git.push({
         fs,
         http,

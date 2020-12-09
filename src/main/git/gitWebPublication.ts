@@ -1,4 +1,4 @@
-import {addCollaborators, clone, createBranch, createNewRepository, commit} from "./gitOperations";
+import {addCollaborators, clone, createBranch, createNewRepository, commit, addFiles, push} from "./gitOperations";
 
 const fs = require('fs');
 const path = require('path');
@@ -18,9 +18,10 @@ export async function createProject(accessToken: string,
     let responseData = await createNewRepository(accessToken, repoName, description);
     clone(projectDirectory, responseData.data.clone_url, accessToken);
     createFoldersInDirectory(projectDirectory);
-
+    addFiles(projectDirectory);
     commit(projectDirectory, responseData.data.owner.login, "project initiating");
-    createBranch(projectDirectory, "programista", accessToken);
+    createBranch(projectDirectory, "redaktor", accessToken);
+    push(projectDirectory, accessToken);
     addCollaborators(accessToken, responseData.data.owner.login, responseData.data.name, collaborators);
     //TODO: place for adding collaborators in configuration file, collaborators : string[] will have to be changed to the type containing name and role
 
