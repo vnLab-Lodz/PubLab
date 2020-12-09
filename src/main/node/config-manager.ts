@@ -1,6 +1,6 @@
 var fs = require('fs');
-import isDirectory from './file-manager';
-import isPublication from './file-manager';
+import { isDirectory } from './file-manager';
+import { isPublication } from './file-manager';
 
 class Collaborator {
   username: string;
