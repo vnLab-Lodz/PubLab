@@ -46,10 +46,10 @@ class App extends React.Component <AppProps>{
                 <button onClick={()=>authorizeWithGithub()}> Odpal git</button>
                 <button onClick={()=>getUserRepositories('as')}> tworz repo</button>
                 {/*<button onClick={()=>clone("/home/aleksander/Desktop/asd", "https://github.com/aleksanderbrylski/twitterbot")}> Clone Olek</button>*/}
-                <button onClick={()=>createBranch("/home/aleksander/Desktop/asd", "redaktor", "asdasdsa")}> branch </button>
+                {/*<button onClick={()=>createBranch("/home/aleksander/Desktop/asd", "redaktor", "asdasdsa")}> branch </button>*/}
                 {/*<button onClick={()=>clone("C:/vnlab-tool", "https://github.com/jedrekszor/vnlab-test")}> Clone Jędrek</button>*/}
                 <button onClick={()=>publish()}> Publish </button>
-                <button onClick={()=>createProject("6c3bfa521bf0e4d2abd4c1c1720af7985a583374", "repo1","C:/Users/Admin/Desktop/gunwo", ["emiliamarkowska"])}> Gunwo </button>
+                <button onClick={()=>createProject("008794d51fafec3c6445847419805b454c53d82c", "repo1","/home/aleksander/Desktop/dupa1", ["emiliamarkowska"])}> Gunwo </button>
                 {/*<button onClick={()=>addCollaborator("jedrekszor", "vnlab-test", "emiliamarkowska")}>Add collaborator</button>*/}
                 <button onClick={()=>listCollaborators("jedrekszor", "vnlab-test")}>list collaborators</button>
                 <button onClick={()=>addFiles("C:/dupa")}>Dej mie tom liste</button>
