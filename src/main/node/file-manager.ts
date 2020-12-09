@@ -1,21 +1,17 @@
 import fs from 'fs';
 import path from 'path';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { selectDefaultDirPath } from '../../shared/slices/configurationSlice';
-import { setPublicationList, addPublication } from '../../shared/slices/publicationsSlice';
+import { addPublication } from '../../shared/slices/publicationsSlice';
 
-const dispatch = useDispatch();
 
 function isRepository(source: string): boolean {
   return fs.existsSync(path.join(source, '.git'));
 }
 
-function isPublication(source: string): boolean {
+export function isPublication(source: string): boolean {
   return fs.existsSync(path.join(source, 'publication_config.json'));
 }
 
-function isDirectory(source: string): boolean {
+export function isDirectory(source: string): boolean {
   try {
     return fs.lstatSync(source).isDirectory();
   } catch (error) {
@@ -32,36 +28,42 @@ function getDirectories(source: string): string[] {
       .map((name) => path.join(source, name))
       .filter(isDirectory);
   } catch (error) {
-    console.log(error);
   }
   return directories;
 }
 
-function recursiveSearch(path: string): void {
-  if (isPublication(path)) {
+function recursiveSearch(source: string): void {
+  if (isPublication(source)) {
     try {
-      let rawdata = fs.readFileSync('publication_config.json');
+      let filePath = path.join(source, 'publication_config.json');
+      let rawdata = fs.readFileSync(filePath);
       let dataParsed = JSON.parse(rawdata.toString());
-      dispatch(addPublication({project_name: dataParsed.publication_name, 
+      addPublication({project_name: dataParsed.project_name, 
         collaborators: dataParsed.collaborators, pm_preference: dataParsed.collaborators,
-         description: dataParsed.description ,dirPath: path}));
-    } catch(err) {}
-  } else if (!isRepository(path)) {
-    const availableDirectories: string[] = getDirectories(path);
+         description: dataParsed.description ,dirPath: source});
+    } catch(err) {
+    }
+  } else if (!isRepository(source)) {
+    const availableDirectories: string[] = getDirectories(source);
     for (var i = 0; i < availableDirectories.length; i++) {
       recursiveSearch(availableDirectories[i]);
     }
   }
 }
 
-function findLocalPublications(): void {
-  const path = useSelector(selectDefaultDirPath);
-
-  if (fs.existsSync(path)) {
-    if (isDirectory(path)) {
-      recursiveSearch(path);
+export function findLocalPublications(source: string): Promise<boolean> {
+  return new Promise<boolean>((resolve, reject) => {
+    try{
+      if (fs.existsSync(source) && isDirectory(source)) {
+          recursiveSearch(source);
+          resolve(true);
+      } else {
+        resolve(false);
+      }
+    } catch(e) {
+      reject(e);
     }
-  } 
+    
+  })
+  
 }
-
-export default {findLocalPublications, isDirectory, isPublication};

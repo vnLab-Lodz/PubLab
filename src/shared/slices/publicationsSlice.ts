@@ -12,8 +12,6 @@ type PublicationListElement = {
   pm_preference: string,
   description: string,
   dirPath: string,
-    /*id: number,  
-    publicationName: string*/
   };
 
 type PublicationList = {
