@@ -41,7 +41,7 @@ export function getUserRepositories(accessToken: string): Repository[] {
  * @param repoName - name of the repository
  * @param description - description of repository(optional)
  */
-export async function createNewRepository(accessToken: string, repoName: string, description?: string) : Promise<AxiosResponse> {
+export async function createNewRepository(accessToken: string, repoName: string, description?: string): Promise<any> {
     return await axios({
         method: 'POST',
         headers: {
@@ -61,7 +61,6 @@ export async function createNewRepository(accessToken: string, repoName: string,
     }).then(data => {
         return data;
     });
-
 }
 
 /**
@@ -84,7 +83,7 @@ export async function clone(dir: string, url: string, accessToken: string): Prom
     });
 }
 
-export async function init(dir: string) : Promise<void> {
+export async function init(dir: string): Promise<void> {
     await git.init({
         fs,
         dir
@@ -97,7 +96,7 @@ export async function init(dir: string) : Promise<void> {
  *
  */
 export async function getLocalBranches(dir: string) {
-    return await git.listBranches({fs, dir: dir })
+    return await git.listBranches({fs, dir: dir})
 }
 
 /**
@@ -112,7 +111,7 @@ export async function getRemoteBranches(dir: string) {
  * @param dir - path to directory with project
  * @param name - name of the branch
  */
-export async function createBranch(dir: string, name: string) {
+export async function createBranch(dir: string, name: string): Promise<void> {
     await git.branch({fs, dir: dir, ref: name, checkout: true})
 }
 
@@ -223,7 +222,7 @@ export async function commit(dir: string, author: Author, message: string): Prom
  * @param dir - Current working directory (From which command will be executed)
  * @param accessToken - Authentication access token
  */
-export function push(dir: string, accessToken: string): void {
+export async function push(dir: string, accessToken: string): Promise<any> {
     git.push({
         fs,
         http,
@@ -235,7 +234,6 @@ export function push(dir: string, accessToken: string): void {
 }
 
 
-
 export function publish(): void {
     const token = '';
     const file = {filename: 'test.txt', path: 'C:\\Users\\anton\\Desktop'};
@@ -244,7 +242,7 @@ export function publish(): void {
     push("C:\\Users\\anton\\Desktop", token);
 }
 
-export function addCollaborator(accessToken :string, owner: string, repo: string, username: string): void {
+export function addCollaborator(accessToken: string, owner: string, repo: string, username: string): void {
     let octokit = new Octokit({
         auth: accessToken
     })
@@ -255,8 +253,8 @@ export function addCollaborator(accessToken :string, owner: string, repo: string
     });
 }
 
-export function addCollaborators(accessToken : string, owner : string, repo: string, usernames: string[]) {
-    usernames.forEach((username : string) => addCollaborator(accessToken, owner, repo, username))
+export async function addCollaborators(accessToken: string, owner: string, repo: string, usernames: string[]): Promise<any> {
+    usernames.forEach((username: string) => addCollaborator(accessToken, owner, repo, username))
 }
 
 export function removeCollaborator(owner: string, repo: string, username: string): void {
@@ -273,7 +271,7 @@ export async function listCollaborators(owner: string, repo: string): Promise<st
         owner,
         repo,
     })
-        .then((data : any) => {
+        .then((data: any) => {
             data.data.forEach((collaborator: any) => {
                 collaborators.push(collaborator.login)
             })
@@ -282,7 +280,7 @@ export async function listCollaborators(owner: string, repo: string): Promise<st
     return collaborators;
 }
 
-export async function addRemote(dir: string, remote: string, url: string) {
+export async function addRemote(dir: string, remote: string, url: string): Promise<void> {
     await git.addRemote({
         fs,
         dir: dir,
