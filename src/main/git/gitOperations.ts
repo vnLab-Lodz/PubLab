@@ -86,6 +86,14 @@ export function clone(dir: string, url: string, accessToken: string): void {
     });
 }
 
+export function init(dir: string) : void {
+    git.init({
+        fs,
+        dir
+    })
+}
+
+
 /**
  * Get list of local branches
  *
@@ -187,7 +195,7 @@ function removeFiles(files: File[]): void {
  * @param author - Author of the commit
  * @param message - Message of the commit
  */
-function commit(dir: string, author: Author, message: string): void {
+export function commit(dir: string, author: Author, message: string): void {
     git.commit({
         fs,
         dir: dir,
