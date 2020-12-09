@@ -70,6 +70,7 @@ export async function createNewRepository(accessToken: string, repoName: string,
  * clone repository to given folder
  * @param dir - path to directory
  * @param url - url to repository
+ * @param accessToken - access token
  */
 export function clone(dir: string, url: string, accessToken: string): void {
     git.clone({
@@ -107,14 +108,19 @@ export async function getRemoteBranches(dir: string) {
  * @param accessToken
  */
 export async function createBranch(dir: string, name: string, accessToken: string) {
-    await git.branch({ fs, dir: dir, ref: name, checkout: true })
-    let pushResult = await git.push({
+    git.branch({ fs, dir: dir, ref: name, checkout: true }).then((data : void) => {
+        console.log(getLocalBranches(dir));
+    })
+
+
+
+   /* let pushResult = await git.push({
         fs,
         http,
         dir: dir,
         onAuth: () => ({ username: accessToken}),
-    })
-    console.log(pushResult)
+    })*/
+   // console.log(pushResult)
 }
 
 
