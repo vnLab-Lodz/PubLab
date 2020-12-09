@@ -2,9 +2,6 @@ import axios, {AxiosResponse} from "axios";
 import {Author, BranchNames, Repository, WEB_PUB_REPO_NAME} from "./gitTypes";
 import {File} from "./gitTypes";
 import {Octokit} from "@octokit/rest";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
-import {NoParamCallback} from "fs";
 
 const git = require('isomorphic-git')
 const http = require('isomorphic-git/http/node')
@@ -87,8 +84,8 @@ export function clone(dir: string, url: string, accessToken: string): void {
     });
 }
 
-export function init(dir: string) : void {
-    git.init({
+export async function init(dir: string) : Promise<void> {
+    await git.init({
         fs,
         dir
     })
@@ -111,25 +108,22 @@ export async function getRemoteBranches(dir: string) {
 }
 
 /**
- * creates new branch locally and push it to repository
+ * creates new branch locally
  * @param dir - path to directory with project
  * @param name - name of the branch
- * @param accessToken
  */
-export async function createBranch(dir: string, name: string, accessToken: string) {
-    git.branch({ fs, dir: dir, ref: name, checkout: true }).then((data : void) => {
-        console.log(getLocalBranches(dir));
-    })
+export async function createBranch(dir: string, name: string) {
+    await git.branch({fs, dir: dir, ref: name, checkout: true})
+}
 
-
-
-   /* let pushResult = await git.push({
+export async function pushBranch(dir: string, accessToken: string) {
+    let pushResult = await git.push({
         fs,
         http,
         dir: dir,
-        onAuth: () => ({ username: accessToken}),
-    })*/
-   // console.log(pushResult)
+        onAuth: () => ({username: accessToken}),
+    })
+    console.log(pushResult)
 }
 
 
@@ -174,7 +168,7 @@ function traverseDir(dir: string): File[] {
  * Adds multiple files loccaly
  * @param path - Path of the root of the project
  */
-export function addFiles(path: string): void {
+export async function addFiles(path: string): Promise<void> {
     traverseDir(path).forEach(file => {
         addFile(file);
     });
@@ -209,13 +203,13 @@ function removeFiles(files: File[]): void {
  * @param author - Author of the commit
  * @param message - Message of the commit
  */
-export function commit(dir: string, author: Author, message: string): void {
+export async function commit(dir: string, author: Author, message: string): Promise<void> {
     git.commit({
         fs,
         dir: dir,
         author: {
-            name: author.name,
-            email: author.email,
+            name: 'Mr. Test',
+            email: 'a.brylski@gmail.com'
         },
         message: message
     })
@@ -286,4 +280,14 @@ export async function listCollaborators(owner: string, repo: string): Promise<st
         })
     console.log(collaborators)
     return collaborators;
+}
+
+export async function addRemote(dir: string, remote: string, url: string) {
+    await git.addRemote({
+        fs,
+        dir: dir,
+        remote: remote,
+        url: url
+    })
+    console.log('done add remote')
 }
