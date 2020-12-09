@@ -49,7 +49,7 @@ class App extends React.Component <AppProps>{
                 {/*<button onClick={()=>createBranch("/home/aleksander/Desktop/asd", "redaktor", "asdasdsa")}> branch </button>*/}
                 {/*<button onClick={()=>clone("C:/vnlab-tool", "https://github.com/jedrekszor/vnlab-test")}> Clone Jędrek</button>*/}
                 <button onClick={()=>publish()}> Publish </button>
-                <button onClick={()=>createProject("008794d51fafec3c6445847419805b454c53d82c", "repo1","/home/aleksander/Desktop/dupa1", ["emiliamarkowska"])}> Gunwo </button>
+                <button onClick={()=>createProject("46cabcceff655ede7748dd70640c0b5c99344112", "repo1","/home/aleksander/Desktop/dupa1", ["emiliamarkowska"])}> Gunwo </button>
                 {/*<button onClick={()=>addCollaborator("jedrekszor", "vnlab-test", "emiliamarkowska")}>Add collaborator</button>*/}
                 <button onClick={()=>listCollaborators("jedrekszor", "vnlab-test")}>list collaborators</button>
                 <button onClick={()=>addFiles("C:/dupa")}>Dej mie tom liste</button>

@@ -70,8 +70,8 @@ export async function createNewRepository(accessToken: string, repoName: string,
  * @param url - url to repository
  * @param accessToken - access token
  */
-export function clone(dir: string, url: string, accessToken: string): void {
-    git.clone({
+export async function clone(dir: string, url: string, accessToken: string): Promise<void> {
+    await git.clone({
         fs,
         http,
         dir,

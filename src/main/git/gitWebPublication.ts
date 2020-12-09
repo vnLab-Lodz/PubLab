@@ -13,7 +13,7 @@ const fs = require('fs');
 const path = require('path');
 const process = require('process');
 
-export function createFoldersInDirectory(projectDirectory : string) : void {
+export async function createFoldersInDirectory(projectDirectory : string) : Promise<void> {
     fs.mkdir(path.join(projectDirectory, 'src'), function () {});
     fs.writeFile(projectDirectory +'/src/ReadMeSrc.txt', "This folder should contain code written by a programmer", function () {});
 
@@ -28,14 +28,17 @@ export async function createProject(accessToken: string,
                                     collaborators : string[],
                                     description?: string) {
     let responseData = await createNewRepository(accessToken, repoName, description)
-    createFoldersInDirectory(projectDirectory)
-    addCollaborators(accessToken, responseData.data.owner.login, responseData.data.name, collaborators);
+
     init(projectDirectory).then(r => {
-        addFiles(projectDirectory).then(r => {
-            commit(projectDirectory, responseData.data.owner.login, "first commit").then(r => {
-                createBranch(projectDirectory, "master");
-                addRemote(projectDirectory,  "origin", responseData.data.clone_url).then(r=> {
-                    push(projectDirectory, accessToken);
+        createFoldersInDirectory(projectDirectory).then(r=> {
+            addFiles(projectDirectory).then(r => {
+                commit(projectDirectory, responseData.data.owner.login, "first commit").then(r => {
+                    createBranch(projectDirectory, "master");
+                    addRemote(projectDirectory,  "origin", responseData.data.clone_url).then(r=> {
+                        push(projectDirectory, accessToken);
+                        addCollaborators(accessToken, responseData.data.owner.login, responseData.data.name, collaborators);
+
+                    })
                 })
             })
         })
