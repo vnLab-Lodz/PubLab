@@ -9,6 +9,7 @@ import {NoParamCallback} from "fs";
 const git = require('isomorphic-git')
 const http = require('isomorphic-git/http/node')
 const fs = require('fs')
+var path = require('path')
 let octokit = new Octokit({
     auth: '2b16c63d908a87d69b8df96b655f693304865cb6',
 })
@@ -138,16 +139,29 @@ function checkout(branchDir: string, branchName: string) {
  */
 function addFile(file: File): void {
     git.add({fs, dir: file.path, filepath: file.filename})
-        .then(() => console.log('(git remove) Ok: ' + file.filename))
-        .catch((error: any) => console.error('(git remove) Error: ' + error));
+        .then(() => console.log('(git add) Ok: ' + file.filename))
+        .catch((error: any) => console.error('(git add) Error: ' + error));
+}
+
+function traverseDir(dir: string): File[] {
+    let results: File[] = []
+    fs.readdirSync(dir).forEach((file: any) => {
+        let fullPath = path.join(dir, file);
+        if (fs.lstatSync(fullPath).isDirectory()) {
+            results = results.concat(traverseDir(fullPath));
+        } else {
+            results.push({filename: file, path: dir});
+        }
+    });
+    return results
 }
 
 /**
- * Adds multiple files loccally
- * @param files - Array of the files needed to be added locally.
+ * Adds multiple files loccaly
+ * @param path - Path of the root of the project
  */
-function addFiles(files: File[]): void {
-    files.forEach(file => {
+export function addFiles(path: string): void {
+    traverseDir(path).forEach(file => {
         addFile(file);
     });
 }

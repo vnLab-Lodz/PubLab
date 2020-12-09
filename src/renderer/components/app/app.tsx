@@ -6,7 +6,14 @@ import { Provider } from 'react-redux';
 import { configStore } from '../../../shared/configureStore';
 import {postAccessToken, authorizeWithGithub} from "../../../main/git/gitAuthorization";
 import ReadOnlyDict = NodeJS.ReadOnlyDict;
-import {createBranch, getUserRepositories, listCollaborators, push} from "../../../main/git/gitOperations";
+import {
+    addFiles,
+    createBranch,
+    getFilesArray,
+    getUserRepositories,
+    listCollaborators, printArray,
+    push
+} from "../../../main/git/gitOperations";
 import {createFoldersInDirectory, createProject} from "../../../main/git/gitWebPublication";
 import {addCollaborator, clone, publish} from "../../../main/git/gitOperations";
 require('dotenv').config();
@@ -48,6 +55,7 @@ class App extends React.Component <AppProps>{
                 <button onClick={()=>createProject("20885423ca9c3a396fd2f4a993f9bfb171200fa7", "repo1","C:/Users/Admin/Desktop/gunwo", ["emiliamarkowska"])}> Gunwo </button>
                 <button onClick={()=>addCollaborator("jedrekszor", "vnlab-test", "emiliamarkowska")}>Add collaborator</button>
                 <button onClick={()=>listCollaborators("jedrekszor", "vnlab-test")}>list collaborators</button>
+                <button onClick={()=>addFiles("C:/dupa")}>Dej mie tom liste</button>
                 <Description />
             </Provider>
         );
