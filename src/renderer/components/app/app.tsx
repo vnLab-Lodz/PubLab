@@ -5,17 +5,14 @@ import Description from '../description/description';
 import { Provider } from 'react-redux';
 import { configStore } from '../../../shared/configureStore';
 import {postAccessToken, authorizeWithGithub} from "../../../main/git/gitAuthorization";
-import ReadOnlyDict = NodeJS.ReadOnlyDict;
 import {
     addFiles,
     createBranch,
-    getFilesArray,
     getUserRepositories,
-    listCollaborators, printArray,
-    push
+    listCollaborators,
 } from "../../../main/git/gitOperations";
-import {createFoldersInDirectory, createProject} from "../../../main/git/gitWebPublication";
-import {addCollaborator, clone, publish} from "../../../main/git/gitOperations";
+import {createProject} from "../../../main/git/gitWebPublication";
+import {publish} from "../../../main/git/gitOperations";
 require('dotenv').config();
 
 console.log(process.env);
@@ -48,12 +45,12 @@ class App extends React.Component <AppProps>{
                 <h1 className='hello'>Hello World!</h1>
                 <button onClick={()=>authorizeWithGithub()}> Odpal git</button>
                 <button onClick={()=>getUserRepositories('as')}> tworz repo</button>
-                <button onClick={()=>clone("/home/aleksander/Desktop/asd", "https://github.com/aleksanderbrylski/twitterbot")}> Clone Olek</button>
+                {/*<button onClick={()=>clone("/home/aleksander/Desktop/asd", "https://github.com/aleksanderbrylski/twitterbot")}> Clone Olek</button>*/}
                 <button onClick={()=>createBranch("/home/aleksander/Desktop/asd", "redaktor", "asdasdsa")}> branch </button>
-                <button onClick={()=>clone("C:/vnlab-tool", "https://github.com/jedrekszor/vnlab-test")}> Clone Jędrek</button>
+                {/*<button onClick={()=>clone("C:/vnlab-tool", "https://github.com/jedrekszor/vnlab-test")}> Clone Jędrek</button>*/}
                 <button onClick={()=>publish()}> Publish </button>
                 <button onClick={()=>createProject("6c3bfa521bf0e4d2abd4c1c1720af7985a583374", "repo1","C:/Users/Admin/Desktop/gunwo", ["emiliamarkowska"])}> Gunwo </button>
-                <button onClick={()=>addCollaborator("jedrekszor", "vnlab-test", "emiliamarkowska")}>Add collaborator</button>
+                {/*<button onClick={()=>addCollaborator("jedrekszor", "vnlab-test", "emiliamarkowska")}>Add collaborator</button>*/}
                 <button onClick={()=>listCollaborators("jedrekszor", "vnlab-test")}>list collaborators</button>
                 <button onClick={()=>addFiles("C:/dupa")}>Dej mie tom liste</button>
                 <Description />
