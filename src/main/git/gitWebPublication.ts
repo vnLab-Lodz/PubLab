@@ -6,7 +6,10 @@ const process = require('process');
 
 export function createFoldersInDirectory(projectDirectory : string) : void {
     fs.mkdir(path.join(projectDirectory, 'src'), function () {});
+    fs.writeFile(projectDirectory +'/src/ReadMeSrc.txt', "This folder should contain code written by a programmer", function () {});
+
     fs.mkdir(path.join(projectDirectory, 'content'), function () {});
+    fs.writeFile(projectDirectory + '/content/ReadMeContent.txt', "This folder should contain code written by a publisher", function () {});
 }
 
 
