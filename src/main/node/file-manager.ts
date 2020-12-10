@@ -2,12 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import { addPublication } from '../../shared/slices/publicationsSlice';
 
+let configFileName = 'vn-pub.conf';
+
 function isRepository(source: string): boolean {
   return fs.existsSync(path.join(source, '.git'));
 }
 
 export function isPublication(source: string): boolean {
-  return fs.existsSync(path.join(source, 'publication_config.json'));
+  return fs.existsSync(path.join(source, configFileName));
 }
 
 export function isDirectory(source: string): boolean {
@@ -33,7 +35,7 @@ function getDirectories(source: string): string[] {
 function recursiveSearch(source: string): void {
   if (isPublication(source)) {
     try {
-      let filePath = path.join(source, 'publication_config.json');
+      let filePath = path.join(source, configFileName);
       let rawdata = fs.readFileSync(filePath);
       let dataParsed = JSON.parse(rawdata.toString());
       addPublication({
