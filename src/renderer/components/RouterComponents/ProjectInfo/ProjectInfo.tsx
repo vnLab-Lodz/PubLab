@@ -9,16 +9,7 @@ interface IProps {
 
 const ProjectInfo = ({ project }: IProps) => (
   <div className='projectList__project__info'>
-    {project.id == -1 ? (
-      <div style={{ color: 'white' }}>
-        <div>
-          <h1 className='projectList__info_header'>VNLAB</h1>
-          <div style={{ marginLeft: '35px', marginRight: '35px' }}>
-            <h2>Info, shortcuts, tips</h2>
-          </div>
-        </div>
-      </div>
-    ) : (
+    {project.id == -1 ? null : (
       <div style={{ color: 'white' }}>
         <h1 className='projectList__info_header'> Project's info</h1>
         <h2 style={{ marginLeft: '35px', marginRight: '35px' }}>
