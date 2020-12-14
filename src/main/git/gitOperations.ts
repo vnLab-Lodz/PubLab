@@ -144,13 +144,15 @@ function checkout(branchDir: string, branchName: string) {
  * Adds single file locally
  * @param file - File passed to be added locally
  */
-function addFile(file: File): void {
+export function addFile(file: File): void {
+    console.log(file.path);
+    console.log(file.filename);
     git.add({fs, dir: file.path, filepath: file.filename})
         .then(() => console.log('(git add) Ok: ' + file.filename))
         .catch((error: any) => console.error('(git add) Error: ' + error));
 }
 
-function traverseDir(dir: string): File[] {
+export function traverseDir(dir: string): File[] {
     let results: File[] = []
     fs.readdirSync(dir).forEach((file: any) => {
         let fullPath = path.join(dir, file);
@@ -163,15 +165,6 @@ function traverseDir(dir: string): File[] {
     return results
 }
 
-/**
- * Adds multiple files loccaly
- * @param path - Path of the root of the project
- */
-export async function addFiles(path: string): Promise<void> {
-    traverseDir(path).forEach(file => {
-        addFile(file);
-    });
-}
 
 //OK Removing file(s)
 
@@ -289,4 +282,28 @@ export async function addRemote(dir: string, remote: string, url: string): Promi
         url: url
     })
     console.log('done add remote')
+}
+
+export async function addFiles(path: string): Promise<void> {
+    searchForFiles(path, new Array<File>()).forEach((value) => addFile(value));
+}
+
+export function searchForFiles(dirPath: string, arrayOfFiles: File[], dirToRepo: string = dirPath): File[] {
+    if (dirPath.includes('.git')) {
+        return arrayOfFiles;
+    }
+
+    let files = fs.readdirSync(dirPath);
+    arrayOfFiles = arrayOfFiles || [];
+
+    files.forEach(function (file: string) {
+        if (fs.statSync(dirPath + '/' + file).isDirectory()) {
+            arrayOfFiles = searchForFiles(dirPath + '/' + file, arrayOfFiles, dirToRepo);
+        } else {
+            // let newPath = dirPath.replace(new RegExp('/', 'g'), '\u005C');
+            let relPath = dirPath.replace(dirToRepo + '/', '');
+            arrayOfFiles.push({filename: relPath + '/' + file, path: dirToRepo});
+        }
+    })
+    return arrayOfFiles;
 }

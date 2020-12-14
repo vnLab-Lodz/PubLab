@@ -32,27 +32,35 @@ export async function createProject(accessToken: string,
         //After creation of the repository fire sequence of setting up methods
         Promise.resolve()
             .then(function () {
+                console.log(1);
                 return createFoldersInDirectory(projectDirectory);
             })
             .then(function () {
+                console.log(2);
                 return addCollaborators(accessToken, responseData.data.owner.login, responseData.data.name, collaborators);
             })
             .then(function () {
+                console.log(3);
                 return init(projectDirectory);
             })
             .then(function () {
+                console.log(4);
                 return addFiles(projectDirectory);
             })
             .then(function (){
+                console.log(5);
                 return commit(projectDirectory, responseData.data.owner, "first commit");
             })
             .then(function () {
-                return createBranch(projectDirectory,  "master");
+                console.log(6);
+                return createBranch(projectDirectory,  "main");
             })
             .then(function () {
+                console.log(7);
                 return addRemote(projectDirectory, "origin", responseData.data.clone_url);
             })
             .then(function () {
+                console.log(8);
                 return push(projectDirectory, accessToken);
             })
     })

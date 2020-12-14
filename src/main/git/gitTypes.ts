@@ -4,9 +4,13 @@ export interface Repository {
     url: string
 }
 
-export interface File {
-    filename: string,
-    path: string
+export class File {
+    filename: string;
+    path: string;
+
+    toString() : string {
+        return this.path + "/" + this.filename;
+    }
 }
 
 export interface Author {
