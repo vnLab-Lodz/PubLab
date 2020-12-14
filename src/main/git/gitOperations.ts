@@ -8,7 +8,7 @@ const http = require('isomorphic-git/http/node')
 const fs = require('fs')
 var path = require('path')
 let octokit = new Octokit({
-    auth: '2b16c63d908a87d69b8df96b655f693304865cb6',
+    auth: '4fd3007b3e6f1944ce185352fddf552a7db1f7ec',
 })
 
 /**
@@ -277,7 +277,6 @@ export async function listCollaborators(owner: string, repo: string): Promise<st
                 collaborators.push(collaborator.login)
             })
         })
-    console.log(collaborators)
     return collaborators;
 }
 
@@ -290,3 +289,28 @@ export async function addRemote(dir: string, remote: string, url: string): Promi
     })
     console.log('done add remote')
 }
+
+export async function getPublications(path: string): Promise<string[]>{
+    let repo: string;
+    let owner: string;
+    const results: string[] = [];
+    await octokit.repos.listForAuthenticatedUser().then((data: any) => {
+        data.data.forEach((rep: any) => {
+            owner = rep.owner.login
+            repo = rep.name
+            octokit.repos.getContent({
+                owner,
+                repo,
+                path,
+            }).then((data: any) => {
+                if(data.status == 200) {
+                    results.push(rep.name)
+                }
+            }).catch((error) => {
+                console.log(error)
+            })
+        })
+    })
+    return results;
+}
+

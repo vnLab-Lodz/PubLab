@@ -7,7 +7,7 @@ import { configStore } from '../../../shared/configureStore';
 import {postAccessToken, authorizeWithGithub} from "../../../main/git/gitAuthorization";
 import {
     addFiles,
-    createBranch,
+    createBranch, getPublications,
     getUserRepositories,
     listCollaborators,
 } from "../../../main/git/gitOperations";
@@ -53,6 +53,7 @@ class App extends React.Component <AppProps>{
                 {/*<button onClick={()=>addCollaborator("jedrekszor", "vnlab-test", "emiliamarkowska")}>Add collaborator</button>*/}
                 <button onClick={()=>listCollaborators("jedrekszor", "vnlab-test")}>list collaborators</button>
                 <button onClick={()=>addFiles("C:/dupa")}>Dej mie tom liste</button>
+                <button onClick={()=>getPublications('vn-config.json')}>Publikacje</button>
                 <Description />
             </Provider>
         );
