@@ -7,12 +7,12 @@ import { configStore } from '../../../shared/configureStore';
 import {postAccessToken, authorizeWithGithub} from "../../../main/git/gitAuthorization";
 import {
     addFiles,
-    createBranch,
     getUserRepositories,
     listCollaborators,
 } from "../../../main/git/gitOperations";
 import {createProject} from "../../../main/git/gitWebPublication";
 import {publish} from "../../../main/git/gitOperations";
+import {getCommitChanges, getListOfCommits} from "../../../main/git/gitCommits";
 require('dotenv').config();
 
 console.log(process.env);
@@ -53,6 +53,8 @@ class App extends React.Component <AppProps>{
                 {/*<button onClick={()=>addCollaborator("jedrekszor", "vnlab-test", "emiliamarkowska")}>Add collaborator</button>*/}
                 <button onClick={()=>listCollaborators("jedrekszor", "vnlab-test")}>list collaborators</button>
                 <button onClick={()=>addFiles("C:/dupa")}>Dej mie tom liste</button>
+                <button onClick={()=>getListOfCommits("access","portfolio-maker", "aleksanderbrylski")}>commitsssy</button>
+                <button onClick={()=>getCommitChanges("acces","portfolio-maker", "aleksanderbrylski", "7b2812aba829b20d0676b82efc976edac24339c0")}>commit!11y</button>
                 <Description />
             </Provider>
         );

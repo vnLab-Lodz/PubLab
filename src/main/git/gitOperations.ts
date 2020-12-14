@@ -1,5 +1,5 @@
-import axios, {AxiosResponse} from "axios";
-import {Author, BranchNames, Repository, WEB_PUB_REPO_NAME} from "./gitTypes";
+import axios from "axios";
+import {Repository, WEB_PUB_REPO_NAME} from "./gitTypes";
 import {File} from "./gitTypes";
 import {Octokit} from "@octokit/rest";
 
