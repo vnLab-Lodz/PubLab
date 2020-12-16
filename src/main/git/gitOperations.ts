@@ -97,6 +97,7 @@ export async function init(dir: string): Promise<void> {
  */
 export async function getLocalBranches(dir: string) {
     return await git.listBranches({fs, dir: dir})
+        .then((data : any) => console.log(data));
 }
 
 /**
@@ -104,6 +105,7 @@ export async function getLocalBranches(dir: string) {
  */
 export async function getRemoteBranches(dir: string) {
     return await git.listBranches({fs, dir: dir, remote: 'origin'})
+        .then((data : any) => console.log(data));
 }
 
 /**

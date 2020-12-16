@@ -6,7 +6,7 @@ import {
     commit,
     addFiles,
     push,
-    init, addRemote
+    init, addRemote, getLocalBranches
 } from "./gitOperations";
 
 const fs = require('fs');
@@ -58,6 +58,9 @@ export async function createProject(accessToken: string,
             .then(function () {
                 console.log(7);
                 return addRemote(projectDirectory, "origin", responseData.data.clone_url);
+            })
+            .then(function () {
+                return getLocalBranches(projectDirectory);
             })
             .then(function () {
                 console.log(8);
