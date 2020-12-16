@@ -69,7 +69,7 @@ export async function createProject(accessToken: string,
                 return push(projectDirectory, accessToken);
             })
             .then(function () {
-                return createBranch(projectDirectory, "programmer");
+                return createBranch(projectDirectory, "programista");
             })
             .then(function () {
                 return push(projectDirectory, accessToken);
