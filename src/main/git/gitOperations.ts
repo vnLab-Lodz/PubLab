@@ -59,7 +59,7 @@ export async function createNewRepository(accessToken: string, repoName: string,
             "has_wiki": true
         }
     }).then(data => {
-        return data;
+        return data
     });
 }
 
@@ -118,13 +118,12 @@ export async function createBranch(dir: string, name: string): Promise<void> {
 }
 
 export async function pushBranch(dir: string, accessToken: string) {
-    let pushResult = await git.push({
+    await git.push({
         fs,
         http,
         dir: dir,
         onAuth: () => ({username: accessToken}),
     })
-    console.log(pushResult)
 }
 
 
@@ -166,7 +165,6 @@ export function traverseDir(dir: string): File[] {
     });
     return results
 }
-
 
 
 //OK Removing file(s)
@@ -227,7 +225,7 @@ export async function push(dir: string, accessToken: string): Promise<any> {
         onAuth: () => ({username: accessToken})
     })
         .then(() => console.log('(git push) OK'))
-        .catch((error: any) => console.error('(git commit) Error: ' + error));
+        .catch((error: any) => console.error('(git push) Error: ' + error));
 }
 
 
@@ -282,11 +280,13 @@ export async function addRemote(dir: string, remote: string, url: string): Promi
         dir: dir,
         remote: remote,
         url: url
-    })
+    }).then((data: any) => {
+        console.log(data);
+    });
     console.log('done add remote')
 }
 
-export async function getPublications(path: string): Promise<string[]>{
+export async function getPublications(path: string): Promise<string[]> {
     let repo: string;
     let owner: string;
     const results: string[] = [];
@@ -299,7 +299,7 @@ export async function getPublications(path: string): Promise<string[]>{
                 repo,
                 path,
             }).then((data: any) => {
-                if(data.status == 200) {
+                if (data.status == 200) {
                     results.push(rep.name)
                 }
             }).catch((error) => {

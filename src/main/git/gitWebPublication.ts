@@ -32,41 +32,43 @@ export async function createProject(accessToken: string,
         //After creation of the repository fire sequence of setting up methods
         Promise.resolve()
             .then(function () {
-                console.log(1);
                 return createFoldersInDirectory(projectDirectory);
             })
             .then(function () {
-                console.log(2);
                 return addCollaborators(accessToken, responseData.data.owner.login, responseData.data.name, collaborators);
             })
             .then(function () {
-                console.log(3);
                 return init(projectDirectory);
             })
             .then(function () {
-                console.log(4);
                 return addFiles(projectDirectory);
             })
             .then(function (){
-                console.log(5);
                 return commit(projectDirectory, responseData.data.owner, "first commit");
             })
             .then(function () {
-                console.log(6);
-                return createBranch(projectDirectory,  "main");
+                return addRemote(projectDirectory, "origin", responseData.data.clone_url);
             })
             .then(function () {
-                console.log(7);
-                return addRemote(projectDirectory, "origin", responseData.data.clone_url);
+                return createBranch(projectDirectory, "main");
             })
             .then(function () {
                 return getLocalBranches(projectDirectory);
             })
             .then(function () {
-                console.log(8);
                 return push(projectDirectory, accessToken);
             })
+/*
+            .then(function () {
+                return createBranch(projectDirectory, "programmer");
+            })
+            .then(function () {
+                return getLocalBranches(projectDirectory);
+            })
+            .then(function () {
+                return pushBranch(projectDirectory, accessToken);
+            })
+*/
+
     })
-    //TODO: place for adding collaborators in configuration file, collaborators : string[] will have to be changed to the type containing name and role
-    //TODO: git add, git commit, git push here <----
 }
