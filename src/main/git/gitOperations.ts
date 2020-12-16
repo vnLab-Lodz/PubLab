@@ -1,12 +1,12 @@
-import axios from "axios";
-import {Repository, WEB_PUB_REPO_NAME} from "./gitTypes";
+import axios, {AxiosResponse} from "axios";
+import {Author, BranchNames, Repository, WEB_PUB_REPO_NAME} from "./gitTypes";
 import {File} from "./gitTypes";
 import {Octokit} from "@octokit/rest";
 
 const git = require('isomorphic-git')
 const http = require('isomorphic-git/http/node')
 const fs = require('fs')
-var path = require('path')
+let path = require('path')
 let octokit = new Octokit({
     auth: '4fd3007b3e6f1944ce185352fddf552a7db1f7ec',
 })

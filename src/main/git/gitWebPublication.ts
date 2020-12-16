@@ -61,17 +61,5 @@ export async function createProject(accessToken: string,
             .then(function () {
                 return push(projectDirectory, accessToken);
             })
-/*
-            .then(function () {
-                return createBranch(projectDirectory, "programmer");
-            })
-            .then(function () {
-                return getLocalBranches(projectDirectory);
-            })
-            .then(function () {
-                return pushBranch(projectDirectory, accessToken);
-            })
-*/
-
     })
 }
