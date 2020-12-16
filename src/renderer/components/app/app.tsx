@@ -50,7 +50,7 @@ class App extends React.Component <AppProps>{
                 {/*<button onClick={()=>createBranch("/home/aleksander/Desktop/asd", "redaktor", "asdasdsa")}> branch </button>*/}
                 {/*<button onClick={()=>clone("C:/vnlab-tool", "https://github.com/jedrekszor/vnlab-test")}> Clone Jędrek</button>*/}
                 <button onClick={()=>publish()}> Publish </button>
-                <button onClick={()=>createProject("c1475f9255b9331bb0a59131c011fc179e88c52b", "repo1","C:/Users/Admin/Desktop/gunwo", ["emiliamarkowska"])}> Gunwo </button>
+                <button onClick={()=>createProject("ce2d74d3276a01fa7032bb3bd52026dae48ba3a8", "repo1","C:/Users/Admin/Desktop/gunwo", ["emiliamarkowska"])}> Gunwo </button>
                 {/*<button onClick={()=>addCollaborator("jedrekszor", "vnlab-test", "emiliamarkowska")}>Add collaborator</button>*/}
                 <button onClick={()=>listCollaborators("jedrekszor", "vnlab-test")}>list collaborators</button>
                 <button onClick={() => addFile({filename: 'src/src1.txt', path: 'C:/Users/Admin/Desktop/gunwo1'})}> add file temp </button>
