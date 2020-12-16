@@ -12,7 +12,6 @@ import { formatDate } from '../../../utils/formatDate';
 import { updateSubview } from '../../../../shared/slices/currentViewSlice';
 import { Subviews } from '../../../constants/Views';
 import { useDispatch } from 'react-redux';
-import { remove } from 'isomorphic-git';
 
 const projects: IProject[] = [
   {
