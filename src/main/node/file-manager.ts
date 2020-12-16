@@ -8,10 +8,20 @@ function isRepository(source: string): boolean {
   return fs.existsSync(path.join(source, '.git'));
 }
 
+/**
+ * Checks if given path is a publication. Returns true if there is a config file in the directory.
+ * @param {string} source
+ * @return {boolean}
+ */
 export function isPublication(source: string): boolean {
   return fs.existsSync(path.join(source, configFileName));
 }
 
+/**
+ * Checks if given path is a directory
+ * @param {string} source
+ * @return {boolean}
+ */
 export function isDirectory(source: string): boolean {
   try {
     return fs.lstatSync(source).isDirectory();
@@ -21,7 +31,7 @@ export function isDirectory(source: string): boolean {
 }
 
 function getDirectories(source: string): string[] {
-  var directories: string[] = [];
+  let directories: string[] = [];
   try {
     const isDirectory = (source: string) => fs.lstatSync(source).isDirectory();
     directories = fs
@@ -48,12 +58,18 @@ function recursiveSearch(source: string): void {
     } catch (err) {}
   } else if (!isRepository(source)) {
     const availableDirectories: string[] = getDirectories(source);
-    for (var i = 0; i < availableDirectories.length; i++) {
+    for (let i = 0; i < availableDirectories.length; i++) {
       recursiveSearch(availableDirectories[i]);
     }
   }
 }
 
+/**
+ * Finds all publication config files and uploads their content to the application state.
+ * Rejects the promise if a command execution error occurs.
+ * @param {string} source
+ * @return {Promise<boolean>}
+ */
 export function findLocalPublications(source: string): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
     try {
