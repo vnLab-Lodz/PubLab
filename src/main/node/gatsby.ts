@@ -1,13 +1,5 @@
 import { exec } from 'child_process';
-import * as fs from 'fs';
-
-const logger = fs.createWriteStream('gatsby-cli-install.log', { flags: 'a' });
-const tzOffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
-
-function appendLog(msg: string): void {
-  let localISOTime = new Date(Date.now() - tzOffset).toISOString();
-  logger.write(localISOTime.replace(/T/, ' ').replace(/\..+/, '') + ' ' + msg + '\n');
-}
+import { appendLog } from '../logger';
 
 /**
  * Check if gatsby-cli is installed globally.
@@ -26,7 +18,10 @@ export function checkForGatsby(): Promise<boolean> {
         reject(stdout);
       }
 
-      if (Object.keys(resultObj).length === 0 && resultObj.constructor === Object) {
+      if (
+        Object.keys(resultObj).length === 0 &&
+        resultObj.constructor === Object
+      ) {
         appendLog('gatsby-cli not installed');
         resolve(false);
       } else {

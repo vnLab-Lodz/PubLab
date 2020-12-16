@@ -1,6 +1,8 @@
 import './index.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/app/app';
+import App from './components/App/App';
 
-ReactDOM.render(<App/>, document.getElementById('root'));
+require('dotenv').config();
+
+ReactDOM.render(<App />, document.getElementById('root'));
