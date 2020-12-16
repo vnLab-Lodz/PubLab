@@ -1,5 +1,4 @@
-import axios, {AxiosResponse} from "axios";
-import {Author, BranchNames, Repository, WEB_PUB_REPO_NAME} from "./gitTypes";
+import axios from "axios";
 import {File} from "./gitTypes";
 import {Octokit} from "@octokit/rest";
 
@@ -7,37 +6,7 @@ const git = require('isomorphic-git')
 const http = require('isomorphic-git/http/node')
 const fs = require('fs')
 let path = require('path')
-let octokit = new Octokit({
-    auth: '4fd3007b3e6f1944ce185352fddf552a7db1f7ec',
-})
-import axios from 'axios';
-import { Repository, WEB_PUB_REPO_NAME } from './gitTypes';
 
-/**
- * return array of objects with name of repository, author of repository and url to repository
- * @param accessToken - accessToken
- */
-export function getUserRepositories(accessToken: string): Repository[] {
-  const repositories: Repository[] = [];
-  axios({
-    method: 'GET',
-    headers: {
-      Authorization: 'token ' + accessToken,
-    },
-    url: 'https://api.github.com/user/repos',
-  }).then((data) => {
-    console.log(data);
-    data.data.forEach((repo: any) => {
-      if (repo.name.indexOf(WEB_PUB_REPO_NAME) !== -1) {
-        repositories.push({
-          name: repo.name,
-          author: repo.owner.login,
-          url: repo.url,
-        } as Repository);
-      }
-    });
-    return repositories;
-}
 
 /**
  * creates new repository on authorized user account
@@ -173,7 +142,6 @@ export function traverseDir(dir: string): File[] {
     return results
 }
 
-
 //OK Removing file(s)
 
 /**
@@ -257,7 +225,10 @@ export async function addCollaborators(accessToken: string, owner: string, repo:
     await usernames.forEach((username: string) => addCollaborator(accessToken, owner, repo, username))
 }
 
-export function removeCollaborator(owner: string, repo: string, username: string): void {
+export function removeCollaborator(accessToken: string, owner: string, repo: string, username: string): void {
+    let octokit = new Octokit({
+        auth: accessToken
+    })
     octokit.repos.removeCollaborator({
         owner,
         repo,
@@ -265,7 +236,10 @@ export function removeCollaborator(owner: string, repo: string, username: string
     })
 }
 
-export async function listCollaborators(owner: string, repo: string): Promise<string[]> {
+export async function listCollaborators(accessToken: string, owner: string, repo: string): Promise<string[]> {
+    let octokit = new Octokit({
+        auth: accessToken
+    })
     const collaborators: string[] = [];
     octokit.repos.listCollaborators({
         owner,
@@ -290,7 +264,10 @@ export async function addRemote(dir: string, remote: string, url: string): Promi
     });
 }
 
-export async function getPublications(path: string): Promise<string[]> {
+export async function getPublications(accessToken: string, path: string): Promise<string[]> {
+    let octokit = new Octokit({
+        auth: accessToken
+    })
     let repo: string;
     let owner: string;
     const results: string[] = [];

@@ -1,6 +1,5 @@
 import {
     addCollaborators,
-    clone,
     createBranch,
     createNewRepository,
     commit,
@@ -11,12 +10,12 @@ import {
 
 const fs = require('fs');
 const path = require('path');
-const process = require('process');
+const mkdirp = require('mkdirp');
 
 export async function createFoldersInDirectory(projectDirectory : string) : Promise<void> {
+    await mkdirp(projectDirectory);
     await fs.mkdir(path.join(projectDirectory, 'src'), function () {});
     await fs.writeFile(projectDirectory +'/src/ReadMeSrc.txt', "This folder should contain code written by a programmer", function () {});
-
     await fs.mkdir(path.join(projectDirectory, 'content'), function () {});
     await fs.writeFile(projectDirectory + '/content/ReadMeContent.txt', "This folder should contain code written by a publisher", function () {});
 }
