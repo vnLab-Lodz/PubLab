@@ -12,6 +12,11 @@ const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
 
+/**
+ * Create basic project folders in given directory
+ * @param projectDirectory - local project directory
+ */
+
 export async function createFoldersInDirectory(projectDirectory : string) : Promise<void> {
     await mkdirp(projectDirectory);
     await fs.mkdir(path.join(projectDirectory, 'src'), function () {});
@@ -20,6 +25,15 @@ export async function createFoldersInDirectory(projectDirectory : string) : Prom
     await fs.writeFile(projectDirectory + '/content/ReadMeContent.txt', "This folder should contain code written by a publisher", function () {});
 }
 
+/**
+ * Function to create new project. Creates folders in given directory, creates repository on github, add collaborators on new github repository,
+ * push local changes to new github repository
+ * @param accessToken - access token
+ * @param repoName - name of the repository on Github
+ * @param projectDirectory - local project directory
+ * @param collaborators - list of collaborators (usernames on github)
+ * @param description - description of github repository
+ */
 export async function createProject(accessToken: string,
                                     repoName: string,
                                     projectDirectory: string,
