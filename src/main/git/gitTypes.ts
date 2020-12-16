@@ -41,3 +41,15 @@ export enum BranchNames {
 }
 
 export const WEB_PUB_REPO_NAME = "WEB_PUB"
+
+export interface Commit {
+    sha: string,
+    message: string,
+    author: string,
+    date: string
+}
+
+export interface CommitDiff {
+    filename: string,
+    differences: string
+}
