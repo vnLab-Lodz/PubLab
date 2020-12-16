@@ -86,7 +86,8 @@ export async function clone(dir: string, url: string, accessToken: string): Prom
 export async function init(dir: string): Promise<void> {
     await git.init({
         fs,
-        dir
+        dir,
+        defaultBranch: 'redaktor'
     })
 }
 
@@ -96,7 +97,7 @@ export async function init(dir: string): Promise<void> {
  *
  */
 export async function getLocalBranches(dir: string) {
-    return await git.listBranches({fs, dir: dir})
+    await git.listBranches({fs, dir: dir})
         .then((data : any) => console.log(data));
 }
 
@@ -145,10 +146,8 @@ function checkout(branchDir: string, branchName: string) {
  * Adds single file locally
  * @param file - File passed to be added locally
  */
-export function addFile(file: File): void {
-    console.log(file.path);
-    console.log(file.filename);
-    git.add({fs, dir: file.path, filepath: file.filename})
+export async function addFile(file: File): Promise<void> {
+    await git.add({fs, dir: file.path, filepath: file.filename})
         .then(() => console.log('(git add) Ok: ' + file.filename))
         .catch((error: any) => console.error('(git add) Error: ' + error));
 }
@@ -197,9 +196,7 @@ function removeFiles(files: File[]): void {
  * @param message - Message of the commit
  */
 export async function commit(dir: string, author: any, message: string): Promise<void> {
-
-    console.log(author);
-    git.commit({
+    await git.commit({
         fs,
         dir: dir,
         author: {
@@ -218,7 +215,7 @@ export async function commit(dir: string, author: any, message: string): Promise
  * @param accessToken - Authentication access token
  */
 export async function push(dir: string, accessToken: string): Promise<any> {
-    git.push({
+   await git.push({
         fs,
         http,
         dir: dir,
@@ -249,7 +246,7 @@ export function addCollaborator(accessToken: string, owner: string, repo: string
 }
 
 export async function addCollaborators(accessToken: string, owner: string, repo: string, usernames: string[]): Promise<any> {
-    usernames.forEach((username: string) => addCollaborator(accessToken, owner, repo, username))
+    await usernames.forEach((username: string) => addCollaborator(accessToken, owner, repo, username))
 }
 
 export function removeCollaborator(owner: string, repo: string, username: string): void {
@@ -283,7 +280,6 @@ export async function addRemote(dir: string, remote: string, url: string): Promi
     }).then((data: any) => {
         console.log(data);
     });
-    console.log('done add remote')
 }
 
 export async function getPublications(path: string): Promise<string[]> {
@@ -312,7 +308,7 @@ export async function getPublications(path: string): Promise<string[]> {
 
 
 export async function addFiles(path: string): Promise<void> {
-    searchForFiles(path, new Array<File>()).forEach((value) => addFile(value));
+    await searchForFiles(path, new Array<File>()).forEach((value) => addFile(value));
 }
 
 export function searchForFiles(dirPath: string, arrayOfFiles: File[], dirToRepo: string = dirPath): File[] {

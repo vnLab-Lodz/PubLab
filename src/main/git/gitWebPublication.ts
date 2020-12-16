@@ -14,11 +14,11 @@ const path = require('path');
 const process = require('process');
 
 export async function createFoldersInDirectory(projectDirectory : string) : Promise<void> {
-    fs.mkdir(path.join(projectDirectory, 'src'), function () {});
-    fs.writeFile(projectDirectory +'/src/ReadMeSrc.txt', "This folder should contain code written by a programmer", function () {});
+    await fs.mkdir(path.join(projectDirectory, 'src'), function () {});
+    await fs.writeFile(projectDirectory +'/src/ReadMeSrc.txt', "This folder should contain code written by a programmer", function () {});
 
-    fs.mkdir(path.join(projectDirectory, 'content'), function () {});
-    fs.writeFile(projectDirectory + '/content/ReadMeContent.txt', "This folder should contain code written by a publisher", function () {});
+    await fs.mkdir(path.join(projectDirectory, 'content'), function () {});
+    await fs.writeFile(projectDirectory + '/content/ReadMeContent.txt', "This folder should contain code written by a publisher", function () {});
 }
 
 export async function createProject(accessToken: string,
@@ -32,7 +32,7 @@ export async function createProject(accessToken: string,
         //After creation of the repository fire sequence of setting up methods
         Promise.resolve()
             .then(function () {
-                return createFoldersInDirectory(projectDirectory);
+                return  createFoldersInDirectory(projectDirectory);
             })
             .then(function () {
                 return addCollaborators(accessToken, responseData.data.owner.login, responseData.data.name, collaborators);
@@ -50,10 +50,13 @@ export async function createProject(accessToken: string,
                 return addRemote(projectDirectory, "origin", responseData.data.clone_url);
             })
             .then(function () {
-                return createBranch(projectDirectory, "main");
+                return getLocalBranches(projectDirectory);
             })
             .then(function () {
-                return getLocalBranches(projectDirectory);
+                return push(projectDirectory, accessToken);
+            })
+            .then(function () {
+                return createBranch(projectDirectory, "programmer");
             })
             .then(function () {
                 return push(projectDirectory, accessToken);
