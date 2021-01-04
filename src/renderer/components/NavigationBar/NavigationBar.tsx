@@ -8,14 +8,33 @@ import {
 import './NavigationBar.scss';
 import { Views } from '../../constants/Views';
 import { terminateSessionAsync } from '../../../shared/slices/currentUserSlice';
+import PlaceholderProjectImage from '../../assets/placeholder-project-image.png';
 
-const TOP_BUTTONS: Views[] = [
-  Views.PROJECT,
-  Views.FILES,
-  Views.CHANGES,
-  Views.SETTINGS,
+interface IButton {
+  abbreviation: string;
+  view: Views;
+}
+
+interface IImageButton extends IButton {
+  src: any;
+}
+
+const PROJECT_BUTTON: IImageButton = {
+  abbreviation: 'P',
+  src: PlaceholderProjectImage,
+  view: Views.PROJECT,
+};
+
+const TOP_BUTTONS: IButton[] = [
+  { abbreviation: 'F', view: Views.FILES },
+  { abbreviation: 'C', view: Views.CHANGES },
+  { abbreviation: 'S', view: Views.SETTINGS },
 ];
-const BOTTOM_BUTTONS: Views[] = [Views.PROJECTS_LIST, Views.APP_SETTINGS];
+
+const BOTTOM_BUTTONS: IButton[] = [
+  { abbreviation: 'PL', view: Views.PROJECTS_LIST },
+  { abbreviation: 'AS', view: Views.APP_SETTINGS },
+];
 
 const NavigationBar = () => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -23,30 +42,40 @@ const NavigationBar = () => {
   const dispatch = useDispatch();
   const currentView = useSelector(selectCurrentView);
 
-  const onNavigationButtonClick = (buttonKey: Views) => () => {
-    dispatch(updateCurrentView(buttonKey));
+  const onNavigationButtonClick = (button: IButton) => () => {
+    dispatch(updateCurrentView(button.view));
   };
 
-  const isButtonActive = (key: Views) => key === currentView.view;
-  const renderListOfButtons = (buttons: Views[]) => {
-    return buttons.map((key: Views) => {
-      const iconClassName = isButtonActive(key)
-        ? 'navbar__button__icon navbar__button__icon--active'
-        : 'navbar__button__icon';
-      return (
-        <button
-          key={key}
-          className='navbar__button'
-          onClick={onNavigationButtonClick(key)}
-        >
-          <div className={iconClassName}>{COMPONENTS_TRANSLATIONS[key][0]}</div>
-          <span className='navbar__button__text'>
-            {COMPONENTS_TRANSLATIONS[key]}
-          </span>
-        </button>
-      );
-    });
+  const isButtonActive = (button: IButton) => button.view === currentView.view;
+  const isImageButton = (
+    button: IButton | IImageButton
+  ): button is IImageButton => (button as IImageButton).src !== undefined;
+
+  const renderButton = (button: IButton | IImageButton) => {
+    const iconClassName = isButtonActive(button)
+      ? 'navbar__button__icon navbar__button__icon--active'
+      : 'navbar__button__icon';
+    return (
+      <button
+        key={button.abbreviation}
+        className='navbar__button'
+        onClick={onNavigationButtonClick(button)}
+      >
+        <div className={iconClassName}>
+          {isImageButton(button) ? (
+            <img src={button.src} alt='Project image' />
+          ) : (
+            button.abbreviation
+          )}
+        </div>
+        <span className='navbar__button__text'>
+          {COMPONENTS_TRANSLATIONS[button.view]}
+        </span>
+      </button>
+    );
   };
+
+  const renderListOfButtons = (buttons: IButton[]) => buttons.map(renderButton);
 
   const navbarClassName = isExpanded ? 'navbar navbar--expanded' : 'navbar';
 
@@ -60,14 +89,17 @@ const NavigationBar = () => {
         }
       }}
     >
-      <div>{renderListOfButtons(TOP_BUTTONS)}</div>
+      <div>
+        {renderButton(PROJECT_BUTTON)}
+        {renderListOfButtons(TOP_BUTTONS)}
+      </div>
       <div>
         {renderListOfButtons(BOTTOM_BUTTONS)}
         <button
           className='navbar__button'
           onClick={() => dispatch(terminateSessionAsync())}
         >
-          <div className='navbar__button__icon'>L</div>
+          <div className='navbar__button__icon'>LO</div>
           <span className='navbar__button__text'>Log out</span>
         </button>
       </div>

@@ -1,10 +1,8 @@
 .wrapper {
   display: grid;
-  grid-template-columns: auto minmax(40vw, 1fr) minmax(40vw, 1fr);
-  grid-column-gap: 0.5rem;
+  grid-template-columns: auto 1fr auto;
   height: 100%;
   box-sizing: border-box;
-  padding: 0.5rem;
 
   > * {
     height: 100%;
