@@ -41,4 +41,12 @@ module.exports = [
       loader: 'svg-url-loader',
     },
   },
+  {
+    test: /\.(png|jpe?g|gif)$/i,
+    use: [
+      {
+        loader: 'file-loader',
+      },
+    ],
+  },
 ];
