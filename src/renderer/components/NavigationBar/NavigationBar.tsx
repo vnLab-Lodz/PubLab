@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {COMPONENTS_TRANSLATIONS} from '../../constants/RouterComponents';
-import {selectCurrentView, updateCurrentView,} from '../../../shared/slices/currentViewSlice';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { COMPONENTS_TRANSLATIONS } from '../../constants/RouterComponents';
+import {
+  selectCurrentView,
+  updateCurrentView,
+} from '../../../shared/slices/currentViewSlice';
 import './NavigationBar.scss';
-import {Views} from '../../constants/Views';
-import {terminateSessionAsync} from '../../../shared/slices/currentUserSlice';
+import { Views } from '../../constants/Views';
+import { terminateSessionAsync } from '../../../shared/slices/currentUserSlice';
 import PlaceholderProjectImage from '../../assets/placeholder-project-image.png';
 
 interface IButton {
@@ -19,18 +22,18 @@ interface IImageButton extends IButton {
 const PROJECT_BUTTON: IImageButton = {
   abbreviation: 'P',
   src: PlaceholderProjectImage,
-  view: Views.PROJECT
-}
+  view: Views.PROJECT,
+};
 
 const TOP_BUTTONS: IButton[] = [
-  {abbreviation: 'F', view: Views.FILES},
-  {abbreviation: 'C', view: Views.CHANGES},
-  {abbreviation: 'S', view: Views.SETTINGS},
+  { abbreviation: 'F', view: Views.FILES },
+  { abbreviation: 'C', view: Views.CHANGES },
+  { abbreviation: 'S', view: Views.SETTINGS },
 ];
 
 const BOTTOM_BUTTONS: IButton[] = [
-  {abbreviation: 'PL', view: Views.PROJECTS_LIST},
-  {abbreviation: 'AS', view: Views.APP_SETTINGS}
+  { abbreviation: 'PL', view: Views.PROJECTS_LIST },
+  { abbreviation: 'AS', view: Views.APP_SETTINGS },
 ];
 
 const NavigationBar = () => {
@@ -44,7 +47,9 @@ const NavigationBar = () => {
   };
 
   const isButtonActive = (button: IButton) => button.view === currentView.view;
-  const isImageButton = (button: IButton | IImageButton): button is IImageButton => (button as IImageButton).src !== undefined;
+  const isImageButton = (
+    button: IButton | IImageButton
+  ): button is IImageButton => (button as IImageButton).src !== undefined;
 
   const renderButton = (button: IButton | IImageButton) => {
     const iconClassName = isButtonActive(button)
@@ -57,11 +62,11 @@ const NavigationBar = () => {
         onClick={onNavigationButtonClick(button)}
       >
         <div className={iconClassName}>
-          {
-            isImageButton(button) ?
-              <img src={button.src} alt="Project image"/> :
-              button.abbreviation
-          }
+          {isImageButton(button) ? (
+            <img src={button.src} alt='Project image' />
+          ) : (
+            button.abbreviation
+          )}
         </div>
         <span className='navbar__button__text'>
           {COMPONENTS_TRANSLATIONS[button.view]}
