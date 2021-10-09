@@ -1,5 +1,5 @@
 import { app, BrowserWindow } from 'electron';
-import { configStore } from '../shared/configureStore';
+import { configStore } from '../shared/redux/configureStore';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: any;
 

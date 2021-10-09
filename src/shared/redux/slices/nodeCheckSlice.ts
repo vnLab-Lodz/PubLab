@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../rootReducer';
-import { checkForNode } from '../../main/node/nodeCheck';
+import { checkForNode } from '../../../main/node/nodeCheck';
 import { createAsyncActionMain } from '../helpers/createActionMain';
 
 type NodeCheck = {

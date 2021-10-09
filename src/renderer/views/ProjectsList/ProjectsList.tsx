@@ -9,7 +9,7 @@ import deleteIcon from './delete-24px.svg';
 
 import './ProjectsList.scss';
 import { formatDate } from '../../../shared/utils/formatDate';
-import { updateSubview } from '../../../shared/slices/currentViewSlice';
+import { updateSubview } from '../../../shared/redux/slices/currentViewSlice';
 import { Subviews } from '../../constants/Views';
 import { useDispatch } from 'react-redux';
 

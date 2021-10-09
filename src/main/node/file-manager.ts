@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { addPublication } from '../../shared/slices/publicationsSlice';
+import { addPublication } from '../../shared/redux/slices/publicationsSlice';
 
 let configFileName = 'vn-pub.conf';
 

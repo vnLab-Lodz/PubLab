@@ -1,8 +1,8 @@
 import React from 'react';
 import './Description.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCurrentUser } from '../../../shared/slices/currentUserSlice';
-import { installGatsbyCLI } from '../../../shared/slices/gatsbyInstallSlice';
+import { selectCurrentUser } from '../../../shared/redux/slices/currentUserSlice';
+import { installGatsbyCLI } from '../../../shared/redux/slices/gatsbyInstallSlice';
 
 const Description = () => {
   const currentUser = useSelector(selectCurrentUser);

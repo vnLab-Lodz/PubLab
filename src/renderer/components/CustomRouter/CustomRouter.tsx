@@ -1,7 +1,7 @@
 import React from 'react';
 import './CustomRouter.scss';
 import { useSelector } from 'react-redux';
-import { selectCurrentView } from '../../../shared/slices/currentViewSlice';
+import { selectCurrentView } from '../../../shared/redux/slices/currentViewSlice';
 import { routerComponents } from '../../constants/RouterComponents';
 import { Subviews } from '../../constants/Views';
 

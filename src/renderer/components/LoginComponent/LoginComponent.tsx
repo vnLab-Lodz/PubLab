@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { authorizeGitHubUserAsync } from '../../../shared/slices/currentUserSlice';
+import { authorizeGitHubUserAsync } from '../../../shared/redux/slices/currentUserSlice';
 import { FaGithub } from 'react-icons/fa';
 import './LoginComponent.scss';
 

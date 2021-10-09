@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../rootReducer';
-import { installGatsby, checkForGatsby } from '../../main/node/gatsby';
+import { installGatsby, checkForGatsby } from '../../../main/node/gatsby';
 import { createAsyncActionMain } from '../helpers/createActionMain';
 
 type GatsbyInstall = {

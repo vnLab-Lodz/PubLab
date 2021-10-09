@@ -6,7 +6,7 @@ import {
   fetchUserDataAsync,
   requestAccesTokenAsync,
   selectCurrentUser,
-} from '../../../shared/slices/currentUserSlice';
+} from '../../../shared/redux/slices/currentUserSlice';
 import LoginComponent from '../LoginComponent/LoginComponent';
 
 const Auth = ({ children }: any) => {

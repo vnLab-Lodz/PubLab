@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../rootReducer';
-import { Subviews, Views } from '../../renderer/constants/Views';
+import { Subviews, Views } from '../../../renderer/constants/Views';
 
 export interface ISubview {
   element: Subviews;

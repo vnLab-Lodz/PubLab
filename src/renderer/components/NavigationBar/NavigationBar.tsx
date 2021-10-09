@@ -4,10 +4,10 @@ import { COMPONENTS_TRANSLATIONS } from '../../constants/RouterComponents';
 import {
   selectCurrentView,
   updateCurrentView,
-} from '../../../shared/slices/currentViewSlice';
+} from '../../../shared/redux/slices/currentViewSlice';
 import './NavigationBar.scss';
 import { Views } from '../../constants/Views';
-import { terminateSessionAsync } from '../../../shared/slices/currentUserSlice';
+import { terminateSessionAsync } from '../../../shared/redux/slices/currentUserSlice';
 import PlaceholderProjectImage from '../../assets/placeholder-project-image.png';
 
 interface IButton {

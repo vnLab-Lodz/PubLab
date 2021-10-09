@@ -3,10 +3,10 @@ import {
   authorizeWithGithub,
   requestAccessToken,
   terminateSession,
-} from '../../main/git/gitAuthorization';
+} from '../../../main/git/gitAuthorization';
 import { createAsyncActionMain } from '../helpers/createActionMain';
 import { RootState } from '../rootReducer';
-import { fetchUserData } from '../../main/git/gitCurrentUser';
+import { fetchUserData } from '../../../main/git/gitCurrentUser';
 
 export enum AUTH_STATES {
   PRE_AUTHORIZE = 'PRE_AUTHORIZE',
