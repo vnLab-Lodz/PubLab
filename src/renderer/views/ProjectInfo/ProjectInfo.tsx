@@ -1,6 +1,6 @@
 import React from 'react';
 import { IProject } from '../ProjectsList/IProject';
-import { formatDate } from '../../../../shared/utils/formatDate';
+import { formatDate } from '../../../shared/utils/formatDate';
 import './ProjectInfo.scss';
 
 interface IProps {

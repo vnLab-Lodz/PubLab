@@ -1,13 +1,13 @@
 import React from 'react';
-import Description from '../components/RouterComponents/Description/Description';
-import Files from '../components/RouterComponents/Files/Files';
-import Changes from '../components/RouterComponents/Changes/Changes';
-import Settings from '../components/RouterComponents/Settings/Settings';
-import ProjectsList from '../components/RouterComponents/ProjectsList/ProjectsList';
-import AppSettings from '../components/RouterComponents/AppSettings/AppSettings';
 import { Subviews, Views } from './Views';
-import ProjectInfo from '../components/RouterComponents/ProjectInfo/ProjectInfo';
-import NoProjects from '../components/RouterComponents/NoProjects/NoProjects';
+import AppSettings from '../views/AppSettings/AppSettings';
+import Description from '../views/Description/Description';
+import Files from '../views/Files/Files';
+import Changes from '../views/Changes/Changes';
+import Settings from '../views/Settings/Settings';
+import ProjectsList from '../views/ProjectsList/ProjectsList';
+import ProjectInfo from '../views/ProjectInfo/ProjectInfo';
+import NoProjects from '../views/NoProjects/NoProjects';
 
 export type RouterComponents = {
   [key in Views | Subviews]: React.FC<any>;
@@ -33,7 +33,5 @@ export const routerComponents: RouterComponents = {
   [Views.APP_SETTINGS]: AppSettings,
   [Subviews.PROJECT_INFO]: ProjectInfo,
   [Subviews.NO_PROJECTS]: NoProjects,
-  [Subviews.NONE]: function () {
-    return null;
-  },
+  [Subviews.NONE]: () => null,
 };
