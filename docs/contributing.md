@@ -4,12 +4,12 @@
 
 ### Issues
 
-Please follow the issue template whenever possible when creating new issues. An exemplary issue can be found [here](https://github.com/karczewskiPiotr/vnlab-tool/issues/1).
+Please follow the issue template whenever possible when creating new issues. An exemplary issue can be found [here](https://github.com/vnLab-Lodz/PubLab/issues/1).
 Make sure to tick all the checklist items.
 
 ### Pull requests
 
-Please follow the pull request template whenever possible when creating new pull requests. An exemplary PR can be found [here](https://github.com/karczewskiPiotr/vnlab-tool/pull/2).
+Please follow the pull request template whenever possible when creating new pull requests. An exemplary PR can be found [here](https://github.com/vnLab-Lodz/PubLab/pull/2).
 Make sure to tick all the checklist items.
 
 ## How do I contribute?
