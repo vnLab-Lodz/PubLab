@@ -1,4 +1,4 @@
-# vnLab Tool
+# PubLab
 
 Tool that helps you kick off your next web publicaion project in no time.
 
