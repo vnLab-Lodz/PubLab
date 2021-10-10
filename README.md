@@ -26,13 +26,13 @@ From command line:
 
     ```bash
     # SSH (Recommended if you have keys configured)
-    $ git clone git@github.com:karczewskiPiotr/vnlab-tool.git
+    $ git clone git@github.com:vnLab-Lodz/PubLab.git
 
     # HTTPS
-    $ git clone https://github.com/karczewskiPiotr/vnlab-tool.git
+    $ git clone https://github.com/vnLab-Lodz/PubLab.git
     ```
 
-2.  Create an OAuth Application
+2.  Create an OAuth Application on GitHub
 
     2a. Enter profile's **Settings** section
 
@@ -49,7 +49,7 @@ From command line:
 3.  Move into directory
 
     ```bash
-    $ cd vnlab-tool
+    $ cd PubLab
     ```
 
 4.  Install dependecies
