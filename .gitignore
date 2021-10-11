@@ -91,3 +91,4 @@ typings/
 out/
 
 .idea
+.vscode
