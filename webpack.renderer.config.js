@@ -8,12 +8,7 @@ rules.push({
 
 module.exports = {
   module: {
-    rules: [
-      {
-        test: /\.(woff|woff2)$/i,
-        type: 'asset/resource',
-      },
-    ]
+    rules,
   },
   plugins: plugins,
   resolve: {
