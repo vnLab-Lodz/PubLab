@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { authorizeGitHubUserAsync } from '../../../shared/redux/slices/currentUserSlice';
 import { FaGithub } from 'react-icons/fa';
 import './LoginComponent.scss';
-import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
 
 const LoginComponent = () => {
