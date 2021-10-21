@@ -191,11 +191,8 @@ const ProjectsList = () => {
   );
 
   const [searchPhrase, setSearchPhrase] = useState('');
-  const [
-    sortOption,
-    setSortOption,
-  ] = useState(() => (a: IProject, b: IProject) =>
-    a.id === b.id ? 0 : a.id > b.id ? 1 : -1
+  const [sortOption, setSortOption] = useState(
+    () => (a: IProject, b: IProject) => a.id === b.id ? 0 : a.id > b.id ? 1 : -1
   );
   const [filterOption, setFilterOption] = useState(() => (s: IProject) => true);
   const [pickedProject, setPickedProject] = useState(emptyProject);

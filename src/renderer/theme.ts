@@ -42,11 +42,11 @@ const hkgroteskExtraBold = {
 // own variants could not be introduced as they do not work with responsiveFontSizes()
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
-    h1: true;   // lg
-    h2: true;   // md
-    h3: true;   // sm
-    h4: true;   // xs
-    h5: true;   // xss
+    h1: true; // lg
+    h2: true; // md
+    h3: true; // sm
+    h4: true; // xs
+    h5: true; // xss
     h6: false;
     subtitle1: false;
     subtitle2: false;
@@ -91,5 +91,5 @@ export let theme = createTheme({
   },
 });
 
-// make the font sizes in the theme responsive to the breakpoint changes 
+// make the font sizes in the theme responsive to the breakpoint changes
 theme = responsiveFontSizes(theme);

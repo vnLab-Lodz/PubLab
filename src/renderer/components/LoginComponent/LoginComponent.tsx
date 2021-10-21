@@ -9,9 +9,7 @@ const LoginComponent = () => {
   const dispatch = useDispatch();
   return (
     <div className='container'>
-      <Typography fontWeight="800">
-      Welcome to VNlab
-      </Typography>
+      <Typography fontWeight='800'>Welcome to VNlab</Typography>
       <div>
         <button
           className='button'

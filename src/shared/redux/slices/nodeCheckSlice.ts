@@ -40,11 +40,8 @@ const nodeCheckSlice = createSlice({
   },
 });
 
-export const {
-  checkingInstallation,
-  nodeInstalled,
-  nodeNotInstalled,
-} = nodeCheckSlice.actions;
+export const { checkingInstallation, nodeInstalled, nodeNotInstalled } =
+  nodeCheckSlice.actions;
 
 export const selectNodeCheckStatus = (state: RootState) => state.nodeCheck;
 
