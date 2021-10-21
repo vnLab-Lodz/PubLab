@@ -1,6 +1,8 @@
-name: Continuous Integration
+name: CI | Push to main
 
-on: [pull_request]
+on:
+  push:
+    branches: [main]
 
 jobs:
   prettier:
@@ -15,4 +17,4 @@ jobs:
       - name: Prettify code 💄
         uses: creyD/prettier_action@v4.0
         with:
-          prettier_options: --write --config .prettierrc ./src
+          prettier_options: --check --config .prettierrc ./src
