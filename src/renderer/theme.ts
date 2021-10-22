@@ -89,7 +89,7 @@ declare module '@mui/material/Typography' {
 export let theme = createTheme({
   typography: {
     fontFamily: 'HK Grotesk',
-    fontWeightLight: 300, 
+    fontWeightLight: 300,
     fontWeightMedium: 500,
     // set up the baseline for what value in pixels 1rem represents
     htmlFontSize: 10,
@@ -114,7 +114,13 @@ export let theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         '@global': {
-          '@font-face': [hkgrotesk, hkgroteskItalic, hkgroteskBold, hkgroteskSemiBold, hkgroteskExtraBold],
+          '@font-face': [
+            hkgrotesk,
+            hkgroteskItalic,
+            hkgroteskBold,
+            hkgroteskSemiBold,
+            hkgroteskExtraBold,
+          ],
         },
       },
     },
