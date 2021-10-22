@@ -1,7 +1,13 @@
-import { Breakpoint, createTheme, responsiveFontSizes } from '@mui/material';
+import { createTheme, responsiveFontSizes } from '@mui/material';
 import HKGroteskWoff2 from './fonts/HKGrotesk/HKGrotesk-Regular.woff2';
 import HKGroteskItalicWoff2 from './fonts/HKGrotesk/HKGrotesk-Italic.woff2';
+import HKGroteskBoldWoff2 from './fonts/HKGrotesk/HKGrotesk-Bold.woff2';
+import HKGroteskSemiBoldWoff2 from './fonts/HKGrotesk/HKGrotesk-SemiBold.woff2';
 import HKGroteskExtraBoldWoff2 from './fonts/HKGrotesk/HKGrotesk-ExtraBold.woff2';
+
+//for different font style variants in components use respective fontWeight/fontStyle
+//defined here or in typoghraphy (fontWeightLight and fontWeightMedium)
+//for reference see <Typography> componend defined in LoginComponent.tsx
 
 const hkgrotesk = {
   fontFamily: 'HK Grotesk',
@@ -23,6 +29,28 @@ const hkgroteskItalic = {
   src: `
     local('HK Grotesk Italic'), local('HKGrotesk-Italic'),
     url(${HKGroteskItalicWoff2}) format('woff2')
+  `,
+};
+
+const hkgroteskBold = {
+  fontFamily: 'HK Grotesk',
+  fontStyle: 'normal',
+  fontDisplay: 'swap',
+  fontWeight: 'bold',
+  src: `
+    local('HK Grotesk Bold'), local('HKGrotesk-Bold'),
+    url(${HKGroteskBoldWoff2}) format('woff2')
+  `,
+};
+
+const hkgroteskSemiBold = {
+  fontFamily: 'HK Grotesk',
+  fontStyle: 'normal',
+  fontDisplay: 'swap',
+  fontWeight: 600,
+  src: `
+    local('HK Grotesk SemiBold'), local('HKGrotesk-SemiBold'),
+    url(${HKGroteskSemiBoldWoff2}) format('woff2')
   `,
 };
 
@@ -61,6 +89,8 @@ declare module '@mui/material/Typography' {
 export let theme = createTheme({
   typography: {
     fontFamily: 'HK Grotesk',
+    fontWeightLight: 300, 
+    fontWeightMedium: 500,
     // set up the baseline for what value in pixels 1rem represents
     htmlFontSize: 10,
     h1: {
@@ -84,7 +114,7 @@ export let theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         '@global': {
-          '@font-face': [hkgrotesk, hkgroteskItalic, hkgroteskExtraBold],
+          '@font-face': [hkgrotesk, hkgroteskItalic, hkgroteskBold, hkgroteskSemiBold, hkgroteskExtraBold],
         },
       },
     },
