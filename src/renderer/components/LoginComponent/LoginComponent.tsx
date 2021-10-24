@@ -3,12 +3,15 @@ import { useDispatch } from 'react-redux';
 import { authorizeGitHubUserAsync } from '../../../shared/redux/slices/currentUserSlice';
 import { FaGithub } from 'react-icons/fa';
 import './LoginComponent.scss';
+import { Typography } from '@mui/material';
 
 const LoginComponent = () => {
   const dispatch = useDispatch();
   return (
     <div className='container'>
-      <div>Welcome to VNlab</div>
+      <Typography fontWeight='normal' fontStyle='italic'>
+        Welcome to VNlab
+      </Typography>
       <div>
         <button
           className='button'
