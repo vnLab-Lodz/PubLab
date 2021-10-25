@@ -7,7 +7,6 @@ import HKGroteskExtraBoldWoff2 from './fonts/HKGrotesk/HKGrotesk-ExtraBold.woff2
 import { blue } from '@mui/material/colors';
 import { palette } from '@mui/system';
 
-
 //for different font style variants in components use respective fontWeight/fontStyle
 //defined here or in typoghraphy (fontWeightLight and fontWeightMedium)
 //for reference see <Typography> componend defined in LoginComponent.tsx
@@ -90,27 +89,26 @@ declare module '@mui/material/Typography' {
 }
 
 export let theme = createTheme({
-  
   palette: {
     primary: {
-      main: '#111111',  //black backgrounds
+      main: '#111111', //black backgrounds
       contrastText: '#DDDDDD',
     },
     secondary: {
-      main: '#DDDDDD',  //light backgrounds
+      main: '#DDDDDD', //light backgrounds
       contrastText: '#111111',
     },
     warning: {
-      main: '#FFD6EA',  //pink, eg. notifications background
+      main: '#FFD6EA', //pink, eg. notifications background
       contrastText: '#111111',
     },
     success: {
-      main: '#01D39F',  //green, eg. button, switches when 
+      main: '#01D39F', //green, eg. button, switches when
       contrastText: '#111111',
     },
     text: {
       primary: '#DDDDDD',
-      secondary:'#111111',
+      secondary: '#111111',
     },
   },
   typography: {
@@ -152,7 +150,6 @@ export let theme = createTheme({
     },
   },
 });
-
 
 // make the font sizes in the theme responsive to the breakpoint changes
 theme = responsiveFontSizes(theme);

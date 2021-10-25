@@ -8,7 +8,7 @@ interface Props {
 
 const AuthButton: React.FC<Props> = ({ children, icon, disabled }) => {
   return (
-    <button  className='auth-btn' disabled={disabled}>
+    <button className='auth-btn' disabled={disabled}>
       {icon && <div className='auth-btn__icon'>{icon}</div>}
       <p className='auth-btn__text'>{children}</p>
     </button>
