@@ -9,10 +9,10 @@
   "description": "Tool aiming to ease the creation and adoption of interactive web publications.",
   "main": ".webpack/main",
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
+    "start": "cross-env NODE_ENV=development electron-forge start",
+    "package": "cross-env NODE_ENV=production electron-forge package",
+    "make": "cross-env NODE_ENV=production electron-forge make",
+    "publish": "cross-env NODE_ENV=production electron-forge publish",
     "format": "yarn prettier --write --config .prettierrc ./src",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -47,9 +47,9 @@
         [
           "@electron-forge/plugin-webpack",
           {
-            "mainConfig": "./webpack.main.config.js",
+            "mainConfig": "./config/webpack.main.config.js",
             "renderer": {
-              "config": "./webpack.renderer.config.js",
+              "config": "./config/webpack.renderer.config.js",
               "entryPoints": [
                 {
                   "html": "./public/index.html",
@@ -84,6 +84,7 @@
     "@types/react-redux": "^7.1.11",
     "@types/react-select": "^3.0.26",
     "babel-loader": "^8.1.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^4.2.1",
     "electron": "10.1.4",
     "electron-devtools-installer": "^3.2.0",

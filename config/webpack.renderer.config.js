@@ -7,9 +7,7 @@ rules.push({
 });
 
 module.exports = {
-  module: {
-    rules,
-  },
+  module: { rules },
   plugins: plugins,
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.scss'],
