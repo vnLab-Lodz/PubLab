@@ -28,10 +28,17 @@ const CurrentViewSlice = createSlice({
     updateSubview: (state: CurrentView, action: PayloadAction<ISubview>) => {
       state.subview = { ...action.payload };
     },
+    resetCurrentView: (state: CurrentView, action: PayloadAction<null>) => {
+      return initialState;
+    }
   },
 });
 
-export const { updateCurrentView, updateSubview } = CurrentViewSlice.actions;
+export const {
+  updateCurrentView,
+  updateSubview,
+  resetCurrentView
+} = CurrentViewSlice.actions;
 
 export const selectCurrentView = (state: RootState) => state.currentView;
 
