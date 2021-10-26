@@ -7,7 +7,7 @@ module.exports = {
   extends: ['airbnb', 'airbnb-typescript', 'prettier'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: './tsconfig.eslint.json',
+    project: './tsconfig.json',
     ecmaFeatures: {
       jsx: true,
     },
@@ -20,16 +20,14 @@ module.exports = {
     // Too restrictive, writing ugly code to defend against a very unlikely scenario: https://eslint.org/docs/rules/no-prototype-builtins
     'no-prototype-builtins': 'off',
     'import/prefer-default-export': 'off',
-    'import/no-default-export': 'error',
+    'import/no-default-export': 'off',
+    'react/jsx-props-no-spreading': 'warn',
     // Too restrictive: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/destructuring-assignment.md
     'react/destructuring-assignment': 'off',
     // No jsx extension: https://github.com/facebook/create-react-app/issues/87#issuecomment-234627904
     'react/jsx-filename-extension': 'off',
     // Use function hoisting to improve code readability
-    'no-use-before-define': [
-      'error',
-      { functions: false, classes: true, variables: true },
-    ],
+    'no-use-before-define': 'off',
     // Allow most functions to rely on type inference. If the function is exported, then `@typescript-eslint/explicit-module-boundary-types` will ensure it's typed.
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-use-before-define': [
