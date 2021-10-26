@@ -17,7 +17,7 @@ const LoginComponent = () => {
         <Button
           variant='contained'
           className='button'
-          color='success'
+          color='green'
           onClick={() => {
             dispatch(authorizeGitHubUserAsync(false));
           }}

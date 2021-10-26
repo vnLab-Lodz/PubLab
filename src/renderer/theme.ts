@@ -11,6 +11,50 @@ import { palette } from '@mui/system';
 //defined here or in typoghraphy (fontWeightLight and fontWeightMedium)
 //for reference see <Typography> componend defined in LoginComponent.tsx
 
+declare module "@mui/material/styles/createPalette" {  
+  interface Palette {
+    light: PaletteColor;
+    dark: PaletteColor;
+    lightPink: PaletteColor;
+    darkPink: PaletteColor;
+    green: PaletteColor;
+    orange: PaletteColor;
+    beige: PaletteColor;
+    lightGray: PaletteColor;
+    darkGray: PaletteColor;
+    blue: PaletteColor;
+  }
+  interface PaletteOptions {
+    light: PaletteColorOptions;
+    dark: PaletteColorOptions;
+    lightPink: PaletteColorOptions;
+    darkPink: PaletteColorOptions;
+    green: PaletteColorOptions;
+    orange: PaletteColorOptions;
+    beige: PaletteColorOptions;
+    lightGray: PaletteColorOptions;
+    darkGray: PaletteColorOptions;
+    blue: PaletteColorOptions;
+  }
+}
+
+declare module '@mui/material/Button' {  //for Button's color to accept custom palette colors
+  export interface ButtonPropsColorOverrides {
+    'light': true;
+    'dark': true;
+    'lightPink': true;
+    'darkPink': true;
+    'green': true;
+    'orange': true;
+    'beige': true;
+    'lightGray': true;
+    'darkGray': true;
+    'blue': true;
+  }
+}
+//IMPORTANT - this step needs to be repeated for all Material UI components that are to be styled with those colors
+
+
 const hkgrotesk = {
   fontFamily: 'HK Grotesk',
   fontStyle: 'normal',
@@ -90,25 +134,49 @@ declare module '@mui/material/Typography' {
 
 export let theme = createTheme({
   palette: {
-    primary: {
-      main: '#111111', //black backgrounds
-      contrastText: '#DDDDDD',
-    },
-    secondary: {
-      main: '#DDDDDD', //light backgrounds
-      contrastText: '#111111',
-    },
-    warning: {
-      main: '#FFD6EA', //pink, eg. notifications background
-      contrastText: '#111111',
-    },
-    success: {
-      main: '#01D39F', //green, eg. button, switches when
-      contrastText: '#111111',
-    },
     text: {
       primary: '#DDDDDD',
-      secondary: '#111111',
+      secondary:'#111111',
+    },
+    light: {
+      main: '#111111',  //black backgrounds
+      contrastText: '#DDDDDD',
+    },
+    dark: {
+      main: '#DDDDDD',  //light backgrounds
+      contrastText: '#111111',
+    },
+    lightPink: {
+      main: '#FFD6EA',  //light pink, eg. notifications background
+      contrastText: '#111111',
+    },
+    darkPink: {
+      main: '#ff8383',
+      contrastText: '#DDDDDD',
+    },
+    green: {
+      main: '#01D39F',  //green, eg. button, switches when 
+      contrastText: '#111111',
+    },
+    orange: {
+      main: '#d89e01',
+      contrastText: '#111111',
+    },
+    beige: {
+      main: '#EBF8EA',
+      contrastText: '#111111',
+    },
+    lightGray: {
+      main: '#d1d1d1',
+      contrastText: '#111111',
+    },
+    darkGray: {
+      main: '#505050',
+      contrastText: '#DDDDDD',
+    },
+    blue: {
+      main: '#83aeff',
+      contrastText: '#111111',
     },
   },
   typography: {
