@@ -16,9 +16,12 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'prettier'],
   rules: {
+    'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+    'no-alert': 'warn',
     'prettier/prettier': 'error',
     // Too restrictive, writing ugly code to defend against a very unlikely scenario: https://eslint.org/docs/rules/no-prototype-builtins
     'no-prototype-builtins': 'off',
+    'global-require': 'warn',
     'import/prefer-default-export': 'off',
     'import/no-default-export': 'off',
     'react/jsx-props-no-spreading': 'warn',
@@ -42,5 +45,21 @@ module.exports = {
         peerDependencies: false,
       },
     ],
+    '@typescript-eslint/naming-convention': [
+      'error',
+      // Define enums in UPPER_CASE
+      { selector: 'enum', format: ['UPPER_CASE'] },
+    ],
   },
+  overrides: [
+    {
+      files: ['src/shared/redux/**/*'],
+      rules: {
+        // Allow param reassignment in reducers because immer is used under the hood
+        'no-param-reassign': 'off',
+        // Allow the cycle due to type definitions
+        'import/no-cycle': `off`,
+      },
+    },
+  ],
 };
