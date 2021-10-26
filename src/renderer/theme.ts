@@ -4,6 +4,8 @@ import HKGroteskItalicWoff2 from './fonts/HKGrotesk/HKGrotesk-Italic.woff2';
 import HKGroteskBoldWoff2 from './fonts/HKGrotesk/HKGrotesk-Bold.woff2';
 import HKGroteskSemiBoldWoff2 from './fonts/HKGrotesk/HKGrotesk-SemiBold.woff2';
 import HKGroteskExtraBoldWoff2 from './fonts/HKGrotesk/HKGrotesk-ExtraBold.woff2';
+import { blue } from '@mui/material/colors';
+import { palette } from '@mui/system';
 
 //for different font style variants in components use respective fontWeight/fontStyle
 //defined here or in typoghraphy (fontWeightLight and fontWeightMedium)
@@ -87,6 +89,28 @@ declare module '@mui/material/Typography' {
 }
 
 export let theme = createTheme({
+  palette: {
+    primary: {
+      main: '#111111', //black backgrounds
+      contrastText: '#DDDDDD',
+    },
+    secondary: {
+      main: '#DDDDDD', //light backgrounds
+      contrastText: '#111111',
+    },
+    warning: {
+      main: '#FFD6EA', //pink, eg. notifications background
+      contrastText: '#111111',
+    },
+    success: {
+      main: '#01D39F', //green, eg. button, switches when
+      contrastText: '#111111',
+    },
+    text: {
+      primary: '#DDDDDD',
+      secondary: '#111111',
+    },
+  },
   typography: {
     fontFamily: 'HK Grotesk',
     fontWeightLight: 300,
