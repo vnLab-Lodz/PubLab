@@ -1,7 +1,9 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
+import { useDispatch } from 'react-redux';
 import { IProject } from './IProject';
-import { State } from './IProjectState';
+import { STATE } from './IProjectState';
 import add_icon from './add_circle-24px.svg';
 import article_icon from './article-24px.svg';
 import searchIcon from './search-24px.svg';
@@ -10,8 +12,7 @@ import deleteIcon from './delete-24px.svg';
 import './ProjectsList.scss';
 import { formatDate } from '../../../shared/utils/formatDate';
 import { updateSubview } from '../../../shared/redux/slices/currentViewSlice';
-import { Subviews } from '../../constants/Views';
-import { useDispatch } from 'react-redux';
+import { SUBVIEWS } from '../../constants/Views';
 
 const projects: IProject[] = [
   {
@@ -21,7 +22,7 @@ const projects: IProject[] = [
     date_creation: new Date(2018, 10, 31).toString(),
     date_edition: new Date(2018, 10, 31).toString(),
     tags: ['TAG A', 'TAG B'],
-    state: State.Cloned,
+    state: STATE.Cloned,
     last_modified_by: '',
     technologies: [],
     coauthors: [],
@@ -34,7 +35,7 @@ const projects: IProject[] = [
     date_creation: new Date(2018, 12, 31).toString(),
     date_edition: new Date(2018, 10, 30).toString(),
     tags: ['TAG C', 'TAG A', 'TAG D'],
-    state: State.Cloned,
+    state: STATE.Cloned,
     last_modified_by: '',
     technologies: [],
     coauthors: [],
@@ -47,7 +48,7 @@ const projects: IProject[] = [
     date_creation: new Date(1998, 2, 31).toString(),
     date_edition: new Date(2018, 10, 29).toString(),
     tags: ['TAG C', 'TAG A', 'TAG D'],
-    state: State.Cloned,
+    state: STATE.Cloned,
     last_modified_by: '',
     technologies: [],
     coauthors: [],
@@ -60,7 +61,7 @@ const projects: IProject[] = [
     date_creation: new Date(1999, 3, 31).toString(),
     date_edition: new Date(2018, 10, 28).toString(),
     tags: ['TAG C', 'TAG A', 'TAG D'],
-    state: State.Cloned,
+    state: STATE.Cloned,
     last_modified_by: '',
     technologies: [],
     coauthors: [],
@@ -73,17 +74,13 @@ const projects: IProject[] = [
     date_creation: new Date(2018, 12, 31).toString(),
     date_edition: new Date(2018, 10, 27).toString(),
     tags: ['TAG C', 'TAG A', 'TAG D'],
-    state: State.NotCloned,
+    state: STATE.NotCloned,
     last_modified_by: '',
     technologies: [],
     coauthors: [],
     description: '',
   },
 ];
-
-interface IProps {
-  project: IProject[];
-}
 
 const ProjectsList = () => {
   const dispatch = useDispatch();
@@ -95,7 +92,7 @@ const ProjectsList = () => {
     date_creation: new Date(2000, 12, 31).toString(),
     date_edition: new Date(2017, 12, 31).toString(),
     tags: ['TAG C', 'TAG A', 'TAG D'],
-    state: State.NotCloned,
+    state: STATE.NotCloned,
     last_modified_by: '',
     technologies: [''],
     coauthors: [''],
@@ -167,41 +164,33 @@ const ProjectsList = () => {
 
   const options_filter = [
     {
-      value: (s: IProject) => {
-        return true;
-      },
+      value: () => true,
       label: 'Both',
     },
     {
-      value: (s: IProject) => {
-        return s.state == State.Cloned;
-      },
+      value: (s: IProject) => s.state === STATE.Cloned,
       label: 'Cloned',
     },
     {
-      value: (s: IProject) => {
-        return s.state == State.NotCloned;
-      },
+      value: (s: IProject) => s.state === STATE.NotCloned,
       label: 'Not cloned',
     },
   ];
 
-  const [displayedProjects, setDisplayedProjects] = useState(
-    projects ? projects : []
-  );
+  const [displayedProjects, setDisplayedProjects] = useState(projects || []);
 
   const [searchPhrase, setSearchPhrase] = useState('');
   const [sortOption, setSortOption] = useState(
     () => (a: IProject, b: IProject) => a.id === b.id ? 0 : a.id > b.id ? 1 : -1
   );
-  const [filterOption, setFilterOption] = useState(() => (s: IProject) => true);
+  const [filterOption, setFilterOption] = useState(() => () => true);
   const [pickedProject, setPickedProject] = useState(emptyProject);
 
   useEffect(() => {
     if (displayedProjects.length === 0) {
       dispatch(
         updateSubview({
-          element: Subviews.NO_PROJECTS,
+          element: SUBVIEWS.NO_PROJECTS,
         })
       );
     }
@@ -210,7 +199,7 @@ const ProjectsList = () => {
   useEffect(() => {
     dispatch(
       updateSubview({
-        element: Subviews.PROJECT_INFO,
+        element: SUBVIEWS.PROJECT_INFO,
         props: { project: pickedProject },
       })
     );
@@ -218,7 +207,7 @@ const ProjectsList = () => {
 
   const applyAllSortsFilters = () => {
     const clone: IProject[] = [];
-    displayedProjects.forEach((val) => clone.push(Object.assign({}, val)));
+    displayedProjects.forEach((val) => clone.push({ ...val }));
     clone.sort(sortOption);
     return clone
       .filter(filterOption)
@@ -229,14 +218,14 @@ const ProjectsList = () => {
 
   const addNewProject = (project: IProject) => {
     const clone: IProject[] = [];
-    displayedProjects.forEach((val) => clone.push(Object.assign({}, val)));
+    displayedProjects.forEach((val) => clone.push({ ...val }));
     clone.push(project);
     setDisplayedProjects(clone);
   };
 
   const removeProjectFromProjectList = (rProject: IProject) => {
     const clone: IProject[] = [];
-    displayedProjects.forEach((val) => clone.push(Object.assign({}, val)));
+    displayedProjects.forEach((val) => clone.push({ ...val }));
     const index = clone.indexOf(rProject, 0);
     clone.splice(index);
     setDisplayedProjects(clone);
@@ -256,7 +245,11 @@ const ProjectsList = () => {
           <div className='projectList__search_sort'>
             <form>
               <div style={{ position: 'relative' }}>
-                <img src={searchIcon} className='projectList__search_icon' />
+                <img
+                  src={searchIcon}
+                  className='projectList__search_icon'
+                  alt='Search'
+                />
                 <input
                   className='projectList__input'
                   type='text'
@@ -276,8 +269,13 @@ const ProjectsList = () => {
           <ul className='projectList__list'>
             {applyAllSortsFilters().map((project) => (
               <li key={project.id} className='projectList__list_element'>
-                <img className='projectList__icon' src={project.image} />
+                <img
+                  className='projectList__icon'
+                  src={project.image}
+                  alt='Project thumb'
+                />
                 <button
+                  type='button'
                   className='projectList__button'
                   onClick={() => {
                     setPickedProject(project);
@@ -297,8 +295,10 @@ const ProjectsList = () => {
                   </div>
                 </button>
                 <button
+                  type='button'
                   className='projectList_remove_button'
                   onClick={() => {
+                    // eslint-disable-next-line no-restricted-globals
                     confirm('Are you sure you want to delete this project?');
                     if (project.id === pickedProject.id) {
                       setPickedProject(emptyProject);
@@ -306,18 +306,24 @@ const ProjectsList = () => {
                     removeProjectFromProjectList(project);
                   }}
                 >
-                  <img className='projectList__remove_icon' src={deleteIcon} />
+                  <img
+                    className='projectList__remove_icon'
+                    src={deleteIcon}
+                    alt='Delete bin'
+                  />
                 </button>
               </li>
             ))}
           </ul>
           <button
+            type='button'
             className='projectList__add_button'
             onClick={() => addNewProject(newProjectPlaceHolder)}
           >
             <img
               src={add_icon}
               style={{ width: '60px', height: '60px', borderRadius: '50%' }}
+              alt='Add project'
             />
           </button>
         </div>

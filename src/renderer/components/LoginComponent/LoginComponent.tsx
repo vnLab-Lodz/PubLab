@@ -1,9 +1,9 @@
 import React from 'react';
+import { Typography } from '@mui/material';
+import { FaGithub } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { authorizeGitHubUserAsync } from '../../../shared/redux/slices/currentUserSlice';
-import { FaGithub } from 'react-icons/fa';
 import './LoginComponent.scss';
-import { Typography } from '@mui/material';
 
 const LoginComponent = () => {
   const dispatch = useDispatch();
@@ -14,6 +14,7 @@ const LoginComponent = () => {
       </Typography>
       <div>
         <button
+          type='button'
           className='button'
           onClick={() => {
             dispatch(authorizeGitHubUserAsync(false));

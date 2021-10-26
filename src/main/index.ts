@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 import { configStore } from '../shared/redux/configureStore';
 import installDevToolsExtensions from './devToolsExtensions';
+
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: any;
 
@@ -11,6 +12,7 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const store = configStore('main');
 
 const createWindow = async (): Promise<void> => {

@@ -7,8 +7,8 @@ import { appendLog } from '../logger';
  * @return {Promise<boolean>}
  */
 export function checkForNode(): Promise<boolean> {
-  return new Promise<boolean>((resolve, reject) => {
-    exec('node -v', (error, stdout, stderr) => {
+  return new Promise<boolean>((resolve) => {
+    exec('node -v', (error) => {
       if (error) {
         appendLog('node is not installed globally');
         resolve(false);

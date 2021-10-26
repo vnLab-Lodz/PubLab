@@ -51,69 +51,9 @@ const initialState: CurrentUser = {
   loading: false,
 };
 
-export const authorizeGitHubUserAsync = createAsyncActionMain<boolean>(
-  'currentUser/requestAuthCode',
-  (silent = false) => {
-    return async (dispatch) => {
-      dispatch(authStarted());
-      authorizeWithGithub(silent, ({ code, error }) => {
-        code ? dispatch(authFulfilled(code)) : dispatch(authRejected(error));
-      });
-    };
-  }
-);
-
-export const requestAccesTokenAsync = createAsyncActionMain<string>(
-  'currentUser/requestAccessToken',
-  (code) => {
-    return async (dispatch) => {
-      dispatch(tokenRequestStarted());
-      const data = await requestAccessToken(code);
-
-      if ('access_token' in data) {
-        dispatch(
-          tokenRequestFulfilled({
-            value: data.access_token,
-            type: data.token_type,
-            scope: data.scope,
-          })
-        );
-      } else {
-        dispatch(tokenRequestRejected(data));
-      }
-    };
-  }
-);
-
-export const fetchUserDataAsync = createAsyncActionMain<string>(
-  'currentUser/fetchData',
-  (token) => {
-    return async (dispatch) => {
-      dispatch(fetchUserDataStarted());
-      const data = await fetchUserData(token);
-
-      if (data) {
-        dispatch(fetchUserDataFulfilled(data));
-      } else {
-        dispatch(fetchUserDataRejected());
-      }
-    };
-  }
-);
-
-export const terminateSessionAsync = createAsyncActionMain<void>(
-  'currentUser/terminateSession',
-  () => {
-    return async (dispatch) => {
-      await terminateSession();
-      dispatch(terminateSessionFulfilled());
-    };
-  }
-);
-
 const currentUserSlice = createSlice({
   name: 'currentUser',
-  initialState: initialState,
+  initialState,
   reducers: {
     authStarted: (state: CurrentUser) => {
       state.loading = true;
@@ -194,5 +134,58 @@ export const {
 } = currentUserSlice.actions;
 
 export const selectCurrentUser = (state: RootState) => state.currentUser;
+
+export const authorizeGitHubUserAsync = createAsyncActionMain<boolean>(
+  'currentUser/requestAuthCode',
+  (silent = false) =>
+    async (dispatch) => {
+      dispatch(authStarted());
+      authorizeWithGithub(silent, ({ code, error }) => {
+        dispatch(code ? authFulfilled(code) : authRejected(error));
+      });
+    }
+);
+
+export const requestAccessTokenAsync = createAsyncActionMain<string>(
+  'currentUser/requestAccessToken',
+  (code) => async (dispatch) => {
+    dispatch(tokenRequestStarted());
+    const data = await requestAccessToken(code);
+
+    if ('access_token' in data) {
+      dispatch(
+        tokenRequestFulfilled({
+          value: data.access_token,
+          type: data.token_type,
+          scope: data.scope,
+        })
+      );
+    } else {
+      dispatch(tokenRequestRejected(data));
+    }
+  }
+);
+
+export const fetchUserDataAsync = createAsyncActionMain<string>(
+  'currentUser/fetchData',
+  (token) => async (dispatch) => {
+    dispatch(fetchUserDataStarted());
+    const data = await fetchUserData(token);
+
+    if (data) {
+      dispatch(fetchUserDataFulfilled(data));
+    } else {
+      dispatch(fetchUserDataRejected());
+    }
+  }
+);
+
+export const terminateSessionAsync = createAsyncActionMain<void>(
+  'currentUser/terminateSession',
+  () => async (dispatch) => {
+    await terminateSession();
+    dispatch(terminateSessionFulfilled());
+  }
+);
 
 export default currentUserSlice.reducer;

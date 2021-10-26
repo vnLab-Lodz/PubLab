@@ -25,7 +25,7 @@ LogIn.args = {
 
 export const Disabled = Template.bind({});
 Disabled.args = {
-  icon: <img src={GitHubIcon} />,
+  icon: <img src={GitHubIcon} alt='GitHub Octocat' />,
   children: 'Log in with GitHub',
   disabled: true,
 };

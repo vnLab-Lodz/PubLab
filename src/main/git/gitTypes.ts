@@ -9,13 +9,13 @@ export interface File {
   path: string;
 }
 
-export enum Url {
+export enum URLS {
   REDIRECT_URI = 'http://localhost/main_window',
   AUTHORIZE_URL = 'https://github.com/login/oauth/authorize',
   ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token',
 }
 
-export enum EndPointParameters {
+export enum ENDPOINT_PARAMS {
   CLIENT_ID = 'client_id',
   REDIRECT_URI = 'redirect_uri',
 }
