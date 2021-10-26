@@ -11,7 +11,7 @@ import { palette } from '@mui/system';
 //defined here or in typoghraphy (fontWeightLight and fontWeightMedium)
 //for reference see <Typography> componend defined in LoginComponent.tsx
 
-declare module "@mui/material/styles/createPalette" {  
+declare module '@mui/material/styles/createPalette' {
   interface Palette {
     light: PaletteColor;
     dark: PaletteColor;
@@ -38,22 +38,22 @@ declare module "@mui/material/styles/createPalette" {
   }
 }
 
-declare module '@mui/material/Button' {  //for Button's color to accept custom palette colors
+declare module '@mui/material/Button' {
+  //for Button's color to accept custom palette colors
   export interface ButtonPropsColorOverrides {
-    'light': true;
-    'dark': true;
-    'lightPink': true;
-    'darkPink': true;
-    'green': true;
-    'orange': true;
-    'beige': true;
-    'lightGray': true;
-    'darkGray': true;
-    'blue': true;
+    light: true;
+    dark: true;
+    lightPink: true;
+    darkPink: true;
+    green: true;
+    orange: true;
+    beige: true;
+    lightGray: true;
+    darkGray: true;
+    blue: true;
   }
 }
 //IMPORTANT - this step needs to be repeated for all Material UI components that are to be styled with those colors
-
 
 const hkgrotesk = {
   fontFamily: 'HK Grotesk',
@@ -136,18 +136,18 @@ export let theme = createTheme({
   palette: {
     text: {
       primary: '#DDDDDD',
-      secondary:'#111111',
+      secondary: '#111111',
     },
     light: {
-      main: '#111111',  //black backgrounds
+      main: '#111111', //black backgrounds
       contrastText: '#DDDDDD',
     },
     dark: {
-      main: '#DDDDDD',  //light backgrounds
+      main: '#DDDDDD', //light backgrounds
       contrastText: '#111111',
     },
     lightPink: {
-      main: '#FFD6EA',  //light pink, eg. notifications background
+      main: '#FFD6EA', //light pink, eg. notifications background
       contrastText: '#111111',
     },
     darkPink: {
@@ -155,7 +155,7 @@ export let theme = createTheme({
       contrastText: '#DDDDDD',
     },
     green: {
-      main: '#01D39F',  //green, eg. button, switches when 
+      main: '#01D39F', //green, eg. button, switches when
       contrastText: '#111111',
     },
     orange: {
