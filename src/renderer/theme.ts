@@ -4,56 +4,10 @@ import HKGroteskItalicWoff2 from './fonts/HKGrotesk/HKGrotesk-Italic.woff2';
 import HKGroteskBoldWoff2 from './fonts/HKGrotesk/HKGrotesk-Bold.woff2';
 import HKGroteskSemiBoldWoff2 from './fonts/HKGrotesk/HKGrotesk-SemiBold.woff2';
 import HKGroteskExtraBoldWoff2 from './fonts/HKGrotesk/HKGrotesk-ExtraBold.woff2';
-import { blue } from '@mui/material/colors';
-import { palette } from '@mui/system';
 
 //for different font style variants in components use respective fontWeight/fontStyle
 //defined here or in typoghraphy (fontWeightLight and fontWeightMedium)
 //for reference see <Typography> componend defined in LoginComponent.tsx
-
-declare module '@mui/material/styles/createPalette' {
-  interface Palette {
-    lightGray: PaletteColor;
-    veryDarkGray: PaletteColor;
-    lightPink: PaletteColor;
-    darkPink: PaletteColor;
-    green: PaletteColor;
-    orange: PaletteColor;
-    beige: PaletteColor;
-    gray: PaletteColor;
-    darkGray: PaletteColor;
-    blue: PaletteColor;
-  }
-  interface PaletteOptions {
-    lightGray: PaletteColorOptions;
-    veryDarkGray: PaletteColorOptions;
-    lightPink: PaletteColorOptions;
-    darkPink: PaletteColorOptions;
-    green: PaletteColorOptions;
-    orange: PaletteColorOptions;
-    beige: PaletteColorOptions;
-    gray: PaletteColorOptions;
-    darkGray: PaletteColorOptions;
-    blue: PaletteColorOptions;
-  }
-}
-
-declare module '@mui/material/Button' {
-  //for Button's color to accept custom palette colors
-  export interface ButtonPropsColorOverrides {
-    lightGray: true;
-    veryDarkGray: true;
-    lightPink: true;
-    darkPink: true;
-    green: true;
-    orange: true;
-    beige: true;
-    Gray: true;
-    darkGray: true;
-    blue: true;
-  }
-}
-//IMPORTANT - this step needs to be repeated for all Material UI components that are to be styled with those colors
 
 const hkgrotesk = {
   fontFamily: 'HK Grotesk',
@@ -110,27 +64,6 @@ const hkgroteskExtraBold = {
     url(${HKGroteskExtraBoldWoff2}) format('woff2')
   `,
 };
-
-// overwrite typography variants to match available to requirements, false means
-// excluding the value, true including it as a variant option for Typography component
-// own variants could not be introduced as they do not work with responsiveFontSizes()
-declare module '@mui/material/Typography' {
-  interface TypographyPropsVariantOverrides {
-    h1: true; // lg
-    h2: true; // md
-    h3: true; // sm
-    h4: true; // xs
-    h5: true; // xss
-    h6: false;
-    subtitle1: false;
-    subtitle2: false;
-    body1: false;
-    body2: false;
-    button: false;
-    caption: false;
-    overline: false;
-  }
-}
 
 export let theme = createTheme({
   palette: {
