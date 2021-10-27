@@ -65,74 +65,76 @@ const hkgroteskExtraBold = {
   `,
 };
 
-export let theme = createTheme({
-  palette: {
-    text: {
-      primary: '#DDDDDD',
-      secondary: '#111111',
+export const theme = responsiveFontSizes(
+  createTheme({
+    palette: {
+      text: {
+        primary: '#DDDDDD',
+        secondary: '#111111',
+      },
+      black: {
+        main: '#111111', // black backgrounds
+        contrastText: '#DDDDDD',
+      },
+      lightGray: {
+        main: '#DDDDDD', // light backgrounds
+        contrastText: '#111111',
+      },
+      gray: {
+        main: '#d1d1d1',
+        contrastText: '#111111',
+      },
+      darkGray: {
+        main: '#505050',
+        contrastText: '#DDDDDD',
+      },
+      lightPink: {
+        main: '#FFD6EA', // light pink, eg. notifications background
+        contrastText: '#111111',
+      },
+      lightRed: {
+        main: '#ff8383',
+        contrastText: '#DDDDDD',
+      },
+      green: {
+        main: '#01D39F', // green, eg. button, switches when
+        contrastText: '#111111',
+      },
+      lightGreen: {
+        main: '#EBF8EA',
+        contrastText: '#111111',
+      },
+      orange: {
+        main: '#d89e01',
+        contrastText: '#111111',
+      },
+      blue: {
+        main: '#83aeff',
+        contrastText: '#111111',
+      },
     },
-    black: {
-      main: '#111111', //black backgrounds
-      contrastText: '#DDDDDD',
-    },
-    lightGray: {
-      main: '#DDDDDD', //light backgrounds
-      contrastText: '#111111',
-    },
-    gray: {
-      main: '#d1d1d1',
-      contrastText: '#111111',
-    },
-    darkGray: {
-      main: '#505050',
-      contrastText: '#DDDDDD',
-    },
-    lightPink: {
-      main: '#FFD6EA', //light pink, eg. notifications background
-      contrastText: '#111111',
-    },
-    lightRed: {
-      main: '#ff8383',
-      contrastText: '#DDDDDD',
-    },
-    green: {
-      main: '#01D39F', //green, eg. button, switches when
-      contrastText: '#111111',
-    },
-    lightGreen: {
-      main: '#EBF8EA',
-      contrastText: '#111111',
-    },
-    orange: {
-      main: '#d89e01',
-      contrastText: '#111111',
-    },
-    blue: {
-      main: '#83aeff',
-      contrastText: '#111111',
-    },
-  },
-  typography: {
-    fontFamily: 'HK Grotesk',
-    fontWeightLight: 300,
-    fontWeightMedium: 500,
-    // set up the baseline for what value in pixels 1rem represents
-    htmlFontSize: 10,
-    h1: {
-      fontSize: '2rem',
-      color: 'red',
-    },
-    h2: {
-      fontSize: '1.8rem',
-    },
-    h3: {
-      fontSize: '1.5rem',
-    },
-    h4: {
-      fontSize: '1.3rem',
-    },
-    h5: {
-      fontSize: '1rem',
+    typography: {
+      fontFamily: 'HK Grotesk',
+      fontWeightLight: 300,
+      fontWeightMedium: 500,
+      // set up the baseline for what value in pixels 1rem represents
+      htmlFontSize: 10,
+      h1: {
+        fontSize: '2rem',
+        color: 'red',
+      },
+      h2: {
+        fontSize: '1.8rem',
+      },
+      h3: {
+        fontSize: '1.5rem',
+      },
+      h4: {
+        fontSize: '1.3rem',
+      },
+      h5: {
+        fontSize: '1rem',
+      },
     },
     components: {
       MuiCssBaseline: {
