@@ -20,6 +20,7 @@
     "src/renderer/renderer.tsx",
     "src/main/index.ts",
     "src/components",
-    "./custom.d.ts"
+    "./custom.d.ts",
+    "./mui.d.ts"
   ]
 }

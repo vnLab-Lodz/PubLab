@@ -4,24 +4,27 @@ import { FaGithub } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { authorizeGitHubUserAsync } from '../../../shared/redux/slices/currentUserSlice';
 import './LoginComponent.scss';
+import { Typography } from '@mui/material';
+import Button from '@mui/material/Button';
 
 const LoginComponent = () => {
   const dispatch = useDispatch();
   return (
     <div className='container'>
-      <Typography fontWeight='normal' fontStyle='italic'>
+      <Typography fontWeight='normal' fontStyle='italic' color='text.secondary'>
         Welcome to VNlab
       </Typography>
       <div>
-        <button
-          type='button'
+        <Button
+          variant='contained'
           className='button'
+          color='green'
           onClick={() => {
             dispatch(authorizeGitHubUserAsync(false));
           }}
         >
           Log in with GitHub <FaGithub />
-        </button>
+        </Button>
       </div>
     </div>
   );
