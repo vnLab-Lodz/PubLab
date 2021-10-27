@@ -65,28 +65,53 @@ const hkgroteskExtraBold = {
   `,
 };
 
-// overwrite typography variants to match available to requirements, false means
-// excluding the value, true including it as a variant option for Typography component
-// own variants could not be introduced as they do not work with responsiveFontSizes()
-declare module '@mui/material/Typography' {
-  interface TypographyPropsVariantOverrides {
-    h1: true; // lg
-    h2: true; // md
-    h3: true; // sm
-    h4: true; // xs
-    h5: true; // xss
-    h6: false;
-    subtitle1: false;
-    subtitle2: false;
-    body1: false;
-    body2: false;
-    button: false;
-    caption: false;
-    overline: false;
-  }
-}
-
 export let theme = createTheme({
+  palette: {
+    text: {
+      primary: '#DDDDDD',
+      secondary: '#111111',
+    },
+    black: {
+      main: '#111111', //black backgrounds
+      contrastText: '#DDDDDD',
+    },
+    lightGray: {
+      main: '#DDDDDD', //light backgrounds
+      contrastText: '#111111',
+    },
+    gray: {
+      main: '#d1d1d1',
+      contrastText: '#111111',
+    },
+    darkGray: {
+      main: '#505050',
+      contrastText: '#DDDDDD',
+    },
+    lightPink: {
+      main: '#FFD6EA', //light pink, eg. notifications background
+      contrastText: '#111111',
+    },
+    lightRed: {
+      main: '#ff8383',
+      contrastText: '#DDDDDD',
+    },
+    green: {
+      main: '#01D39F', //green, eg. button, switches when
+      contrastText: '#111111',
+    },
+    lightGreen: {
+      main: '#EBF8EA',
+      contrastText: '#111111',
+    },
+    orange: {
+      main: '#d89e01',
+      contrastText: '#111111',
+    },
+    blue: {
+      main: '#83aeff',
+      contrastText: '#111111',
+    },
+  },
   typography: {
     fontFamily: 'HK Grotesk',
     fontWeightLight: 300,
