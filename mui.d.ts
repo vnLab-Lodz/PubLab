@@ -23,26 +23,26 @@ declare module '@mui/material/Typography' {
 
 declare module '@mui/material/styles' {
   export interface Palette {
-    lightGray: PaletteColor;
-    veryDarkGray: PaletteColor;
-    lightPink: PaletteColor;
-    darkPink: PaletteColor;
-    green: PaletteColor;
-    orange: PaletteColor;
-    beige: PaletteColor;
+    black: PaletteColor;
     gray: PaletteColor;
+    lightGray: PaletteColor;
     darkGray: PaletteColor;
+    lightPink: PaletteColor;
+    lightRed: PaletteColor;
+    green: PaletteColor;
+    lightGreen: PaletteColor;
+    orange: PaletteColor;
     blue: PaletteColor;
   }
   export interface PaletteOptions {
-    lightGray?: PaletteColorOptions;
-    veryDarkGray?: PaletteColorOptions;
-    lightPink?: PaletteColorOptions;
-    darkPink?: PaletteColorOptions;
-    green?: PaletteColorOptions;
-    orange?: PaletteColorOptions;
-    beige?: PaletteColorOptions;
     gray?: PaletteColorOptions;
+    lightGray?: PaletteColorOptions;
+    black?: PaletteColorOptions;
+    lightPink?: PaletteColorOptions;
+    lightRed?: PaletteColorOptions;
+    green?: PaletteColorOptions;
+    lightGreen?: PaletteColorOptions;
+    orange?: PaletteColorOptions;
     darkGray?: PaletteColorOptions;
     blue?: PaletteColorOptions;
   }
@@ -53,14 +53,14 @@ declare module '@mui/material/styles' {
 declare module '@mui/material/Button' {
   //for Button's color to accept custom palette colors
   export interface ButtonPropsColorOverrides {
-    lightGray: true;
-    veryDarkGray: true;
-    lightPink: true;
-    darkPink: true;
-    green: true;
-    orange: true;
-    beige: true;
     gray: true;
+    lightGray: true;
+    black: true;
+    lightPink: true;
+    lightRed: true;
+    green: true;
+    lightGreen: true;
+    orange: true;
     darkGray: true;
     blue: true;
   }

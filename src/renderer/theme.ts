@@ -71,32 +71,12 @@ export let theme = createTheme({
       primary: '#DDDDDD',
       secondary: '#111111',
     },
-    lightGray: {
+    black: {
       main: '#111111', //black backgrounds
       contrastText: '#DDDDDD',
     },
-    veryDarkGray: {
+    lightGray: {
       main: '#DDDDDD', //light backgrounds
-      contrastText: '#111111',
-    },
-    lightPink: {
-      main: '#FFD6EA', //light pink, eg. notifications background
-      contrastText: '#111111',
-    },
-    darkPink: {
-      main: '#ff8383',
-      contrastText: '#DDDDDD',
-    },
-    green: {
-      main: '#01D39F', //green, eg. button, switches when
-      contrastText: '#111111',
-    },
-    orange: {
-      main: '#d89e01',
-      contrastText: '#111111',
-    },
-    beige: {
-      main: '#EBF8EA',
       contrastText: '#111111',
     },
     gray: {
@@ -106,6 +86,26 @@ export let theme = createTheme({
     darkGray: {
       main: '#505050',
       contrastText: '#DDDDDD',
+    },
+    lightPink: {
+      main: '#FFD6EA', //light pink, eg. notifications background
+      contrastText: '#111111',
+    },
+    lightRed: {
+      main: '#ff8383',
+      contrastText: '#DDDDDD',
+    },
+    green: {
+      main: '#01D39F', //green, eg. button, switches when
+      contrastText: '#111111',
+    },
+    lightGreen: {
+      main: '#EBF8EA',
+      contrastText: '#111111',
+    },
+    orange: {
+      main: '#d89e01',
+      contrastText: '#111111',
     },
     blue: {
       main: '#83aeff',
