@@ -17,4 +17,4 @@ jobs:
       - name: Install modules 📦
         run: yarn
       - name: Run ESLint 🕵️‍♂️
-        run: eslint ./src
+        run: yarn run eslint ./src
