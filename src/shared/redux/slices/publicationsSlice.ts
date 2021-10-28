@@ -9,7 +9,7 @@ type CollaboratorElement = {
 type PublicationListElement = {
   id: string;
   dirPath: string;
-  projectName: string;
+  publicationName: string;
   description: string;
   collaborators: [CollaboratorElement];
   packageManager: string;
@@ -17,16 +17,21 @@ type PublicationListElement = {
   useTypescript: boolean,
 };
 
-type PublicationList = {
+type PublicationsList = {
   list: [PublicationListElement];
 };
 
-const initialState: PublicationList = {
+type ModifiedPublication<T> = {
+  id: string;
+  value: T;
+};
+
+const initialState: PublicationsList = {
   list: [
     {
       id: '',
       dirPath: '',
-      projectName: '',
+      publicationName: '',
       description: '',
       collaborators: [{ githubUsername: '', role: '' }],
       packageManager: '',
@@ -40,28 +45,35 @@ const publicationsSlice = createSlice({
   name: 'publications',
   initialState,
   reducers: {
+    setPublicationsList: (
+      state: PublicationsList,
+      action: PayloadAction<[PublicationListElement]>
+    ) => {
+      state.list = action.payload;
+    },
     addPublication: (
-      state: PublicationList,
+      state: PublicationsList,
       action: PayloadAction<PublicationListElement>
     ) => {
       state.list.push(action.payload);
     },
     deletePublication: (
-      state: PublicationList,
+      state: PublicationsList,
       action: PayloadAction<string>
     ) => {
       state.list.filter(element => element.id !== action.payload);
     },
-    setPublicationList: (
-      state: PublicationList,
-      action: PayloadAction<[PublicationListElement]>
+    setProjectName: (
+      state: PublicationsList,
+      action: PayloadAction<ModifiedPublication<string>>
     ) => {
-      state.list = action.payload;
+      const changedProjectIndex = state.list.findIndex(element => element.id === action.payload.id);
+      state.list[changedProjectIndex].publicationName = action.payload.value;
     },
   },
 });
 
-export const { addPublication, deletePublication, setPublicationList } = publicationsSlice.actions;
+export const { addPublication, deletePublication, setPublicationsList } = publicationsSlice.actions;
 
 export const selectPublicationList = (state: RootState) =>
   state.publications.list;

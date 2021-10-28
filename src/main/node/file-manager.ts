@@ -53,7 +53,7 @@ function recursiveSearch(source: string): void {
         // TODO: change to GUID 
         id: Math.random().toString(),
         dirPath: source,
-        projectName: dataParsed.projectName,
+        publicationName: dataParsed.publicationName,
         description: dataParsed.description,
         collaborators: dataParsed.collaborators,
         packageManager: dataParsed.packageManager,
