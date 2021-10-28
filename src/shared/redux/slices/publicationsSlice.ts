@@ -63,12 +63,40 @@ const publicationsSlice = createSlice({
     ) => {
       state.list.filter(element => element.id !== action.payload);
     },
+    setProjectPath: (
+      state: PublicationsList,
+      action: PayloadAction<ModifiedPublication<string>>
+    ) => {
+      const changedProjectIndex = state.list.findIndex(element => element.id === action.payload.id);
+      state.list[changedProjectIndex].dirPath = action.payload.value;
+    },
     setProjectName: (
       state: PublicationsList,
       action: PayloadAction<ModifiedPublication<string>>
     ) => {
       const changedProjectIndex = state.list.findIndex(element => element.id === action.payload.id);
       state.list[changedProjectIndex].publicationName = action.payload.value;
+    },
+    setProjectDescription: (
+      state: PublicationsList,
+      action: PayloadAction<ModifiedPublication<string>>
+    ) => {
+      const changedProjectIndex = state.list.findIndex(element => element.id === action.payload.id);
+      state.list[changedProjectIndex].description = action.payload.value;
+    },
+    setProjectCollabolators: (
+      state: PublicationsList,
+      action: PayloadAction<ModifiedPublication<[CollaboratorElement]>>
+    ) => {
+      const changedProjectIndex = state.list.findIndex(element => element.id === action.payload.id);
+      state.list[changedProjectIndex].collaborators = action.payload.value;
+    },
+    setPackageManager: (
+      state: PublicationsList,
+      action: PayloadAction<ModifiedPublication<string>>
+    ) => {
+      const changedProjectIndex = state.list.findIndex(element => element.id === action.payload.id);
+      state.list[changedProjectIndex].packageManager = action.payload.value;
     },
   },
 });
