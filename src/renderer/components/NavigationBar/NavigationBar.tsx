@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { COMPONENTS_TRANSLATIONS } from '../../constants/RouterComponents';
 import {
+  resetCurrentView,
   selectCurrentView,
   updateCurrentView,
 } from '../../../shared/redux/slices/currentViewSlice';
@@ -97,7 +98,10 @@ const NavigationBar = () => {
         {renderListOfButtons(BOTTOM_BUTTONS)}
         <button
           className='navbar__button'
-          onClick={() => dispatch(terminateSessionAsync())}
+          onClick={() => {
+            dispatch(terminateSessionAsync());
+            dispatch(resetCurrentView());
+          }}
         >
           <div className='navbar__button__icon'>LO</div>
           <span className='navbar__button__text'>Log out</span>
