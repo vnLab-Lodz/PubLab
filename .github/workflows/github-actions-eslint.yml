@@ -1,0 +1,20 @@
+name: CI | ESlint
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🚚
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Install modules 📦
+        run: yarn
+      - name: Run ESLint 🕵️‍♂️
+        run: eslint ./src
