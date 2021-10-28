@@ -12,13 +12,13 @@ const Description = () => {
     <div>
       <h1 className='hello'>Hello World!</h1>
       <p className='description'>Welcome to your Electron application.</p>
-      <button onClick={() => dispatch(installGatsbyCLI())}>
+      <button type='button' onClick={() => dispatch(installGatsbyCLI())}>
         Install gatsby-cli
       </button>
       <p>
         Welcome <b>{currentUser.data?.nick || ''}</b>!
       </p>
-      <img src={currentUser.data?.avatar || ''} />
+      <img src={currentUser.data?.avatar || ''} alt='User avatar' />
       <p>
         Your work in <b>{currentUser.data?.company || ''}</b>
       </p>

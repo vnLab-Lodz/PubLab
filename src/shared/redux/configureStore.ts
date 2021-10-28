@@ -6,8 +6,8 @@ import {
   replayActionMain,
   replayActionRenderer,
 } from 'electron-redux';
-import rootReducer from './rootReducer';
 import thunk from 'redux-thunk';
+import rootReducer from './rootReducer';
 
 type Scope = 'main' | 'renderer';
 

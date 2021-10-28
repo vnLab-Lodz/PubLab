@@ -10,7 +10,7 @@ export function getUserRepositories(accessToken: string): Repository[] {
   axios({
     method: 'GET',
     headers: {
-      Authorization: 'token ' + accessToken,
+      Authorization: `token ${accessToken}`,
     },
     url: 'https://api.github.com/user/repos',
   }).then((data) => {
@@ -44,12 +44,12 @@ export function createNewRepository(
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'token ' + accessToken,
+      Authorization: `token ${accessToken}`,
     },
     url: 'https://api.github.com/user/repos',
     data: {
       name: WEB_PUB_REPO_NAME + repoName,
-      description: description,
+      description,
       homepage: 'https://github.com',
       private: true,
       has_issues: true,

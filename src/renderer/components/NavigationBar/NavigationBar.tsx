@@ -6,13 +6,13 @@ import {
   updateCurrentView,
 } from '../../../shared/redux/slices/currentViewSlice';
 import './NavigationBar.scss';
-import { Views } from '../../constants/Views';
+import { VIEWS } from '../../constants/Views';
 import { terminateSessionAsync } from '../../../shared/redux/slices/currentUserSlice';
 import PlaceholderProjectImage from '../../assets/placeholder-project-image.png';
 
 interface IButton {
   abbreviation: string;
-  view: Views;
+  view: VIEWS;
 }
 
 interface IImageButton extends IButton {
@@ -22,18 +22,18 @@ interface IImageButton extends IButton {
 const PROJECT_BUTTON: IImageButton = {
   abbreviation: 'P',
   src: PlaceholderProjectImage,
-  view: Views.PROJECT,
+  view: VIEWS.PROJECT,
 };
 
 const TOP_BUTTONS: IButton[] = [
-  { abbreviation: 'F', view: Views.FILES },
-  { abbreviation: 'C', view: Views.CHANGES },
-  { abbreviation: 'S', view: Views.SETTINGS },
+  { abbreviation: 'F', view: VIEWS.FILES },
+  { abbreviation: 'C', view: VIEWS.CHANGES },
+  { abbreviation: 'S', view: VIEWS.SETTINGS },
 ];
 
 const BOTTOM_BUTTONS: IButton[] = [
-  { abbreviation: 'PL', view: Views.PROJECTS_LIST },
-  { abbreviation: 'AS', view: Views.APP_SETTINGS },
+  { abbreviation: 'PL', view: VIEWS.PROJECTS_LIST },
+  { abbreviation: 'AS', view: VIEWS.APP_SETTINGS },
 ];
 
 const NavigationBar = () => {
@@ -57,13 +57,14 @@ const NavigationBar = () => {
       : 'navbar__button__icon';
     return (
       <button
+        type='button'
         key={button.abbreviation}
         className='navbar__button'
         onClick={onNavigationButtonClick(button)}
       >
         <div className={iconClassName}>
           {isImageButton(button) ? (
-            <img src={button.src} alt='Project image' />
+            <img src={button.src} alt='Project' />
           ) : (
             button.abbreviation
           )}
@@ -73,6 +74,12 @@ const NavigationBar = () => {
         </span>
       </button>
     );
+  };
+
+  const expandNav = () => {
+    const newIsExpandLocked = !isExpandLocked;
+    if (!newIsExpandLocked) setIsExpanded(false);
+    setIsExpandLocked(newIsExpandLocked);
   };
 
   const renderListOfButtons = (buttons: IButton[]) => buttons.map(renderButton);
@@ -96,6 +103,7 @@ const NavigationBar = () => {
       <div>
         {renderListOfButtons(BOTTOM_BUTTONS)}
         <button
+          type='button'
           className='navbar__button'
           onClick={() => dispatch(terminateSessionAsync())}
         >
@@ -106,12 +114,12 @@ const NavigationBar = () => {
       {isExpanded && (
         <div
           className='navbar__expand-handle'
-          onClick={() => {
-            const newIsExpandLocked = !isExpandLocked;
-            setIsExpandLocked(newIsExpandLocked);
-            if (!newIsExpandLocked) {
-              setIsExpanded(false);
-            }
+          role='button'
+          aria-label='Expand'
+          tabIndex={0}
+          onClick={expandNav}
+          onKeyPress={({ key }) => {
+            if (key === 'Enter') expandNav();
           }}
         />
       )}

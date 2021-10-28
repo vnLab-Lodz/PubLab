@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { Url } from './gitTypes';
 import { BrowserWindow, session } from 'electron';
+import { URLS } from './gitTypes';
 import { appendLog } from '../logger';
 
 /**
@@ -19,7 +19,7 @@ export function authorizeWithGithub(
   });
 
   authWindow.loadURL(
-    `${Url.AUTHORIZE_URL}?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${Url.REDIRECT_URI}&scope=user%20repo`
+    `${URLS.AUTHORIZE_URL}?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${URLS.REDIRECT_URI}&scope=user%20repo`
   );
 
   if (!silent) {
@@ -60,11 +60,11 @@ export function authorizeWithGithub(
 export async function requestAccessToken(code: string): Promise<any> {
   try {
     const response = await axios.post(
-      Url.ACCESS_TOKEN_URL,
+      URLS.ACCESS_TOKEN_URL,
       {
         client_id: process.env.GITHUB_CLIENT_ID,
         client_secret: process.env.GITHUB_CLIENT_SECRET,
-        code: code,
+        code,
       },
       {
         headers: {
@@ -83,6 +83,7 @@ export async function requestAccessToken(code: string): Promise<any> {
     appendLog('Check if environmental variables are correctly set up.');
     appendLog('Request:');
     appendLog(JSON.stringify(error.response));
+    return JSON.stringify(error);
   }
 }
 

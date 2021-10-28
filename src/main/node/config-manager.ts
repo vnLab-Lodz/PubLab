@@ -1,17 +1,19 @@
-var fs = require('fs');
-import { isDirectory } from './file-manager';
-import { isPublication } from './file-manager';
+import { isDirectory, isPublication } from './file-manager';
+
+const fs = require('fs');
 
 class Collaborator {
   username: string;
+
   role: string;
+
   constructor(username: string, role: string) {
     this.username = username;
     this.role = role;
   }
 }
 
-let configFileName = 'vn-pub.conf';
+const configFileName = 'vn-pub.conf';
 
 export function createConfigFile(
   path: string,
@@ -22,15 +24,15 @@ export function createConfigFile(
   tag: string
 ): boolean {
   if (isDirectory(path)) {
-    let configContent = {
-      name: name,
-      description: description,
-      collaborators: collaborators,
+    const configContent = {
+      name,
+      description,
+      collaborators,
       package_manager: packageManager,
-      tag: tag,
+      tag,
     };
-    let configContentJSON = JSON.stringify(configContent);
-    fs.writeFileSync(path + '/' + configFileName, configContentJSON);
+    const configContentJSON = JSON.stringify(configContent);
+    fs.writeFileSync(`${path}/${configFileName}`, configContentJSON);
     return true;
   }
   return false;
@@ -40,7 +42,7 @@ export function deleteConfigFile(path: string): boolean {
   if (isDirectory(path) && isPublication(path)) {
     try {
       if (fs.existsSync(path)) {
-        fs.unlinkSync(path + '/' + configFileName);
+        fs.unlinkSync(`${path}/${configFileName}`);
         return true;
       }
     } catch (err) {
@@ -53,12 +55,12 @@ export function deleteConfigFile(path: string): boolean {
 
 export function modifyName(path: string, newName: string): boolean {
   if (isDirectory(path) && isPublication(path)) {
-    let configContentJSON = fs.readFileSync(path + '/' + configFileName);
-    let configContent = JSON.parse(configContentJSON);
+    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
+    const configContent = JSON.parse(configContentJSON);
     configContent.name = newName;
-    let newConfigContentJSON = JSON.stringify(configContent);
+    const newConfigContentJSON = JSON.stringify(configContent);
     deleteConfigFile(path);
-    fs.writeFileSync(path + '/' + configFileName, newConfigContentJSON);
+    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
     return true;
   }
   return false;
@@ -69,12 +71,12 @@ export function modifyDescription(
   newDescription: string
 ): boolean {
   if (isDirectory(path) && isPublication(path)) {
-    let configContentJSON = fs.readFileSync(path + '/' + configFileName);
-    let configContent = JSON.parse(configContentJSON);
+    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
+    const configContent = JSON.parse(configContentJSON);
     configContent.description = newDescription;
-    let newConfigContentJSON = JSON.stringify(configContent);
+    const newConfigContentJSON = JSON.stringify(configContent);
     deleteConfigFile(path);
-    fs.writeFileSync(path + '/' + configFileName, newConfigContentJSON);
+    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
     return true;
   }
   return false;
@@ -85,12 +87,12 @@ export function modifyCollaborators(
   newCollaborators: Collaborator[]
 ): boolean {
   if (isDirectory(path) && isPublication(path)) {
-    let configContentJSON = fs.readFileSync(path + '/' + configFileName);
-    let configContent = JSON.parse(configContentJSON);
+    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
+    const configContent = JSON.parse(configContentJSON);
     configContent.collaborators = newCollaborators;
-    let newConfigContentJSON = JSON.stringify(configContent);
+    const newConfigContentJSON = JSON.stringify(configContent);
     deleteConfigFile(path);
-    fs.writeFileSync(path + '/' + configFileName, newConfigContentJSON);
+    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
     return true;
   }
   return false;
@@ -101,12 +103,12 @@ export function modifyPackageManager(
   newPackageManager: string
 ): boolean {
   if (isDirectory(path) && isPublication(path)) {
-    let configContentJSON = fs.readFileSync(path + '/' + configFileName);
-    let configContent = JSON.parse(configContentJSON);
+    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
+    const configContent = JSON.parse(configContentJSON);
     configContent.packageManager = newPackageManager;
-    let newConfigContentJSON = JSON.stringify(configContent);
+    const newConfigContentJSON = JSON.stringify(configContent);
     deleteConfigFile(path);
-    fs.writeFileSync(path + '/' + configFileName, newConfigContentJSON);
+    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
     return true;
   }
   return false;
@@ -114,12 +116,12 @@ export function modifyPackageManager(
 
 export function modifyTag(path: string, newTag: string): boolean {
   if (isDirectory(path) && isPublication(path)) {
-    let configContentJSON = fs.readFileSync(path + '/' + configFileName);
-    let configContent = JSON.parse(configContentJSON);
+    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
+    const configContent = JSON.parse(configContentJSON);
     configContent.tag = newTag;
-    let newConfigContentJSON = JSON.stringify(configContent);
+    const newConfigContentJSON = JSON.stringify(configContent);
     deleteConfigFile(path);
-    fs.writeFileSync(path + '/' + configFileName, newConfigContentJSON);
+    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
     return true;
   }
   return false;
@@ -127,8 +129,8 @@ export function modifyTag(path: string, newTag: string): boolean {
 
 export function getConfigFileJSON(path: string): string {
   if (isDirectory(path) && isPublication(path)) {
-    let configContentJSON = fs.readFileSync(path + '/' + configFileName);
-    let configContent = JSON.parse(configContentJSON);
+    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
+    const configContent = JSON.parse(configContentJSON);
     return configContent;
   }
   return null;
