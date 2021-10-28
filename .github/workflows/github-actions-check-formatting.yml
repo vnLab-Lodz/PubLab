@@ -1,4 +1,4 @@
-name: CI | Push to main
+name: CI | Prettier (check)
 
 on:
   push:
