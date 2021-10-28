@@ -7,11 +7,13 @@ type CollaboratorElement = {
 };
 
 type PublicationListElement = {
-  projectName: string;
-  collaborators: [CollaboratorElement];
-  pmPreference: string;
-  description: string;
   dirPath: string;
+  projectName: string;
+  description: string;
+  collaborators: [CollaboratorElement];
+  packageManager: string;
+  useSass: boolean,
+  useTypescript: boolean,
 };
 
 type PublicationList = {
@@ -21,11 +23,13 @@ type PublicationList = {
 const initialState: PublicationList = {
   list: [
     {
-      projectName: '',
-      collaborators: [{ githubUsername: '', role: '' }],
-      pmPreference: '',
-      description: '',
       dirPath: '',
+      projectName: '',
+      description: '',
+      collaborators: [{ githubUsername: '', role: '' }],
+      packageManager: '',
+      useSass: false,
+      useTypescript: false,
     },
   ],
 };
