@@ -50,6 +50,8 @@ function recursiveSearch(source: string): void {
       const rawdata = fs.readFileSync(filePath);
       const dataParsed = JSON.parse(rawdata.toString());
       addPublication({
+        // TODO: change to GUID 
+        id: Math.random().toString(),
         dirPath: source,
         projectName: dataParsed.projectName,
         description: dataParsed.description,
