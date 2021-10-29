@@ -1,11 +1,12 @@
-name: CI | Prettier (check)
+name: CI | ESlint
 
 on:
+  pull_request:
   push:
     branches: [main]
 
 jobs:
-  prettier:
+  eslint:
     runs-on: ubuntu-latest
 
     steps:
@@ -13,8 +14,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
-
-      - name: Prettify code 💄
-        uses: creyD/prettier_action@v4.0
-        with:
-          prettier_options: --check --config .prettierrc ./src
+      - name: Install modules 📦
+        run: yarn
+      - name: Run ESLint 🕵️‍♂️
+        run: yarn run eslint ./src

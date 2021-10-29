@@ -1,4 +1,4 @@
-const isDevelopment = process.env.NODE_ENV !== 'production';
+const { isDevelopment } = require('./constants');
 
 module.exports = [
   {
@@ -29,7 +29,7 @@ module.exports = [
           transpileOnly: true,
         },
       },
-    ],
+    ].filter(Boolean),
   },
   {
     test: /\.s[ac]ss$/i,
@@ -56,9 +56,9 @@ module.exports = [
         loader: 'file-loader',
         options: {
           name: '[name].[ext]',
-          outputPath: 'fonts/'
-        }
-      }
-    ]
-  }
+          outputPath: 'fonts/',
+        },
+      },
+    ],
+  },
 ];

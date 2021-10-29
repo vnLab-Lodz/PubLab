@@ -1,47 +1,41 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../rootReducer';
-import { Subviews, Views } from '../../../renderer/constants/Views';
+import { SUBVIEWS, VIEWS } from '../../../renderer/constants/Views';
 import { terminateSessionFulfilled } from './currentUserSlice';
 
 export interface ISubview {
-  element: Subviews;
+  element: SUBVIEWS;
   props?: { [key: string]: any };
 }
 
 export type CurrentView = {
-  view: Views;
+  view: VIEWS;
   subview: ISubview;
 };
 
 const initialState: CurrentView = {
-  view: Views.PROJECT,
-  subview: { element: Subviews.NONE },
+  view: VIEWS.PROJECT,
+  subview: { element: SUBVIEWS.NONE },
 };
 
 const CurrentViewSlice = createSlice({
   name: 'CurrentView',
-  initialState: initialState,
+  initialState,
   reducers: {
-    updateCurrentView: (state: CurrentView, action: PayloadAction<Views>) => {
+    updateCurrentView: (state: CurrentView, action: PayloadAction<VIEWS>) => {
       state.view = action.payload;
-      state.subview = { element: Subviews.NONE };
+      state.subview = { element: SUBVIEWS.NONE };
     },
     updateSubview: (state: CurrentView, action: PayloadAction<ISubview>) => {
       state.subview = { ...action.payload };
     }
   },
   extraReducers: builder => {
-    builder.addCase(
-      terminateSessionFulfilled,
-      () => initialState
-    )
+    builder.addCase(terminateSessionFulfilled, () => initialState);
   }
 });
 
-export const {
-  updateCurrentView,
-  updateSubview
-} = CurrentViewSlice.actions;
+export const { updateCurrentView, updateSubview } = CurrentViewSlice.actions;
 
 export const selectCurrentView = (state: RootState) => state.currentView;
 

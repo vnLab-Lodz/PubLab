@@ -32,7 +32,7 @@ const initialState: PublicationList = {
 
 const publicationsSlice = createSlice({
   name: 'publications',
-  initialState: initialState,
+  initialState,
   reducers: {
     addPublication: (
       state: PublicationList,

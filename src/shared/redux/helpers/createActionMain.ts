@@ -7,14 +7,12 @@ type ThunkFunction<T> = (
 
 type AsyncActionMainCreator = <T>(type: string, thunk: ThunkFunction<T>) => any;
 
-export const createActionMain = <T>(type: string) => {
-  return createAliasedAction(type, (payload: T) => ({
-    type: type,
-    payload: payload,
+export const createActionMain = <T>(type: string) =>
+  createAliasedAction(type, (payload: T) => ({
+    type,
+    payload,
   }));
-};
 
-export const createAsyncActionMain: AsyncActionMainCreator = (type, thunk) => {
+export const createAsyncActionMain: AsyncActionMainCreator = (type, thunk) =>
   // @ts-expect-error
-  return createAliasedAction(type, thunk);
-};
+  createAliasedAction(type, thunk);

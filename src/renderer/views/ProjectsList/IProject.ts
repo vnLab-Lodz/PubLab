@@ -1,4 +1,4 @@
-import { State } from './IProjectState';
+import { STATE } from './IProjectState';
 
 export interface IProject {
   id: number;
@@ -12,5 +12,5 @@ export interface IProject {
   description: string;
   technologies: string[];
   coauthors: string[];
-  state: State;
+  state: STATE;
 }
