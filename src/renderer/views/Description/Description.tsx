@@ -15,7 +15,7 @@ const Description = () => {
       <button type='button' onClick={() => dispatch(installGatsbyCLI())}>
         Install gatsby-cli
       </button>
-      
+
       <p>
         Welcome <b>{currentUser.data?.nick || ''}</b>!
       </p>
