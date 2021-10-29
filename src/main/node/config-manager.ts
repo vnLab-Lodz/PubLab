@@ -4,7 +4,6 @@ const fs = require('fs');
 
 class Collaborator {
   username: string;
-
   role: string;
 
   constructor(username: string, role: string) {
