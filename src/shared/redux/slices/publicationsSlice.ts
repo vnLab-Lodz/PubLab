@@ -1,109 +1,116 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../rootReducer';
 
-type CollaboratorElement = {
+type Collaborator = {
   githubUsername: string;
   role: string;
 };
 
-type PublicationListElement = {
+type Publication = {
   id: string;
   dirPath: string;
   publicationName: string;
   description: string;
-  collaborators: [CollaboratorElement];
+  collaborators: [Collaborator];
   packageManager: string;
-  useSass: boolean,
-  useTypescript: boolean,
+  useSass: string,
+  useTypescript: string,
 };
 
-type PublicationsList = {
-  list: [PublicationListElement];
-};
+// type created to exclude collaborator type to avoid an issue with
+// index access writes on union of keys, which would complicate the
+// code significantly more
+type PublicationPrimitives = Omit<Publication, "collaborators">;
 
-type ModifiedPublication<T> = {
+// type created to define payload structure for actions on
+// publication primitive fields
+type PublicationModification = {
   id: string;
-  value: T;
+  field: keyof PublicationPrimitives;
+  value: string;
 };
 
-const initialState: PublicationsList = {
-  list: [
-    {
-      id: '',
-      dirPath: '',
-      publicationName: '',
-      description: '',
-      collaborators: [{ githubUsername: '', role: '' }],
-      packageManager: '',
-      useSass: false,
-      useTypescript: false,
-    },
-  ],
+// type created to define payload structure for actions on
+// publication collaborators
+type CollaboratorListModification = {
+  pubId: string;
+  value: Collaborator;
 };
+
+
+const initialState: [Publication] = [
+  {
+    id: '',
+    dirPath: '',
+    publicationName: '',
+    description: '',
+    collaborators: [{ githubUsername: '', role: '' }],
+    packageManager: '',
+    useSass: 'false',
+    useTypescript: 'false',
+  },
+];
 
 const publicationsSlice = createSlice({
   name: 'publications',
   initialState,
   reducers: {
     setPublicationsList: (
-      state: PublicationsList,
-      action: PayloadAction<[PublicationListElement]>
+      state: [Publication],
+      action: PayloadAction<[Publication]>
     ) => {
-      state.list = action.payload;
+      state = action.payload;
     },
     addPublication: (
-      state: PublicationsList,
-      action: PayloadAction<PublicationListElement>
+      state: [Publication],
+      action: PayloadAction<Publication>
     ) => {
-      state.list.push(action.payload);
+      state.push(action.payload);
     },
     deletePublication: (
-      state: PublicationsList,
+      state: [Publication],
       action: PayloadAction<string>
     ) => {
-      state.list.filter(element => element.id !== action.payload);
+      const newState = state.filter(publication => publication.id !== action.payload) as [Publication];
+      state = newState;
     },
-    setProjectPath: (
-      state: PublicationsList,
-      action: PayloadAction<ModifiedPublication<string>>
+    setPublicationField: (
+      state: [Publication],
+      action: PayloadAction<PublicationModification>
     ) => {
-      const changedProjectIndex = state.list.findIndex(element => element.id === action.payload.id);
-      state.list[changedProjectIndex].dirPath = action.payload.value;
+      const chosenPubIndex = state.findIndex(publication => publication.id === action.payload.id);
+      state[chosenPubIndex][action.payload.field] = action.payload.value;
     },
-    setProjectName: (
-      state: PublicationsList,
-      action: PayloadAction<ModifiedPublication<string>>
+    addCollaborator: (
+      state: [Publication],
+      action: PayloadAction<CollaboratorListModification>
     ) => {
-      const changedProjectIndex = state.list.findIndex(element => element.id === action.payload.id);
-      state.list[changedProjectIndex].publicationName = action.payload.value;
+      const chosenPubIndex = state.findIndex(publication => publication.id === action.payload.pubId);
+      const collaborator = action.payload.value as Collaborator;
+      state[chosenPubIndex].collaborators.push(collaborator);
     },
-    setProjectDescription: (
-      state: PublicationsList,
-      action: PayloadAction<ModifiedPublication<string>>
+    deleteCollaborator: (
+      state: [Publication],
+      action: PayloadAction<CollaboratorListModification>
     ) => {
-      const changedProjectIndex = state.list.findIndex(element => element.id === action.payload.id);
-      state.list[changedProjectIndex].description = action.payload.value;
-    },
-    setProjectCollabolators: (
-      state: PublicationsList,
-      action: PayloadAction<ModifiedPublication<[CollaboratorElement]>>
-    ) => {
-      const changedProjectIndex = state.list.findIndex(element => element.id === action.payload.id);
-      state.list[changedProjectIndex].collaborators = action.payload.value;
-    },
-    setPackageManager: (
-      state: PublicationsList,
-      action: PayloadAction<ModifiedPublication<string>>
-    ) => {
-      const changedProjectIndex = state.list.findIndex(element => element.id === action.payload.id);
-      state.list[changedProjectIndex].packageManager = action.payload.value;
+      const chosenPubIndex = state.findIndex(publication => publication.id === action.payload.pubId);
+      const collaborator = action.payload.value;
+      const updatedCollaborators = state[chosenPubIndex].collaborators.filter(element => element !== collaborator) as [Collaborator];
+      state[chosenPubIndex].collaborators = updatedCollaborators;
     },
   },
 });
 
-export const { addPublication, deletePublication, setPublicationsList } = publicationsSlice.actions;
+export const { 
+  setPublicationsList, 
+  addPublication, 
+  deletePublication, 
+  setPublicationField, 
+  addCollaborator, 
+  deleteCollaborator
+} = publicationsSlice.actions;
 
 export const selectPublicationList = (state: RootState) =>
-  state.publications.list;
+  state.publications;
 
 export default publicationsSlice.reducer;
