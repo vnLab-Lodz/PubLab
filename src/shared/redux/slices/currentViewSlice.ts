@@ -28,11 +28,11 @@ const CurrentViewSlice = createSlice({
     },
     updateSubview: (state: CurrentView, action: PayloadAction<ISubview>) => {
       state.subview = { ...action.payload };
-    }
+    },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder.addCase(terminateSessionFulfilled, () => initialState);
-  }
+  },
 });
 
 export const { updateCurrentView, updateSubview } = CurrentViewSlice.actions;
