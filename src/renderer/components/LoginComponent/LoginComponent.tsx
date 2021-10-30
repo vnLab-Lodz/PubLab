@@ -1,31 +1,46 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import {  Typography } from '@mui/material';
 import { FaGithub } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import { authorizeGitHubUserAsync } from '../../../shared/redux/slices/currentUserSlice';
 import './LoginComponent.scss';
+import logo from '../../assets/publab.png';
 
 const LoginComponent = () => {
   const dispatch = useDispatch();
   return (
+    
+    <div className = 'background'>
     <div className='container'>
-      <Typography fontWeight='normal' fontStyle='italic' color='text.secondary'>
-        Welcome to VNlab
+   
+   
+    <img src={logo} />
+      <Typography variant='h4' className='text'> 
+      <p>To begin, please log in using your GitHub account </p>
       </Typography>
-      <div>
+      <div className='button'>
         <Button
-          variant='contained'
+          variant='text'
           className='button'
-          color='green'
           onClick={() => {
             dispatch(authorizeGitHubUserAsync(false));
           }}
         >
-          Log in with GitHub <FaGithub />
+         <FaGithub  className='icon'/>      <p>Log in with GitHub </p>
+
         </Button>
+
+
       </div>
     </div>
+<div className='footer'>
+    <Typography variant='h4' > 
+    <p> Created by: Marlon Brando, Al Pacino, James Caan, Richard Castellano, Robert Duvall, Sterling Hayden, John Marley, Richard Conte, and Diane Keaton</p>
+    </Typography>
+    </div>
+    </div>
+    
   );
 };
 

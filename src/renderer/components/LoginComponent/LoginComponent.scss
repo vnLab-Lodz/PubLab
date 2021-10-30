@@ -1,8 +1,9 @@
-html,
-body {
+
+
+.background {
   width: 100%;
   height: 100%;
-  background-color: #89969f;
+  background-color: #111111;
 }
 
 .container {
@@ -14,29 +15,64 @@ body {
   justify-content: center;
   align-items: center;
   position: fixed;
-  top: 30%;
-  left: 50%;
-  margin-top: -50px;
-  margin-left: -100px;
+  top: 40%;
+  left: 35%;
+}
+.container img{
+  height: 50%;
+}
+.text {
+  padding: 2em;
+}
+.text p {
+  color:#DDDDDD;
+}
+.icon{
+  color:#111111;
+  font-size: xx-large;
+
 }
 
-.button {
-  margin-top: 30px;
-  padding: 10px 10px 10px 10px;
-  border-radius: 20px;
-  font-size: medium;
-  border: none;
+
+.button { 
+background-color: #DDDDDD;
+padding-right: 4em;
+height: 2em;
+
+
 }
+.button p {
+  color: #111111;
+  text-transform: none;
+  word-spacing: 4px;
+  text-indent: 5em;
+  font-size:large;
+
+}
+
 .button:hover {
-  background-color: rgb(125, 209, 0);
-  color: white;
-  cursor: pointer;
+  background-color:#ddddddc9;
+ 
 }
+
 // .button:focus {
 //   outline: none;
 //   box-shadow: none;
 // }
 
+
+.footer {
+  justify-content: center;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  bottom: 0;
+  align-items: center;
+  left: 25%;
+}
+.footer p {
+  font-size: small;
+}
 @keyframes fade {
   from {
     opacity: 0;
