@@ -13,9 +13,12 @@ const Template: ComponentStory<typeof OurSwitch> = (args) => (
   <OurSwitch {...args} />
 );
 
-export const Checked = Template.bind({});
-Checked.args = {
+export const Normal = Template.bind({});
+Normal.args = {
     disabled: false,
+    onChange: () => {
+      console.log('123');
+    }
 }
 
 export const Disabled = Template.bind({});
