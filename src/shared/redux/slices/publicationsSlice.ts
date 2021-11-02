@@ -1,4 +1,4 @@
-import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../rootReducer';
 
 type Collaborator = {
@@ -27,20 +27,17 @@ type PublicationList = {
 // code significantly more
 type PublicationPrimitives = Omit<Publication, 'collaborators'>;
 
-// type created to define payload structure for actions on
-// publication primitive fields
 type PublicationModification = {
   id: string;
   field: keyof PublicationPrimitives;
   value: string;
 };
 
-// type created to define payload structure for actions on
-// publication collaborators
-type CollaboratorListModification = {
-  pubId: string;
-  value: Collaborator | string;
-};
+interface CollaboratorListModification<T> {
+  id: string;
+
+  value: T;
+}
 
 const initialState: PublicationList = {
   list: [
@@ -93,20 +90,20 @@ const publicationsSlice = createSlice({
     },
     addCollaborator: (
       state: PublicationList,
-      action: PayloadAction<CollaboratorListModification>
+      action: PayloadAction<CollaboratorListModification<Collaborator>>
     ) => {
       const chosenPubIndex = state.list.findIndex(
-        (publication) => publication.id === action.payload.pubId
+        (publication) => publication.id === action.payload.id
       );
       const collaborator = action.payload.value as Collaborator;
       state.list[chosenPubIndex].collaborators.push(collaborator);
     },
     deleteCollaborator: (
       state: PublicationList,
-      action: PayloadAction<CollaboratorListModification>
+      action: PayloadAction<CollaboratorListModification<string>>
     ) => {
       const chosenPubIndex = state.list.findIndex(
-        (publication) => publication.id === action.payload.pubId
+        (publication) => publication.id === action.payload.id
       );
       const collaboratorId = action.payload.value as string;
       const updatedCollaborators = state.list[
