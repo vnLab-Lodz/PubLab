@@ -49,7 +49,6 @@ const publicationsSlice = createSlice({
       action: PayloadAction<Publication>
     ) => {
       state.push(action.payload);
-      console.log(current(state));
     },
     deletePublication: (
       state: Publication[],
@@ -58,7 +57,6 @@ const publicationsSlice = createSlice({
       const updatedState = state.filter(
         (publication) => publication.id !== action.payload
       );
-      console.log(current(updatedState));
       return updatedState;
     },
     setPublicationField: (
@@ -69,7 +67,6 @@ const publicationsSlice = createSlice({
         (publication) => publication.id === action.payload.id
       );
       state[chosenPubIndex][action.payload.field] = action.payload.value;
-      console.log(current(state));
     },
     addCollaborator: (
       state: Publication[],
@@ -80,7 +77,6 @@ const publicationsSlice = createSlice({
       );
       const collaborator = action.payload.value as Collaborator;
       state[chosenPubIndex].collaborators.push(collaborator);
-      console.log(current(state[chosenPubIndex].collaborators));
     },
     deleteCollaborator: (
       state: Publication[],
@@ -94,7 +90,6 @@ const publicationsSlice = createSlice({
         (collaborator) => collaborator.id !== collaboratorId
       );
       state[chosenPubIndex].collaborators = updatedCollaborators;
-      console.log(current(state[chosenPubIndex]));
     },
   },
 });
