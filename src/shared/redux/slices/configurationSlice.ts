@@ -9,7 +9,7 @@ const initialState: Config = { defaultDirPath: '' };
 
 const configSlice = createSlice({
   name: 'config',
-  initialState: initialState,
+  initialState,
   reducers: {
     setDefaultDirPath: (state: Config, action: PayloadAction<string>) => {
       state.defaultDirPath = action.payload;

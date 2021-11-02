@@ -17,6 +17,7 @@ export async function fetchUserData(token: string) {
 
     return userData;
   } catch (error) {
-    console.log(error.response);
+    console.error(error.response);
+    return undefined;
   }
 }

@@ -8,7 +8,7 @@ import { appendLog } from '../logger';
  */
 export function checkForGatsby(): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
-    exec('npm list -g gatsby-cli --json', (error, stdout, stderr) => {
+    exec('npm list -g gatsby-cli --json', (error, stdout) => {
       if (error && stdout.trim() !== '{}') reject(error);
 
       let resultObj: any;
