@@ -1,8 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import { addPublication } from '../../shared/redux/slices/publicationsSlice';
+import { configStore } from '../../shared/redux/configureStore';
 
 const configFileName = 'vn-pub.conf';
+const store = configStore('main');
 
 function isRepository(source: string): boolean {
   return fs.existsSync(path.join(source, '.git'));
@@ -49,17 +51,26 @@ function recursiveSearch(source: string): void {
       const filePath = path.join(source, configFileName);
       const rawdata = fs.readFileSync(filePath);
       const dataParsed = JSON.parse(rawdata.toString());
-      addPublication({
-        // TODO: change to GUID
-        id: Math.random().toString(),
-        dirPath: source,
-        publicationName: dataParsed.publicationName,
-        description: dataParsed.description,
-        collaborators: dataParsed.collaborators,
-        packageManager: dataParsed.packageManager,
-        useSass: dataParsed.useSass,
-        useTypescript: dataParsed.useTypescript,
-      });
+      store.dispatch(
+        addPublication({
+          // TODO: change to GUID
+          id: Math.random().toString(),
+
+          dirPath: source,
+
+          publicationName: dataParsed.publicationName,
+
+          description: dataParsed.description,
+
+          collaborators: dataParsed.collaborators,
+
+          packageManager: dataParsed.packageManager,
+
+          useSass: dataParsed.useSass,
+
+          useTypescript: dataParsed.useTypescript,
+        })
+      );
     } catch (err) {
       console.error(err);
     }
