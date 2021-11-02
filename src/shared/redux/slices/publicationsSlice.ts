@@ -92,9 +92,7 @@ const publicationsSlice = createSlice({
         (publication) => publication.id === action.payload.id
       );
       const collaboratorId = action.payload.value as string;
-      const updatedCollaborators = state[
-        chosenPubIndex
-      ].collaborators.filter(
+      const updatedCollaborators = state[chosenPubIndex].collaborators.filter(
         (collaborator) => collaborator.id !== collaboratorId
       );
       state[chosenPubIndex].collaborators = updatedCollaborators;
