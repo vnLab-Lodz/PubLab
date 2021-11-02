@@ -43,9 +43,7 @@ const publicationsSlice = createSlice({
     setPublicationsList: (
       state: Publication[],
       action: PayloadAction<Publication[]>
-    ) => {
-      return action.payload;
-    },
+    ) => action.payload,
     addPublication: (
       state: Publication[],
       action: PayloadAction<Publication>
