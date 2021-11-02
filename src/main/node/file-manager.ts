@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { store } from '..';
 import { addPublication } from '../../shared/redux/slices/publicationsSlice';
+import { v4 as generateUuid } from 'uuid';
 
 const configFileName = 'vn-pub.conf';
 
@@ -52,8 +53,7 @@ function recursiveSearch(source: string): void {
       const dataParsed = JSON.parse(rawdata.toString());
       store.dispatch(
         addPublication({
-          // TODO: change to GUID
-          id: Math.random().toString(),
+          id: generateUuid(),
 
           dirPath: source,
 
