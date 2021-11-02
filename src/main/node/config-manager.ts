@@ -4,6 +4,7 @@ const fs = require('fs');
 
 class Collaborator {
   username: string;
+
   role: string;
 
   constructor(username: string, role: string) {
@@ -27,7 +28,7 @@ export function createConfigFile(
       name,
       description,
       collaborators,
-      packageManager: packageManager,
+      packageManager,
       tag,
     };
     const configContentJSON = JSON.stringify(configContent);
