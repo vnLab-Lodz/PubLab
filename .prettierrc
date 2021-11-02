@@ -1,5 +1,5 @@
 {
-  "endOfLine": "lf",
+  "endOfLine": "auto",
   "htmlWhitespaceSensitivity": "css",
   "bracketSameLine": false,
   "printWidth": 80,

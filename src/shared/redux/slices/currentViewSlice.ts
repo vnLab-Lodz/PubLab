@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../rootReducer';
 import { SUBVIEWS, VIEWS } from '../../../renderer/constants/Views';
+import { terminateSessionFulfilled } from './currentUserSlice';
 
 export interface ISubview {
   element: SUBVIEWS;
@@ -28,6 +29,9 @@ const CurrentViewSlice = createSlice({
     updateSubview: (state: CurrentView, action: PayloadAction<ISubview>) => {
       state.subview = { ...action.payload };
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(terminateSessionFulfilled, () => initialState);
   },
 });
 
