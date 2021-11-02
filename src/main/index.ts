@@ -13,7 +13,7 @@ if (require('electron-squirrel-startup')) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const store = configStore('main');
+export const store = configStore('main');
 
 const createWindow = async (): Promise<void> => {
   // Create the browser window.

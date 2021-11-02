@@ -1,10 +1,9 @@
 import fs from 'fs';
 import path from 'path';
+import { store } from '..';
 import { addPublication } from '../../shared/redux/slices/publicationsSlice';
-import { configStore } from '../../shared/redux/configureStore';
 
 const configFileName = 'vn-pub.conf';
-const store = configStore('main');
 
 function isRepository(source: string): boolean {
   return fs.existsSync(path.join(source, '.git'));

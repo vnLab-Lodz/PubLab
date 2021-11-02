@@ -35,7 +35,6 @@ type PublicationModification = {
 
 interface CollaboratorListModification<T> {
   id: string;
-
   value: T;
 }
 
