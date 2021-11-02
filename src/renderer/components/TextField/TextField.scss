@@ -1,5 +1,4 @@
-input[type="text"], textarea {
-
-    background-color : #d1d1d1; 
-  
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: red;
+    opacity: 1; /* Firefox */
   }

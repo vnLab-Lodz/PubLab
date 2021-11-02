@@ -1,27 +1,42 @@
 import * as React from 'react';
-import { TextField, TextFieldProps } from '@mui/material';
-import { styled } from '@mui/material';
+import { TextField, InputBase, TextFieldProps } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { ReactNode } from 'react';
+import './TextField.scss';
 
 interface Props {
     children: ReactNode;
 
-    variant: 'outlined' | 'filled';
+    type?: string;
 }
+
+
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
 }));
 
 
-const OurTextField: React.FC<Props> = ({children, ...props}: Props) => {
+const OurTextField: React.FC<Props> = ({type, ...props}: Props) => {
 
-  const [checked, setChecked] = React.useState<boolean>(); 
-
-  return (
-    <div>
-      <TextField {...props}>{children}</TextField>
-    </div>
-  );
+  if (type == 'light') {
+    return (
+        <div color='black'>
+          <InputBase {...props} style={{backgroundColor: "#DDDDDD", border: "2px solid #111111", height: "15mm", padding: "15px", color: '#111111'}}></InputBase>
+        </div>
+      );
+  } else if (type == 'dark') {
+    return (
+        <div> 
+          <InputBase {...props} style={{backgroundColor: "#111111", border: "2px solid #DDDDDD", height: "15mm", padding: "15px", color: '#DDDDDD'}}></InputBase>
+        </div>
+      );
+  } else {
+    return (
+        <div>
+          <InputBase {...props} style={{backgroundColor: "#111111", border: "2px solid #ff8383", height: "15mm", padding: "15px", color: "#ff8383", }}></InputBase>
+        </div>
+      );
+  }
 }
 
 export default OurTextField;
