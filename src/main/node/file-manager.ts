@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
+import { v4 as generateUuid } from 'uuid';
 import { store } from '..';
 import { addPublication } from '../../shared/redux/slices/publicationsSlice';
-import { v4 as generateUuid } from 'uuid';
 
 const configFileName = 'vn-pub.conf';
 
