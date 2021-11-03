@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from 'electron';
+import { setLocale } from '../shared/redux/slices/settingsSlice';
 import { configStore } from '../shared/redux/configureStore';
 import installDevToolsExtensions from './devToolsExtensions';
 
@@ -32,6 +33,7 @@ const createWindow = async (): Promise<void> => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+  store.dispatch(setLocale('en'));
 };
 
 // This method will be called when Electron has finished

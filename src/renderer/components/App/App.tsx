@@ -8,8 +8,15 @@ import Auth from '../Auth/Auth';
 import CustomRouter from '../CustomRouter/CustomRouter';
 import NavigationBar from '../NavigationBar/NavigationBar';
 import { theme } from '../../theme';
+import observeStore from '../../../shared/redux/helpers/observeStore';
+import { selectCurrentLocale } from '../../../shared/redux/slices/settingsSlice';
+import i18next from '../../localisation/i18next';
 
 const store = configStore('renderer');
+
+observeStore(store, selectCurrentLocale, (langCode) =>
+  i18next.changeLanguage(langCode)
+);
 
 const App = () => (
   <Provider store={store}>
