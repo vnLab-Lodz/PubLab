@@ -14,22 +14,26 @@ type Publication = {
   description: string;
   collaborators: Collaborator[];
   packageManager: string;
-  useSass: string;
-  useTypescript: string;
+  useSass: boolean;
+  useTypescript: boolean;
 };
 
-// type created to exclude collaborator type to avoid an issue with
-// index access writes on union of keys, which would complicate the
+// type created to avoid an issue with both unclear modification type
+// and index access writes on union of keys, which would complicate the
 // code significantly more
-type PublicationPrimitives = Omit<Publication, 'collaborators'>;
+type PublicationModification = 
+  | {
+      id: string;
+      field: keyof Omit<Publication, 'useTypescript' | 'useSass' | 'collaborators'>;
+      value: string;
+    }
+  | {
+      id: string;
+      field: keyof Pick<Publication, 'useTypescript' | 'useSass'>;
+      value: boolean;
+    };
 
-type PublicationModification = {
-  id: string;
-  field: keyof PublicationPrimitives;
-  value: string;
-};
-
-interface CollaboratorListModification<T> {
+type CollaboratorListModification<T> = {
   id: string;
   value: T;
 }
@@ -66,7 +70,7 @@ const publicationsSlice = createSlice({
       const chosenPubIndex = state.findIndex(
         (publication) => publication.id === action.payload.id
       );
-      state[chosenPubIndex][action.payload.field] = action.payload.value;
+      (state[chosenPubIndex][action.payload.field] as any) = action.payload.value;
     },
     addCollaborator: (
       state: Publication[],
