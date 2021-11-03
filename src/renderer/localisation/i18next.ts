@@ -4,20 +4,16 @@ import { initReactI18next } from 'react-i18next';
 import enTranslation from './locales/en/translation.json';
 import plTranslation from './locales/pl/translation.json';
 
-export const SUPPORTED_LANGUAGE_CODES = {
-  english: 'en',
-  polish: 'pl',
-} as const;
+export const resources = {
+  en: { translation: enTranslation },
+  pl: { translation: plTranslation },
+};
 
-export type SupportedLangCode =
-  typeof SUPPORTED_LANGUAGE_CODES[keyof typeof SUPPORTED_LANGUAGE_CODES];
+export type SupportedLangCode = keyof typeof resources;
 
 i18n.use(initReactI18next).init({
-  lng: 'en',
-  resources: {
-    en: { translation: enTranslation },
-    pl: { translation: plTranslation },
-  },
+  fallbackLng: 'en',
+  resources,
 });
 
 export default i18n;

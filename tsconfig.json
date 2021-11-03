@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "strict": true,
     "allowJs": true,
     "module": "commonjs",
     "skipLibCheck": true,
@@ -21,6 +22,6 @@
     "src/main/index.ts",
     "src/components",
     "./custom.d.ts",
-    "./mui.d.ts"
-  ]
+    "./mui.d.ts", 
+    "src/renderer/localisation/react-i18next.d.ts"  ]
 }
