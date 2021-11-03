@@ -21,10 +21,13 @@ type Publication = {
 // type created to avoid an issue with both unclear modification type
 // and index access writes on union of keys, which would complicate the
 // code significantly more
-type PublicationModification = 
+type PublicationModification =
   | {
       id: string;
-      field: keyof Omit<Publication, 'useTypescript' | 'useSass' | 'collaborators'>;
+      field: keyof Omit<
+        Publication,
+        'useTypescript' | 'useSass' | 'collaborators'
+      >;
       value: string;
     }
   | {
@@ -36,7 +39,7 @@ type PublicationModification =
 type CollaboratorListModification<T> = {
   id: string;
   value: T;
-}
+};
 
 const initialState: Publication[] = [];
 
@@ -70,7 +73,8 @@ const publicationsSlice = createSlice({
       const chosenPubIndex = state.findIndex(
         (publication) => publication.id === action.payload.id
       );
-      (state[chosenPubIndex][action.payload.field] as any) = action.payload.value;
+      (state[chosenPubIndex][action.payload.field] as any) =
+        action.payload.value;
     },
     addCollaborator: (
       state: Publication[],
