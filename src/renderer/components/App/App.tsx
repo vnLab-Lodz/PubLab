@@ -10,7 +10,7 @@ import NavigationBar from '../NavigationBar/NavigationBar';
 import { theme } from '../../theme';
 import observeStore from '../../../shared/redux/helpers/observeStore';
 import { selectCurrentLocale } from '../../../shared/redux/slices/settingsSlice';
-import i18next from '../../localisation/i18next';
+import i18next from '../../internationalisation/i18next';
 
 const store = configStore('renderer');
 

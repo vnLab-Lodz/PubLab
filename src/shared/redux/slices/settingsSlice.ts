@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SupportedLangCode } from '../../../renderer/localisation/i18next';
+import { SupportedLangCode } from '../../../renderer/internationalisation/i18next';
 import { RootState } from '../rootReducer';
 
 type Settings = {
