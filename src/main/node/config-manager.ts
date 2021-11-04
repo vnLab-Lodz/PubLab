@@ -2,7 +2,7 @@ import { isDirectory, isPublication } from './file-manager';
 
 const fs = require('fs');
 
-// ! This no longer exists in #93
+// TODO: This should be switched over to definition form #93 -> https://github.com/vnLab-Lodz/PubLab/pull/93
 class Collaborator {
   username: string;
 
@@ -33,8 +33,7 @@ export function createConfigFile(
       name,
       description,
       collaborators,
-      // TODO: casing can be camel case | might have been changed in #93 already
-      package_manager: packageManager,
+      packageManager,
       tag,
     };
     const configContentJSON = JSON.stringify(configContent, null, 2);

@@ -1,5 +1,7 @@
 import fs from 'fs';
 import path from 'path';
+import { v4 as generateUuid } from 'uuid';
+import { store } from '..';
 import { addPublication } from '../../shared/redux/slices/publicationsSlice';
 
 const configFileName = 'vn-pub.conf';
@@ -49,13 +51,25 @@ function recursiveSearch(source: string): void {
       const filePath = path.join(source, configFileName);
       const rawdata = fs.readFileSync(filePath);
       const dataParsed = JSON.parse(rawdata.toString());
-      addPublication({
-        project_name: dataParsed.project_name,
-        collaborators: dataParsed.collaborators,
-        pm_preference: dataParsed.collaborators,
-        description: dataParsed.description,
-        dirPath: source,
-      });
+      store.dispatch(
+        addPublication({
+          id: generateUuid(),
+
+          dirPath: source,
+
+          publicationName: dataParsed.publicationName,
+
+          description: dataParsed.description,
+
+          collaborators: dataParsed.collaborators,
+
+          packageManager: dataParsed.packageManager,
+
+          useSass: dataParsed.useSass,
+
+          useTypescript: dataParsed.useTypescript,
+        })
+      );
     } catch (err) {
       console.error(err);
     }
