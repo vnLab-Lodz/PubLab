@@ -1,11 +1,14 @@
 .navbar {
-  position: relative;
+  position: sticky;
+  top: 0;
   box-sizing: border-box;
+  max-height: 100vh;
   flex: 0 220px;
-  min-width: 68px;
-  max-width: 68px;
+  min-width: 74px;
+  max-width: 74px;
   padding: 1rem 4px;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   border-right: 1px solid #dddddd;
 
   display: flex;
