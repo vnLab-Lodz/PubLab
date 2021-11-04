@@ -1,3 +1,14 @@
 {
-    "App Settings": "App Settings"
+    "common": {
+        "save": "save"
+    },
+    "AppSettings": {
+        "title": "App Settings",
+        "titleShort": "AS",
+        "language": {
+            "language": "Language",
+            "english": "English",
+            "polish": "Polish"
+        }
+    }
 }

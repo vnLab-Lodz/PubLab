@@ -1,3 +1,14 @@
 {
-    "App Settings": "Ustawienia Aplikacji"
+    "common": {
+        "save": "zapisz"
+    },
+    "AppSettings": {
+        "title": "Ustawienia Aplikacji",
+        "titleShort": "US",
+        "language": {
+            "language": "Język",
+            "english": "Angielski",
+            "polish": "Polski"
+        }
+    }
 }
