@@ -25,7 +25,8 @@ const Auth = ({ children }: any) => {
         dispatch(requestAccessTokenAsync(currentUser.auth.code));
         break;
       case AUTH_STATES.TOKEN_REQUESTED:
-        dispatch(fetchUserDataAsync(currentUser.auth.accessToken.value));
+        if (currentUser.auth.accessToken)
+          dispatch(fetchUserDataAsync(currentUser.auth.accessToken.value));
         break;
       default:
         break;
@@ -38,7 +39,7 @@ const Auth = ({ children }: any) => {
   const shouldRender =
     status === AUTH_STATES.AUTHED || status === AUTH_STATES.AUTH_FAILED;
 
-  return shouldRender && component;
+  return <>{shouldRender && component}</>;
 };
 
 export default Auth;
