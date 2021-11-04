@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "removeComments": true,
     "strict": true,
     "allowJs": true,
     "module": "commonjs",
