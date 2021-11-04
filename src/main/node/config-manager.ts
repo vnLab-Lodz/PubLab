@@ -28,7 +28,7 @@ export function createConfigFile(
       name,
       description,
       collaborators,
-      package_manager: packageManager,
+      packageManager,
       tag,
     };
     const configContentJSON = JSON.stringify(configContent);

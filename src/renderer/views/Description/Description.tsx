@@ -6,8 +6,8 @@ import { installGatsbyCLI } from '../../../shared/redux/slices/gatsbyInstallSlic
 
 const Description = () => {
   const currentUser = useSelector(selectCurrentUser);
-
   const dispatch = useDispatch();
+
   return (
     <div>
       <h1 className='hello'>Hello World!</h1>
@@ -15,6 +15,7 @@ const Description = () => {
       <button type='button' onClick={() => dispatch(installGatsbyCLI())}>
         Install gatsby-cli
       </button>
+
       <p>
         Welcome <b>{currentUser.data?.nick || ''}</b>!
       </p>
