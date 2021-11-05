@@ -1,14 +1,14 @@
 {
-    "common": {
-        "save": "zapisz"
-    },
-    "AppSettings": {
-        "title": "Ustawienia Aplikacji",
-        "abbreviation": "UA",
-        "language": {
-            "language": "Język",
-            "english": "Angielski",
-            "polish": "Polski"
-        }
+  "common": {
+    "save": "zapisz"
+  },
+  "AppSettings": {
+    "title": "Ustawienia Aplikacji",
+    "abbreviation": "UA",
+    "language": {
+      "language": "Język",
+      "english": "Angielski",
+      "polish": "Polski"
     }
+  }
 }
