@@ -4,7 +4,7 @@
     },
     "AppSettings": {
         "title": "App Settings",
-        "titleShort": "AS",
+        "abbreviation": "AS",
         "language": {
             "language": "Language",
             "english": "English",

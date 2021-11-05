@@ -4,7 +4,7 @@
     },
     "AppSettings": {
         "title": "Ustawienia Aplikacji",
-        "titleShort": "US",
+        "abbreviation": "UA",
         "language": {
             "language": "Język",
             "english": "Angielski",
