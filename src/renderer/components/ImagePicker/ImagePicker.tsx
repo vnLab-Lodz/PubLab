@@ -7,20 +7,30 @@ interface Props {
   error?: boolean;
 }
 
-const ImagePicker: React.FC<Props> = ({ image, error }) => {
-  if (!image) {
-    return error ? (
-      <div className='img error'>
-        <div className='imgplus error' />
-      </div>
-    ) : (
-      <div className='img'>
-        <div className='imgplus' />
-      </div>
-    );
-  } else {
-    return <img className='img selected' src={image} />;
-  }
+const ImagePicker: React.FC<Props> = ({ image, error, onClick }) => {
+  if (image)
+    return <img className='img selected' src={image} alt='Example alt' />;
+
+  const makeClass = (base: string): string => (error ? `${base} error` : base);
+
+  return (
+    <div
+      aria-label='image picker'
+      tabIndex={0}
+      role='button'
+      className={makeClass('img')}
+      onClick={onClick}
+      onKeyPress={({ key }) => key === 'Enter' && onClick()}
+    >
+      <div className={makeClass('imgplus')} />
+    </div>
+  );
+};
+
+ImagePicker.defaultProps = {
+  image: undefined,
+  onClick: () => {},
+  error: false,
 };
 
 export default ImagePicker;
