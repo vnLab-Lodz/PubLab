@@ -51,3 +51,23 @@ export function installGatsby(): Promise<void> {
     });
   });
 }
+
+/**
+ * Generate new PaaW project with gaysby.
+ * Rejects the promise if a command execution error occurs.
+ * @return {Promise<void>}
+ */
+export function generateProject(params: string[]): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    appendLog('Generating new project...');
+    
+    exec(`gatsby new ${params[0]} ${params[1]}`, (error, stdout, stderr) => {
+      if (error) reject(error);
+
+      appendLog(`project generator standard output: ${stdout}`);
+      appendLog(`project generator error output: ${stderr}`);
+      appendLog('Finished generation of new project');
+      resolve();
+    });
+  });
+}
