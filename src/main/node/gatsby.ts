@@ -60,7 +60,6 @@ export function installGatsby(): Promise<void> {
 export function generateProject(params: string[]): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     appendLog('Generating new project...');
-    
     exec(`gatsby new ${params[0]} ${params[1]}`, (error, stdout, stderr) => {
       if (error) reject(error);
 
