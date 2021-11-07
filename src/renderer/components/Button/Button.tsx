@@ -5,10 +5,24 @@ import {
 import React, { FC } from 'react';
 import './Button.scss';
 
-interface ButtonProps extends MUIButtonProps {}
+interface ButtonProps extends MUIButtonProps {
+  text: string;
+  textCase?: 'lowercase' | 'uppercase' | 'sentence-case';
+  fontWeight?: 'bold' | 'light';
+}
 
-const Button: FC<ButtonProps> = ({ children, ...rest }) => {
-  return <MUIButton {...rest}>{children}</MUIButton>;
+const Button: FC<ButtonProps> = ({
+  text,
+  textCase,
+  fontWeight,
+  children,
+  ...rest
+}) => {
+  return (
+    <MUIButton className={`${textCase ?? 'lowercase'} ${fontWeight}`} {...rest}>
+      {text}
+    </MUIButton>
+  );
 };
 
 export default Button;
