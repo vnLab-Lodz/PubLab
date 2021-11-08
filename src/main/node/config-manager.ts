@@ -1,144 +1,110 @@
 import { isDirectory, isPublication } from './file-manager';
+import { Configuration } from './model/Configuration';
+import { Collaborator } from '../../shared/redux/slices/publicationsSlice';
+import { configFileName } from './config-util';
 
 const fs = require('fs');
 
-// TODO: This should be switched over to definition form #93 -> https://github.com/vnLab-Lodz/PubLab/pull/93
-class Collaborator {
-  username: string;
-
-  role: string;
-
-  constructor(username: string, role: string) {
-    this.username = username;
-    this.role = role;
-  }
+export function createConfigFile(path: string, configuration: Configuration) {
+  validatePath(
+    !isDirectory(path),
+    'Error while creating a config file: directory is not found'
+  );
+  const configContentJSON = JSON.stringify(configuration, null, 2);
+  fs.writeFileSync(`${path}/${configFileName}`, configContentJSON);
 }
 
-// TODO: This should have .json extension to actually be JSON
-// TODO: Rename to publab.config.json
-const configFileName = 'vn-pub.conf';
-
-// TODO: It would be much better if the function took two args - path and an object with the options
-// TODO: The whole return of booleans is a bit weird as well, should probably throw an Error instead
-export function createConfigFile(
-  path: string,
-  name: string,
-  description: string,
-  collaborators: Collaborator[],
-  packageManager: string,
-  tag: string
-): boolean {
-  if (isDirectory(path)) {
-    const configContent = {
-      name,
-      description,
-      collaborators,
-      packageManager,
-      tag,
-    };
-    const configContentJSON = JSON.stringify(configContent, null, 2);
-    fs.writeFileSync(`${path}/${configFileName}`, configContentJSON);
-    return true;
-  }
-  return false;
-}
-
-export function deleteConfigFile(path: string): boolean {
-  if (isDirectory(path) && isPublication(path)) {
-    try {
-      if (fs.existsSync(path)) {
-        fs.unlinkSync(`${path}/${configFileName}`);
-        return true;
-      }
-    } catch (err) {
-      console.error(err);
-      return false;
+export function deleteConfigFile(path: string) {
+  validatePath(!isDirectory(path) || !isPublication(path), 'Invalid path');
+  try {
+    if (fs.existsSync(path)) {
+      fs.unlinkSync(`${path}/${configFileName}`);
     }
+  } catch (err) {
+    throw new Error(err.toString());
   }
-  return false;
 }
 
-// TODO: Unsure how much sense it makes to have all separate `modify` functions, could probably abstract that
-export function modifyName(path: string, newName: string): boolean {
-  if (isDirectory(path) && isPublication(path)) {
-    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
-    const configContent = JSON.parse(configContentJSON);
-    configContent.name = newName;
-    const newConfigContentJSON = JSON.stringify(configContent);
-    deleteConfigFile(path);
-    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
-    return true;
-  }
-  return false;
+export function updateName(path: string, newName: string) {
+  validateNonEmptyNorNull(newName);
+  const configurationToUpdate = getConfigFileJSON(path);
+  updateConfigField(configurationToUpdate, path, () => {
+    configurationToUpdate.name = newName;
+  });
 }
 
-export function modifyDescription(
-  path: string,
-  newDescription: string
-): boolean {
-  if (isDirectory(path) && isPublication(path)) {
-    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
-    const configContent = JSON.parse(configContentJSON);
-    configContent.description = newDescription;
-    const newConfigContentJSON = JSON.stringify(configContent);
-    deleteConfigFile(path);
-    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
-    return true;
-  }
-  return false;
+export function updateDescription(path: string, newDescription: string) {
+  const configurationToUpdate = getConfigFileJSON(path);
+  updateConfigField(configurationToUpdate, path, () => {
+    configurationToUpdate.description = newDescription;
+  });
 }
 
-export function modifyCollaborators(
+export function updateCollaborators(
   path: string,
   newCollaborators: Collaborator[]
-): boolean {
-  if (isDirectory(path) && isPublication(path)) {
-    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
-    const configContent = JSON.parse(configContentJSON);
-    configContent.collaborators = newCollaborators;
-    const newConfigContentJSON = JSON.stringify(configContent);
-    deleteConfigFile(path);
-    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
-    return true;
-  }
-  return false;
+) {
+  validateNonEmpty(newCollaborators);
+  const configurationToUpdate = getConfigFileJSON(path);
+  updateConfigField(configurationToUpdate, path, () => {
+    configurationToUpdate.collaborators = newCollaborators;
+  });
 }
 
-export function modifyPackageManager(
+export function updatePackageManager(path: string, newPackageManager: string) {
+  validateNonEmptyNorNull(newPackageManager);
+  const configurationToUpdate = getConfigFileJSON(path);
+  updateConfigField(configurationToUpdate, path, () => {
+    configurationToUpdate.packageManager = newPackageManager;
+  });
+}
+
+export function updateTag(path: string, tag: string) {
+  const configurationToUpdate = getConfigFileJSON(path);
+  updateConfigField(configurationToUpdate, path, () => {
+    configurationToUpdate.tag = tag;
+  });
+}
+
+function saveUpdatedConfiguration(path: string, configuration: Configuration) {
+  const updatedConfigurationJson = JSON.stringify(configuration);
+  deleteConfigFile(path);
+  fs.writeFileSync(`${path}/${configFileName}`, updatedConfigurationJson);
+}
+
+function validatePath(condition: boolean, errMessage: string) {
+  if (condition) {
+    throw new Error(errMessage);
+  }
+}
+
+export function validateNonEmptyNorNull(property: string): void {
+  if (!property || property.trim().length === 0) {
+    throw new Error('This property cannot be null or empty');
+  }
+}
+
+function validateNonEmpty(arr: any[]) {
+  if (!arr || arr.length === 0) {
+    throw new Error('Cannot be an empty array');
+  }
+}
+
+function updateConfigField(
+  configurationToUpdate: Configuration,
   path: string,
-  newPackageManager: string
-): boolean {
-  if (isDirectory(path) && isPublication(path)) {
-    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
-    const configContent = JSON.parse(configContentJSON);
-    configContent.packageManager = newPackageManager;
-    const newConfigContentJSON = JSON.stringify(configContent);
-    deleteConfigFile(path);
-    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
-    return true;
-  }
-  return false;
-}
-
-export function modifyTag(path: string, newTag: string): boolean {
-  if (isDirectory(path) && isPublication(path)) {
-    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
-    const configContent = JSON.parse(configContentJSON);
-    configContent.tag = newTag;
-    const newConfigContentJSON = JSON.stringify(configContent);
-    deleteConfigFile(path);
-    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
-    return true;
-  }
-  return false;
+  setFn: () => void
+): void {
+  setFn();
+  saveUpdatedConfiguration(path, configurationToUpdate as Configuration);
 }
 
 // TODO: the return type should be a variation of Publication from #93 -> https://github.com/vnLab-Lodz/PubLab/pull/93
-export function getConfigFileJSON<T = { [key: string]: any }>(path: string): T {
-  if (!isDirectory(path) || !isPublication(path)) {
-    throw new Error('Config file does not exist. Check the provided path');
-  }
-
+export function getConfigFileJSON(path: string): Configuration {
+  validatePath(
+    !isDirectory(path) || !isPublication(path),
+    'Config file does not exist. Check the provided path'
+  );
   const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
-  return JSON.parse(configContentJSON);
+  return JSON.parse(configContentJSON) as Configuration;
 }

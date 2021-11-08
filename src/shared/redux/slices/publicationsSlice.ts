@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../rootReducer';
 
-type Collaborator = {
+export type Collaborator = {
   id: string;
   githubUsername: string;
   role: string;
 };
 
-type Publication = {
+export type Publication = {
   id: string;
   dirPath: string;
   publicationName: string;
