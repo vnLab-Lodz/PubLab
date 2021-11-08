@@ -28,12 +28,32 @@ const config: Configuration = {
   useTypescript: true,
 };
 
+const invalidConfig: Configuration = {
+  id: '',
+  dirPath: '',
+  publicationName: '',
+  description: '',
+  collaborators: [],
+  packageManager: '',
+  tag: '',
+  useSass: true,
+  useTypescript: true,
+};
+
 describe('createConfigFile', () => {
   it('create a config file under given directory', () => {
     createConfigFile(nodeDirectoryPath, config);
     expect(() => {
       fs.readFileSync(`${nodeDirectoryPath}/${configFileName}`);
     }).not.toThrow();
+  });
+});
+
+describe('createConfigFile', () => {
+  it('error is thrown when trying to create a config with empty name, packageManager or collaborators', () => {
+    expect(() => {
+      createConfigFile(nodeDirectoryPath, invalidConfig);
+    }).toThrow();
   });
 });
 
