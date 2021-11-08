@@ -7,6 +7,7 @@ import {
   selectCurrentLocale,
   setLocale,
 } from '../../../shared/redux/slices/settingsSlice';
+import { supportedLocales } from '../../internationalisation/i18next';
 
 const AppSettings = () => {
   const { t } = useTranslation();
@@ -17,6 +18,13 @@ const AppSettings = () => {
     dispatch(setLocale(language));
   }
 
+  function generateLangOptions() {
+    return supportedLocales.map((locale) => (
+      <MenuItem key={locale} value={locale}>
+        {t(`AppSettings.language.${locale}` as const)}
+      </MenuItem>
+    ));
+  }
   return (
     <div>
       {t('AppSettings.title')}
@@ -27,10 +35,9 @@ const AppSettings = () => {
         labelId='lang-select-label'
         title={t('AppSettings.language.language')}
         value={language}
-        onChange={(e) => setLanguage(e.target.value as 'en' | 'pl')}
+        onChange={(e) => setLanguage(e.target.value as typeof language)}
       >
-        <MenuItem value='en'>{t('AppSettings.language.english')}</MenuItem>
-        <MenuItem value='pl'>{t('AppSettings.language.polish')}</MenuItem>
+        {generateLangOptions()}
       </Select>
       <Button onClick={() => submitChanges()}>{t('common.save')}</Button>
     </div>
