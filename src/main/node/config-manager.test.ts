@@ -16,7 +16,17 @@ const fs = require('fs');
 const nodeDirectoryPath = './src/main/node';
 const invalidDirectoryPath = '&&&*88*.';
 
-const config = new Configuration('name', 'description', [], 'npm', 'tag');
+const config: Configuration = {
+  id: 'id',
+  dirPath: 'home',
+  publicationName: 'name',
+  description: 'description',
+  collaborators: [{ id: 'test', role: 'test', githubUsername: 'test' }],
+  packageManager: 'npm',
+  tag: 'tag',
+  useSass: true,
+  useTypescript: true,
+};
 
 describe('createConfigFile', () => {
   it('create a config file under given directory', () => {
@@ -55,7 +65,7 @@ describe('updateName', () => {
       updatedName,
       updateName
     );
-    expect(updatedConfig.name).toEqual(updatedName);
+    expect(updatedConfig.publicationName).toEqual(updatedName);
     expect([
       oldConfig.description,
       oldConfig.packageManager,
@@ -79,11 +89,11 @@ describe('updateDescription', () => {
     );
     expect(updatedConfig.description).toEqual(updatedDescription);
     expect([
-      oldConfig.name,
+      oldConfig.publicationName,
       oldConfig.packageManager,
       oldConfig.collaborators,
     ]).toEqual([
-      updatedConfig.name,
+      updatedConfig.publicationName,
       updatedConfig.packageManager,
       updatedConfig.collaborators,
     ]);
@@ -101,11 +111,11 @@ describe('updatePackageManager', () => {
     );
     expect(updatedConfig.packageManager).toEqual(updatedPackageManager);
     expect([
-      oldConfig.name,
+      oldConfig.publicationName,
       oldConfig.description,
       oldConfig.collaborators,
     ]).toEqual([
-      updatedConfig.name,
+      updatedConfig.publicationName,
       updatedConfig.description,
       updatedConfig.collaborators,
     ]);
@@ -125,11 +135,11 @@ describe('updateCollaborators', () => {
     );
     expect(updatedConfig.collaborators).toEqual(updatedCollaborators);
     expect([
-      oldConfig.name,
+      oldConfig.publicationName,
       oldConfig.description,
       oldConfig.packageManager,
     ]).toEqual([
-      updatedConfig.name,
+      updatedConfig.publicationName,
       updatedConfig.description,
       updatedConfig.packageManager,
     ]);
@@ -147,11 +157,11 @@ describe('updateTag', () => {
     );
     expect(updatedConfig.tag).toEqual(updatedTag);
     expect([
-      oldConfig.name,
+      oldConfig.publicationName,
       oldConfig.description,
       oldConfig.packageManager,
     ]).toEqual([
-      updatedConfig.name,
+      updatedConfig.publicationName,
       updatedConfig.description,
       updatedConfig.packageManager,
     ]);

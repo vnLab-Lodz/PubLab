@@ -1,7 +1,7 @@
 import { isDirectory, isPublication } from './file-manager';
-import { Configuration } from './model/Configuration';
 import { Collaborator } from '../../shared/redux/slices/publicationsSlice';
 import { configFileName } from './config-util';
+import { Configuration } from './model/Configuration';
 
 const fs = require('fs');
 
@@ -10,6 +10,13 @@ export function createConfigFile(path: string, configuration: Configuration) {
     !isDirectory(path),
     'Error while creating a config file: directory is not found'
   );
+  if (
+    !configuration.publicationName ||
+    !configuration.packageManager ||
+    !configuration.collaborators
+  ) {
+    throw new Error('Name, package manager and collaborators are required');
+  }
   const configContentJSON = JSON.stringify(configuration, null, 2);
   fs.writeFileSync(`${path}/${configFileName}`, configContentJSON);
 }
@@ -29,7 +36,7 @@ export function updateName(path: string, newName: string) {
   validateNonEmptyNorNull(newName);
   const configurationToUpdate = getConfigFileJSON(path);
   updateConfigField(configurationToUpdate, path, () => {
-    configurationToUpdate.name = newName;
+    configurationToUpdate.publicationName = newName;
   });
 }
 
@@ -99,7 +106,6 @@ function updateConfigField(
   saveUpdatedConfiguration(path, configurationToUpdate as Configuration);
 }
 
-// TODO: the return type should be a variation of Publication from #93 -> https://github.com/vnLab-Lodz/PubLab/pull/93
 export function getConfigFileJSON(path: string): Configuration {
   validatePath(
     !isDirectory(path) || !isPublication(path),
