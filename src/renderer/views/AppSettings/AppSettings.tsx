@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './AppSettings.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Button, MenuItem, Select } from '@mui/material';
+import { Button, InputLabel, MenuItem, Select } from '@mui/material';
 import {
   selectCurrentLocale,
   setLocale,
@@ -20,8 +20,12 @@ const AppSettings = () => {
   return (
     <div>
       {t('AppSettings.title')}
+      <InputLabel id='lang-select-label'>
+        {t('AppSettings.language.language')}
+      </InputLabel>
       <Select
-        label={t('AppSettings.language')}
+        labelId='lang-select-label'
+        title={t('AppSettings.language.language')}
         value={language}
         onChange={(e) => setLanguage(e.target.value as 'en' | 'pl')}
       >
