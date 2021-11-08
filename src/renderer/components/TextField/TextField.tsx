@@ -1,42 +1,44 @@
 import * as React from 'react';
-import { TextField, InputBase, TextFieldProps } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { TextField, InputBase } from '@mui/material';
 import { ReactNode } from 'react';
 import './TextField.scss';
+import { styled } from '@mui/material/styles';
 
 interface Props {
     children: ReactNode;
-
     type?: string;
 }
 
-
-
-const StyledTextField = styled(TextField)(({ theme }) => ({
+const StyledTextField = styled(InputBase)(({ theme, type }) => ({
+  backgroundColor: type === 'light' ? 'lightGray' : 'black', 
+  color: type === 'light' ? 'black' : 
+    type === 'dark' ? 'lightGray' : '#ff8383',
+  border: type === 'light' ? '2px solid black' 
+    : type === 'dark' ? '2px solid lightGray' : '2px solid #ff8383',
+  height: '45px',
+  width: '400px',
+  padding: '10px'
 }));
-
 
 const OurTextField: React.FC<Props> = ({type, ...props}: Props) => {
 
-  if (type == 'light') {
+  if (type === 'light') {
     return (
-        <div color='black'>
-          <InputBase {...props} style={{backgroundColor: "#DDDDDD", border: "2px solid #111111", height: "15mm", padding: "15px", color: '#111111'}}></InputBase>
-        </div>
+        <StyledTextField {...props} type={type}/>
       );
-  } else if (type == 'dark') {
+  } else if (type === 'dark') {
     return (
-        <div> 
-          <InputBase {...props} style={{backgroundColor: "#111111", border: "2px solid #DDDDDD", height: "15mm", padding: "15px", color: '#DDDDDD'}}></InputBase>
-        </div>
+      <StyledTextField {...props} type={type}/>
       );
   } else {
     return (
-        <div>
-          <InputBase {...props} style={{backgroundColor: "#111111", border: "2px solid #ff8383", height: "15mm", padding: "15px", color: "#ff8383", }}></InputBase>
-        </div>
+      <StyledTextField {...props} type={type}/>
       );
   }
 }
+
+OurTextField.defaultProps = {
+  type: 'black'
+};
 
 export default OurTextField;
