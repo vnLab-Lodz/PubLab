@@ -34,14 +34,14 @@ export function deleteConfigFile(path: string) {
 
 export function updateName(path: string, newName: string) {
   validateNonEmptyNorNull(newName);
-  const configurationToUpdate = getConfigFileJSON(path);
+  const configurationToUpdate: Configuration = getConfigFile(path);
   updateConfigField(configurationToUpdate, path, () => {
     configurationToUpdate.publicationName = newName;
   });
 }
 
 export function updateDescription(path: string, newDescription: string) {
-  const configurationToUpdate = getConfigFileJSON(path);
+  const configurationToUpdate: Configuration = getConfigFile(path);
   updateConfigField(configurationToUpdate, path, () => {
     configurationToUpdate.description = newDescription;
   });
@@ -52,7 +52,7 @@ export function updateCollaborators(
   newCollaborators: Collaborator[]
 ) {
   validateNonEmpty(newCollaborators);
-  const configurationToUpdate = getConfigFileJSON(path);
+  const configurationToUpdate: Configuration = getConfigFile(path);
   updateConfigField(configurationToUpdate, path, () => {
     configurationToUpdate.collaborators = newCollaborators;
   });
@@ -60,17 +60,26 @@ export function updateCollaborators(
 
 export function updatePackageManager(path: string, newPackageManager: string) {
   validateNonEmptyNorNull(newPackageManager);
-  const configurationToUpdate = getConfigFileJSON(path);
+  const configurationToUpdate: Configuration = getConfigFile(path);
   updateConfigField(configurationToUpdate, path, () => {
     configurationToUpdate.packageManager = newPackageManager;
   });
 }
 
 export function updateTag(path: string, tag: string) {
-  const configurationToUpdate = getConfigFileJSON(path);
+  const configurationToUpdate: Configuration = getConfigFile(path);
   updateConfigField(configurationToUpdate, path, () => {
     configurationToUpdate.tag = tag;
   });
+}
+
+export function getConfigFile(path: string): Configuration {
+  validatePath(
+    !isDirectory(path) || !isPublication(path),
+    'Config file does not exist. Check the provided path'
+  );
+  const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
+  return JSON.parse(configContentJSON) as Configuration;
 }
 
 function saveUpdatedConfiguration(path: string, configuration: Configuration) {
@@ -85,7 +94,7 @@ function validatePath(condition: boolean, errMessage: string) {
   }
 }
 
-export function validateNonEmptyNorNull(property: string): void {
+function validateNonEmptyNorNull(property: string): void {
   if (!property || property.trim().length === 0) {
     throw new Error('This property cannot be null or empty');
   }
@@ -104,13 +113,4 @@ function updateConfigField(
 ): void {
   setFn();
   saveUpdatedConfiguration(path, configurationToUpdate as Configuration);
-}
-
-export function getConfigFileJSON(path: string): Configuration {
-  validatePath(
-    !isDirectory(path) || !isPublication(path),
-    'Config file does not exist. Check the provided path'
-  );
-  const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
-  return JSON.parse(configContentJSON) as Configuration;
 }

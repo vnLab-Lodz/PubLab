@@ -1,7 +1,7 @@
 import {
   createConfigFile,
   deleteConfigFile,
-  getConfigFileJSON,
+  getConfigFile,
   updateCollaborators,
   updateDescription,
   updateName,
@@ -224,7 +224,7 @@ describe('deleteConfigFile', () => {
 
 function prepareNewConfigFile(): Configuration {
   createConfigFile(nodeDirectoryPath, config);
-  return getConfigFileJSON(nodeDirectoryPath);
+  return getConfigFile(nodeDirectoryPath);
 }
 
 function updateConfigField(
@@ -233,7 +233,7 @@ function updateConfigField(
   updateFn: (path: string, newValue: any) => void
 ): Configuration {
   updateFn(path, newValue);
-  return getConfigFileJSON(path);
+  return getConfigFile(path);
 }
 
 function tryToUpdateWithInvalidParam(
