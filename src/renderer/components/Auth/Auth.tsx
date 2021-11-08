@@ -22,10 +22,12 @@ const Auth = ({ children }: any) => {
         dispatch(authorizeGitHubUserAsync(true));
         break;
       case AUTH_STATES.CODE_REQUESTED:
-        dispatch(requestAccessTokenAsync(currentUser.auth.code));
+        if (currentUser.auth.code)
+          dispatch(requestAccessTokenAsync(currentUser.auth.code));
         break;
       case AUTH_STATES.TOKEN_REQUESTED:
-        dispatch(fetchUserDataAsync(currentUser.auth.accessToken?.value));
+        if (currentUser.auth.accessToken?.value)
+          dispatch(fetchUserDataAsync(currentUser.auth.accessToken?.value));
         break;
       default:
         break;
