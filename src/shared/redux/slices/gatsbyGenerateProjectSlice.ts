@@ -2,10 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 import { generateProject } from '../../../main/node/gatsby';
 import { createAsyncActionMain } from '../helpers/createActionMain';
 
-type GatsbyGenerateProject = {
+interface NewProjectPayload {
+  projectName: string;
+  templateUrl: string;
+}
+
+interface GatsbyGenerateProject {
   creating: boolean;
   creationSuccess: boolean | null;
-};
+}
 
 const initialState: GatsbyGenerateProject = {
   creating: false,
@@ -34,12 +39,20 @@ const gatsbyGenerateProjectSlice = createSlice({
 export const { creationExecuting, creationFulfilled, creationRejected } =
   gatsbyGenerateProjectSlice.actions;
 
-export const generateNewProject = createAsyncActionMain<string[]>(
+export const generateNewProject = createAsyncActionMain<NewProjectPayload>(
   'generateProject',
-  (params) => async (dispatch) => {
-    dispatch(creationExecuting());
-    generateProject(params);
-  }
+  ({ projectName, templateUrl }) =>
+    async (dispatch, getState) => {
+      dispatch(creationExecuting());
+      try {
+        const { defaultDirPath } = getState().appSettings;
+
+        await generateProject(defaultDirPath, projectName, templateUrl);
+        dispatch(creationFulfilled());
+      } catch (error) {
+        dispatch(creationRejected());
+      }
+    }
 );
 
 export default gatsbyGenerateProjectSlice.reducer;
