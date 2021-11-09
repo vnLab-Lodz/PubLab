@@ -1,5 +1,45 @@
 import { exec } from 'child_process';
+import { platform } from 'os';
 import { appendLog } from '../logger';
+
+class Platform {
+  public os: string;
+
+  constructor(os: string)
+  {
+    this.os = os;
+  }
+
+  public static WINDOWS: Platform = new Platform('win32');
+  public static LINUX: Platform = new Platform('linux');
+  public static MAC: Platform = new Platform('darwin');
+  private static supportedPlatforms: Platform[] = [Platform.WINDOWS, Platform.LINUX, Platform.MAC];
+
+  public static Current() : Platform
+  {
+    return new Platform(platform());
+  }
+
+  public IsSupported() : boolean
+  {
+    const index = Platform.supportedPlatforms.findIndex(platform => platform.os === this.os);
+    return index > -1;
+  }
+
+  public NodeManagerInstallationCommand() : string
+  {
+    if (this == Platform.WINDOWS) return "winget install nvs";
+    if (this == Platform.LINUX || this == Platform.MAC) return "npm install -g n";
+    return "";
+  }
+
+  public NodeInstallationCommand() : string
+  {
+    if (this == Platform.WINDOWS) return "nvs add lts; nvs link latest";
+    if (this == Platform.LINUX || this == Platform.MAC) return "n lts";
+    return "";
+  }
+}
 
 /**
  * Check if node is installed globally.
@@ -21,26 +61,41 @@ export function checkForNode(): Promise<boolean> {
 }
 
 /**
- * Checks if node is already installed globally and if not installs it.
+ * Installes globally the lateset version of node.js.
  * Rejects the promise if a command execution error occurs or node verification fails.
  * @return {Promise<void>}
  */
 export function installNode(): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    appendLog('Installing node...');
-
-    checkForNode()
-      .then(_ => {
-        let version = 'v17.0.1';
-        exec(`msiexec.exe /i https://nodejs.org/dist/${version}/node-${version}-x64.msi /quiet`, (error, stdout, stderr) => {
-          if (error) reject(error);
-          appendLog(`Launched installation of node. Version: ${version}`);
-          resolve();
-        });
-      })
-      .catch(error => {
-        appendLog('Cannot install node - an error occurred during verification of its installation.');
-        resolve(error);
+    var platform = Platform.Current();
+    if (platform.IsSupported())
+    {
+      appendLog('Installing node...');
+      appendLog(`Platform: ${platform.os}`);
+      exec(platform.NodeManagerInstallationCommand(), (error, stdout, stderr) => {
+        if (error)
+        {
+          appendLog(`Node.js Manager installation failed.`);
+          reject(error);
+        }
+        appendLog(`Finished installation of node manager.`);
+        resolve();
       });
+      exec(platform.NodeInstallationCommand(), (error, stdout, stderr) => {
+        if (error)
+        {
+          appendLog(`Node installation failed.`);
+          reject(error);
+        }
+        appendLog(`Finished installation of node.`);
+        resolve();
+      });
+    }
+    else
+    {
+      let message = `Cannot install node. Platform {${platform.os} is not supported.}`;
+      appendLog(message);
+      reject(message);
+    }
   });
 }
