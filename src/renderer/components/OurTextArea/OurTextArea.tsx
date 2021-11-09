@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
-import { light } from '@mui/material/styles/createPalette';
-import internal from 'stream';
 
 interface Props {
   type?: string;
@@ -28,14 +26,14 @@ const StyledTextArea = styled(TextField)(({ type }) => ({
       },
     },
   },
-  //customise top label, e.g "Project description"
+  // customise top label, e.g "Project description"
   '& .MuiInputLabel-root': {
     color: type === 'light' ? 'lightGray' : 'black',
     '&.Mui-error': {
       color: 'lightRed',
     },
   },
-  //customise helperText for errors
+  // customise helperText for errors
   '& .MuiFormHelperText-root': {
     color: 'lightRed',
   },
@@ -45,7 +43,7 @@ const OurTextArea: React.FC<Props> = (props) => (
   <StyledTextArea
     label={props.placeholder}
     variant='outlined'
-    multiline={true}
+    multiline
     rows={6}
     maxRows={10}
     type={props.type}
