@@ -50,7 +50,7 @@ declare module '@mui/material/styles' {
 
 // * IMPORTANT - this step needs to be repeated for all MUI components that are to be styled with those colors
 
-declare module '@mui/material/MUIButton' {
+declare module '@mui/material/Button' {
   //for Button's color to accept custom palette colors
   export interface ButtonPropsColorOverrides {
     gray: true;

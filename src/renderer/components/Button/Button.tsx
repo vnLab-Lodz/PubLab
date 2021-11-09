@@ -1,18 +1,13 @@
-import {
-  Button as MUIButton,
-  ButtonProps as MUIButtonProps,
-} from '@mui/material';
+import MUIButton, { ButtonProps as MUIButtonProps } from '@mui/material/Button';
 import React, { FC } from 'react';
 import './Button.scss';
 
 interface ButtonProps extends MUIButtonProps {
-  text: string;
   textCase?: 'lowercase' | 'uppercase' | 'sentence-case';
   fontWeight?: 'bold' | 'light';
 }
 
 const Button: FC<ButtonProps> = ({
-  text,
   textCase,
   fontWeight,
   children,
@@ -20,7 +15,7 @@ const Button: FC<ButtonProps> = ({
 }) => {
   return (
     <MUIButton className={`${textCase ?? 'lowercase'} ${fontWeight}`} {...rest}>
-      {text}
+      {children}
     </MUIButton>
   );
 };

@@ -16,7 +16,7 @@ WithIcon.args = {
   startIcon: <img src={GitHubIcon} alt='GitHub logo' />,
   variant: 'contained',
   color: 'inherit',
-  text: 'Log in with GitHub',
+  children: 'Log in with GitHub',
   textCase: 'sentence-case',
 };
 
@@ -24,7 +24,7 @@ export const SentenceCase = Template.bind({});
 SentenceCase.args = {
   variant: 'contained',
   color: 'inherit',
-  text: 'Yes, log me out.',
+  children: 'Yes, log me out.',
   textCase: 'sentence-case',
 };
 
@@ -32,7 +32,7 @@ export const LightUppercase = Template.bind({});
 LightUppercase.args = {
   variant: 'contained',
   color: 'inherit',
-  text: 'choose',
+  children: 'choose',
   textCase: 'uppercase',
   fontWeight: 'light',
 };
@@ -40,8 +40,8 @@ LightUppercase.args = {
 export const BoldUppercase = Template.bind({});
 BoldUppercase.args = {
   variant: 'contained',
-  color: 'primary',
-  text: "let's go",
+  color: 'green',
+  children: "let's go",
   textCase: 'uppercase',
   fontWeight: 'bold',
 };
@@ -49,14 +49,16 @@ BoldUppercase.args = {
 export const DarkOutline = Template.bind({});
 DarkOutline.args = {
   variant: 'outlined',
-  color: 'inherit',
-  text: "let's go",
+  color: 'black',
+  children: 'back',
   textCase: 'uppercase',
+  fontWeight: 'bold',
 };
 export const LightOutline = Template.bind({});
 LightOutline.args = {
   variant: 'outlined',
-  color: 'inherit',
-  text: "let's go",
+  color: 'lightGray',
+  children: 'history',
   textCase: 'uppercase',
+  fontWeight: 'light',
 };
