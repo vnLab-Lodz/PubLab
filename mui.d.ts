@@ -65,3 +65,11 @@ declare module '@mui/material/Button' {
     blue: true;
   }
 }
+
+declare module '@mui/material/TextField' {
+  export interface OurTextArea {
+    black: true;
+    lightRed: true;
+    lightGray: true;
+  }
+}
