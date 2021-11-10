@@ -6,10 +6,7 @@ import { RootState } from '../rootReducer';
 type Settings = {
   defaultDirPath: string;
   currentLocale: SupportedLangCode;
-  versionDetails: {
-    version: string;
-    isUpToDate: boolean;
-  };
+  versionDetails: VersionDetails;
 };
 
 const initialState: Settings = {
