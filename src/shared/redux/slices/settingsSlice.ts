@@ -3,7 +3,7 @@ import { VersionDetails } from '../../../main/versionDetails';
 import { SupportedLangCode } from '../../../renderer/internationalisation/i18next';
 import { RootState } from '../rootReducer';
 
-type Settings = {
+export type Settings = {
   defaultDirPath: string;
   currentLocale: SupportedLangCode;
   versionDetails: VersionDetails;
@@ -22,6 +22,8 @@ const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
+    setAllSettings: (state: Settings, action: PayloadAction<Settings>) =>
+      action.payload,
     setDefaultDirPath: (state: Settings, action: PayloadAction<string>) => {
       state.defaultDirPath = action.payload;
     },
@@ -37,8 +39,14 @@ const settingsSlice = createSlice({
   },
 });
 
-export const { setDefaultDirPath, setLocale, setVersionDetails } =
-  settingsSlice.actions;
+export const {
+  setAllSettings,
+  setDefaultDirPath,
+  setLocale,
+  setVersionDetails,
+} = settingsSlice.actions;
+
+export const selectAllSettings = (state: RootState) => state.appSettings;
 
 export const selectDefaultDirPath = (state: RootState) =>
   state.appSettings.defaultDirPath;
