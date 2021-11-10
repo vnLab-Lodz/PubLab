@@ -56,7 +56,7 @@ function recursiveSearch(source: string): void {
 
           dirPath: source,
 
-          publicationName: dataParsed.publicationName,
+          publicationName: dataParsed.confipublicationName,
 
           description: dataParsed.description,
 

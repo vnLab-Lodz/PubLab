@@ -2,11 +2,7 @@ import {
   createConfigFile,
   deleteConfigFile,
   getConfigFile,
-  updateCollaborators,
-  updateDescription,
-  updateName,
-  updatePackageManager,
-  updateTag,
+  updateConfigField,
 } from './config-manager';
 import { Configuration } from './model/Configuration';
 import { configFileName } from './config-util';
@@ -15,6 +11,7 @@ const fs = require('fs');
 
 const nodeDirectoryPath = './src/main/node';
 const invalidDirectoryPath = '&&&*88*.';
+const configFilePath = `${nodeDirectoryPath}/${configFileName}`;
 
 const config: Configuration = {
   id: 'id',
@@ -41,193 +38,23 @@ const invalidConfig: Configuration = {
 };
 
 describe('createConfigFile', () => {
-  it('create a config file under given directory', () => {
+  beforeEach(() => {
+    if (fs.existsSync(configFilePath)) {
+      fs.unlinkSync(configFilePath);
+    }
+  });
+  it('creates a config file under given directory', () => {
     createConfigFile(nodeDirectoryPath, config);
     expect(() => {
-      fs.readFileSync(`${nodeDirectoryPath}/${configFileName}`);
+      fs.readFileSync(configFilePath);
     }).not.toThrow();
   });
-});
-
-describe('createConfigFile', () => {
-  it('error is thrown when trying to create a config with empty name, packageManager or collaborators', () => {
+  it('throws an error when trying to create a config with empty name', () => {
     expect(() => {
       createConfigFile(nodeDirectoryPath, invalidConfig);
     }).toThrow();
   });
-});
-
-describe('deleteConfigFile', () => {
-  it('the repository is correctly deleted', () => {
-    createConfigFile(nodeDirectoryPath, config);
-    deleteConfigFile(nodeDirectoryPath);
-    expect(() => {
-      fs.existsSync(nodeDirectoryPath).toBe(false);
-      fs.readFileSync(`${nodeDirectoryPath}/${configFileName}`);
-    }).toThrow();
-  });
-});
-
-describe('deleteConfigFile', () => {
-  it('the error is thrown when trying to delete non-existing repository', () => {
-    expect(() => {
-      deleteConfigFile(nodeDirectoryPath);
-    }).toThrow();
-  });
-});
-
-describe('updateName', () => {
-  it('name property in the config is correctly updated, while other fields remain unchanged', () => {
-    const updatedName = '08/11/2021 7.8PM';
-    const oldConfig = prepareNewConfigFile();
-    const updatedConfig = updateConfigField(
-      nodeDirectoryPath,
-      updatedName,
-      updateName
-    );
-    expect(updatedConfig.publicationName).toEqual(updatedName);
-    expect([
-      oldConfig.description,
-      oldConfig.packageManager,
-      oldConfig.collaborators,
-    ]).toEqual([
-      updatedConfig.description,
-      updatedConfig.packageManager,
-      updatedConfig.collaborators,
-    ]);
-  });
-});
-
-describe('updateDescription', () => {
-  it('description property in the config is correctly updated, while other fields remain unchanged', () => {
-    const updatedDescription = '08/11/2021 7.30PM';
-    const oldConfig = prepareNewConfigFile();
-    const updatedConfig = updateConfigField(
-      nodeDirectoryPath,
-      updatedDescription,
-      updateDescription
-    );
-    expect(updatedConfig.description).toEqual(updatedDescription);
-    expect([
-      oldConfig.publicationName,
-      oldConfig.packageManager,
-      oldConfig.collaborators,
-    ]).toEqual([
-      updatedConfig.publicationName,
-      updatedConfig.packageManager,
-      updatedConfig.collaborators,
-    ]);
-  });
-});
-
-describe('updatePackageManager', () => {
-  it('packageManager property in the config is correctly updated, while other fields remain unchanged', () => {
-    const updatedPackageManager = 'yarn';
-    const oldConfig = prepareNewConfigFile();
-    const updatedConfig = updateConfigField(
-      nodeDirectoryPath,
-      updatedPackageManager,
-      updatePackageManager
-    );
-    expect(updatedConfig.packageManager).toEqual(updatedPackageManager);
-    expect([
-      oldConfig.publicationName,
-      oldConfig.description,
-      oldConfig.collaborators,
-    ]).toEqual([
-      updatedConfig.publicationName,
-      updatedConfig.description,
-      updatedConfig.collaborators,
-    ]);
-  });
-});
-
-describe('updateCollaborators', () => {
-  it('collaborators property in the config is correctly updated, while other fields remain unchanged', () => {
-    const updatedCollaborators = [
-      { id: 'id', role: 'role', githubUsername: 'githubUsername' },
-    ];
-    const oldConfig = prepareNewConfigFile();
-    const updatedConfig = updateConfigField(
-      nodeDirectoryPath,
-      updatedCollaborators,
-      updateCollaborators
-    );
-    expect(updatedConfig.collaborators).toEqual(updatedCollaborators);
-    expect([
-      oldConfig.publicationName,
-      oldConfig.description,
-      oldConfig.packageManager,
-    ]).toEqual([
-      updatedConfig.publicationName,
-      updatedConfig.description,
-      updatedConfig.packageManager,
-    ]);
-  });
-});
-
-describe('updateTag', () => {
-  it('tag property in the config is correctly updated, while other fields remain unchanged', () => {
-    const updatedTag = '08/11/2021 7.37PM';
-    const oldConfig = prepareNewConfigFile();
-    const updatedConfig = updateConfigField(
-      nodeDirectoryPath,
-      updatedTag,
-      updateTag
-    );
-    expect(updatedConfig.tag).toEqual(updatedTag);
-    expect([
-      oldConfig.publicationName,
-      oldConfig.description,
-      oldConfig.packageManager,
-    ]).toEqual([
-      updatedConfig.publicationName,
-      updatedConfig.description,
-      updatedConfig.packageManager,
-    ]);
-  });
-});
-
-describe('updateName', () => {
-  it('name property cannot be empty or null', () => {
-    expect(() => {
-      tryToUpdateWithInvalidParam(nodeDirectoryPath, '', updateName);
-    }).toThrowError();
-    expect(() => {
-      tryToUpdateWithInvalidParam(nodeDirectoryPath, null, updateName);
-    }).toThrowError();
-  });
-});
-
-describe('updatePackageManager', () => {
-  it('packageManager property cannot be empty or null', () => {
-    expect(() => {
-      tryToUpdateWithInvalidParam(nodeDirectoryPath, '', updatePackageManager);
-    }).toThrowError();
-    expect(() => {
-      tryToUpdateWithInvalidParam(
-        nodeDirectoryPath,
-        null,
-        updatePackageManager
-      );
-    }).toThrowError();
-  });
-});
-
-describe('updateCollaborators', () => {
-  it('collaborators property cannot be empty or null', () => {
-    createConfigFile(nodeDirectoryPath, config);
-    expect(() => {
-      tryToUpdateWithInvalidParam(nodeDirectoryPath, null, updateCollaborators);
-    }).toThrowError();
-    expect(() => {
-      tryToUpdateWithInvalidParam(nodeDirectoryPath, [], updateCollaborators);
-    }).toThrowError();
-  });
-});
-
-describe('createConfigFile', () => {
-  it('error is thrown when an invalid directory is passed', () => {
+  it('throws an error when an invalid directory is passed', () => {
     expect(() => {
       createConfigFile(invalidDirectoryPath, config);
     }).toThrow();
@@ -235,32 +62,93 @@ describe('createConfigFile', () => {
 });
 
 describe('deleteConfigFile', () => {
-  it('error is thrown when an invalid directory is passed', () => {
+  beforeEach(() => {
+    createConfigFile(nodeDirectoryPath, config);
+  });
+  it('deletes the config file correctly if it exists', () => {
+    deleteConfigFile(nodeDirectoryPath);
+    expect(() => {
+      fs.readFileSync(configFilePath);
+    }).toThrow();
+  });
+  it('throws an error when trying to delete a non-existing config', () => {
+    deleteConfigFile(nodeDirectoryPath);
+    expect(() => {
+      deleteConfigFile(nodeDirectoryPath);
+    }).toThrow();
+  });
+  it('throws an error when invalid directory is passed', () => {
     expect(() => {
       deleteConfigFile(invalidDirectoryPath);
     }).toThrow();
   });
 });
 
-function prepareNewConfigFile(): Configuration {
-  createConfigFile(nodeDirectoryPath, config);
-  return getConfigFile(nodeDirectoryPath);
-}
+describe('updateConfigField', () => {
+  beforeEach(() => createConfigFile(nodeDirectoryPath, config));
+  it('correctly updates the publicationName', () => {
+    const name = 'new name';
+    updateConfigField(nodeDirectoryPath, 'publicationName', name);
+    expect(getConfigFile(nodeDirectoryPath).publicationName).toBe(name);
+  });
+  it('correctly validates input for publicationNameField', () => {
+    expect(() => {
+      updateConfigField(nodeDirectoryPath, 'publicationName', '');
+    }).toThrow();
+  });
+  it('correctly updates the description', () => {
+    const description = 'new description';
+    updateConfigField(nodeDirectoryPath, 'description', description);
+    expect(getConfigFile(nodeDirectoryPath).description).toBe(description);
+  });
+  it('correctly updates the tag', () => {
+    const tag = 'new tag';
+    updateConfigField(nodeDirectoryPath, 'tag', tag);
+    expect(getConfigFile(nodeDirectoryPath).tag).toBe(tag);
+  });
+  it('correctly updates the packageManager', () => {
+    const packageManager = 'yarn';
+    updateConfigField(nodeDirectoryPath, 'packageManager', packageManager);
+    expect(getConfigFile(nodeDirectoryPath).packageManager).toBe(
+      packageManager
+    );
+  });
+  it('correctly updates the dirPath', () => {
+    const dirPath = '/core';
+    updateConfigField(nodeDirectoryPath, 'dirPath', dirPath);
+    expect(getConfigFile(nodeDirectoryPath).dirPath).toBe(dirPath);
+  });
+  it('correctly updates the useSaas', () => {
+    updateConfigField(nodeDirectoryPath, 'useSass', false);
+    expect(getConfigFile(nodeDirectoryPath).useSass).toBe(false);
+  });
+  it('correctly updates the useTypescript', () => {
+    updateConfigField(nodeDirectoryPath, 'useTypescript', false);
+    expect(getConfigFile(nodeDirectoryPath).useTypescript).toBe(false);
+  });
+  it('correctly updates the useSaas', () => {
+    updateConfigField(nodeDirectoryPath, 'useSass', false);
+    expect(getConfigFile(nodeDirectoryPath).useSass).toBe(false);
+  });
+  it('correctly updates collaborators', () => {
+    const collaborators = [
+      { githubUsername: 'new test', id: 'new test', role: 'new test' },
+    ];
+    updateConfigField(nodeDirectoryPath, 'collaborators', collaborators);
+    expect(getConfigFile(nodeDirectoryPath).collaborators).toEqual(
+      collaborators
+    );
+  });
+});
 
-function updateConfigField(
-  path: string,
-  newValue: any,
-  updateFn: (path: string, newValue: any) => void
-): Configuration {
-  updateFn(path, newValue);
-  return getConfigFile(path);
-}
-
-function tryToUpdateWithInvalidParam(
-  path: string,
-  param: any,
-  updateFn: (path: string, newValue: any) => void
-) {
-  createConfigFile(nodeDirectoryPath, config);
-  updateFn(path, param);
-}
+describe('getConfigFile', () => {
+  beforeEach(() => {
+    createConfigFile(nodeDirectoryPath, config);
+  });
+  it('correctly returns an existing config', () => {
+    expect(getConfigFile(nodeDirectoryPath)).toEqual(config);
+  });
+  it('throws an error when incorrect path is passed', () => {
+    expect(() => getConfigFile(invalidDirectoryPath)).toThrow();
+  });
+});
