@@ -63,22 +63,5 @@ declare module '@mui/material/Button' {
     orange: true;
     darkGray: true;
     blue: true;
-    error: lightRed;
-  }
-}
-
-declare module '@mui/material/InputBase' {
-  //for InputBase's color to accept custom palette colors
-  export interface TextFieldPropsColorOverrides {
-    gray: true;
-    lightGray: true;
-    black: true;
-    lightPink: true;
-    lightRed: true;
-    green: true;
-    lightGreen: true;
-    orange: true;
-    darkGray: true;
-    blue: true;
   }
 }

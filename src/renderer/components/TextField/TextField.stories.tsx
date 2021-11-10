@@ -17,20 +17,20 @@ const Template: ComponentStory<typeof OurTextField> = (args) => (
 export const Light = Template.bind({});
 Light.args = {
     type: 'light',
-    variant: 'outlined',
+    error: false,
     placeholder: 'Project name ...'
 };
 
 export const Dark = Template.bind({});
 Dark.args = {
     type: 'dark',
-    variant: 'outlined',
+    error: false,
     placeholder: 'Project name ...'
 };
 
 export const Error = Template.bind({});
 Error.args = {
-    type: 'error',
-    variant: 'outlined',
+    type: 'dark',
+    error: true,
     placeholder: 'Project name ...'
 };
