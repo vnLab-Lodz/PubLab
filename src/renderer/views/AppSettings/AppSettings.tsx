@@ -8,6 +8,7 @@ import {
   setLocale,
 } from '../../../shared/redux/slices/settingsSlice';
 import { supportedLocales } from '../../internationalisation/i18next';
+import AppUpdate from './subcomponents/AppUpdate';
 
 const AppSettings = () => {
   const { t } = useTranslation();
@@ -28,6 +29,7 @@ const AppSettings = () => {
   return (
     <div>
       {t('AppSettings.title')}
+      <AppUpdate />
       <InputLabel id='lang-select-label'>
         {t('AppSettings.language.language')}
       </InputLabel>

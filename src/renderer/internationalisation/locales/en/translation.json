@@ -9,6 +9,11 @@
       "language": "Language",
       "en": "English",
       "pl": "Polish"
+    },
+    "updates": {
+      "version": "version",
+      "newVersionAvailable": "New version is available. Would you like to update?",
+      "update": "update"
     }
   }
 }
