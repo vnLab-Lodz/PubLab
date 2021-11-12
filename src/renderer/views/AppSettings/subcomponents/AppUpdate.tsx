@@ -13,9 +13,7 @@ export default function AppUpdate() {
         {t('AppSettings.updates.version')} {versionDetails.version}
       </Typography>
 
-      {versionDetails.isUpToDate ? (
-        ''
-      ) : (
+      {!versionDetails.isUpToDate && (
         <>
           <Typography>
             {t('AppSettings.updates.newVersionAvailable')}
