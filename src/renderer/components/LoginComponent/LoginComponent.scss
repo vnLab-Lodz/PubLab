@@ -33,7 +33,28 @@
 
 }
 
+.language-box {
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 45.7%;
+}
 
+.language {
+  background-color: transparent;
+ 
+} 
+
+.language p {
+  color: #ddddddc9;
+  font-weight: 100;
+  font-size: large;
+}
+
+.language:focus p {
+  color: #DDDDDD;
+  font-weight: 800;
+}
 .button { 
 background-color: #DDDDDD;
 padding-right: 4em;
