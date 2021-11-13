@@ -11,7 +11,7 @@ interface Props {
   onChange?: (...args: any[]) => void;
 }
 
-const StyledTextField = styled(InputBase)(({ type, error, theme: { palette, typography } }) => {
+const StyledTextField = styled(InputBase)(({ type, error, theme: { palette } }) => {
   const { lightGray, black, lightRed } = palette;
 
   return {
@@ -22,7 +22,7 @@ const StyledTextField = styled(InputBase)(({ type, error, theme: { palette, typo
     width: '400px',
     paddingTop: '10px',
     padding: '12px 10px 12px 10px',
-    fontSize: "15px !important"
+    fontSize: '15px !important'
   }
 });
 
