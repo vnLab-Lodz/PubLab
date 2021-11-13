@@ -22,7 +22,7 @@ export function deleteConfigFile(path: string) {
     if (fs.existsSync(path)) {
       fs.unlinkSync(`${path}/${configFileName}`);
     }
-  } catch (err) {
+  } catch (err: any) {
     throw new Error(err.toString());
   }
 }
