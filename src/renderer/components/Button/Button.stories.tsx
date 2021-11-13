@@ -18,6 +18,7 @@ WithIcon.args = {
   color: 'inherit',
   children: 'Log in with GitHub',
   textCase: 'sentence-case',
+  fullWidth: true,
 };
 
 export const SentenceCase = Template.bind({});
@@ -26,6 +27,7 @@ SentenceCase.args = {
   color: 'inherit',
   children: 'Yes, log me out.',
   textCase: 'sentence-case',
+  fullWidth: true,
 };
 
 export const LightUppercase = Template.bind({});
@@ -35,30 +37,25 @@ LightUppercase.args = {
   children: 'choose',
   textCase: 'uppercase',
   fontWeight: 'light',
+  fullWidth: true,
 };
 
 export const BoldUppercase = Template.bind({});
 BoldUppercase.args = {
   variant: 'contained',
-  color: 'green',
+  color: 'success',
   children: "let's go",
   textCase: 'uppercase',
   fontWeight: 'bold',
+  fullWidth: true,
 };
 
 export const DarkOutline = Template.bind({});
 DarkOutline.args = {
   variant: 'outlined',
-  color: 'black',
+  color: 'inherit',
   children: 'back',
   textCase: 'uppercase',
   fontWeight: 'bold',
-};
-export const LightOutline = Template.bind({});
-LightOutline.args = {
-  variant: 'outlined',
-  color: 'lightGray',
-  children: 'history',
-  textCase: 'uppercase',
-  fontWeight: 'light',
+  fullWidth: true,
 };
