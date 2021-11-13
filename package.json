@@ -88,6 +88,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.11",
     "@types/react-select": "^3.0.26",
+    "@types/semver": "^7.3.9",
     "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
@@ -129,15 +130,19 @@
     "dotenv": "^8.2.0",
     "electron-redux": "^1.5.4",
     "electron-squirrel-startup": "^1.0.0",
+    "i18next": "^21.3.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-i18next": "^11.13.0",
     "react-icons": "^4.1.0",
     "react-redux": "^7.2.2",
     "react-select": "^3.1.1",
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
+    "semver": "^7.3.5",
     "svg-url-loader": "^7.1.1",
     "ts-node": "^9.1.1",
+    "tslib": "^2.3.1",
     "uuid": "^8.3.2"
   }
 }
