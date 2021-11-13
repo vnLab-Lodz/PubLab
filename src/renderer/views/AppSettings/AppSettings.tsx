@@ -10,6 +10,7 @@ import {
 } from '../../../shared/redux/slices/settingsSlice';
 import AppUpdate from './subcomponents/AppUpdate';
 import LangSelect from './subcomponents/LangSelect';
+import DefaultDirSelect from './subcomponents/DefaultDirSelect';
 
 const AppSettings = () => {
   const { t } = useTranslation();
@@ -31,7 +32,13 @@ const AppSettings = () => {
         currentLocale={settings.currentLocale}
         onChange={(locale) => changeSetting({ currentLocale: locale })}
       />
-      <Button onClick={() => submitChanges()}>{t('common.save')}</Button>
+      <DefaultDirSelect
+        defaultDirPath={settings.defaultDirPath}
+        onChange={(path) => changeSetting({ defaultDirPath: path })}
+      />
+      <Button style={{ display: 'block' }} onClick={() => submitChanges()}>
+        {t('common.save')}
+      </Button>
     </div>
   );
 };

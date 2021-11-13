@@ -1,6 +1,7 @@
 {
   "common": {
-    "save": "zapisz"
+    "save": "zapisz",
+    "change": "zmień"
   },
   "AppSettings": {
     "title": "Ustawienia Aplikacji",
@@ -14,6 +15,9 @@
       "version": "wersja",
       "newVersionAvailable": "Nowa wersja jest dostępna. Czy przeprowadzić aktualizację?",
       "update": "aktualizuj"
+    },
+    "defaultDirectory": {
+      "description": "Folder w którym będą zapisywane twoje projekty"
     }
   }
 }
