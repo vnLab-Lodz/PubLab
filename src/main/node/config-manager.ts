@@ -2,6 +2,9 @@ import { isDirectory, isPublication } from './file-manager';
 
 const fs = require('fs');
 
+const NODE_PACKAGE_PATH: string = 'package.json';
+const GATSBY_CONFIG_TS_PATH: string = 'config/gatsby-config.ts';
+
 // TODO: This should be switched over to definition form #93 -> https://github.com/vnLab-Lodz/PubLab/pull/93
 class Collaborator {
   username: string;
@@ -141,4 +144,67 @@ export function getConfigFileJSON<T = { [key: string]: any }>(path: string): T {
 
   const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
   return JSON.parse(configContentJSON);
+}
+
+export function createAuthorFromCollaborators(
+  collaborators: Collaborator[]
+): string {
+  let result = '';
+  for (let i = 0; i < collaborators.length; i++) {
+    result += `${collaborators[i].id} ${collaborators[i].role} ${collaborators[i].githubUsername}`;
+    if (i !== collaborators.length - 1) {
+      result += ', ';
+    }
+  }
+  return result;
+}
+
+export function modifyNodePackage(path: string, config: Configuration) {
+  const packagePath = `${path}/${NODE_PACKAGE_PATH}`;
+  validatePath(
+    !isDirectory(path) || !fs.lstatSync(packagePath).isFile(),
+    "Couldn't find the package.json file."
+  );
+
+  // eslint-disable-next-line import/no-dynamic-require
+  const pckgJson = require(packagePath);
+  pckgJson.name = config.publicationName;
+  pckgJson.description = config.description;
+
+  pckgJson.author = createAuthorFromCollaborators(config.collaborators);
+  if (!config.useSass) {
+    delete pckgJson.dependencies.sass;
+  }
+  if (!config.useTypescript) {
+    delete pckgJson.devDependencies.typescript;
+  }
+  fs.writeFileSync(packagePath, JSON.stringify(pckgJson));
+}
+
+export function modifyGatsbyConfig(path: string, config: Configuration) {
+  const configPath = `${path}/${GATSBY_CONFIG_TS_PATH}`;
+  validatePath(
+    !isDirectory(path) || !fs.lstatSync(configPath).isFile(),
+    "Couldn't find the gatsby config file."
+  );
+
+  let result = fs.readFileSync(configPath, 'utf8');
+  result = result.replace(
+    /title: `(.*?)`,/g,
+    `title: \`${config.publicationName}\`,`
+  );
+  result = result.replace(
+    /description: `.*?`,/g,
+    `description: \`${config.description}\`,`
+  );
+  result = result.replace(
+    /author: `.*?`,/g,
+    `author: \`${createAuthorFromCollaborators(config.collaborators)}\`,`
+  );
+
+  if (!config.useSass) {
+    result = result.replace(/`gatsby-plugin-sass`,/g, '');
+  }
+
+  fs.writeFileSync(configPath, result, 'utf8');
 }

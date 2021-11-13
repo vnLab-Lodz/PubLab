@@ -1,4 +1,4 @@
-import fs from 'fs';
+import * as fs from 'fs';
 import path from 'path';
 import { v4 as generateUuid } from 'uuid';
 import { addPublication } from '../../shared/redux/slices/publicationsSlice';
