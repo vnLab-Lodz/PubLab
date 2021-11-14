@@ -2,6 +2,7 @@ import { isDirectory, isPublication } from './file-manager';
 
 const fs = require('fs');
 
+// TODO: This should be switched over to definition form #93 -> https://github.com/vnLab-Lodz/PubLab/pull/93
 class Collaborator {
   username: string;
 
@@ -13,8 +14,12 @@ class Collaborator {
   }
 }
 
+// TODO: This should have .json extension to actually be JSON
+// TODO: Rename to publab.config.json
 const configFileName = 'vn-pub.conf';
 
+// TODO: It would be much better if the function took two args - path and an object with the options
+// TODO: The whole return of booleans is a bit weird as well, should probably throw an Error instead
 export function createConfigFile(
   path: string,
   name: string,
@@ -28,10 +33,10 @@ export function createConfigFile(
       name,
       description,
       collaborators,
-      package_manager: packageManager,
+      packageManager,
       tag,
     };
-    const configContentJSON = JSON.stringify(configContent);
+    const configContentJSON = JSON.stringify(configContent, null, 2);
     fs.writeFileSync(`${path}/${configFileName}`, configContentJSON);
     return true;
   }
@@ -53,6 +58,7 @@ export function deleteConfigFile(path: string): boolean {
   return false;
 }
 
+// TODO: Unsure how much sense it makes to have all separate `modify` functions, could probably abstract that
 export function modifyName(path: string, newName: string): boolean {
   if (isDirectory(path) && isPublication(path)) {
     const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
@@ -127,11 +133,12 @@ export function modifyTag(path: string, newTag: string): boolean {
   return false;
 }
 
-export function getConfigFileJSON(path: string): string {
-  if (isDirectory(path) && isPublication(path)) {
-    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
-    const configContent = JSON.parse(configContentJSON);
-    return configContent;
+// TODO: the return type should be a variation of Publication from #93 -> https://github.com/vnLab-Lodz/PubLab/pull/93
+export function getConfigFileJSON<T = { [key: string]: any }>(path: string): T {
+  if (!isDirectory(path) || !isPublication(path)) {
+    throw new Error('Config file does not exist. Check the provided path');
   }
-  return null;
+
+  const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
+  return JSON.parse(configContentJSON);
 }
