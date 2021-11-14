@@ -22,7 +22,7 @@ const LoginComponent = () => {
         </Button>
       </div>
       <div className='container'>
-        <img src={logo} alt='Logo'/>
+        <img src={logo} alt='Logo' />
         <Typography variant='h4' className='text'>
           <p>To begin, please log in using your GitHub account </p>
         </Typography>
