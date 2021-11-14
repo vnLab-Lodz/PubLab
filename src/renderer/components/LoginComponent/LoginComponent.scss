@@ -1,5 +1,3 @@
-
-
 .background {
   width: 100%;
   height: 100%;
@@ -18,19 +16,18 @@
   top: 40%;
   left: 35%;
 }
-.container img{
+.container img {
   height: 50%;
 }
 .text {
   padding: 2em;
 }
 .text p {
-  color:#DDDDDD;
+  color: #dddddd;
 }
-.icon{
-  color:#111111;
+.icon {
+  color: #111111;
   font-size: xx-large;
-
 }
 
 .language-box {
@@ -42,8 +39,7 @@
 
 .language {
   background-color: transparent;
- 
-} 
+}
 
 .language p {
   color: #ddddddc9;
@@ -52,35 +48,30 @@
 }
 
 .language:focus p {
-  color: #DDDDDD;
+  color: #dddddd;
   font-weight: 800;
 }
-.button { 
-background-color: #DDDDDD;
-padding-right: 4em;
-height: 2em;
-
-
+.button {
+  background-color: #dddddd;
+  padding-right: 4em;
+  height: 2em;
 }
 .button p {
   color: #111111;
   text-transform: none;
   word-spacing: 4px;
   text-indent: 5em;
-  font-size:large;
-
+  font-size: large;
 }
 
 .button:hover {
-  background-color:#ddddddc9;
- 
+  background-color: #ddddddc9;
 }
 
 // .button:focus {
 //   outline: none;
 //   box-shadow: none;
 // }
-
 
 .footer {
   justify-content: center;
