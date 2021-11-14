@@ -16,26 +16,26 @@ const StyledTextArea = styled(TextField)(({ type }) => ({
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
       borderRadius: '0px',
-      borderColor: type === 'light' ? 'lightGray' : 'black',
-      color: type === 'light' ? 'lightGray' : 'black',
+      borderColor: type === 'light' ? lightGray.main : black.main,
+      color: type === 'light' ? lightGray.main : black.main,
     },
     '&.Mui-error': {
       '& fieldset': {
         borderRadius: '0px',
-        borderColor: 'lightRed',
+        borderColor: lightRed.main,
       },
     },
   },
   // customise top label, e.g "Project description"
   '& .MuiInputLabel-root': {
-    color: type === 'light' ? 'lightGray' : 'black',
+    color: type === 'light' ? lightGray.main : black.main,
     '&.Mui-error': {
-      color: 'lightRed',
+      color: lightRed.main,
     },
   },
   // customise helperText for errors
   '& .MuiFormHelperText-root': {
-    color: 'lightRed',
+    color: lightRed.main,
   },
 }));
 
