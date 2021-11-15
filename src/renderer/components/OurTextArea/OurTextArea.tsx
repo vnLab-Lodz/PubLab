@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
+import { theme } from 'src/renderer/theme';
 
 interface Props {
   type?: string;
@@ -16,26 +17,35 @@ const StyledTextArea = styled(TextField)(({ type }) => ({
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
       borderRadius: '0px',
-      borderColor: type === 'light' ? lightGray.main : black.main,
-      color: type === 'light' ? lightGray.main : black.main,
+      borderColor:
+        type === 'light'
+          ? theme.palette.lightGray.main
+          : theme.palette.black.main,
+      color:
+        type === 'light'
+          ? theme.palette.lightGray.main
+          : theme.palette.black.main,
     },
     '&.Mui-error': {
       '& fieldset': {
         borderRadius: '0px',
-        borderColor: lightRed.main,
+        borderColor: theme.palette.lightRed.main,
       },
     },
   },
   // customise top label, e.g "Project description"
   '& .MuiInputLabel-root': {
-    color: type === 'light' ? lightGray.main : black.main,
+    color:
+      type === 'light'
+        ? theme.palette.lightGray.main
+        : theme.palette.black.main,
     '&.Mui-error': {
-      color: lightRed.main,
+      color: theme.palette.lightRed.main,
     },
   },
   // customise helperText for errors
   '& .MuiFormHelperText-root': {
-    color: lightRed.main,
+    color: theme.palette.lightRed.main,
   },
 }));
 
