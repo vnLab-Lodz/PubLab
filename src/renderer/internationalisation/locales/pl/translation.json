@@ -9,6 +9,11 @@
       "language": "Język",
       "en": "Angielski",
       "pl": "Polski"
+    },
+    "updates": {
+      "version": "wersja",
+      "newVersionAvailable": "Nowa wersja jest dostępna. Czy przeprowadzić aktualizację?",
+      "update": "aktualizuj"
     }
   }
 }
