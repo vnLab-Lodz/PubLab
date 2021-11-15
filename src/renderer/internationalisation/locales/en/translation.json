@@ -1,6 +1,7 @@
 {
   "common": {
-    "save": "save"
+    "save": "save",
+    "change": "change"
   },
   "AppSettings": {
     "title": "App Settings",
@@ -14,6 +15,9 @@
       "version": "version",
       "newVersionAvailable": "New version is available. Would you like to update?",
       "update": "update"
+    },
+    "defaultDirectory": {
+      "description": "Directory to which you save your projects"
     }
   }
 }
