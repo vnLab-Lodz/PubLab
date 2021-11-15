@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { appendLog } from '../logger';
 
 export async function fetchUserData(token: string) {
   try {
@@ -9,14 +10,13 @@ export async function fetchUserData(token: string) {
       },
     });
 
-    const userData = {
+    return {
       nick: response.data.login,
       avatar: response.data.avatar_url,
       company: response.data.company,
     };
-
-    return userData;
-  } catch (error) {
-    console.log(error.response);
+  } catch (error: any) {
+    appendLog(error.response);
+    return undefined;
   }
 }

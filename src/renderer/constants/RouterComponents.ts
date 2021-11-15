@@ -1,20 +1,20 @@
 import React from 'react';
-import Description from '../components/RouterComponents/Description/Description';
-import Files from '../components/RouterComponents/Files/Files';
-import Changes from '../components/RouterComponents/Changes/Changes';
-import Settings from '../components/RouterComponents/Settings/Settings';
-import ProjectsList from '../components/RouterComponents/ProjectsList/ProjectsList';
-import AppSettings from '../components/RouterComponents/AppSettings/AppSettings';
-import { Subviews, Views } from './Views';
-import ProjectInfo from '../components/RouterComponents/ProjectInfo/ProjectInfo';
-import NoProjects from '../components/RouterComponents/NoProjects/NoProjects';
+import { SUBVIEWS, VIEWS } from './Views';
+import AppSettings from '../views/AppSettings/AppSettings';
+import Description from '../views/Description/Description';
+import Files from '../views/Files/Files';
+import Changes from '../views/Changes/Changes';
+import Settings from '../views/Settings/Settings';
+import ProjectsList from '../views/ProjectsList/ProjectsList';
+import ProjectInfo from '../views/ProjectInfo/ProjectInfo';
+import NoProjects from '../views/NoProjects/NoProjects';
 
 export type RouterComponents = {
-  [key in Views | Subviews]: React.FC<any>;
+  [key in VIEWS | SUBVIEWS]: React.FC<any>;
 };
 
 // This can be changed when we introduce some i18n
-export const COMPONENTS_TRANSLATIONS: Record<Views, string> = {
+export const COMPONENTS_TRANSLATIONS: Record<VIEWS, string> = {
   PROJECT: 'Project',
   FILES: 'Files',
   CHANGES: 'Changes',
@@ -25,15 +25,13 @@ export const COMPONENTS_TRANSLATIONS: Record<Views, string> = {
 };
 
 export const routerComponents: RouterComponents = {
-  [Views.PROJECT]: Description,
-  [Views.FILES]: Files,
-  [Views.CHANGES]: Changes,
-  [Views.SETTINGS]: Settings,
-  [Views.PROJECTS_LIST]: ProjectsList,
-  [Views.APP_SETTINGS]: AppSettings,
-  [Subviews.PROJECT_INFO]: ProjectInfo,
-  [Subviews.NO_PROJECTS]: NoProjects,
-  [Subviews.NONE]: function () {
-    return null;
-  },
+  [VIEWS.PROJECT]: Description,
+  [VIEWS.FILES]: Files,
+  [VIEWS.CHANGES]: Changes,
+  [VIEWS.SETTINGS]: Settings,
+  [VIEWS.PROJECTS_LIST]: ProjectsList,
+  [VIEWS.APP_SETTINGS]: AppSettings,
+  [SUBVIEWS.PROJECT_INFO]: ProjectInfo,
+  [SUBVIEWS.NO_PROJECTS]: NoProjects,
+  [SUBVIEWS.NONE]: () => null,
 };

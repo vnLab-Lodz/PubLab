@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "removeComments": true,
+    "strict": true,
     "allowJs": true,
     "module": "commonjs",
     "skipLibCheck": true,
@@ -19,6 +23,8 @@
     "src/**/*",
     "src/renderer/renderer.tsx",
     "src/main/index.ts",
-    "src/components", "./custom.d.ts"
-  ]
+    "src/components",
+    "./custom.d.ts",
+    "./mui.d.ts", 
+    "src/renderer/internationalisation/react-i18next.d.ts"  ]
 }

@@ -1,6 +1,6 @@
-import {EndPointParameters, ScopeParamValues, Url} from "./gitTypes";
 import axios from 'axios';
 import { BrowserWindow, session } from 'electron';
+import { URLS } from './gitTypes';
 import { appendLog } from '../logger';
 
 /**
@@ -9,7 +9,7 @@ import { appendLog } from '../logger';
  */
 export function authorizeWithGithub(
   silent: boolean,
-  callback: (response: { code: string; error: any }) => void
+  callback: (response: { code: string | null; error: any }) => void
 ): void {
   const authWindow = new BrowserWindow({
     width: 800,
@@ -19,7 +19,7 @@ export function authorizeWithGithub(
   });
 
   authWindow.loadURL(
-    `${Url.AUTHORIZE_URL}?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${Url.REDIRECT_URI}&scope=user%20repo`
+    `${URLS.AUTHORIZE_URL}?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${URLS.REDIRECT_URI}&scope=user%20repo`
   );
 
   if (!silent) {
@@ -60,11 +60,11 @@ export function authorizeWithGithub(
 export async function requestAccessToken(code: string): Promise<any> {
   try {
     const response = await axios.post(
-      Url.ACCESS_TOKEN_URL,
+      URLS.ACCESS_TOKEN_URL,
       {
         client_id: process.env.GITHUB_CLIENT_ID,
         client_secret: process.env.GITHUB_CLIENT_SECRET,
-        code: code,
+        code,
       },
       {
         headers: {
@@ -78,11 +78,14 @@ export async function requestAccessToken(code: string): Promise<any> {
     return data;
   } catch (error) {
     appendLog(
-      `GitHub auth failed with ${error.response.statusText} (${error.response.status})`
+      `GitHub auth failed with ${(error as any).response.statusText} (${
+        (error as any).response.status
+      })`
     );
     appendLog('Check if environmental variables are correctly set up.');
     appendLog('Request:');
-    appendLog(JSON.stringify(error.response));
+    appendLog(JSON.stringify((error as any).response));
+    return JSON.stringify(error);
   }
 }
 

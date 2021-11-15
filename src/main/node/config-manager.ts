@@ -1,18 +1,25 @@
-var fs = require('fs');
-import { isDirectory } from './file-manager';
-import { isPublication } from './file-manager';
+import { isDirectory, isPublication } from './file-manager';
 
+const fs = require('fs');
+
+// TODO: This should be switched over to definition form #93 -> https://github.com/vnLab-Lodz/PubLab/pull/93
 class Collaborator {
   username: string;
+
   role: string;
+
   constructor(username: string, role: string) {
     this.username = username;
     this.role = role;
   }
 }
 
-let configFileName = 'vn-pub.conf';
+// TODO: This should have .json extension to actually be JSON
+// TODO: Rename to publab.config.json
+const configFileName = 'vn-pub.conf';
 
+// TODO: It would be much better if the function took two args - path and an object with the options
+// TODO: The whole return of booleans is a bit weird as well, should probably throw an Error instead
 export function createConfigFile(
   path: string,
   name: string,
@@ -22,15 +29,15 @@ export function createConfigFile(
   tag: string
 ): boolean {
   if (isDirectory(path)) {
-    let configContent = {
-      name: name,
-      description: description,
-      collaborators: collaborators,
-      package_manager: packageManager,
-      tag: tag,
+    const configContent = {
+      name,
+      description,
+      collaborators,
+      packageManager,
+      tag,
     };
-    let configContentJSON = JSON.stringify(configContent);
-    fs.writeFileSync(path + '/' + configFileName, configContentJSON);
+    const configContentJSON = JSON.stringify(configContent, null, 2);
+    fs.writeFileSync(`${path}/${configFileName}`, configContentJSON);
     return true;
   }
   return false;
@@ -40,7 +47,7 @@ export function deleteConfigFile(path: string): boolean {
   if (isDirectory(path) && isPublication(path)) {
     try {
       if (fs.existsSync(path)) {
-        fs.unlinkSync(path + '/' + configFileName);
+        fs.unlinkSync(`${path}/${configFileName}`);
         return true;
       }
     } catch (err) {
@@ -51,14 +58,15 @@ export function deleteConfigFile(path: string): boolean {
   return false;
 }
 
+// TODO: Unsure how much sense it makes to have all separate `modify` functions, could probably abstract that
 export function modifyName(path: string, newName: string): boolean {
   if (isDirectory(path) && isPublication(path)) {
-    let configContentJSON = fs.readFileSync(path + '/' + configFileName);
-    let configContent = JSON.parse(configContentJSON);
+    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
+    const configContent = JSON.parse(configContentJSON);
     configContent.name = newName;
-    let newConfigContentJSON = JSON.stringify(configContent);
+    const newConfigContentJSON = JSON.stringify(configContent);
     deleteConfigFile(path);
-    fs.writeFileSync(path + '/' + configFileName, newConfigContentJSON);
+    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
     return true;
   }
   return false;
@@ -69,12 +77,12 @@ export function modifyDescription(
   newDescription: string
 ): boolean {
   if (isDirectory(path) && isPublication(path)) {
-    let configContentJSON = fs.readFileSync(path + '/' + configFileName);
-    let configContent = JSON.parse(configContentJSON);
+    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
+    const configContent = JSON.parse(configContentJSON);
     configContent.description = newDescription;
-    let newConfigContentJSON = JSON.stringify(configContent);
+    const newConfigContentJSON = JSON.stringify(configContent);
     deleteConfigFile(path);
-    fs.writeFileSync(path + '/' + configFileName, newConfigContentJSON);
+    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
     return true;
   }
   return false;
@@ -85,12 +93,12 @@ export function modifyCollaborators(
   newCollaborators: Collaborator[]
 ): boolean {
   if (isDirectory(path) && isPublication(path)) {
-    let configContentJSON = fs.readFileSync(path + '/' + configFileName);
-    let configContent = JSON.parse(configContentJSON);
+    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
+    const configContent = JSON.parse(configContentJSON);
     configContent.collaborators = newCollaborators;
-    let newConfigContentJSON = JSON.stringify(configContent);
+    const newConfigContentJSON = JSON.stringify(configContent);
     deleteConfigFile(path);
-    fs.writeFileSync(path + '/' + configFileName, newConfigContentJSON);
+    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
     return true;
   }
   return false;
@@ -101,12 +109,12 @@ export function modifyPackageManager(
   newPackageManager: string
 ): boolean {
   if (isDirectory(path) && isPublication(path)) {
-    let configContentJSON = fs.readFileSync(path + '/' + configFileName);
-    let configContent = JSON.parse(configContentJSON);
+    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
+    const configContent = JSON.parse(configContentJSON);
     configContent.packageManager = newPackageManager;
-    let newConfigContentJSON = JSON.stringify(configContent);
+    const newConfigContentJSON = JSON.stringify(configContent);
     deleteConfigFile(path);
-    fs.writeFileSync(path + '/' + configFileName, newConfigContentJSON);
+    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
     return true;
   }
   return false;
@@ -114,22 +122,23 @@ export function modifyPackageManager(
 
 export function modifyTag(path: string, newTag: string): boolean {
   if (isDirectory(path) && isPublication(path)) {
-    let configContentJSON = fs.readFileSync(path + '/' + configFileName);
-    let configContent = JSON.parse(configContentJSON);
+    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
+    const configContent = JSON.parse(configContentJSON);
     configContent.tag = newTag;
-    let newConfigContentJSON = JSON.stringify(configContent);
+    const newConfigContentJSON = JSON.stringify(configContent);
     deleteConfigFile(path);
-    fs.writeFileSync(path + '/' + configFileName, newConfigContentJSON);
+    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
     return true;
   }
   return false;
 }
 
-export function getConfigFileJSON(path: string): string {
-  if (isDirectory(path) && isPublication(path)) {
-    let configContentJSON = fs.readFileSync(path + '/' + configFileName);
-    let configContent = JSON.parse(configContentJSON);
-    return configContent;
+// TODO: the return type should be a variation of Publication from #93 -> https://github.com/vnLab-Lodz/PubLab/pull/93
+export function getConfigFileJSON<T = { [key: string]: any }>(path: string): T {
+  if (!isDirectory(path) || !isPublication(path)) {
+    throw new Error('Config file does not exist. Check the provided path');
   }
-  return null;
+
+  const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
+  return JSON.parse(configContentJSON);
 }

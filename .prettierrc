@@ -1,7 +1,7 @@
 {
-  "endOfLine": "lf",
+  "endOfLine": "auto",
   "htmlWhitespaceSensitivity": "css",
-  "jsxBracketSameLine": false,
+  "bracketSameLine": false,
   "printWidth": 80,
   "quoteProps": "as-needed",
   "semi": true,

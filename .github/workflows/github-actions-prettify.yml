@@ -1,0 +1,18 @@
+name: CI | Prettier (write)
+
+on: [pull_request]
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🚚
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Prettify code 💄
+        uses: creyD/prettier_action@v4.0
+        with:
+          prettier_options: --write --config .prettierrc ./src

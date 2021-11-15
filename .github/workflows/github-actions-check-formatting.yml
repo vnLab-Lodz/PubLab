@@ -1,0 +1,20 @@
+name: CI | Prettier (check)
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🚚
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Prettify code 💄
+        uses: creyD/prettier_action@v4.0
+        with:
+          prettier_options: --check --config .prettierrc ./src

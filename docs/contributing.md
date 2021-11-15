@@ -2,18 +2,14 @@
 
 ## Main topics
 
-### Projects
-
-Each team has their own project and is obliged to follow the rules when it comes to tracking the work. Issues have to have correct labels and projects assigned. Our codebase will have many mini-projects and it is important to avoid mess and stay organized.
-
 ### Issues
 
-Please follow the issue template whenever possible when creating new issues. An exemplary issue can be found [here](https://github.com/karczewskiPiotr/vnlab-tool/issues/1).
+Please follow the issue template whenever possible when creating new issues. An exemplary issue can be found [here](https://github.com/vnLab-Lodz/PubLab/issues/1).
 Make sure to tick all the checklist items.
 
 ### Pull requests
 
-Please follow the pull request template whenever possible when creating new pull requests. An exemplary PR can be found [here](https://github.com/karczewskiPiotr/vnlab-tool/pull/2).
+Please follow the pull request template whenever possible when creating new pull requests. An exemplary PR can be found [here](https://github.com/vnLab-Lodz/PubLab/pull/2).
 Make sure to tick all the checklist items.
 
 ## How do I contribute?
@@ -33,21 +29,24 @@ Quick guide how to traverse the project.
 
 ```sh
 +-- public # Entry folder for webpack and electron
-+-- src # Folder for fron-end related code
++-- src
 |    +-- main # All "back-end" code that runs on main process
 |      +-- git # All operations on git and GitHub
 |      +-- node # All operations on local files
-|    +-- renderer # Front-end code
+|    +-- renderer # Front-end  that runs on renderer process
 |      +-- assets
 |      +-- components
-|           +-- component # Keep components in a separate folders wtih style files
-|           |    +-- component.tsx
-|           |    +-- component.scss
-|           +-- component
-|           |    +-- component.tsx
-|           |    +-- component.scss
+|      |    +-- component # Keep components in a separate folders wtih style files
+|      |    |    +-- component.tsx
+|      |    |    +-- component.scss
+|      |    +-- component
+|      |    |    +-- component.tsx
+|      |    |    +-- component.scss
+|      +-- views # All components that render main views of the project
 |      +-- constants
 |    +-- shared # Logic shared between main and rendere process
-|      +-- helpers
-|      +-- slices # Redux Toolkit slices to manage actions adn reducers
+|      +-- redux
+|      |    +-- slices # Redux Toolkit slices to manage actions adn reducers
+|      |    +-- helpers # Redux helpers for async actions / main thread actions
+|      +-- utils
 ```

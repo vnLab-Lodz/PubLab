@@ -1,8 +1,10 @@
 import fs from 'fs';
 import path from 'path';
-import { addPublication } from '../../shared/slices/publicationsSlice';
+import { v4 as generateUuid } from 'uuid';
+import { addPublication } from '../../shared/redux/slices/publicationsSlice';
+import { store } from '../store';
 
-let configFileName = 'vn-pub.conf';
+const configFileName = 'vn-pub.conf';
 
 function isRepository(source: string): boolean {
   return fs.existsSync(path.join(source, '.git'));
@@ -33,29 +35,44 @@ export function isDirectory(source: string): boolean {
 function getDirectories(source: string): string[] {
   let directories: string[] = [];
   try {
-    const isDirectory = (source: string) => fs.lstatSync(source).isDirectory();
     directories = fs
       .readdirSync(source)
       .map((name) => path.join(source, name))
       .filter(isDirectory);
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
   return directories;
 }
 
 function recursiveSearch(source: string): void {
   if (isPublication(source)) {
     try {
-      let filePath = path.join(source, configFileName);
-      let rawdata = fs.readFileSync(filePath);
-      let dataParsed = JSON.parse(rawdata.toString());
-      addPublication({
-        project_name: dataParsed.project_name,
-        collaborators: dataParsed.collaborators,
-        pm_preference: dataParsed.collaborators,
-        description: dataParsed.description,
-        dirPath: source,
-      });
-    } catch (err) {}
+      const filePath = path.join(source, configFileName);
+      const rawdata = fs.readFileSync(filePath);
+      const dataParsed = JSON.parse(rawdata.toString());
+      store.dispatch(
+        addPublication({
+          id: generateUuid(),
+
+          dirPath: source,
+
+          publicationName: dataParsed.publicationName,
+
+          description: dataParsed.description,
+
+          collaborators: dataParsed.collaborators,
+
+          packageManager: dataParsed.packageManager,
+
+          useSass: dataParsed.useSass,
+
+          useTypescript: dataParsed.useTypescript,
+        })
+      );
+    } catch (err) {
+      console.error(err);
+    }
   } else if (!isRepository(source)) {
     const availableDirectories: string[] = getDirectories(source);
     for (let i = 0; i < availableDirectories.length; i++) {

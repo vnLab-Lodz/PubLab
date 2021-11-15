@@ -8,7 +8,7 @@ import { appendLog } from '../logger';
  */
 export function checkForGatsby(): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
-    exec('npm list -g gatsby-cli --json', (error, stdout, stderr) => {
+    exec('npm list -g gatsby-cli --json', (error, stdout) => {
       if (error && stdout.trim() !== '{}') reject(error);
 
       let resultObj: any;
@@ -49,5 +49,32 @@ export function installGatsby(): Promise<void> {
       appendLog('Finished installation of gatsby-cli');
       resolve();
     });
+  });
+}
+
+/**
+ * Generate new PaaW project with gatsby.
+ * Rejects the promise if a command execution error occurs.
+ * @return {Promise<void>}
+ */
+export function generateProject(
+  dir: string,
+  projectName: string,
+  templateUrl: string
+): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    appendLog('Generating new project...');
+    exec(
+      `gatsby new ${projectName} ${templateUrl}`,
+      { cwd: dir },
+      (error, stdout, stderr) => {
+        if (error) reject(error);
+
+        appendLog(`project generator standard output: ${stdout}`);
+        appendLog(`project generator error output: ${stderr}`);
+        appendLog('Finished generation of new project');
+        resolve();
+      }
+    );
   });
 }

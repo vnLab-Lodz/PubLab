@@ -1,9 +1,9 @@
 import React from 'react';
-import './CustomRouter.scss';
 import { useSelector } from 'react-redux';
-import { selectCurrentView } from '../../../shared/slices/currentViewSlice';
+import { selectCurrentView } from '../../../shared/redux/slices/currentViewSlice';
 import { routerComponents } from '../../constants/RouterComponents';
-import { Subviews } from '../../constants/Views';
+import { SUBVIEWS } from '../../constants/Views';
+import './CustomRouter.scss';
 
 const CustomRouter = () => {
   const { view, subview } = useSelector(selectCurrentView);
@@ -15,7 +15,7 @@ const CustomRouter = () => {
       <div className='view'>
         <View />
       </div>
-      {subview.element !== Subviews.NONE && (
+      {subview.element !== SUBVIEWS.NONE && (
         <div className='subview'>
           <Subview {...(subview.props || {})} />
         </div>

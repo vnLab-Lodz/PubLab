@@ -91,3 +91,6 @@ typings/
 out/
 
 .idea
+.vscode
+
+src/main/node/vn-pub.conf
