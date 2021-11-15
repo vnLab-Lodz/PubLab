@@ -1,47 +1,61 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import './AppSettings.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Button, InputLabel, MenuItem, Select } from '@mui/material';
+import { Button } from '@mui/material';
 import {
-  selectCurrentLocale,
-  setLocale,
+  selectAllSettings,
+  setAllSettings,
+  Settings,
 } from '../../../shared/redux/slices/settingsSlice';
-import { supportedLocales } from '../../internationalisation/i18next';
+import AppUpdate from './subcomponents/AppUpdate';
+import LangSelect from './subcomponents/LangSelect';
+import DefaultDirSelect from './subcomponents/DefaultDirSelect';
+import NotificationIntervalSelect from './subcomponents/NotifIntervalSelect';
 
 const AppSettings = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [language, setLanguage] = useState(useSelector(selectCurrentLocale));
+  const [settings, changeSetting] = useReducer(
+    handleSettingChange,
+    useSelector(selectAllSettings)
+  );
 
   function submitChanges() {
-    dispatch(setLocale(language));
+    dispatch(setAllSettings(settings));
   }
 
-  function generateLangOptions() {
-    return supportedLocales.map((locale) => (
-      <MenuItem key={locale} value={locale}>
-        {t(`AppSettings.language.${locale}` as const)}
-      </MenuItem>
-    ));
-  }
   return (
     <div>
       {t('AppSettings.title')}
-      <InputLabel id='lang-select-label'>
-        {t('AppSettings.language.language')}
-      </InputLabel>
-      <Select
-        labelId='lang-select-label'
-        title={t('AppSettings.language.language')}
-        value={language}
-        onChange={(e) => setLanguage(e.target.value as typeof language)}
-      >
-        {generateLangOptions()}
-      </Select>
+      <AppUpdate />
+      <LangSelect
+        currentLocale={settings.currentLocale}
+        onChange={(locale) => changeSetting({ currentLocale: locale })}
+      />
+      <DefaultDirSelect
+        defaultDirPath={settings.defaultDirPath}
+        onChange={(path) => changeSetting({ defaultDirPath: path })}
+      />
+      <Button style={{ display: 'block' }} onClick={() => submitChanges()}>
+        {t('common.save')}
+      </Button>
+      <NotificationIntervalSelect
+        currentInterval={settings.notificationInterval}
+        onChange={(interval) =>
+          changeSetting({ notificationInterval: interval })
+        }
+      />
       <Button onClick={() => submitChanges()}>{t('common.save')}</Button>
     </div>
   );
 };
 
 export default AppSettings;
+
+function handleSettingChange(
+  state: Settings,
+  change: Partial<Settings>
+): Settings {
+  return { ...state, ...change };
+}
