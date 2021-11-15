@@ -5,23 +5,23 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import { Typography } from "@mui/material";
+import { Box } from "@mui/system";
+
 
 const BpIcon = styled("span")(({ theme }) => ({
   borderRadius: "50%",
-  width: 16,
-  height: 16,
+  width: 20,
+  height: 20,
   boxShadow:
     theme.palette.mode === "dark"
-      ? "0 0 0 1px rgb(16 22 26 / 40%)"
-      : "inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)",
-  backgroundColor: theme.palette.mode === "dark" ? "#fffff" : "#ffff",
-  backgroundImage:
-    theme.palette.mode === "dark"
-      ? "linear-gradient(180deg,hsla(0,0%,100%,.05),hsla(0,0%,100%,0))"
-      : "linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))",
+      ? "0 0 0 1px #DDDDDD"
+      : "inset 0 0 0 3.5px rgb(0,0,0), inset 0 -3.5px 0 #DDDDDD",
+  border: "1px solid #DDDDDD",
+  backgroundColor: theme.palette.mode === "dark" ? "#000" : "#000",
   ".Mui-focusVisible &": {
-    outline: "2px auto rgba(19,124,189,.6)",
-    outlineOffset: 2
+    outline: "1px auto #DDDDDD",
+    outlineOffset: 1
   },
   "input:hover ~ &": {
     backgroundColor: theme.palette.mode === "dark" ? "#30404d" : "#ebf1f5"
@@ -36,18 +36,10 @@ const BpIcon = styled("span")(({ theme }) => ({
 }));
 
 const BpCheckedIcon = styled(BpIcon)({
-  backgroundColor: "#000",
-  backgroundImage:
-    "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
-  "&:before": {
-    display: "block",
-    width: 16,
-    height: 16,
-    backgroundImage: "radial-gradient(#fff,#fff 28%,transparent 32%)",
-    content: '""'
-  },
+  backgroundColor: "#fff",
+  
   "input:hover ~ &": {
-    backgroundColor: "#106ba3"
+    backgroundColor: "#DDDDDD"
   }
 });
 
@@ -57,8 +49,9 @@ function BpRadio(props: RadioProps) {
     <Radio
       sx={{
         "&:hover": {
-          bgcolor: "transparent"
-        }
+          bgcolor: "black"
+        },
+               
       }}
       disableRipple
       color="default"
@@ -86,21 +79,16 @@ const OurRadio: React.FC = () => {
   
     return (
         <FormControl component="fieldset">
-        <FormLabel component="legend">Gender</FormLabel>
+          <Box pb={4} pt={2}>
+        <FormLabel component="legend"><Typography variant="h4" color="text.primary"> Choose the Package Manager:</Typography></FormLabel>
+        </Box>
         <RadioGroup
-          defaultValue="female"
-          aria-label="gender"
+          defaultValue="yarn"
           name="customized-radios"
         >
-          <FormControlLabel value="female" control={<BpRadio />} label="Female" />
-          <FormControlLabel value="male" control={<BpRadio />} label="Male" />
-          <FormControlLabel value="other" control={<BpRadio />} label="Other" />
-          <FormControlLabel
-            value="disabled"
-            disabled
-            control={<BpRadio />}
-            label="(Disabled option)"
-          />
+          <FormControlLabel value="yarn" control={<BpRadio />} label={<Typography variant="h5" color="default">YARN</Typography>}/>
+          <FormControlLabel value="npm" control={<BpRadio />} label={<Typography variant="h5" color="default">NPM</Typography>}/>
+         
         </RadioGroup>
       </FormControl>
     );
