@@ -11,6 +11,7 @@ import {
 import AppUpdate from './subcomponents/AppUpdate';
 import LangSelect from './subcomponents/LangSelect';
 import DefaultDirSelect from './subcomponents/DefaultDirSelect';
+import NotificationIntervalSelect from './subcomponents/NotifIntervalSelect';
 
 const AppSettings = () => {
   const { t } = useTranslation();
@@ -39,6 +40,13 @@ const AppSettings = () => {
       <Button style={{ display: 'block' }} onClick={() => submitChanges()}>
         {t('common.save')}
       </Button>
+      <NotificationIntervalSelect
+        currentInterval={settings.notificationInterval}
+        onChange={(interval) =>
+          changeSetting({ notificationInterval: interval })
+        }
+      />
+      <Button onClick={() => submitChanges()}>{t('common.save')}</Button>
     </div>
   );
 };

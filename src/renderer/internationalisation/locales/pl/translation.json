@@ -18,6 +18,12 @@
     },
     "defaultDirectory": {
       "description": "Folder w którym będą zapisywane twoje projekty"
+    },
+    "notifications": {
+      "notifications": "Powiadomienia",
+      "intervals": {
+        "instant": "Chcę by pojawiały się od razu."
     }
   }
+}
 }
