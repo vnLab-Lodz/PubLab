@@ -2,6 +2,11 @@
   "common": {
     "save": "save"
   },
+  "login-screen": {
+    "message": "To begin, please log in using your GitHub account",
+    "button": "Log in with GitHub",
+    "created":"Created by:"
+    },
   "AppSettings": {
     "title": "App Settings",
     "abbreviation": "AS",
@@ -15,5 +20,6 @@
       "newVersionAvailable": "New version is available. Would you like to update?",
       "update": "update"
     }
+ 
   }
 }

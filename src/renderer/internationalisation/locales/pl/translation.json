@@ -14,6 +14,11 @@
       "version": "wersja",
       "newVersionAvailable": "Nowa wersja jest dostępna. Czy przeprowadzić aktualizację?",
       "update": "aktualizuj"
+    },
+    "login-screen": {
+      "message": "Aby rozpocząć, zaloguj się za pomocą swojego konta GitHub",
+      "button": "Zaloguj się do GitHub",
+      "created":"Stworzony przez:"
     }
   }
 }
