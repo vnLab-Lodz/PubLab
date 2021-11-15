@@ -3,10 +3,15 @@ import { VersionDetails } from '../../../main/versionDetails';
 import { SupportedLangCode } from '../../../renderer/internationalisation/i18next';
 import { RootState } from '../rootReducer';
 
+export enum NOTIFICATION_INTERVAL { // TODO: Define it in better place when the notification implementation is ready
+  INSTANT = 'instant',
+}
+
 export type Settings = {
   defaultDirPath: string;
   currentLocale: SupportedLangCode;
   versionDetails: VersionDetails;
+  notificationInterval: NOTIFICATION_INTERVAL;
 };
 
 const initialState: Settings = {
@@ -16,6 +21,7 @@ const initialState: Settings = {
     version: '',
     isUpToDate: false,
   },
+  notificationInterval: NOTIFICATION_INTERVAL.INSTANT,
 };
 
 const settingsSlice = createSlice({

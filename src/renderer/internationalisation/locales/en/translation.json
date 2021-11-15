@@ -18,6 +18,12 @@
     },
     "defaultDirectory": {
       "description": "Directory to which you save your projects"
+    },
+    "notifications": {
+      "notifications": "Notifications",
+      "intervals": {
+        "instant": "I want them instantly."
+      }
     }
   }
 }
