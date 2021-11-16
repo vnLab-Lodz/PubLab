@@ -3,14 +3,14 @@ import currentUserReducer from './slices/currentUserSlice';
 import appSettingsReducer from './slices/settingsSlice';
 import gatsbyInstallReducer from './slices/gatsbyInstallSlice';
 import publicationsReducer from './slices/publicationsSlice';
-import nodeCheckReducer from './slices/nodeCheckSlice';
+import nodeInstallReducer from './slices/nodeInstallSlice';
 import currentViewReducer from './slices/currentViewSlice';
 import gatsbyGenerateProjectReducer from './slices/gatsbyGenerateProjectSlice';
 
 const rootReducer = combineReducers({
   currentUser: currentUserReducer,
   appSettings: appSettingsReducer,
-  nodeCheck: nodeCheckReducer,
+  nodeInstall: nodeInstallReducer,
   gatsbyInstall: gatsbyInstallReducer,
   publications: publicationsReducer,
   currentView: currentViewReducer,

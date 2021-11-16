@@ -3,6 +3,7 @@ import './Description.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../../shared/redux/slices/currentUserSlice';
 import { installGatsbyCLI } from '../../../shared/redux/slices/gatsbyInstallSlice';
+import { installNodeJs } from '../../../shared/redux/slices/nodeInstallSlice';
 import { generateNewProject } from '../../../shared/redux/slices/gatsbyGenerateProjectSlice';
 import {
   saveSettingsAsync,
@@ -22,6 +23,9 @@ const Description = () => {
       <p className='description'>Welcome to your Electron application.</p>
       <button type='button' onClick={() => dispatch(installGatsbyCLI())}>
         Install gatsby-cli
+      </button>
+      <button type='button' onClick={() => dispatch(installNodeJs())}>
+        Install node.js
       </button>
       <button
         type='button'

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../rootReducer';
-import { checkForNode } from '../../../main/node/nodeCheck';
+import { checkForNode, installNode } from '../../../main/node/node';
 import { createAsyncActionMain } from '../helpers/createActionMain';
 
 type NodeCheck = {
@@ -26,16 +26,26 @@ const nodeCheckSlice = createSlice({
 export const { checkingInstallation, nodeInstalled, nodeNotInstalled } =
   nodeCheckSlice.actions;
 
-export const selectNodeCheckStatus = (state: RootState) => state.nodeCheck;
+export const selectNodeCheckStatus = (state: RootState) => state.nodeInstall;
 
-export const checkNode = createAsyncActionMain<void>(
-  'checkForNode',
+export const installNodeJs = createAsyncActionMain<void>(
+  'installNode',
   () => async (dispatch) => {
     dispatch(checkingInstallation());
-    if (await checkForNode()) {
+    const isInstalled = await checkForNode().catch(() =>
+      dispatch(nodeNotInstalled())
+    );
+
+    if (isInstalled) {
       dispatch(nodeInstalled());
     } else {
-      dispatch(nodeNotInstalled());
+      installNode()
+        .then(() => {
+          dispatch(nodeInstalled());
+        })
+        .catch(() => {
+          dispatch(nodeNotInstalled());
+        });
     }
   }
 );
