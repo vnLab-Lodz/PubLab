@@ -8,6 +8,11 @@ import FormLabel from "@mui/material/FormLabel";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
+interface Props {
+  disabled1?: boolean;
+  disabled2?: boolean;
+  defaults?: string;
+}
 
 const BpIcon = styled("span")(({ theme }) => ({
   borderRadius: "50%",
@@ -64,7 +69,7 @@ function BpRadio(props: RadioProps) {
 
 
 
-const OurRadio: React.FC = () => {
+const OurRadio: React.FC<Props> = ({disabled1, disabled2, defaults}) => {
 
     const [checked, setChecked] = React.useState<boolean>(); 
   
@@ -83,11 +88,11 @@ const OurRadio: React.FC = () => {
         <FormLabel component="legend"><Typography variant="h4" color="text.primary"> Choose the Package Manager:</Typography></FormLabel>
         </Box>
         <RadioGroup
-          defaultValue="yarn"
+          defaultValue={defaults}
           name="customized-radios"
         >
-          <FormControlLabel value="yarn" control={<BpRadio />} label={<Typography variant="h5" color="default">YARN</Typography>}/>
-          <FormControlLabel value="npm" control={<BpRadio />} label={<Typography variant="h5" color="default">NPM</Typography>}/>
+          <FormControlLabel  disabled={disabled1} value="yarn" control={<BpRadio />} label={<Typography variant="h5" color="default">YARN</Typography>}/>
+          <FormControlLabel disabled={disabled2} value="npm" control={<BpRadio />} label={<Typography variant="h5" color="default">NPM</Typography>}/>
          
         </RadioGroup>
       </FormControl>

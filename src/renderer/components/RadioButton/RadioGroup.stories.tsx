@@ -4,7 +4,7 @@ import OurRadio from './RadioGroup';
 
 
 export default {
-  title: 'Example/OurSwitch',
+  title: 'Example/OurRadio',
   component: OurRadio,
     argTypes: {},
 } as ComponentMeta<typeof OurRadio>;
@@ -20,8 +20,30 @@ Normal.args = {
     }
 };
 
+export const DefaultNPM = Template.bind({});
+DefaultNPM.args = {
+  defaults: "npm",
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-  disabled: true,
+};
+
+
+export const DefaultYarn = Template.bind({});
+DefaultYarn.args = {
+  defaults: "yarn",
+};
+
+export const Disabled1 = Template.bind({});
+Disabled1.args = {
+  disabled1: true,
+};
+
+export const Disabled2 = Template.bind({});
+Disabled2.args = {
+  disabled2: true,
+};
+
+export const DisabledBoth = Template.bind({});
+DisabledBoth.args = {
+  disabled1: true,
+  disabled2: true,
 };
