@@ -76,7 +76,7 @@ CollabPicker.defaultProps = {
   value: undefined,
   options: undefined,
   onChange: () => {},
-  onAdd: ()=> {},
+  onAdd: () => {},
 };
 
 export default CollabPicker;
