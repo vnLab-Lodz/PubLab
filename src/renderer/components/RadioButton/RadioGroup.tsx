@@ -67,14 +67,6 @@ function BpRadio(props: RadioProps) {
 }
 
 const OurRadio: React.FC<Props> = ({ disabled1, disabled2, defaults }) => {
-  const [checked, setChecked] = React.useState<boolean>();
-
-  const handleChange = (event: any) => {
-    //setChecked(event.target.value);
-    // props.onChange();
-
-    console.log('checking some stuff');
-  };
 
   return (
     <FormControl component='fieldset'>
