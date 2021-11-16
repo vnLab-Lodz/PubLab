@@ -2,11 +2,10 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import OurRadio from './RadioGroup';
 
-
 export default {
   title: 'Example/OurRadio',
   component: OurRadio,
-    argTypes: {},
+  argTypes: {},
 } as ComponentMeta<typeof OurRadio>;
 
 const Template: ComponentStory<typeof OurRadio> = (args) => (
@@ -14,22 +13,20 @@ const Template: ComponentStory<typeof OurRadio> = (args) => (
 );
 export const Normal = Template.bind({});
 Normal.args = {
-    disabled: false,
-    onChange: () => {
-      console.log('123');
-    }
+  disabled: false,
+  onChange: () => {
+    console.log('123');
+  },
 };
 
 export const DefaultNPM = Template.bind({});
 DefaultNPM.args = {
-  defaults: "npm",
-
+  defaults: 'npm',
 };
-
 
 export const DefaultYarn = Template.bind({});
 DefaultYarn.args = {
-  defaults: "yarn",
+  defaults: 'yarn',
 };
 
 export const Disabled1 = Template.bind({});
