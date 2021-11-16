@@ -3,8 +3,7 @@ import path from 'path';
 import { v4 as generateUuid } from 'uuid';
 import { addPublication } from '../../shared/redux/slices/publicationsSlice';
 import { store } from '../store';
-
-const configFileName = 'vn-pub.conf';
+import { configFileName } from './config-util';
 
 function isRepository(source: string): boolean {
   return fs.existsSync(path.join(source, '.git'));
@@ -57,7 +56,7 @@ function recursiveSearch(source: string): void {
 
           dirPath: source,
 
-          publicationName: dataParsed.publicationName,
+          publicationName: dataParsed.confipublicationName,
 
           description: dataParsed.description,
 
