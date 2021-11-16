@@ -68,44 +68,44 @@ function BpRadio(props: RadioProps) {
 
 
 const OurRadio: React.FC<Props> = ({ disabled1, disabled2, defaults }) => (
-    <FormControl component='fieldset'>
-      <Box pb={4} pt={2}>
-        <FormLabel component='legend'>
-          <Typography variant='h4' color='text.primary'>
-            {' '}
-            Choose the Package Manager:
+  <FormControl component='fieldset'>
+    <Box pb={4} pt={2}>
+      <FormLabel component='legend'>
+        <Typography variant='h4' color='text.primary'>
+          {' '}
+          Choose the Package Manager:
+        </Typography>
+      </FormLabel>
+    </Box>
+    <RadioGroup defaultValue={defaults} name='customized-radios'>
+      <FormControlLabel
+        disabled={disabled1}
+        value='yarn'
+        control={<BpRadio />}
+        label={
+          <Typography variant='h5' color='default'>
+            YARN
           </Typography>
-        </FormLabel>
-      </Box>
-      <RadioGroup defaultValue={defaults} name='customized-radios'>
-        <FormControlLabel
-          disabled={disabled1}
-          value='yarn'
-          control={<BpRadio />}
-          label={
-            <Typography variant='h5' color='default'>
-              YARN
-            </Typography>
-          }
-        />
-        <FormControlLabel
-          disabled={disabled2}
-          value='npm'
-          control={<BpRadio />}
-          label={
-            <Typography variant='h5' color='default'>
-              NPM
-            </Typography>
-          }
-        />
-      </RadioGroup>
-    </FormControl>
-  );
+        }
+      />
+      <FormControlLabel
+        disabled={disabled2}
+        value='npm'
+        control={<BpRadio />}
+        label={
+          <Typography variant='h5' color='default'>
+            NPM
+          </Typography>
+        }
+      />
+    </RadioGroup>
+  </FormControl>
+);
 
-  OurRadio.defaultProps = {
-    disabled1: false,
-    disabled2: false,
-    defaults: 'npm',
-  };
+OurRadio.defaultProps = {
+  disabled1: false,
+  disabled2: false,
+  defaults: 'npm',
+};
 
 export default OurRadio;
