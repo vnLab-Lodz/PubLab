@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 
 /**
- * return array of objects with name of repository, author of repository and url to repository
+ * return an array of objects with name of each repository, its author and url to it
  * @param accessToken - accessToken
  */
 export function getUserRepositories(accessToken: string): Repository[] {
@@ -36,10 +36,10 @@ export function getUserRepositories(accessToken: string): Repository[] {
 }
 
 /**
- * creates new repository on authorized user account
+ * creates a new repository on the authorized user account
  * @param accessToken - accessToken
  * @param repoName - name of the repository
- * @param description - description of repository(optional)
+ * @param description - description of repository (optional)
  */
 export async function createNewRepository(
   accessToken: string,
@@ -65,9 +65,9 @@ export async function createNewRepository(
 }
 
 /**
- * clone repository to given folder
- * @param dir - path to directory
- * @param url - url to repository
+ * clone repository to the given folder
+ * @param dir - path to the directory
+ * @param url - url to the repository
  * @param accessToken - access token
  */
 export async function clone(
@@ -97,7 +97,7 @@ export async function init(dir: string): Promise<void> {
 }
 
 /**
- * Get list of local branches
+ * Get a list of local branches in the selected dir
  *
  */
 export async function getLocalBranches(dir: string) {
@@ -105,7 +105,7 @@ export async function getLocalBranches(dir: string) {
 }
 
 /**
- * Get list of remote branches
+ * Get a list of remote branches in the selected dir
  */
 export async function getRemoteBranches(dir: string) {
   return git
@@ -114,8 +114,8 @@ export async function getRemoteBranches(dir: string) {
 }
 
 /**
- * creates new branch locally
- * @param dir - path to directory with project
+ * creates a new branch locally
+ * @param dir - path to the directory with the project
  * @param name - name of the branch
  */
 export async function createBranch(dir: string, name: string): Promise<void> {
@@ -145,8 +145,8 @@ function checkout(branchDir: string, branchName: string) {
 }
 
 /**
- * Adds single file locally
- * @param file - File passed to be added locally
+ * Adds a single file locally
+ * @param file - file passed to be added locally
  */
 export async function addFile(file: File): Promise<void> {
   await git
@@ -168,11 +168,9 @@ export function traverseDir(dir: string): File[] {
   return results;
 }
 
-// OK Removing file(s)
-
 /**
- * Removes single file locally
- * @param file - File passed to be removed locally
+ * Removes a single file locally
+ * @param file - file passed to be removed locally
  */
 function removeFile(file: File): void {
   git
@@ -183,7 +181,7 @@ function removeFile(file: File): void {
 
 /**
  * Removes multiple files locally
- * @param files - Array of the files needed to be removed locally.
+ * @param files - array of the files needed to be removed locally.
  */
 function removeFiles(files: File[]): void {
   files.forEach((file) => {
@@ -191,12 +189,11 @@ function removeFiles(files: File[]): void {
   });
 }
 
-// OK Commit
 /**
- * Performs commit from local repository
- * @param dir - Current working directory (From which command will be executed)
- * @param author - Author of the commit
- * @param message - Message of the commit
+ * Performs the commit from local repository
+ * @param dir - current working directory (From which command will be executed)
+ * @param author - author of the commit
+ * @param message - message of the commit
  */
 export async function commit(
   dir: string,
@@ -216,11 +213,10 @@ export async function commit(
     .catch((error: any) => console.error(`(git commit) Error: ${error}`));
 }
 
-// OK Push
 /**
- * Performs push on remote repository
- * @param dir - Current working directory (From which command will be executed)
- * @param accessToken - Authentication access token
+ * Performs a push on the remote repository
+ * @param dir - current working directory (From which command will be executed)
+ * @param accessToken - accessToken
  */
 export async function push(dir: string, accessToken: string): Promise<any> {
   await git
@@ -234,6 +230,13 @@ export async function push(dir: string, accessToken: string): Promise<any> {
     .catch((error: any) => console.error(`(git push) Error: ${error}`));
 }
 
+/**
+ * Adds the single collaborator to the repository (other than its owner)
+ * @param accessToken accessToken
+ * @param owner owner of the repository
+ * @param repo the repository to have the collaborator added
+ * @param username username of the collaborator
+ */
 export function addCollaborator(
   accessToken: string,
   owner: string,
@@ -250,6 +253,13 @@ export function addCollaborator(
   });
 }
 
+/**
+ * Adds the single collaborator to the repository (other than its owner)
+ * @param accessToken accessToken
+ * @param owner owner of the repository
+ * @param repo the repository to have the collaborators added
+ * @param usernames array of usernames of the collaborators
+ */
 export async function addCollaborators(
   accessToken: string,
   owner: string,
@@ -299,6 +309,12 @@ export async function listCollaborators(
   return collaborators;
 }
 
+/**
+ * Adds or updates a remote
+ * @param dir working tree directory path
+ * @param remote name of the remote
+ * @param url url of the remote
+ */
 export async function addRemote(
   dir: string,
   remote: string,
@@ -350,12 +366,22 @@ export async function getPublications(
   return results;
 }
 
+/**
+ * Adds multiple files locally
+ * @param filePath - directory path containing the files to be added
+ */
 export async function addFiles(filePath: string): Promise<void> {
   await searchForFiles(filePath, new Array<File>()).forEach((value) =>
     addFile(value)
   );
 }
 
+/**
+ * recursively search for files in the given directory path
+ * @param dirPath current directory path in the phase of the recursive search
+ * @param arrayOfFiles array of the file objects obtained during recursion
+ * @param dirToRepo directory path where the search starts constant during recursion
+ */
 export function searchForFiles(
   dirPath: string,
   arrayOfFiles: File[],

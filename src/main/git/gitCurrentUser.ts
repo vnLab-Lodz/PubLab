@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { appendLog } from '../logger';
 
+/**
+ * Return an object representing a nick, avatar and company of the currently logged in user
+ * @param token accessToken
+ */
 export async function fetchUserData(token: string) {
   try {
     const response = await axios.get('https://api.github.com/user', {
