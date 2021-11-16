@@ -1,0 +1,40 @@
+.img {
+  border: 1px solid #dddddd;
+  border-radius: 50%;
+  height: 9em;
+  width: 9em;
+  position: relative;
+}
+
+.imgplus {
+  position: absolute;
+  border: 1px solid #dddddd;
+  border-radius: 50%;
+  height: 1em;
+  width: 1em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.imgplus::before {
+  content: '+';
+  height: 1em;
+  width: 1em;
+  font-size: 1em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-family: courier;
+  color: #dddddd;
+}
+
+.selected {
+  background: none;
+}
+
+.error {
+  border: 1px solid #ff8383;
+}
