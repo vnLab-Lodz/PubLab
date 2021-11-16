@@ -1,34 +1,31 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import OurTextArea from './OurTextArea';
+import TextArea from './TextArea';
 
 export default {
-  title: 'Example/OurTextArea',
-  component: OurTextArea,
+  title: 'Example/TextArea',
+  component: TextArea,
   argTypes: {},
-} as ComponentMeta<typeof OurTextArea>;
+} as ComponentMeta<typeof TextArea>;
 
-const Template: ComponentStory<typeof OurTextArea> = (args) => (
-  <OurTextArea {...args} />
+const Template: ComponentStory<typeof TextArea> = (args) => (
+  <TextArea {...args} />
 );
 
 export const Light = Template.bind({});
 Light.args = {
   type: 'light',
-  variant: 'outlined',
   placeholder: 'Project name ...',
 };
 
 export const Dark = Template.bind({});
 Dark.args = {
   type: 'dark',
-  variant: 'outlined',
   placeholder: 'Project name ...',
 };
 
 export const Error = Template.bind({});
 Error.args = {
   type: 'error',
-  variant: 'outlined',
   placeholder: 'Project name ...',
 };

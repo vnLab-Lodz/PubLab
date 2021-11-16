@@ -13,8 +13,6 @@ export default styled(InputBase)(({ type, error, theme: { palette } }) => {
   return {
     color,
     border,
-    height: '45px',
-    width: '400px',
     padding: '12px 10px 12px 10px',
     fontSize: '15px !important',
   };
