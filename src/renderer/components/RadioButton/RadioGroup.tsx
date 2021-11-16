@@ -66,9 +66,7 @@ function BpRadio(props: RadioProps) {
   );
 }
 
-const OurRadio: React.FC<Props> = ({ disabled1, disabled2, defaults }) => {
-
-  return (
+const OurRadio: React.FC<Props> = ({ disabled1, disabled2, defaults }) => (
     <FormControl component='fieldset'>
       <Box pb={4} pt={2}>
         <FormLabel component='legend'>
@@ -102,6 +100,11 @@ const OurRadio: React.FC<Props> = ({ disabled1, disabled2, defaults }) => {
       </RadioGroup>
     </FormControl>
   );
-};
+
+  OurRadio.defaultProps = {
+    disabled1: false,
+    disabled2: false,
+    defaults: 'npm',
+  };
 
 export default OurRadio;

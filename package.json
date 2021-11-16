@@ -116,6 +116,7 @@
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@mui/material": "^5.0.4",
+    "@mui/system": "^5.0.4",
     "@reduxjs/toolkit": "^1.4.0",
     "axios": "^0.21.0",
     "child_process": "^1.0.2",
