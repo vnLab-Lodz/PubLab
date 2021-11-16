@@ -131,19 +131,6 @@ export async function pushBranch(dir: string, accessToken: string) {
   });
 }
 
-function checkout(branchDir: string, branchName: string) {
-  git
-    .checkout({
-      fs,
-      dir: branchDir,
-      ref: branchName,
-    })
-    .then(() => appendLog(`Successfully checked out to ${branchName}`))
-    .catch(() =>
-      console.error(`Error occurred while performing checkout to ${branchName}`)
-    );
-}
-
 /**
  * Adds a single file locally
  * @param file - file passed to be added locally
@@ -166,27 +153,6 @@ export function traverseDir(dir: string): File[] {
     }
   });
   return results;
-}
-
-/**
- * Removes a single file locally
- * @param file - file passed to be removed locally
- */
-function removeFile(file: File): void {
-  git
-    .remove({ fs, dir: file.path, filepath: file.filename })
-    .then(() => appendLog(`(git add) Ok: ${file.filename}`))
-    .catch((error: any) => console.error(`(git add) Error: ${error}`));
-}
-
-/**
- * Removes multiple files locally
- * @param files - array of the files needed to be removed locally.
- */
-function removeFiles(files: File[]): void {
-  files.forEach((file) => {
-    removeFile(file);
-  });
 }
 
 /**
@@ -335,7 +301,7 @@ export async function addRemote(
 
 export async function getPublications(
   accessToken: string,
-  path: string
+  dirPath: string
 ): Promise<string[]> {
   const octokit = new Octokit({
     auth: accessToken,
@@ -351,10 +317,10 @@ export async function getPublications(
         .getContent({
           owner,
           repo,
-          path,
+          path: dirPath,
         })
-        .then((data: any) => {
-          if (data.status === 200) {
+        .then((nextData: any) => {
+          if (nextData.status === 200) {
             results.push(rep.name);
           }
         })
@@ -392,19 +358,22 @@ export function searchForFiles(
   }
 
   const files = fs.readdirSync(dirPath);
-  arrayOfFiles = arrayOfFiles || [];
+  let currentArrayOfFiles = arrayOfFiles || [];
 
   files.forEach((file: string) => {
     if (fs.statSync(`${dirPath}/${file}`).isDirectory()) {
-      arrayOfFiles = searchForFiles(
+      currentArrayOfFiles = searchForFiles(
         `${dirPath}/${file}`,
         arrayOfFiles,
         dirToRepo
       );
     } else {
       const relPath = dirPath.replace(`${dirToRepo}/`, '');
-      arrayOfFiles.push({ filename: `${relPath}/${file}`, path: dirToRepo });
+      currentArrayOfFiles.push({
+        filename: `${relPath}/${file}`,
+        path: dirToRepo,
+      });
     }
   });
-  return arrayOfFiles;
+  return currentArrayOfFiles;
 }
