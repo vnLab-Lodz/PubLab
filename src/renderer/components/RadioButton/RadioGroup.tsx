@@ -67,7 +67,6 @@ function BpRadio(props: RadioProps) {
 }
 
 const OurRadio: React.FC<Props> = ({ disabled1, disabled2, defaults }) => {
-
   return (
     <FormControl component='fieldset'>
       <Box pb={4} pt={2}>
