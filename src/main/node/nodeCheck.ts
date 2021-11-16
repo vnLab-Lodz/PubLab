@@ -1,5 +1,5 @@
 import { exec } from 'child_process';
-import { platform } from 'os';
+import { type } from 'os';
 import { appendLog } from '../logger';
 
 class Platform {
@@ -10,14 +10,14 @@ class Platform {
     this.os = os;
   }
 
-  public static WINDOWS: Platform = new Platform('win32');
-  public static LINUX: Platform = new Platform('linux');
-  public static MAC: Platform = new Platform('darwin');
+  public static WINDOWS: Platform = new Platform('Windows_NT');
+  public static LINUX: Platform = new Platform('Linux');
+  public static MAC: Platform = new Platform('Darwin');
   private static supportedPlatforms: Platform[] = [Platform.WINDOWS, Platform.LINUX, Platform.MAC];
 
   public static Current() : Platform
   {
-    return new Platform(platform());
+    return new Platform(type());
   }
 
   public IsSupported() : boolean
