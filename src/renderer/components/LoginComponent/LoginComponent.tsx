@@ -26,25 +26,30 @@ const LoginComponent = () => {
     dispatch(setAllSettings(settings));
   }
   function changeLanguage(x: string) {
-    if (x === 'EN')
-      changeSetting({ currentLocale: 'pl' });
-    else
-      changeSetting({ currentLocale: 'pl' });
+    if (x === 'EN') changeSetting({ currentLocale: 'pl' });
+    else changeSetting({ currentLocale: 'pl' });
     submitChanges();
   }
   return (
     <div className='background'>
       <div className='language-box'>
         {supportedLocales.map((locale) => (
-          <Button key={locale} variant='text' className='language' onClick={() => changeLanguage('EN')}>
-            <Typography>{"${locale}"}</Typography>
+          <Button 
+          key={locale}
+           variant='text' 
+           className='language' 
+           onClick={() => changeLanguage('EN')}>
+            <Typography>{'${locale}'}</Typography>
           </Button>
         ))}
       </div>
 
       <div className='container'>
         <img src={logo} alt='Logo' />
-        <Typography variant='h4' className='text' onClick={() => changeLanguage('PL')}>
+        <Typography 
+        variant='h4' 
+        className='text' 
+        onClick={() => changeLanguage('PL')}>
           <p>{t('login-screen.message')} </p>
         </Typography>
         <div className='button'>
