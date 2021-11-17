@@ -38,8 +38,7 @@ const LoginComponent = () => {
             key={locale}
             variant='text'
             className='language'
-            onClick={() =>
-              changeLanguage('EN')}
+            onClick={() => changeLanguage('EN')}
           >
             <Typography>{'${locale}'}</Typography>
           </Button>
@@ -51,8 +50,7 @@ const LoginComponent = () => {
         <Typography
           variant='h4'
           className='text'
-          onClick={() =>
-            changeLanguage('PL')}
+          onClick={() => changeLanguage('PL')}
         >
           <p>{t('login-screen.message')} </p>
         </Typography>
