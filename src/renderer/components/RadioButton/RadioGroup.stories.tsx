@@ -1,23 +1,72 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import OurRadio from './RadioGroup';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import { Box, Typography } from '@mui/material';
+import RadioBtn from './RadioBtn';
+
+interface Props {
+  disabled1?: boolean;
+  disabled2?: boolean;
+  defaults?: string;
+}
+
+const RadioForm: React.FC<Props> = ({ disabled1, disabled2, defaults }) => (
+  <FormControl
+    component='fieldset'
+    style={{ background: 'black', padding: '2rem' }}
+  >
+    <Box pb={4} pt={2}>
+      <FormLabel component='legend'>
+        <Typography variant='h4' color='text.primary'>
+          Choose the Package Manager:
+        </Typography>
+      </FormLabel>
+    </Box>
+    <RadioGroup defaultValue={defaults} name='customized-radios'>
+      <FormControlLabel
+        disabled={disabled1}
+        value='yarn'
+        control={<RadioBtn />}
+        label={
+          <Typography variant='h5' color='default'>
+            YARN
+          </Typography>
+        }
+      />
+      <FormControlLabel
+        disabled={disabled2}
+        value='npm'
+        control={<RadioBtn />}
+        label={
+          <Typography variant='h5' color='default'>
+            NPM
+          </Typography>
+        }
+      />
+    </RadioGroup>
+  </FormControl>
+);
+
+RadioForm.defaultProps = {
+  disabled1: false,
+  disabled2: false,
+  defaults: 'npm',
+};
 
 export default {
-  title: 'Example/OurRadio',
-  component: OurRadio,
+  title: 'Example/RadioGroup',
+  component: RadioForm,
   argTypes: {},
-} as ComponentMeta<typeof OurRadio>;
+} as ComponentMeta<typeof RadioForm>;
 
-const Template: ComponentStory<typeof OurRadio> = (args) => (
-  <OurRadio {...args} />
+const Template: ComponentStory<typeof RadioForm> = (args) => (
+  <RadioForm {...args} />
 );
 export const Normal = Template.bind({});
-Normal.args = {
-  disabled: false,
-  onChange: () => {
-    console.log('123');
-  },
-};
+Normal.args = {};
 
 export const DefaultNPM = Template.bind({});
 DefaultNPM.args = {
