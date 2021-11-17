@@ -66,8 +66,7 @@ const LoginComponent = () => {
           <p>
             {' '}
             {t('login-screen.created')} Marlon Brando, Al Pacino, James Caan, Richard
-            Castellano, Robert Duvall, Sterling Hayden, John Marley, Richard
-            Conte, and Diane Keaton
+            Castellano, Robert Duvall, Sterling Hayden, John Marley, Richard Conte, and Diane Keaton
           </p>
         </Typography>
       </div>
