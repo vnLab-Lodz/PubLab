@@ -1,0 +1,29 @@
+{
+  "common": {
+    "save": "zapisz",
+    "change": "zmień"
+  },
+  "AppSettings": {
+    "title": "Ustawienia Aplikacji",
+    "abbreviation": "UA",
+    "language": {
+      "language": "Język",
+      "en": "Angielski",
+      "pl": "Polski"
+    },
+    "updates": {
+      "version": "wersja",
+      "newVersionAvailable": "Nowa wersja jest dostępna. Czy przeprowadzić aktualizację?",
+      "update": "aktualizuj"
+    },
+    "defaultDirectory": {
+      "description": "Folder w którym będą zapisywane twoje projekty"
+    },
+    "notifications": {
+      "notifications": "Powiadomienia",
+      "intervals": {
+        "instant": "Chcę by pojawiały się od razu."
+      }
+    }
+  }
+}

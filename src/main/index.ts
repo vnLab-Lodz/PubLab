@@ -1,6 +1,8 @@
 import { app, BrowserWindow } from 'electron';
+import { setVersionDetails } from '../shared/redux/slices/settingsSlice';
 import { configStore } from '../shared/redux/configureStore';
 import installDevToolsExtensions from './devToolsExtensions';
+import { getVersionDetails } from './versionDetails';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: any;
@@ -12,8 +14,7 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const store = configStore('main');
+export const mainStore = configStore('main');
 
 const createWindow = async (): Promise<void> => {
   // Create the browser window.
@@ -41,7 +42,8 @@ app.on('ready', async () => {
   if (!app.isPackaged) {
     await installDevToolsExtensions();
   }
-  createWindow();
+  await createWindow();
+  mainStore.dispatch(setVersionDetails(getVersionDetails()));
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

@@ -1,137 +1,82 @@
+import * as fs from 'fs';
 import { isDirectory, isPublication } from './file-manager';
+import { Collaborator } from '../../shared/redux/slices/publicationsSlice';
+import { configFileName } from './config-util';
+import { Configuration } from './model/Configuration';
 
-const fs = require('fs');
-
-class Collaborator {
-  username: string;
-
-  role: string;
-
-  constructor(username: string, role: string) {
-    this.username = username;
-    this.role = role;
+export function createConfigFile(path: string, configuration: Configuration) {
+  validatePath(
+    !isDirectory(path),
+    'Error while creating a config file: directory is not found'
+  );
+  if (!configuration.publicationName) {
+    throw new Error('Name is required');
   }
+  const configContentJSON = JSON.stringify(configuration, null, 2);
+  fs.writeFileSync(`${path}/${configFileName}`, configContentJSON);
 }
 
-const configFileName = 'vn-pub.conf';
-
-export function createConfigFile(
-  path: string,
-  name: string,
-  description: string,
-  collaborators: Collaborator[],
-  packageManager: string,
-  tag: string
-): boolean {
-  if (isDirectory(path)) {
-    const configContent = {
-      name,
-      description,
-      collaborators,
-      package_manager: packageManager,
-      tag,
-    };
-    const configContentJSON = JSON.stringify(configContent);
-    fs.writeFileSync(`${path}/${configFileName}`, configContentJSON);
-    return true;
-  }
-  return false;
-}
-
-export function deleteConfigFile(path: string): boolean {
-  if (isDirectory(path) && isPublication(path)) {
-    try {
-      if (fs.existsSync(path)) {
-        fs.unlinkSync(`${path}/${configFileName}`);
-        return true;
-      }
-    } catch (err) {
-      console.error(err);
-      return false;
+export function deleteConfigFile(path: string) {
+  validatePath(!isDirectory(path) || !isPublication(path), 'Invalid path');
+  try {
+    if (fs.existsSync(path)) {
+      fs.unlinkSync(`${path}/${configFileName}`);
     }
+  } catch (err: any) {
+    throw new Error(err.toString());
   }
-  return false;
 }
 
-export function modifyName(path: string, newName: string): boolean {
-  if (isDirectory(path) && isPublication(path)) {
-    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
-    const configContent = JSON.parse(configContentJSON);
-    configContent.name = newName;
-    const newConfigContentJSON = JSON.stringify(configContent);
-    deleteConfigFile(path);
-    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
-    return true;
-  }
-  return false;
+export function getConfigFile(path: string): Configuration {
+  validatePath(
+    !isDirectory(path) || !isPublication(path),
+    'Config file does not exist. Check the provided path'
+  );
+  const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
+  return JSON.parse(configContentJSON.toString()) as Configuration;
 }
 
-export function modifyDescription(
+export function updateConfigField(
   path: string,
-  newDescription: string
-): boolean {
-  if (isDirectory(path) && isPublication(path)) {
-    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
-    const configContent = JSON.parse(configContentJSON);
-    configContent.description = newDescription;
-    const newConfigContentJSON = JSON.stringify(configContent);
-    deleteConfigFile(path);
-    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
-    return true;
-  }
-  return false;
-}
+  field: keyof Omit<
+    Configuration,
+    'useTypescript' | 'useSaas' | 'collaborators'
+  >,
+  value: string
+): void;
 
-export function modifyCollaborators(
+export function updateConfigField(
   path: string,
-  newCollaborators: Collaborator[]
-): boolean {
-  if (isDirectory(path) && isPublication(path)) {
-    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
-    const configContent = JSON.parse(configContentJSON);
-    configContent.collaborators = newCollaborators;
-    const newConfigContentJSON = JSON.stringify(configContent);
-    deleteConfigFile(path);
-    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
-    return true;
-  }
-  return false;
-}
+  field: keyof Pick<Configuration, 'useTypescript' | 'useSass'>,
+  value: boolean
+): void;
 
-export function modifyPackageManager(
+export function updateConfigField(
   path: string,
-  newPackageManager: string
-): boolean {
-  if (isDirectory(path) && isPublication(path)) {
-    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
-    const configContent = JSON.parse(configContentJSON);
-    configContent.packageManager = newPackageManager;
-    const newConfigContentJSON = JSON.stringify(configContent);
-    deleteConfigFile(path);
-    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
-    return true;
-  }
-  return false;
+  field: keyof Pick<Configuration, 'collaborators'>,
+  value: Collaborator[]
+): void;
+
+export function updateConfigField(path: string, field: any, value: any) {
+  if (field === 'publicationName') validateNonEmptyNorNull(value);
+
+  const oldConfiguration = getConfigFile(path);
+  const updatedConfiguration = { ...oldConfiguration, [field]: value };
+
+  fs.writeFileSync(
+    `${path}/${configFileName}`,
+    JSON.stringify(updatedConfiguration, null, 2)
+  );
 }
 
-export function modifyTag(path: string, newTag: string): boolean {
-  if (isDirectory(path) && isPublication(path)) {
-    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
-    const configContent = JSON.parse(configContentJSON);
-    configContent.tag = newTag;
-    const newConfigContentJSON = JSON.stringify(configContent);
-    deleteConfigFile(path);
-    fs.writeFileSync(`${path}/${configFileName}`, newConfigContentJSON);
-    return true;
+function validatePath(condition: boolean, errMessage: string) {
+  if (condition) {
+    throw new Error(errMessage);
   }
-  return false;
 }
 
-export function getConfigFileJSON(path: string): string {
-  if (isDirectory(path) && isPublication(path)) {
-    const configContentJSON = fs.readFileSync(`${path}/${configFileName}`);
-    const configContent = JSON.parse(configContentJSON);
-    return configContent;
+function validateNonEmptyNorNull(property: string): void {
+  if (!property || property.trim().length === 0) {
+    throw new Error('This property cannot be null or empty');
   }
-  return null;
 }

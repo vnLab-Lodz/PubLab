@@ -92,3 +92,5 @@ out/
 
 .idea
 .vscode
+
+src/main/node/publab.config.json
