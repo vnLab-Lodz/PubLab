@@ -34,11 +34,11 @@ const LoginComponent = () => {
     <div className='background'>
       <div className='language-box'>
         {supportedLocales.map((locale) => (
-          <Button 
-          key={locale}
-           variant='text' 
-           className='language' 
-           onClick={() => changeLanguage('EN')}>
+          <Button
+            key={locale}
+            variant='text'
+            className='language'
+            onClick={() => changeLanguage('EN')}>
             <Typography>{'${locale}'}</Typography>
           </Button>
         ))}
@@ -46,10 +46,10 @@ const LoginComponent = () => {
 
       <div className='container'>
         <img src={logo} alt='Logo' />
-        <Typography 
-        variant='h4' 
-        className='text' 
-        onClick={() => changeLanguage('PL')}>
+        <Typography
+          variant='h4'
+          className='text'
+          onClick={() => changeLanguage('PL')}>
           <p>{t('login-screen.message')} </p>
         </Typography>
         <div className='button'>
