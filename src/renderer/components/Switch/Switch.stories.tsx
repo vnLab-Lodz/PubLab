@@ -5,7 +5,7 @@ import OurSwitch from './Switch';
 export default {
   title: 'Example/OurSwitch',
   component: OurSwitch,
-    argTypes: {},
+  argTypes: {},
 } as ComponentMeta<typeof OurSwitch>;
 
 const Template: ComponentStory<typeof OurSwitch> = (args) => (
@@ -13,12 +13,11 @@ const Template: ComponentStory<typeof OurSwitch> = (args) => (
 );
 export const Normal = Template.bind({});
 Normal.args = {
-    disabled: false,
-    onChange: () => {
-      console.log('123');
-    }
+  disabled: false,
+  onChange: () => {
+    console.log('123');
+  },
 };
-
 
 export const Disabled = Template.bind({});
 Disabled.args = {

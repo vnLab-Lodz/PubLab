@@ -2,10 +2,10 @@ import * as React from 'react';
 import Switch from '@mui/material/Switch';
 import { styled, Theme } from '@mui/material';
 interface Props {
-    disabled?: boolean;
-    onChange: (...args: any[]) => void;
-    height: string;
-    width: string;
+  disabled?: boolean;
+  onChange: (...args: any[]) => void;
+  height: string;
+  width: string;
 }
 
 const StyledSwitch = styled(Switch)(({ theme }) => ({
@@ -37,28 +37,26 @@ const StyledSwitch = styled(Switch)(({ theme }) => ({
     borderRadius: 20,
     backgroundColor: theme.palette.black.main,
     opacity: 1,
-    border: "1px solid " + theme.palette.lightGray.main,
+    border: '1px solid ' + theme.palette.lightGray.main,
   },
 }));
 
 const OurSwitch: React.FC<Props> = (props) => {
-
-  const [checked, setChecked] = React.useState<boolean>(); 
+  const [checked, setChecked] = React.useState<boolean>();
 
   const handleChange = (event: any) => {
     setChecked(event.target.value);
-    props.onChange(); 
+    props.onChange();
   };
-
 
   return (
     <div>
       <StyledSwitch
-      disabled = {props.disabled}
-      onChange={(event) => handleChange(event)}
+        disabled={props.disabled}
+        onChange={(event) => handleChange(event)}
       ></StyledSwitch>
     </div>
   );
-}
+};
 
 export default OurSwitch;
