@@ -9,11 +9,7 @@ interface Props {
   onClick?: () => void;
 }
 
-const DirectoryPicker: React.FC<Props> = ({
-  value,
-  placeholder,
-  onClick,
-}) => {
+const DirectoryPicker: React.FC<Props> = ({ value, placeholder, onClick }) => {
   const [currentValue, setCurrentValue] = React.useState(value);
 
   const handleDirectoryChange = (event: React.ChangeEvent<HTMLInputElement>) =>
