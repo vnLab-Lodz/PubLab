@@ -1,11 +1,6 @@
 import * as React from 'react';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Button, MenuItem } from '@mui/material';
+import { Button } from '@mui/material';
 import TextField from '../TextField/TextField';
-
-interface Directory {
-  directory: string;
-}
 
 interface Props {
   value?: string;
@@ -17,7 +12,6 @@ interface Props {
 const DirectoryPicker: React.FC<Props> = ({
   value,
   placeholder,
-  onChange,
   onClick,
 }) => {
   const [currentValue, setCurrentValue] = React.useState(value);
