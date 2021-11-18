@@ -4,7 +4,7 @@ import { createAsyncActionMain } from '../helpers/createActionMain';
 
 export enum TEMPLATE_URLS {
   PAAW_I18N = 'https://github.com/vnLab-Lodz/gatsby-starter-paaw-i18n',
-  PAAW_BASIC= 'https://github.com/vnLab-Lodz/gatsby-starter-paaw-basic',
+  PAAW_BASIC = 'https://github.com/vnLab-Lodz/gatsby-starter-paaw-basic',
 }
 
 function getTemplateUrl(usingSass: boolean, usingTypeScript: boolean) {
@@ -48,7 +48,6 @@ const gatsbyGenerateProjectSlice = createSlice({
   },
 });
 
-
 export const { creationExecuting, creationFulfilled, creationRejected } =
   gatsbyGenerateProjectSlice.actions;
 
@@ -58,9 +57,9 @@ export const generateNewProject = createAsyncActionMain<NewProjectPayload>(
     async (dispatch, getState) => {
       dispatch(creationExecuting());
       try {
-        const { defaultDirPath } = getState().appSettings;    
+        const { defaultDirPath } = getState().appSettings;
         const { useSass } = getState().publications[publicationNumber];
-        const { useTypescript } = getState().publications[publicationNumber];        
+        const { useTypescript } = getState().publications[publicationNumber];
         const templateUrl = getTemplateUrl(useSass, useTypescript);
 
         await generateProject(defaultDirPath, projectName, templateUrl);
