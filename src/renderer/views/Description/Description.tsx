@@ -44,12 +44,10 @@ const Description = () => {
             alert('Pick a path first');
             return;
           }
-
           dispatch(
             generateNewProject({
               projectName: 'testProject',
-              templateUrl:
-                'https://github.com/vnLab-Lodz/gatsby-starter-paaw-basic',
+              publicationNumber: 0,
             })
           );
         }}
