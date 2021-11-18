@@ -1,7 +1,10 @@
 import * as React from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { styled } from '@mui/material';
+import { InputBase, styled } from '@mui/material';
+import * as theme from '../../theme';
+import StateManager from 'react-select';
+import { red } from '@mui/material/colors';
 
 interface Props {
   disabled?: boolean;
@@ -11,11 +14,23 @@ interface Props {
   onChange: (...args: any[]) => void; 
 }
 
+const CustomMenuItem = styled(MenuItem)(({ theme }) => ({ 
+ color: '#111111',
+}));
+
 const StyledSelect = styled(Select)(({ theme }) => ({ 
-borderRadius: "0", 
-border: "1px grey",
+backgroundColor: '#111111',
+borderRadius: '0', 
+borderColor: '#DDDDDD',
+borderStyle: 'solid',
+borderWidth: '1px',
 fontWeight: 'normal',
 fontStyle: 'normal',
+color: '#DDDDDD',
+currentColor: 'red',
+'& .MuiSelect-icon':{
+  fill: "#DDDDDD"
+},
 }));
 
 const OurSelect: React.FC<Props> = (props) => {
@@ -35,7 +50,7 @@ return (
    displayEmpty
    onChange={(event) => handleChange(event)} 
    >
-     <MenuItem disabled value="">{props.placeholder}</MenuItem>
+     <CustomMenuItem disabled value="">{props.placeholder}</CustomMenuItem>
      {props.options.map((option) => { 
        return (<MenuItem value={option}>{option}</MenuItem>);
      })}
