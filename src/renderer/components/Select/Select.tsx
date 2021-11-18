@@ -1,7 +1,7 @@
 import * as React from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { InputBase, styled } from '@mui/material';
+import { InputBase, Menu, styled } from '@mui/material';
 import * as theme from '../../theme';
 import StateManager from 'react-select';
 import { red } from '@mui/material/colors';
@@ -19,17 +19,16 @@ const CustomMenuItem = styled(MenuItem)(({ theme }) => ({
 }));
 
 const StyledSelect = styled(Select)(({ theme }) => ({ 
-backgroundColor: '#111111',
+backgroundColor: theme.palette.black.main,
 borderRadius: '0', 
-borderColor: '#DDDDDD',
+borderColor: theme.palette.lightGray.main,
 borderStyle: 'solid',
 borderWidth: '1px',
 fontWeight: 'normal',
 fontStyle: 'normal',
-color: '#DDDDDD',
-currentColor: 'red',
+color: theme.palette.lightGray.main,
 '& .MuiSelect-icon':{
-  fill: "#DDDDDD"
+  fill: theme.palette.lightGray.main
 },
 }));
 
@@ -46,10 +45,9 @@ const handleChange = (event: any) => {
 return (
   <div>
   <StyledSelect
-   value={value}
-   displayEmpty
-   onChange={(event) => handleChange(event)} 
-   >
+      value={value}
+      displayEmpty
+      onChange={(event) => handleChange(event)}>
      <CustomMenuItem disabled value="">{props.placeholder}</CustomMenuItem>
      {props.options.map((option) => { 
        return (<MenuItem value={option}>{option}</MenuItem>);
