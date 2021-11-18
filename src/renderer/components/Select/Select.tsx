@@ -8,53 +8,54 @@ import { red } from '@mui/material/colors';
 
 interface Props {
   disabled?: boolean;
-  height: string,
+  height: string;
   placeholder: string;
-  options: string[]; 
-  onChange: (...args: any[]) => void; 
+  options: string[];
+  onChange: (...args: any[]) => void;
 }
 
-const CustomMenuItem = styled(MenuItem)(({ theme }) => ({ 
- color: '#111111',
+const CustomMenuItem = styled(MenuItem)(({ theme }) => ({
+  color: '#111111',
 }));
 
-const StyledSelect = styled(Select)(({ theme }) => ({ 
-backgroundColor: theme.palette.black.main,
-borderRadius: '0', 
-borderColor: theme.palette.lightGray.main,
-borderStyle: 'solid',
-borderWidth: '1px',
-fontWeight: 'normal',
-fontStyle: 'normal',
-color: theme.palette.lightGray.main,
-'& .MuiSelect-icon':{
-  fill: theme.palette.lightGray.main
-},
+const StyledSelect = styled(Select)(({ theme }) => ({
+  backgroundColor: theme.palette.black.main,
+  borderRadius: '0',
+  borderColor: theme.palette.lightGray.main,
+  borderStyle: 'solid',
+  borderWidth: '1px',
+  fontWeight: 'normal',
+  fontStyle: 'normal',
+  color: theme.palette.lightGray.main,
+  '& .MuiSelect-icon': {
+    fill: theme.palette.lightGray.main,
+  },
 }));
 
 const OurSelect: React.FC<Props> = (props) => {
+  const [value, setValue] = React.useState<string>('');
 
-const [value, setValue] = React.useState<string>(""); 
+  const handleChange = (event: any) => {
+    setValue(event.target.value);
+    props.onChange();
+  };
 
-const handleChange = (event: any) => {
-  setValue(event.target.value); 
-  props.onChange(); 
+  return (
+    <div>
+      <StyledSelect
+        value={value}
+        displayEmpty
+        onChange={(event) => handleChange(event)}
+      >
+        <CustomMenuItem disabled value=''>
+          {props.placeholder}
+        </CustomMenuItem>
+        {props.options.map((option) => {
+          return <MenuItem value={option}>{option}</MenuItem>;
+        })}
+      </StyledSelect>
+    </div>
+  );
 };
 
-
-return (
-  <div>
-  <StyledSelect
-      value={value}
-      displayEmpty
-      onChange={(event) => handleChange(event)}>
-     <CustomMenuItem disabled value="">{props.placeholder}</CustomMenuItem>
-     {props.options.map((option) => { 
-       return (<MenuItem value={option}>{option}</MenuItem>);
-     })}
-   </StyledSelect>
-  </div>
-);
-}
-
-export default OurSelect; 
+export default OurSelect;

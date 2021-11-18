@@ -17,10 +17,19 @@ const Template: ComponentStory<typeof BasicSelect> = (args) => (
 
 export const Normal = Template.bind({});
 Normal.args = {
-   disabled: false, placeholder: "Role", options: ["Programmer", "asaa"], onChange: () => {console.log("ssacasca")}
+  disabled: false,
+  placeholder: 'Role',
+  options: ['Programmer', 'asaa'],
+  onChange: () => {
+    console.log('ssacasca');
+  },
 };
 
 export const Disabled = Template.bind({});
 Disabled.args = {
-  disabled: true, options: ["la", "asaa"], onChange: () => {console.log("ssacasca")}
+  disabled: true,
+  options: ['la', 'asaa'],
+  onChange: () => {
+    console.log('ssacasca');
+  },
 };
