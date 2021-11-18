@@ -1,7 +1,6 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta, addDecorator } from '@storybook/react';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 import OurSwitch from './Switch';
-import { ThemeProvider } from '@mui/material';
 
 export default {
   title: 'Example/OurSwitch',
