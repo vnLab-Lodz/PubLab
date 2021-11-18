@@ -3,6 +3,11 @@
     "save": "zapisz",
     "change": "zmień"
   },
+  "login-screen": {
+    "message": "Aby rozpocząć, zaloguj się za pomocą swojego konta GitHub",
+    "button": "Zaloguj się przez GitHub",
+    "created": "Stworzony przez:"
+  },
   "AppSettings": {
     "title": "Ustawienia Aplikacji",
     "abbreviation": "UA",
