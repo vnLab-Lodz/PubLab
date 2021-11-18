@@ -1,4 +1,5 @@
 import React from 'react';
+
 import './Files.scss';
 
 const Files = () => <div>Files</div>;
