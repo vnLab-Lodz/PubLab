@@ -29,7 +29,6 @@ const DirectoryPicker: React.FC<Props> = ({ value, placeholder, onClick }) => {
 DirectoryPicker.defaultProps = {
   value: undefined,
   placeholder: undefined,
-  onChange: () => {},
   onClick: () => {},
 };
 
