@@ -5,7 +5,6 @@ import TextField from '../TextField/TextField';
 interface Props {
   value?: string;
   placeholder?: string;
-  onChange?: (value: string | undefined) => void;
   onClick?: () => void;
 }
 
