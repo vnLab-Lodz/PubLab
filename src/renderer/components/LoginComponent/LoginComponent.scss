@@ -4,12 +4,13 @@
   background-color: #111111;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .container {
   animation-duration: 5s;
-  
+
   display: flex;
   flex-direction: column;
   font-size: x-large;
@@ -19,6 +20,7 @@
 
 .text {
   padding: 2em;
+  text-align: center;
 }
 .text p {
   color: #dddddd;
@@ -29,15 +31,11 @@
 }
 
 .language-box {
-  display: block; 
-  transform: translateX(50%);
+  margin-top: 20px;
+  display: block;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  top: 0;
-
-  right:50%;
 }
 
 .language {
@@ -46,7 +44,6 @@
 
 .language p {
   color: #ddddddc9;
-  font-weight: 100;
   font-size: large;
 }
 
@@ -62,7 +59,6 @@
 .button p {
   color: #111111;
   text-transform: none;
-  word-spacing: 4px;
   text-indent: 5em;
   font-size: large;
 }
@@ -71,19 +67,11 @@
   background-color: #ddddddc9;
 }
 
-// .button:focus {
-//   outline: none;
-//   box-shadow: none;
-// }
-
 .footer {
   justify-content: center;
-  position: absolute;
   display: flex;
   flex-direction: column;
-  bottom: 0;
   align-items: center;
-  left: 25%;
 }
 .footer p {
   font-size: small;
