@@ -114,7 +114,7 @@ const NavigationBar = () => {
       {isExpanded && (
         <div
           className='navbar__expand-handle'
-          role ='button'
+          role='button'
           aria-label='Expand'
           tabIndex={0}
           onClick={expandNav}

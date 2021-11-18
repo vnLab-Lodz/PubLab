@@ -4,7 +4,7 @@ import { Button, MenuItem } from '@mui/material';
 import TextField from '../TextField/TextField';
 
 interface Directory {
-  directory:string
+  directory: string;
 }
 
 interface Props {
@@ -14,18 +14,24 @@ interface Props {
   onClick?: () => void;
 }
 
-const DirectoryPicker: React.FC<Props> = ({ value, placeholder, onChange, onClick}) => {
+const DirectoryPicker: React.FC<Props> = ({
+  value,
+  placeholder,
+  onChange,
+  onClick,
+}) => {
   const [currentValue, setCurrentValue] = React.useState(value);
 
   const handleDirectoryChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-  setCurrentValue(event.target.value);
+    setCurrentValue(event.target.value);
 
   return (
     <div>
       <TextField
         placeholder={placeholder}
         value={currentValue}
-        onChange={handleDirectoryChange}/>
+        onChange={handleDirectoryChange}
+      />
       <Button onClick={onClick}>Change</Button>
     </div>
   );
