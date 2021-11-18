@@ -21,7 +21,6 @@
       "newVersionAvailable": "Nowa wersja jest dostępna. Czy przeprowadzić aktualizację?",
       "update": "aktualizuj"
     },
-
     "defaultDirectory": {
       "description": "Folder w którym będą zapisywane twoje projekty"
     },
