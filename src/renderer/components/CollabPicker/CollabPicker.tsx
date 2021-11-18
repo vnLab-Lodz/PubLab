@@ -1,9 +1,6 @@
 import * as React from 'react';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Button, MenuItem, TextField } from '@mui/material';
-import { useState } from 'react';
-import { useEffect } from '@storybook/addons';
-import { ChangeEvent } from 'hoist-non-react-statics/node_modules/@types/react';
 
 interface Value {
   username: string;
@@ -23,21 +20,21 @@ interface Props {
 }
 
 const CollabPicker: React.FC<Props> = ({ value, options, onChange, onAdd }) => {
-  const [currentValue, setCurrentValue] = useState(value);
+  const [currentValue, setCurrentValue] = React.useState(value);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (onChange === undefined) return;
 
     onChange(currentValue);
   }, [currentValue]);
 
-  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) =>
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setCurrentValue((prev) => {
       const username = event.target.value;
       return { username, role: prev?.role ?? '' };
     });
 
-  const handleRoleChange = (event: ChangeEvent<HTMLInputElement>) =>
+  const handleRoleChange = (event: SelectChangeEvent) =>
     setCurrentValue((prev) => {
       const role = event.target.value;
       return { role, username: prev?.username ?? '' };
@@ -60,21 +57,21 @@ const CollabPicker: React.FC<Props> = ({ value, options, onChange, onAdd }) => {
         value={currentUsername}
         onChange={handleUsernameChange}
       />
-      <Select label='Role' value={currentRole} onChange={handleRoleChange}>
-        {options?.map(({ value, label }) => (
-          <MenuItem value={value} key={value}>
-            {label}
+      <Select label='Role' onChange={handleRoleChange} value={currentRole}>
+        {options?.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
           </MenuItem>
         ))}
       </Select>
-      <Button onClick={handleAdd}>ADD</Button>
+      <Button onClick={handleAdd}>Add</Button>
     </div>
   );
 };
 
 CollabPicker.defaultProps = {
   value: undefined,
-  options: undefined,
+  options: [],
   onChange: () => {},
   onAdd: () => {},
 };
