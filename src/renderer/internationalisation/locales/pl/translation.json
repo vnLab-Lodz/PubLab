@@ -1,0 +1,34 @@
+{
+  "common": {
+    "save": "zapisz",
+    "change": "zmień"
+  },
+  "login-screen": {
+    "message": "Aby rozpocząć, zaloguj się za pomocą swojego konta GitHub",
+    "button": "Zaloguj się przez GitHub",
+    "created": "Stworzony przez:"
+  },
+  "AppSettings": {
+    "title": "Ustawienia Aplikacji",
+    "abbreviation": "UA",
+    "language": {
+      "language": "Język",
+      "en": "Angielski",
+      "pl": "Polski"
+    },
+    "updates": {
+      "version": "wersja",
+      "newVersionAvailable": "Nowa wersja jest dostępna. Czy przeprowadzić aktualizację?",
+      "update": "aktualizuj"
+    },
+    "defaultDirectory": {
+      "description": "Folder w którym będą zapisywane twoje projekty"
+    },
+    "notifications": {
+      "notifications": "Powiadomienia",
+      "intervals": {
+        "instant": "Chcę by pojawiały się od razu."
+      }
+    }
+  }
+}

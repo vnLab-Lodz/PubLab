@@ -1,4 +1,6 @@
-/* eslint-disable no-nested-ternary */
+// @ts-nocheck
+/* eslint-disable */
+
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { useDispatch } from 'react-redux';
