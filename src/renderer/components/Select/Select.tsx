@@ -1,61 +1,84 @@
-import * as React from 'react';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { InputBase, Menu, styled } from '@mui/material';
-import * as theme from '../../theme';
-import StateManager from 'react-select';
-import { red } from '@mui/material/colors';
+import React, { useCallback } from 'react';
+import {
+  MenuItem,
+  styled,
+  MenuProps,
+  SelectProps,
+  Select as MuiSelect,
+} from '@mui/material';
 
-interface Props {
-  disabled?: boolean;
-  height: string;
-  placeholder: string;
-  options: string[];
-  onChange: (...args: any[]) => void;
-}
+const StyledSelect = styled(MuiSelect)(({ theme }) => ({
+  borderRadius: 0,
 
-const CustomMenuItem = styled(MenuItem)(({ theme }) => ({
-  color: '#111111',
-}));
+  '& .MuiSelect-select.MuiSelect-outlined.MuiOutlinedInput-input.MuiInputBase-input':
+    {
+      paddingRight: '48px',
+    },
 
-const StyledSelect = styled(Select)(({ theme }) => ({
-  backgroundColor: theme.palette.black.main,
-  borderRadius: '0',
-  borderColor: theme.palette.lightGray.main,
-  borderStyle: 'solid',
-  borderWidth: '1px',
-  fontWeight: 'normal',
-  fontStyle: 'normal',
-  color: theme.palette.lightGray.main,
+  '& .MuiOutlinedInput-input.MuiInputBase-input.Mui-disabled': {
+    '-webkit-text-fill-color': theme.palette.darkGray.main,
+  },
+
+  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+    borderWidth: '1px',
+    borderColor: theme.palette.lightGray.main,
+  },
+
+  '& .MuiOutlinedInput-notchedOutline': {
+    borderColor: theme.palette.lightGray.main,
+  },
+  '&.Mui-disabled .MuiOutlinedInput-notchedOutline': {
+    borderColor: theme.palette.darkGray.main,
+  },
+
   '& .MuiSelect-icon': {
     fill: theme.palette.lightGray.main,
   },
+  '&.Mui-disabled .MuiSelect-icon': {
+    fill: theme.palette.darkGray.main,
+  },
 }));
 
-const OurSelect: React.FC<Props> = (props) => {
-  const [value, setValue] = React.useState<string>('');
+const menuListProps: Partial<MenuProps> = {
+  MenuListProps: {
+    sx: {
+      bgcolor: (theme) => theme.palette.lightGray.main,
+      '& .MuiMenuItem-root': {
+        color: (theme) => theme.palette.black.main,
+        '&.Mui-selected, &.Mui-selected:hover': {
+          bgcolor: (theme) => theme.palette.gray.main,
+        },
+      },
+    },
+  },
+  PaperProps: { sx: { borderRadius: 0 } },
+};
 
-  const handleChange = (event: any) => {
-    setValue(event.target.value);
-    props.onChange();
-  };
+type Props = { placeholder?: string } & SelectProps<any>;
+
+const Select: React.FC<Props> = (props) => {
+  const { placeholder, children, value, ...rest } = props;
+
+  const getValue = useCallback(() => {
+    if (value) return value;
+
+    return placeholder ? 'placeholder' : '';
+  }, [value, placeholder]);
 
   return (
-    <div>
-      <StyledSelect
-        value={value}
-        displayEmpty
-        onChange={(event) => handleChange(event)}
-      >
-        <CustomMenuItem disabled value=''>
-          {props.placeholder}
-        </CustomMenuItem>
-        {props.options.map((option) => {
-          return <MenuItem value={option}>{option}</MenuItem>;
-        })}
-      </StyledSelect>
-    </div>
+    <StyledSelect MenuProps={menuListProps} {...rest} value={getValue()}>
+      {placeholder && (
+        <MenuItem disabled value='placeholder'>
+          {placeholder}
+        </MenuItem>
+      )}
+      {children}
+    </StyledSelect>
   );
 };
 
-export default OurSelect;
+Select.defaultProps = {
+  placeholder: '',
+};
+
+export default Select;
