@@ -1,12 +1,5 @@
-import * as React from 'react';
 import Switch from '@mui/material/Switch';
-import { styled, Theme } from '@mui/material';
-interface Props {
-  disabled?: boolean;
-  onChange: (...args: any[]) => void;
-  height: string;
-  width: string;
-}
+import { styled } from '@mui/material';
 
 const StyledSwitch = styled(Switch)(({ theme }) => ({
   width: 80,
@@ -35,28 +28,10 @@ const StyledSwitch = styled(Switch)(({ theme }) => ({
 
   '& .MuiSwitch-track': {
     borderRadius: 20,
-    backgroundColor: theme.palette.black.main,
+    backgroundColor: 'transparent',
     opacity: 1,
-    border: '1px solid ' + theme.palette.lightGray.main,
+    border: `1px solid ${theme.palette.lightGray.main}`,
   },
 }));
 
-const OurSwitch: React.FC<Props> = (props) => {
-  const [checked, setChecked] = React.useState<boolean>();
-
-  const handleChange = (event: any) => {
-    setChecked(event.target.value);
-    props.onChange();
-  };
-
-  return (
-    <div>
-      <StyledSwitch
-        disabled={props.disabled}
-        onChange={(event) => handleChange(event)}
-      ></StyledSwitch>
-    </div>
-  );
-};
-
-export default OurSwitch;
+export default StyledSwitch;

@@ -12,14 +12,9 @@ const Template: ComponentStory<typeof OurSwitch> = (args) => (
   <OurSwitch {...args} />
 );
 export const Normal = Template.bind({});
-Normal.args = {
-  disabled: false,
-  onChange: () => {
-    console.log('123');
-  },
-};
+Normal.args = { disabled: false };
+Normal.parameters = { backgrounds: { default: 'dark' } };
 
 export const Disabled = Template.bind({});
-Disabled.args = {
-  disabled: true,
-};
+Disabled.args = { disabled: true };
+Disabled.parameters = { backgrounds: { default: 'dark' } };
