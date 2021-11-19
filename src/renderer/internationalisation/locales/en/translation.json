@@ -1,0 +1,34 @@
+{
+  "common": {
+    "save": "save",
+    "change": "change"
+  },
+  "login-screen": {
+    "message": "To begin, please log in using your GitHub account",
+    "button": "Log in with GitHub",
+    "created": "Created by:"
+  },
+  "AppSettings": {
+    "title": "App Settings",
+    "abbreviation": "AS",
+    "language": {
+      "language": "Language",
+      "en": "English",
+      "pl": "Polish"
+    },
+    "updates": {
+      "version": "version",
+      "newVersionAvailable": "New version is available. Would you like to update?",
+      "update": "update"
+    },
+    "defaultDirectory": {
+      "description": "Directory to which you save your projects"
+    },
+    "notifications": {
+      "notifications": "Notifications",
+      "intervals": {
+        "instant": "I want them instantly."
+      }
+    }
+  }
+}
