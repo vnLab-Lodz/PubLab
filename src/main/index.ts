@@ -1,7 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 import {
   readSettingsThunk,
-  setVersionDetails,
+  saveSettingsThunk,
 } from '../shared/redux/slices/settingsSlice';
 import { configStore } from '../shared/redux/configureStore';
 import installDevToolsExtensions from './devToolsExtensions';
@@ -47,7 +47,9 @@ app.on('ready', async () => {
   }
   await createWindow();
   mainStore.dispatch(readSettingsThunk());
-  mainStore.dispatch(setVersionDetails(getVersionDetails()));
+  mainStore.dispatch(
+    saveSettingsThunk({ versionDetails: getVersionDetails() })
+  );
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

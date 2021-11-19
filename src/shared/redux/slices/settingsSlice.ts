@@ -37,19 +37,6 @@ const settingsSlice = createSlice({
       state: Settings,
       action: PayloadAction<Partial<Settings>>
     ) => ({ ...state, ...action.payload }),
-
-    setDefaultDirPath: (state: Settings, action: PayloadAction<string>) => {
-      state.defaultDirPath = action.payload;
-    },
-    setLocale: (state: Settings, action: PayloadAction<SupportedLangCode>) => {
-      state.currentLocale = action.payload;
-    },
-    setVersionDetails: (
-      state: Settings,
-      action: PayloadAction<VersionDetails>
-    ) => {
-      state.versionDetails = action.payload;
-    },
   },
 });
 

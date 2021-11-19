@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography } from '@mui/material';
 import { FaGithub } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
 import { authorizeGitHubUserAsync } from '../../../shared/redux/slices/currentUserSlice';
@@ -11,18 +11,14 @@ import {
   SupportedLangCode,
   supportedLocales,
 } from '../../internationalisation/i18next';
-import {
-  selectAllSettings,
-  setAllSettings,
-} from '../../../shared/redux/slices/settingsSlice';
+import { saveSettingsThunk } from '../../../shared/redux/slices/settingsSlice';
 
 const LoginComponent = () => {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
-  const settings = useSelector(selectAllSettings);
 
   const changeLanguage = (locale: SupportedLangCode) => {
-    dispatch(setAllSettings({ ...settings, currentLocale: locale }));
+    dispatch(saveSettingsThunk({ currentLocale: locale }));
   };
 
   return (
