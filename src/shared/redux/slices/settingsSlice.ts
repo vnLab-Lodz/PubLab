@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { VersionDetails } from '../../../main/versionDetails';
 import { SupportedLangCode } from '../../../renderer/internationalisation/i18next';
 import { createAsyncActionMain } from '../helpers/createActionMain';
 import { RootState } from '../rootReducer';
@@ -15,17 +14,12 @@ export enum NOTIFICATION_INTERVAL { // TODO: Define it in better place when the 
 export type Settings = {
   defaultDirPath: string;
   currentLocale: SupportedLangCode;
-  versionDetails: VersionDetails;
   notificationInterval: NOTIFICATION_INTERVAL;
 };
 
 const initialState: Settings = {
   defaultDirPath: '',
   currentLocale: 'en',
-  versionDetails: {
-    version: '',
-    isUpToDate: false,
-  },
   notificationInterval: NOTIFICATION_INTERVAL.INSTANT,
 };
 
@@ -49,9 +43,6 @@ export const selectDefaultDirPath = (state: RootState) =>
 
 export const selectCurrentLocale = (state: RootState) =>
   state.appSettings.currentLocale;
-
-export const selectVersionDetails = (state: RootState) =>
-  state.appSettings.versionDetails;
 
 export const saveSettingsThunk = createAsyncActionMain<Partial<Settings>>(
   'saveSettings',

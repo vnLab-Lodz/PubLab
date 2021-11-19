@@ -1,11 +1,7 @@
 import { app, BrowserWindow } from 'electron';
-import {
-  readSettingsThunk,
-  saveSettingsThunk,
-} from '../shared/redux/slices/settingsSlice';
+import { readSettingsThunk } from '../shared/redux/slices/settingsSlice';
 import { configStore } from '../shared/redux/configureStore';
 import installDevToolsExtensions from './devToolsExtensions';
-import { getVersionDetails } from './versionDetails';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: any;
@@ -47,9 +43,6 @@ app.on('ready', async () => {
   }
   await createWindow();
   mainStore.dispatch(readSettingsThunk());
-  mainStore.dispatch(
-    saveSettingsThunk({ versionDetails: getVersionDetails() })
-  );
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
