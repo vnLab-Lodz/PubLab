@@ -1,7 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { VersionDetails } from '../../../main/versionDetails';
 import { SupportedLangCode } from '../../../renderer/internationalisation/i18next';
+import { createAsyncActionMain } from '../helpers/createActionMain';
 import { RootState } from '../rootReducer';
+import { readJSON, writeJSON } from '../../../main/node/fileIO/json';
+import app from '../../utils/app';
+
+const SETTINGS_FILE_PATH = `${app.getPath('userData')}/publab-settings.json`;
 
 export enum NOTIFICATION_INTERVAL { // TODO: Define it in better place when the notification implementation is ready
   INSTANT = 'instant',
@@ -28,8 +33,11 @@ const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
-    setAllSettings: (state: Settings, action: PayloadAction<Settings>) =>
-      action.payload,
+    setAllSettings: (
+      state: Settings,
+      action: PayloadAction<Partial<Settings>>
+    ) => ({ ...state, ...action.payload }),
+
     setDefaultDirPath: (state: Settings, action: PayloadAction<string>) => {
       state.defaultDirPath = action.payload;
     },
@@ -45,12 +53,7 @@ const settingsSlice = createSlice({
   },
 });
 
-export const {
-  setAllSettings,
-  setDefaultDirPath,
-  setLocale,
-  setVersionDetails,
-} = settingsSlice.actions;
+const { setAllSettings } = settingsSlice.actions;
 
 export const selectAllSettings = (state: RootState) => state.appSettings;
 
@@ -62,5 +65,21 @@ export const selectCurrentLocale = (state: RootState) =>
 
 export const selectVersionDetails = (state: RootState) =>
   state.appSettings.versionDetails;
+
+export const saveSettingsThunk = createAsyncActionMain<Partial<Settings>>(
+  'saveSettings',
+  (settings) => async (dispatch) => {
+    dispatch(setAllSettings(settings));
+    writeJSON(SETTINGS_FILE_PATH, settings);
+  }
+);
+
+export const readSettingsThunk = createAsyncActionMain<void>(
+  'readSettings',
+  () => async (dispatch) => {
+    const settings = readJSON(SETTINGS_FILE_PATH);
+    dispatch(setAllSettings(settings));
+  }
+);
 
 export default settingsSlice.reducer;

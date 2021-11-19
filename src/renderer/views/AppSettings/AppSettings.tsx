@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@mui/material';
 import {
+  saveSettingsThunk,
   selectAllSettings,
-  setAllSettings,
   Settings,
 } from '../../../shared/redux/slices/settingsSlice';
 import AppUpdate from './subcomponents/AppUpdate';
@@ -22,7 +22,7 @@ const AppSettings = () => {
   );
 
   function submitChanges() {
-    dispatch(setAllSettings(settings));
+    dispatch(saveSettingsThunk(settings));
   }
 
   return (
