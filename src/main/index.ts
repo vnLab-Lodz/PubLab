@@ -1,8 +1,14 @@
 import { app, BrowserWindow } from 'electron';
-import { setVersionDetails } from '../shared/redux/slices/settingsSlice';
+import {
+  selectAllSettings,
+  setAllSettings,
+  setVersionDetails,
+} from '../shared/redux/slices/settingsSlice';
 import { configStore } from '../shared/redux/configureStore';
 import installDevToolsExtensions from './devToolsExtensions';
 import { getVersionDetails } from './versionDetails';
+import { readSettingsFile, writeSettingsFile } from './node/persistSettings';
+import observeStore from '../shared/redux/helpers/observeStore';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: any;
@@ -43,7 +49,13 @@ app.on('ready', async () => {
     await installDevToolsExtensions();
   }
   await createWindow();
+
+  const settings = readSettingsFile();
+  if (settings) {
+    mainStore.dispatch(setAllSettings(settings));
+  }
   mainStore.dispatch(setVersionDetails(getVersionDetails()));
+  observeStore(mainStore, selectAllSettings, writeSettingsFile);
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
