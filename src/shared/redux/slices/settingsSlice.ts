@@ -55,7 +55,7 @@ export const saveSettingsThunk = createAsyncActionMain<Partial<Settings>>(
 export const readSettingsThunk = createAsyncActionMain<void>(
   'readSettings',
   () => async (dispatch) => {
-    const settings = readJSON(SETTINGS_FILE_PATH);
+    const settings = readJSON(SETTINGS_FILE_PATH) as Settings;
     dispatch(setAllSettings(settings));
   }
 );
