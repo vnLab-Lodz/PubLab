@@ -13,14 +13,14 @@ const DirectoryPicker: React.FC<Props> = ({
   onClick,
   onChange,
 }) => (
-    <div>
-      <TextField
-        placeholder={placeholder}
-        onChange={(event) => onChange(event.target.value)}
-      />
-      <Button onClick={onClick}>Change</Button>
-    </div>
-  );
+  <div>
+    <TextField
+      placeholder={placeholder}
+      onChange={(event) => onChange(event.target.value)}
+    />
+    <Button onClick={onClick}>Change</Button>
+  </div>
+);
 
 DirectoryPicker.defaultProps = {
   placeholder: undefined,
