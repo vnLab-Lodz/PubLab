@@ -13,7 +13,8 @@ const DirectoryPicker: React.FC<Props> = ({
   placeholder,
   onClick,
   onChange,
-}) => {return (
+}) => {
+  return (
     <div>
       <TextField
         placeholder={placeholder}
