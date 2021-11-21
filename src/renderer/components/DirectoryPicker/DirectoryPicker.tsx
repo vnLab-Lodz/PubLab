@@ -3,7 +3,6 @@ import { Button } from '@mui/material';
 import TextField from '../TextField/TextField';
 
 interface Props {
-  value?: string;
   placeholder?: string;
   onClick?: () => void;
   onChange?: (event?: string) => void;
@@ -13,8 +12,7 @@ const DirectoryPicker: React.FC<Props> = ({
   placeholder,
   onClick,
   onChange,
-}) => {
-  return (
+}) => (
     <div>
       <TextField
         placeholder={placeholder}
@@ -23,10 +21,8 @@ const DirectoryPicker: React.FC<Props> = ({
       <Button onClick={onClick}>Change</Button>
     </div>
   );
-};
 
 DirectoryPicker.defaultProps = {
-  value: undefined,
   placeholder: undefined,
   onClick: () => {},
   onChange: () => {},
