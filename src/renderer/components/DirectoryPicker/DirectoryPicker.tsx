@@ -10,12 +10,10 @@ interface Props {
 }
 
 const DirectoryPicker: React.FC<Props> = ({
-  value,
   placeholder,
   onClick,
   onChange,
-}) => {
-  return (
+}) => {return (
     <div>
       <TextField
         placeholder={placeholder}
@@ -30,7 +28,7 @@ DirectoryPicker.defaultProps = {
   value: undefined,
   placeholder: undefined,
   onClick: () => {},
-  onChange: (placeholder) => {},
+  onChange: () => {},
 };
 
 export default DirectoryPicker;
