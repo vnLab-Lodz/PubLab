@@ -16,7 +16,11 @@ const Button: FC<ButtonProps> = ({
   children,
   ...rest
 }) => (
-  <MUIButton className={`${textCase}`} {...rest}>
+  <MUIButton
+    className={`${textCase}`}
+    style={{ borderRadius: 0, boxShadow: 'none' }}
+    {...rest}
+  >
     <Typography fontWeight={fontWeight} color={textColor}>
       {children}
     </Typography>
