@@ -15,14 +15,18 @@ const Button: FC<ButtonProps> = ({
   textColor,
   children,
   ...rest
-}) => {
-  return (
-    <MUIButton className={`${textCase ?? 'lowercase'}`} {...rest}>
-      <Typography fontWeight={fontWeight} color={textColor}>
-        {children}
-      </Typography>
-    </MUIButton>
-  );
+}) => (
+  <MUIButton className={`${textCase}`} {...rest}>
+    <Typography fontWeight={fontWeight} color={textColor}>
+      {children}
+    </Typography>
+  </MUIButton>
+);
+
+Button.defaultProps = {
+  textCase: 'lowercase',
+  fontWeight: 'normal',
+  textColor: 'text.secondary',
 };
 
 export default Button;
