@@ -17,9 +17,9 @@ const DirectoryPicker: React.FC<Props> = ({
 }) => (
   <div>
     <TextField
-       placeholder={placeholder || ""}
+      placeholder={placeholder || ''}
       onChange={(event) => onChange(event.target.value)}
-      value={value || ""}
+      value={value || ''}
     />
     <Button onClick={onClick}>Change</Button>
   </div>
