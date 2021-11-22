@@ -5,7 +5,7 @@ import { selectCurrentUser } from '../../../shared/redux/slices/currentUserSlice
 import { installGatsbyCLI } from '../../../shared/redux/slices/gatsbyInstallSlice';
 import { generateNewProject } from '../../../shared/redux/slices/gatsbyGenerateProjectSlice';
 import {
-  saveSettingsThunk,
+  saveSettingsAsync,
   selectDefaultDirPath,
 } from '../../../shared/redux/slices/settingsSlice';
 
@@ -31,7 +31,7 @@ const Description = () => {
               properties: ['openDirectory'],
             })
             .then(({ filePaths }: any) => {
-              dispatch(saveSettingsThunk({ defaultDirPath: filePaths[0] }));
+              dispatch(saveSettingsAsync({ defaultDirPath: filePaths[0] }));
             });
         }}
       >

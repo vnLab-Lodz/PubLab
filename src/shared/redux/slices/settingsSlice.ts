@@ -27,14 +27,14 @@ const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
-    setAllSettings: (
+    setSettings: (
       state: Settings,
       action: PayloadAction<Partial<Settings>>
     ) => ({ ...state, ...action.payload }),
   },
 });
 
-const { setAllSettings } = settingsSlice.actions;
+const { setSettings } = settingsSlice.actions;
 
 export const selectAllSettings = (state: RootState) => state.appSettings;
 
@@ -44,19 +44,19 @@ export const selectDefaultDirPath = (state: RootState) =>
 export const selectCurrentLocale = (state: RootState) =>
   state.appSettings.currentLocale;
 
-export const saveSettingsThunk = createAsyncActionMain<Partial<Settings>>(
+export const saveSettingsAsync = createAsyncActionMain<Partial<Settings>>(
   'saveSettings',
   (settings) => async (dispatch) => {
-    dispatch(setAllSettings(settings));
+    dispatch(setSettings(settings));
     writeJSON(SETTINGS_FILE_PATH, settings);
   }
 );
 
-export const readSettingsThunk = createAsyncActionMain<void>(
+export const readSettingsAsync = createAsyncActionMain<void>(
   'readSettings',
   () => async (dispatch) => {
     const settings = readJSON(SETTINGS_FILE_PATH) as Settings;
-    dispatch(setAllSettings(settings));
+    dispatch(setSettings(settings));
   }
 );
 

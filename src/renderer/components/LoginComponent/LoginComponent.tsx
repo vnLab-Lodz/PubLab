@@ -11,14 +11,14 @@ import {
   SupportedLangCode,
   supportedLocales,
 } from '../../internationalisation/i18next';
-import { saveSettingsThunk } from '../../../shared/redux/slices/settingsSlice';
+import { saveSettingsAsync } from '../../../shared/redux/slices/settingsSlice';
 
 const LoginComponent = () => {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
 
   const changeLanguage = (locale: SupportedLangCode) => {
-    dispatch(saveSettingsThunk({ currentLocale: locale }));
+    dispatch(saveSettingsAsync({ currentLocale: locale }));
   };
 
   return (
