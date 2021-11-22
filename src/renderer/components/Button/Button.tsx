@@ -5,8 +5,8 @@ import './Button.scss';
 
 interface ButtonProps extends MUIButtonProps {
   textCase?: 'lowercase' | 'uppercase' | 'sentence-case';
-  fontWeight?: string;
-  textColor?: any;
+  fontWeight?: React.ComponentProps<typeof Typography>['fontWeight'];
+  textColor?: React.ComponentProps<typeof Typography>['color'];
 }
 
 const Button: FC<ButtonProps> = ({
