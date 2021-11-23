@@ -18,7 +18,11 @@ const Button: FC<ButtonProps> = ({
 }) => (
   <MUIButton
     className={`${textCase}`}
-    style={{ borderRadius: 0, boxShadow: 'none' }}
+    sx={{
+      borderRadius: 0,
+      boxShadow: 'none',
+      borderColor: rest.color || textColor,
+    }}
     {...rest}
   >
     <Typography fontWeight={fontWeight} color={textColor}>
