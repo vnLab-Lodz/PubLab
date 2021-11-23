@@ -43,7 +43,7 @@ LightUppercase.args = {
 export const BoldUppercase = Template.bind({});
 BoldUppercase.args = {
   variant: 'contained',
-  color: 'success',
+  color: 'green',
   children: "let's go",
   textCase: 'uppercase',
   fontWeight: 'bold',
@@ -53,7 +53,6 @@ BoldUppercase.args = {
 export const DarkOutline = Template.bind({});
 DarkOutline.args = {
   variant: 'outlined',
-  color: 'inherit',
   children: 'back',
   textCase: 'uppercase',
   fontWeight: 'bold',
