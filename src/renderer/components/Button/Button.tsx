@@ -9,13 +9,11 @@ interface ButtonProps extends MUIButtonProps {
   color: keyof Palette & MUIButtonProps['color'];
   textCase?: 'lowercase' | 'uppercase' | 'sentence-case';
   fontWeight?: React.ComponentProps<typeof Typography>['fontWeight'];
-  textColor?: React.ComponentProps<typeof Typography>['color'];
 }
 
 const Button: FC<ButtonProps> = ({
   textCase,
   fontWeight,
-  textColor,
   children,
   ...rest
 }) => {
@@ -49,7 +47,6 @@ const Button: FC<ButtonProps> = ({
 Button.defaultProps = {
   textCase: 'lowercase',
   fontWeight: 'normal',
-  textColor: 'text.secondary',
 };
 
 export default Button;
