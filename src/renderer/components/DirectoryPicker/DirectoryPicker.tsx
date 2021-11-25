@@ -4,6 +4,7 @@ import TextField from '../TextField/TextField';
 import Button from '../Button/Button';
 
 interface Props {
+  buttonText: string;
   value?: string;
   placeholder?: string;
   onClick?: () => void;
@@ -15,6 +16,7 @@ const DirectoryPicker: React.FC<Props> = ({
   onClick,
   onChange,
   value,
+  buttonText,
 }) => (
   <Box sx={{ display: 'flex' }}>
     <TextField
@@ -30,7 +32,7 @@ const DirectoryPicker: React.FC<Props> = ({
       fontWeight='regular'
       onClick={onClick}
     >
-      Change
+      {buttonText}
     </Button>
   </Box>
 );

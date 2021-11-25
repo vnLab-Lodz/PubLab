@@ -13,6 +13,7 @@ const Template: ComponentStory<typeof DirectoryPicker> = (args) => (
 );
 export const Normal = Template.bind({});
 Normal.args = {
+  buttonText: 'Choose',
   placeholder: 'Choose a directory...',
   onClick: () => console.log('it_s alive!!!'),
 };
