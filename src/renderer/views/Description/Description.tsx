@@ -47,9 +47,9 @@ const Description = () => {
 
           dispatch(
             generateNewProject({
-              projectName: 'testProject',
-              templateUrl:
-                'https://github.com/vnLab-Lodz/gatsby-starter-paaw-basic',
+              publicationName: 'testProject2',
+              useSass: true,
+              useTypescript: true,
             })
           );
         }}

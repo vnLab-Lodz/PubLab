@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
+import getTemplateUrl from '../../../main/node/getTemplateUrl';
 import { generateProject } from '../../../main/node/gatsby';
 import { createAsyncActionMain } from '../helpers/createActionMain';
+import { Publication } from './publicationsSlice';
 
-interface NewProjectPayload {
-  projectName: string;
-  templateUrl: string;
-}
+type NewProjectPayload = Pick<
+  Publication,
+  'publicationName' | 'useSass' | 'useTypescript'
+>;
 
 interface GatsbyGenerateProject {
   creating: boolean;
@@ -41,13 +43,14 @@ export const { creationExecuting, creationFulfilled, creationRejected } =
 
 export const generateNewProject = createAsyncActionMain<NewProjectPayload>(
   'generateProject',
-  ({ projectName, templateUrl }) =>
+  ({ publicationName, useSass, useTypescript }) =>
     async (dispatch, getState) => {
       dispatch(creationExecuting());
       try {
         const { defaultDirPath } = getState().appSettings;
+        const templateUrl = getTemplateUrl(useSass, useTypescript);
 
-        await generateProject(defaultDirPath, projectName, templateUrl);
+        await generateProject(defaultDirPath, publicationName, templateUrl);
         dispatch(creationFulfilled());
       } catch (error) {
         dispatch(creationRejected());
