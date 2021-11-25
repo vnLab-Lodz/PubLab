@@ -15,7 +15,7 @@ export const WithIcon = Template.bind({});
 WithIcon.args = {
   startIcon: <img src={GitHubIcon} alt='GitHub logo' />,
   variant: 'contained',
-  color: 'inherit',
+  color: 'lightGray',
   children: 'Log in with GitHub',
   textCase: 'sentence-case',
   fullWidth: true,
@@ -24,7 +24,7 @@ WithIcon.args = {
 export const SentenceCase = Template.bind({});
 SentenceCase.args = {
   variant: 'contained',
-  color: 'inherit',
+  color: 'lightGray',
   children: 'Yes, log me out.',
   textCase: 'sentence-case',
   fullWidth: true,
@@ -33,7 +33,7 @@ SentenceCase.args = {
 export const LightUppercase = Template.bind({});
 LightUppercase.args = {
   variant: 'contained',
-  color: 'inherit',
+  color: 'lightGray',
   children: 'choose',
   textCase: 'uppercase',
   fontWeight: 'light',
@@ -57,4 +57,6 @@ DarkOutline.args = {
   textCase: 'uppercase',
   fontWeight: 'bold',
   fullWidth: true,
+  color: 'black',
+};
 };
