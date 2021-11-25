@@ -22,22 +22,28 @@ const Button: FC<ButtonProps> = ({
     <MUIButton
       className={`${textCase}`}
       sx={{
-        borderRadius: 0,
-        boxShadow: 'none',
         border:
           rest.variant === 'outlined'
             ? `1px solid ${alpha(themeColor.main, 1)}`
             : 'none',
         ':hover': {
-          boxShadow: 'none',
           ...(rest.variant === 'contained' && {
             backgroundColor: alpha(themeColor.main, 0.8),
           }),
+          boxShadow: 'none',
         },
+        borderRadius: 0,
+        boxShadow: 'none',
+        padding: 0,
       }}
       {...rest}
     >
-      <Typography fontWeight={fontWeight} color={rest.color}>
+      <Typography
+        fontWeight={fontWeight}
+        color={rest.color}
+        margin='1em'
+        lineHeight='1.4em'
+      >
         {children}
       </Typography>
     </MUIButton>
@@ -45,7 +51,7 @@ const Button: FC<ButtonProps> = ({
 };
 
 Button.defaultProps = {
-  textCase: 'lowercase',
+  textCase: 'uppercase',
   fontWeight: 'normal',
 };
 
