@@ -1,5 +1,4 @@
 import { app, BrowserWindow } from 'electron';
-import { readSettingsAsync } from '../shared/redux/slices/settingsSlice';
 import { configStore } from '../shared/redux/configureStore';
 import installDevToolsExtensions from './devToolsExtensions';
 
@@ -42,7 +41,6 @@ app.on('ready', async () => {
     await installDevToolsExtensions();
   }
   await createWindow();
-  mainStore.dispatch(readSettingsAsync());
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

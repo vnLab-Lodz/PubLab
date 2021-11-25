@@ -9,12 +9,18 @@ import CustomRouter from '../CustomRouter/CustomRouter';
 import NavigationBar from '../NavigationBar/NavigationBar';
 import { theme } from '../../theme';
 import observeStore from '../../../shared/redux/helpers/observeStore';
-import { selectCurrentLocale } from '../../../shared/redux/slices/settingsSlice';
+import {
+  readSettingsAsync,
+  selectCurrentLocale,
+} from '../../../shared/redux/slices/settingsSlice';
 import i18next from '../../internationalisation/i18next';
 
 const store = configStore('renderer');
 
 const App = () => {
+  useEffect(() => {
+    store.dispatch(readSettingsAsync());
+  }, []);
   useEffect(
     () =>
       observeStore(store, selectCurrentLocale, (langCode) =>
