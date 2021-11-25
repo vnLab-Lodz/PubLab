@@ -14,7 +14,6 @@ const Template: ComponentStory<typeof DirectoryPicker> = (args) => (
 export const Normal = Template.bind({});
 Normal.args = {
   placeholder: 'Choose a directory...',
-  onClick: () => {
-    console.log('it_s alive!!!');
-  },
+  onClick: () => console.log('it_s alive!!!'),
 };
+Normal.parameters = { backgrounds: { default: 'dark' } };
