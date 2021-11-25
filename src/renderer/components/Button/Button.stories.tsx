@@ -59,4 +59,13 @@ DarkOutline.args = {
   fullWidth: true,
   color: 'black',
 };
+
+export const LightOutline = Template.bind({});
+LightOutline.args = {
+  variant: 'outlined',
+  children: 'back',
+  textCase: 'uppercase',
+  fontWeight: 'bold',
+  fullWidth: true,
+  color: 'lightGray',
 };
