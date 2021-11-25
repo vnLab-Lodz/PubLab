@@ -18,11 +18,22 @@ interface Option {
 interface Props {
   value?: Value;
   options?: Option[];
+  buttonText: string;
+  selectPlaceholder?: string;
+  textFieldPlaceholder?: string;
   onChange?: (value: Value | undefined) => void;
   onAdd?: (value: Value) => void;
 }
 
-const CollabPicker: React.FC<Props> = ({ value, options, onChange, onAdd }) => {
+const CollabPicker: React.FC<Props> = ({
+  value,
+  options,
+  onChange,
+  onAdd,
+  buttonText,
+  selectPlaceholder,
+  textFieldPlaceholder,
+}) => {
   const [currentValue, setCurrentValue] = React.useState(value);
 
   React.useEffect(() => {
@@ -57,13 +68,13 @@ const CollabPicker: React.FC<Props> = ({ value, options, onChange, onAdd }) => {
     <Box sx={{ display: 'flex', flexDirection: 'row' }}>
       <TextField
         sx={{ flexGrow: 1, borderRight: 'none' }}
-        placeholder='Username...'
+        placeholder={textFieldPlaceholder}
         value={currentUsername}
         onChange={handleUsernameChange}
       />
       <Select
         sx={{ flexGrow: 1 }}
-        placeholder='Role'
+        placeholder={selectPlaceholder}
         onChange={handleRoleChange}
         value={currentRole}
       >
@@ -80,7 +91,7 @@ const CollabPicker: React.FC<Props> = ({ value, options, onChange, onAdd }) => {
         fontWeight='regular'
         onClick={handleAdd}
       >
-        Add
+        {buttonText}
       </Button>
     </Box>
   );
@@ -89,6 +100,8 @@ const CollabPicker: React.FC<Props> = ({ value, options, onChange, onAdd }) => {
 CollabPicker.defaultProps = {
   value: undefined,
   options: [],
+  selectPlaceholder: '',
+  textFieldPlaceholder: '',
   onChange: () => {},
   onAdd: () => {},
 };

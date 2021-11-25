@@ -18,6 +18,9 @@ const Template: ComponentStory<typeof CollabPicker> = (args) => (
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Default.args = {
+  buttonText: 'Add',
+  selectPlaceholder: 'Role',
+  textFieldPlaceholder: 'Username...',
   options: [
     { label: 'Programmer', value: 'programmer' },
     { label: 'Designer', value: 'designer' },
