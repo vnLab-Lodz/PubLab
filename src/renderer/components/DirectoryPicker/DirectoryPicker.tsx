@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { Button } from '@mui/material';
+import { Box } from '@mui/material';
 import TextField from '../TextField/TextField';
+import Button from '../Button/Button';
 
 interface Props {
   value?: string;
   placeholder?: string;
   onClick?: () => void;
-  onChange?: (event?: string) => void;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const DirectoryPicker: React.FC<Props> = ({
@@ -15,14 +16,23 @@ const DirectoryPicker: React.FC<Props> = ({
   onChange,
   value,
 }) => (
-  <div>
+  <Box sx={{ display: 'flex' }}>
     <TextField
-      placeholder={placeholder || ''}
-      onChange={(event) => onChange(event.target.value)}
-      value={value || ''}
+      sx={{ flex: 1 }}
+      placeholder={placeholder ?? ''}
+      value={value ?? ''}
+      onChange={onChange}
     />
-    <Button onClick={onClick}>Change</Button>
-  </div>
+    <Button
+      variant='contained'
+      color='lightGray'
+      textCase='uppercase'
+      fontWeight='regular'
+      onClick={onClick}
+    >
+      Change
+    </Button>
+  </Box>
 );
 
 DirectoryPicker.defaultProps = {
