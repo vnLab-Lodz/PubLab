@@ -23,3 +23,4 @@ Default.args = {
     { label: 'Designer', value: 'designer' },
   ],
 };
+Default.parameters = { backgrounds: { default: 'dark' } };
