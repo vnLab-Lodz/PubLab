@@ -5,8 +5,8 @@ import { selectCurrentUser } from '../../../shared/redux/slices/currentUserSlice
 import { installGatsbyCLI } from '../../../shared/redux/slices/gatsbyInstallSlice';
 import { generateNewProject } from '../../../shared/redux/slices/gatsbyGenerateProjectSlice';
 import {
+  saveSettingsAsync,
   selectDefaultDirPath,
-  setDefaultDirPath,
 } from '../../../shared/redux/slices/settingsSlice';
 
 const { dialog } = require('electron').remote;
@@ -31,7 +31,7 @@ const Description = () => {
               properties: ['openDirectory'],
             })
             .then(({ filePaths }: any) => {
-              dispatch(setDefaultDirPath(filePaths[0]));
+              dispatch(saveSettingsAsync({ defaultDirPath: filePaths[0] }));
             });
         }}
       >

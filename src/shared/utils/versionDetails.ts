@@ -1,5 +1,5 @@
-import { app } from 'electron';
 import { lte } from 'semver';
+import app from './app';
 
 export interface VersionDetails {
   version: string;

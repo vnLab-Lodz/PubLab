@@ -1,7 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { VersionDetails } from '../../../main/versionDetails';
 import { SupportedLangCode } from '../../../renderer/internationalisation/i18next';
+import { createAsyncActionMain } from '../helpers/createActionMain';
 import { RootState } from '../rootReducer';
+import { readJSON, writeJSON } from '../../../main/node/fileIO/json';
+import app from '../../utils/app';
+
+const SETTINGS_FILE_PATH = `${app.getPath('userData')}/publab-settings.json`;
 
 export enum NOTIFICATION_INTERVAL { // TODO: Define it in better place when the notification implementation is ready
   INSTANT = 'instant',
@@ -10,17 +14,12 @@ export enum NOTIFICATION_INTERVAL { // TODO: Define it in better place when the 
 export type Settings = {
   defaultDirPath: string;
   currentLocale: SupportedLangCode;
-  versionDetails: VersionDetails;
   notificationInterval: NOTIFICATION_INTERVAL;
 };
 
 const initialState: Settings = {
   defaultDirPath: '',
   currentLocale: 'en',
-  versionDetails: {
-    version: '',
-    isUpToDate: false,
-  },
   notificationInterval: NOTIFICATION_INTERVAL.INSTANT,
 };
 
@@ -28,29 +27,12 @@ const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
-    setAllSettings: (state: Settings, action: PayloadAction<Settings>) =>
+    setSettings: (state: Settings, action: PayloadAction<Settings>) =>
       action.payload,
-    setDefaultDirPath: (state: Settings, action: PayloadAction<string>) => {
-      state.defaultDirPath = action.payload;
-    },
-    setLocale: (state: Settings, action: PayloadAction<SupportedLangCode>) => {
-      state.currentLocale = action.payload;
-    },
-    setVersionDetails: (
-      state: Settings,
-      action: PayloadAction<VersionDetails>
-    ) => {
-      state.versionDetails = action.payload;
-    },
   },
 });
 
-export const {
-  setAllSettings,
-  setDefaultDirPath,
-  setLocale,
-  setVersionDetails,
-} = settingsSlice.actions;
+const { setSettings } = settingsSlice.actions;
 
 export const selectAllSettings = (state: RootState) => state.appSettings;
 
@@ -60,7 +42,21 @@ export const selectDefaultDirPath = (state: RootState) =>
 export const selectCurrentLocale = (state: RootState) =>
   state.appSettings.currentLocale;
 
-export const selectVersionDetails = (state: RootState) =>
-  state.appSettings.versionDetails;
+export const saveSettingsAsync = createAsyncActionMain<Partial<Settings>>(
+  'saveSettings',
+  (settings) => async (dispatch, getState) => {
+    const nextSettings = { ...getState().appSettings, ...settings };
+    dispatch(setSettings(nextSettings));
+    writeJSON(SETTINGS_FILE_PATH, nextSettings);
+  }
+);
+
+export const readSettingsAsync = createAsyncActionMain<void>(
+  'readSettings',
+  () => async (dispatch) => {
+    const settings = readJSON(SETTINGS_FILE_PATH) as Settings;
+    dispatch(setSettings(settings));
+  }
+);
 
 export default settingsSlice.reducer;

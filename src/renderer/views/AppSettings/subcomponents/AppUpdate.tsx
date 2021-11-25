@@ -1,12 +1,11 @@
 import { Button, Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { selectVersionDetails } from '../../../../shared/redux/slices/settingsSlice';
+import { getVersionDetails } from '../../../../shared/utils/versionDetails';
 
 export default function AppUpdate() {
   const { t } = useTranslation();
-  const versionDetails = useSelector(selectVersionDetails);
+  const versionDetails = getVersionDetails();
   return (
     <>
       <Typography>
