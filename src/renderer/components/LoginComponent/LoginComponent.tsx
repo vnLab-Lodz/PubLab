@@ -38,7 +38,7 @@ const LoginComponent = () => {
             <Typography
               sx={{ fontWeight: i18n.language === locale ? 'bold' : '100' }}
             >
-              {t(`AppSettings.language.${locale}`)}
+              {t(`AppSettings.language.${locale}` as const)}
             </Typography>
           </Button>
         ))}
