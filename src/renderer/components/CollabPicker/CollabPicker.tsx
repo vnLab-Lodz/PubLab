@@ -1,7 +1,9 @@
 import * as React from 'react';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Button, MenuItem } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select';
+import { Box, MenuItem } from '@mui/material';
 import TextField from '../TextField/TextField';
+import Select from '../Select/Select';
+import Button from '../Button/Button';
 
 interface Value {
   username: string;
@@ -52,21 +54,35 @@ const CollabPicker: React.FC<Props> = ({ value, options, onChange, onAdd }) => {
   const currentRole = currentValue?.role ?? '';
 
   return (
-    <div>
+    <Box sx={{ display: 'flex', flexDirection: 'row' }}>
       <TextField
+        sx={{ flexGrow: 1, borderRight: 'none' }}
         placeholder='Username...'
         value={currentUsername}
         onChange={handleUsernameChange}
       />
-      <Select label='Role' onChange={handleRoleChange} value={currentRole}>
+      <Select
+        sx={{ flexGrow: 1 }}
+        placeholder='Role'
+        onChange={handleRoleChange}
+        value={currentRole}
+      >
         {options?.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
           </MenuItem>
         ))}
       </Select>
-      <Button onClick={handleAdd}>Add</Button>
-    </div>
+      <Button
+        variant='contained'
+        color='lightGray'
+        textCase='uppercase'
+        fontWeight='regular'
+        onClick={handleAdd}
+      >
+        Add
+      </Button>
+    </Box>
   );
 };
 
