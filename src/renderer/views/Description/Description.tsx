@@ -44,10 +44,12 @@ const Description = () => {
             alert('Pick a path first');
             return;
           }
+
           dispatch(
             generateNewProject({
-              projectName: 'testProject',
-              publicationNumber: 0,
+              publicationName: 'testProject2',
+              useSass: true,
+              useTypescript: true,
             })
           );
         }}

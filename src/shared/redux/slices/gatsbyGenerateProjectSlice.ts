@@ -1,23 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
+import getTemplateUrl from '../../../main/node/getTemplateUrl';
 import { generateProject } from '../../../main/node/gatsby';
 import { createAsyncActionMain } from '../helpers/createActionMain';
+import { Publication } from './publicationsSlice';
 
-export enum TEMPLATE_URLS {
-  PAAW_I18N = 'https://github.com/vnLab-Lodz/gatsby-starter-paaw-i18n',
-  PAAW_BASIC = 'https://github.com/vnLab-Lodz/gatsby-starter-paaw-basic',
-}
-
-function getTemplateUrl(usingSass: boolean, usingTypeScript: boolean) {
-  if (usingSass && usingTypeScript) {
-    return TEMPLATE_URLS.PAAW_I18N;
-  }
-  return TEMPLATE_URLS.PAAW_BASIC;
-}
-
-interface NewProjectPayload {
-  projectName: string;
-  publicationNumber: number;
-}
+type NewProjectPayload = Pick<
+  Publication,
+  'publicationName' | 'useSass' | 'useTypescript'
+>;
 
 interface GatsbyGenerateProject {
   creating: boolean;
@@ -53,16 +43,14 @@ export const { creationExecuting, creationFulfilled, creationRejected } =
 
 export const generateNewProject = createAsyncActionMain<NewProjectPayload>(
   'generateProject',
-  ({ projectName, publicationNumber }) =>
+  ({ publicationName, useSass, useTypescript }) =>
     async (dispatch, getState) => {
       dispatch(creationExecuting());
       try {
         const { defaultDirPath } = getState().appSettings;
-        const { useSass } = getState().publications[publicationNumber];
-        const { useTypescript } = getState().publications[publicationNumber];
         const templateUrl = getTemplateUrl(useSass, useTypescript);
 
-        await generateProject(defaultDirPath, projectName, templateUrl);
+        await generateProject(defaultDirPath, publicationName, templateUrl);
         dispatch(creationFulfilled());
       } catch (error) {
         dispatch(creationRejected());
