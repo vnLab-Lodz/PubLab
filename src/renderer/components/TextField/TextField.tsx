@@ -14,6 +14,5 @@ export default styled(InputBase)(({ type, error, theme: { palette } }) => {
     color,
     border,
     padding: '12px 10px 12px 10px',
-    fontSize: '15px !important',
   };
 });
