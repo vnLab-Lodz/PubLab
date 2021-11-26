@@ -3,6 +3,16 @@
     "save": "save",
     "change": "change"
   },
+  "auth": {
+    "in_progress": "Authentication in progress:",
+    "states": {
+      "pre_authorize": "Attempting log in...",
+      "code_requested": "Requesting access token...",
+      "token_requested": "Fetching user data...",
+      "auth_failed": "Failed to log in. Please try again.",
+      "authed": "Logged in."
+    }
+  },
   "login-screen": {
     "message": "To begin, please log in using your GitHub account",
     "button": "Log in with GitHub",
