@@ -3,6 +3,16 @@
     "save": "zapisz",
     "change": "zmień"
   },
+  "auth": {
+    "in_progress": "Uwierzytelnianie w toku:",
+    "states": {
+      "pre_authorize": "Próba zalogowania...",
+      "code_requested": "Żądanie tokena dostępu...",
+      "token_requested": "Pobieranie danych użytkownika...",
+      "auth_failed": "Logowanie nieudane. Spróbuj ponownie.",
+      "authed": "Zalogowano."
+    }
+  },
   "login-screen": {
     "message": "Aby rozpocząć, zaloguj się za pomocą swojego konta GitHub",
     "button": "Zaloguj się przez GitHub",
