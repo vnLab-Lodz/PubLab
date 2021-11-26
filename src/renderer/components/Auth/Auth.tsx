@@ -10,21 +10,24 @@ import {
 } from '../../../shared/redux/slices/currentUserSlice';
 import AuthProgress from '../AuthProgress/AuthProgress';
 
+const { AUTHED, AUTH_FAILED, CODE_REQUESTED, PRE_AUTHORIZE, TOKEN_REQUESTED } =
+  AUTH_STATES;
+
 const Auth = ({ children }: any) => {
   const dispatch = useDispatch();
   const { status, auth } = useSelector(selectCurrentUser);
 
   useEffect(() => {
-    if (status === AUTH_STATES.AUTH_FAILED) return;
+    if (status === AUTH_FAILED) return;
 
     switch (status) {
-      case AUTH_STATES.PRE_AUTHORIZE:
+      case PRE_AUTHORIZE:
         dispatch(authorizeGitHubUserAsync(true));
         break;
-      case AUTH_STATES.CODE_REQUESTED:
+      case CODE_REQUESTED:
         if (auth.code) dispatch(requestAccessTokenAsync(auth.code));
         break;
-      case AUTH_STATES.TOKEN_REQUESTED:
+      case TOKEN_REQUESTED:
         if (auth.accessToken?.value)
           dispatch(fetchUserDataAsync(auth.accessToken?.value));
         break;
@@ -33,11 +36,9 @@ const Auth = ({ children }: any) => {
     }
   }, [status]);
 
-  const Component =
-    status === AUTH_STATES.AUTHED ? () => <>{children}</> : LoginComponent;
+  const Component = status === AUTHED ? () => <>{children}</> : LoginComponent;
 
-  const shouldRender =
-    status === AUTH_STATES.AUTHED || status === AUTH_STATES.AUTH_FAILED;
+  const shouldRender = status === AUTHED || status === AUTH_FAILED;
 
   return shouldRender ? <Component /> : <AuthProgress status={status} />;
 };
