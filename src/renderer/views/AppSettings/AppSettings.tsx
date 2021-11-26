@@ -12,8 +12,11 @@ import AppUpdate from './subcomponents/AppUpdate';
 import LangSelect from './subcomponents/LangSelect';
 import DefaultDirSelect from './subcomponents/DefaultDirSelect';
 import NotificationIntervalSelect from './subcomponents/NotifIntervalSelect';
+import ViewContent from '../../components/ViewContent/ViewContent';
 
 const AppSettings = () => {
+  const color = useTheme().palette.black;
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [settings, changeSetting] = useReducer(
@@ -26,7 +29,7 @@ const AppSettings = () => {
   }
 
   return (
-    <div>
+    <ViewContent sx={{ backgroundColor: color.main }}>
       {t('AppSettings.title')}
       <AppUpdate />
       <LangSelect
@@ -47,7 +50,7 @@ const AppSettings = () => {
         }
       />
       <Button onClick={() => submitChanges()}>{t('common.save')}</Button>
-    </div>
+    </ViewContent>
   );
 };
 
