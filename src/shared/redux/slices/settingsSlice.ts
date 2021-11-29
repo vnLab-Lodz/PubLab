@@ -55,7 +55,7 @@ export const readSettingsAsync = createAsyncActionMain<void>(
   'readSettings',
   () => async (dispatch) => {
     const settings = readJSON(SETTINGS_FILE_PATH) as Settings;
-    dispatch(setSettings(settings));
+    if (settings) dispatch(setSettings(settings));
   }
 );
 
