@@ -111,6 +111,7 @@ export const {
   deleteCollaborator,
 } = loadPublicationsSlice.actions;
 
-export const loadedPublicationsList = (state: RootState) => state.loadedPublications;
+export const loadedPublicationsList = (state: RootState) =>
+  state.loadedPublications;
 
 export default loadPublicationsSlice.reducer;

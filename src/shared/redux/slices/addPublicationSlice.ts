@@ -36,13 +36,13 @@ type PublicationModification =
 
 // hacky type casting added to allow initial state to be empty
 const initialState: NewPublication = {
-	publicationName: '',
-	description: '',
-	collaborators: [],
-	packageManager: '',
-	useSass: false,
-	useTypescript: false,
-	step: 0,
+  publicationName: '',
+  description: '',
+  collaborators: [],
+  packageManager: '',
+  useSass: false,
+  useTypescript: false,
+  step: 0,
 } as NewPublication;
 
 const addPublicationSlice = createSlice({
