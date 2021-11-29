@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import getTemplateUrl from '../../../main/node/getTemplateUrl';
 import { generateProject } from '../../../main/node/gatsby';
 import { createAsyncActionMain } from '../helpers/createActionMain';
-import { Publication } from './publicationsSlice';
+import { Publication } from './loadPublicationsSlice';
 
 type NewProjectPayload = Pick<
   Publication,

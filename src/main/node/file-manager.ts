@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import path from 'path';
 import { v4 as generateUuid } from 'uuid';
-import { addPublication } from '../../shared/redux/slices/publicationsSlice';
+import { loadPublication } from '../../shared/redux/slices/loadPublicationsSlice';
 import { store } from '../store';
 import { configFileName } from './config-util';
 
@@ -51,7 +51,7 @@ function recursiveSearch(source: string): void {
       const rawdata = fs.readFileSync(filePath);
       const dataParsed = JSON.parse(rawdata.toString());
       store.dispatch(
-        addPublication({
+        loadPublication({
           id: generateUuid(),
 
           dirPath: source,
