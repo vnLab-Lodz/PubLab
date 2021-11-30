@@ -77,6 +77,7 @@ export const mainTheme = responsiveFontSizes(
       text: {
         primary: commonColors.black,
         secondary: commonColors.lightGray,
+        disabled: '#d1d1d1',
       },
       background: {
         default: commonColors.lightGray,
@@ -179,6 +180,7 @@ export const altTheme = createTheme({
     text: {
       primary: mainTheme.palette.text.secondary,
       secondary: mainTheme.palette.text.primary,
+      disabled: mainTheme.palette.darkGray.main,
     },
     background: { default: commonColors.black },
     primary: mainTheme.palette.secondary,
