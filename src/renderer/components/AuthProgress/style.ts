@@ -11,5 +11,5 @@ export const Container = styled(Box)(({ theme }) => ({
   height: '100vh',
   width: '100vw',
   flexDirection: 'column',
-  background: theme.palette.black.main,
+  background: theme.palette.background.default,
 }));
