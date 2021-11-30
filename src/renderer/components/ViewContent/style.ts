@@ -4,6 +4,7 @@ export const BackgroundWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   backgroundColor: theme.palette.background.default,
+  color: theme.palette.text.primary,
 }));
 
 export const ContentBox = styled(Box)(() => ({
