@@ -34,7 +34,6 @@ type PublicationModification =
       value: number;
     };
 
-// hacky type casting added to allow initial state to be empty
 const initialState: NewPublication = {
   publicationName: '',
   description: '',
@@ -43,7 +42,7 @@ const initialState: NewPublication = {
   useSass: false,
   useTypescript: false,
   step: 0,
-} as NewPublication;
+};
 
 const addPublicationSlice = createSlice({
   name: 'addPublication',
