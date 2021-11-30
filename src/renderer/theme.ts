@@ -67,7 +67,7 @@ const hkgroteskExtraBold = {
 
 const commonColors = {
   black: '#111111',
-  lightGrey: '#DDDDDD',
+  lightGray: '#DDDDDD',
 };
 
 export const mainTheme = responsiveFontSizes(
@@ -76,17 +76,25 @@ export const mainTheme = responsiveFontSizes(
       mode: 'light',
       text: {
         primary: commonColors.black,
-        secondary: commonColors.lightGrey,
+        secondary: commonColors.lightGray,
       },
       background: {
-        default: commonColors.lightGrey,
+        default: commonColors.lightGray,
       },
       primary: {
         main: commonColors.black,
-        contrastText: commonColors.lightGrey,
+        contrastText: commonColors.lightGray,
       },
       secondary: {
-        main: commonColors.lightGrey,
+        main: commonColors.lightGray,
+        contrastText: commonColors.black,
+      },
+      black: {
+        main: commonColors.black,
+        contrastText: commonColors.lightGray,
+      },
+      lightGray: {
+        main: commonColors.lightGray,
         contrastText: commonColors.black,
       },
       gray: {
@@ -95,7 +103,7 @@ export const mainTheme = responsiveFontSizes(
       },
       darkGray: {
         main: '#505050',
-        contrastText: commonColors.lightGrey,
+        contrastText: commonColors.lightGray,
       },
       lightPink: {
         main: '#FFD6EA', // light pink, eg. notifications background
@@ -103,7 +111,7 @@ export const mainTheme = responsiveFontSizes(
       },
       lightRed: {
         main: '#ff8383',
-        contrastText: commonColors.lightGrey,
+        contrastText: commonColors.lightGray,
       },
       green: {
         main: '#01D39F', // green, eg. button, switches when
