@@ -13,23 +13,14 @@ const Template: ComponentStory<typeof TextField> = (args) => (
   <TextField {...args} />
 );
 
-export const Light = Template.bind({});
-Light.args = {
-  type: 'light',
-  error: false,
-  placeholder: 'Project name...',
-};
-
-export const Dark = Template.bind({});
-Dark.args = {
-  type: 'dark',
+export const Base = Template.bind({});
+Base.args = {
   error: false,
   placeholder: 'Project name...',
 };
 
 export const Error = Template.bind({});
 Error.args = {
-  type: 'dark',
   error: true,
   placeholder: 'Project name...',
 };
