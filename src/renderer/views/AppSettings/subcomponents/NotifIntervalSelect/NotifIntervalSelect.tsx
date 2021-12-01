@@ -29,7 +29,7 @@ export default function NotificationIntervalSelect({
   return (
     <div>
       <InputLabel id='interval-select-label'>
-        {t('AppSettings.notifications.notifications')}
+        {t('AppSettings.notifications.notifications')}:
       </InputLabel>
       <Select
         labelId='interval-select-label'
