@@ -1,9 +1,9 @@
 import { alpha, useTheme } from '@mui/material';
-import MUIButton, { ButtonProps as MUIButtonProps } from '@mui/material/Button';
+import { ButtonProps as MUIButtonProps } from '@mui/material/Button';
 import { Palette } from '@mui/material/styles/createPalette';
 import Typography from '@mui/material/Typography';
 import React, { FC } from 'react';
-import './Button.scss';
+import * as Styled from './style';
 
 interface ButtonProps extends MUIButtonProps {
   textCase?: 'lowercase' | 'uppercase' | 'sentence-case';
@@ -18,29 +18,26 @@ const Button: FC<ButtonProps> = ({
   typographyVariant,
   children,
   color,
+  sx,
   ...rest
 }) => {
   const themeColor = useTheme().palette[color || 'primary'];
+  const combinedSx = {
+    border:
+      rest.variant === 'outlined' ? `1px solid ${themeColor.main}` : 'none',
+    ':hover': {
+      ...(rest.variant === 'contained' && {
+        backgroundColor: alpha(themeColor.main, 0.8),
+      }),
+    },
+    ...sx,
+  };
   return (
-    <MUIButton
-      className={`${textCase}`}
-      color={color}
-      sx={{
-        border:
-          rest.variant === 'outlined' ? `1px solid ${themeColor.main}` : 'none',
-        ':hover': {
-          ...(rest.variant === 'contained' && {
-            backgroundColor: alpha(themeColor.main, 0.8),
-          }),
-          boxShadow: 'none',
-        },
-        borderRadius: 0,
-        boxShadow: 'none',
-        padding: 0,
-      }}
-      {...rest}
-    >
+    <Styled.Button color={color} sx={combinedSx} {...rest}>
       <Typography
+        sx={{
+          textTransform: textCase === 'sentence-case' ? 'none' : textCase,
+        }}
         variant={typographyVariant}
         fontWeight={fontWeight}
         margin='1em'
@@ -48,7 +45,7 @@ const Button: FC<ButtonProps> = ({
       >
         {children}
       </Typography>
-    </MUIButton>
+    </Styled.Button>
   );
 };
 
