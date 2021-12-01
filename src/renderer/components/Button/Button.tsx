@@ -8,12 +8,14 @@ import './Button.scss';
 interface ButtonProps extends MUIButtonProps {
   textCase?: 'lowercase' | 'uppercase' | 'sentence-case';
   fontWeight?: React.ComponentProps<typeof Typography>['fontWeight'];
+  typographyVariant?: React.ComponentProps<typeof Typography>['variant'];
   color?: keyof Palette & MUIButtonProps['color'];
 }
 
 const Button: FC<ButtonProps> = ({
   textCase,
   fontWeight,
+  typographyVariant,
   children,
   color,
   ...rest
@@ -38,7 +40,12 @@ const Button: FC<ButtonProps> = ({
       }}
       {...rest}
     >
-      <Typography fontWeight={fontWeight} margin='1em' lineHeight='1.4em'>
+      <Typography
+        variant={typographyVariant}
+        fontWeight={fontWeight}
+        margin='1em'
+        lineHeight='1.4em'
+      >
         {children}
       </Typography>
     </MUIButton>
@@ -48,6 +55,7 @@ const Button: FC<ButtonProps> = ({
 Button.defaultProps = {
   textCase: 'uppercase',
   fontWeight: 'normal',
+  typographyVariant: 'h4',
   color: 'primary',
 };
 
