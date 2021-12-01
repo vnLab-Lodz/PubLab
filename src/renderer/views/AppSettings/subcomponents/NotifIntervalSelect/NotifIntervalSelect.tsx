@@ -19,7 +19,7 @@ export default function NotificationIntervalSelect({
   function generateIntervalOptions() {
     return Object.values(NOTIFICATION_INTERVAL).map((interval) => (
       <MenuItem key={interval} value={interval}>
-        <Typography variant='h4'>
+        <Typography variant='h3'>
           {t(`AppSettings.notifications.intervals.${interval}` as const)}
         </Typography>
       </MenuItem>
@@ -36,6 +36,7 @@ export default function NotificationIntervalSelect({
         title={t('AppSettings.notifications.notifications')}
         value={currentInterval}
         onChange={(e) => onChange(e.target.value as NOTIFICATION_INTERVAL)}
+        fullWidth
       >
         {generateIntervalOptions()}
       </Select>

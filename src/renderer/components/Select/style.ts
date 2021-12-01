@@ -9,7 +9,12 @@ export const Select = styled(MuiSelect)(({ theme }) => ({
     },
   },
   '&&& .MuiSelect-select': {
+    padding: 0,
     paddingRight: '48px',
+    '& > *': {
+      lineHeight: '1.5em',
+      padding: '1em 0 0.6em 0.6em',
+    },
   },
 
   '& .MuiOutlinedInput-input.Mui-disabled': {
