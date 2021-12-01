@@ -3,6 +3,7 @@ import { Box, styled } from '@mui/material';
 export const LogoImg = styled('img')(() => ({
   display: 'block',
   margin: '3rem',
+  marginTop: 0,
 }));
 
 export const Container = styled(Box)(() => ({
