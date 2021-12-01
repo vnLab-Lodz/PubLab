@@ -1,9 +1,9 @@
 import React from 'react';
 import { Typography, TypographyProps } from '@mui/material';
-import { StyledInputLabel } from './style';
+import * as Styled from './style';
 
-type Props = React.ComponentProps<typeof StyledInputLabel> & {
-  typographyVariant?: TypographyProps['variant'];
+type Props = React.ComponentProps<typeof Styled.InputLabel> & {
+  typographyVariant?: Exclude<TypographyProps['variant'], 'inherit'>;
 };
 
 const InputLabel: React.FC<Props> = ({
@@ -12,9 +12,15 @@ const InputLabel: React.FC<Props> = ({
   typographyVariant,
   ...rest
 }: Props) => (
-  <StyledInputLabel {...rest}>
+  <Styled.InputLabel
+    {...rest}
+    sx={{
+      fontSize: (theme) => theme.typography[typographyVariant || 'h4'].fontSize,
+      ...rest.sx,
+    }}
+  >
     <Typography variant={typographyVariant}>{children}</Typography>
-  </StyledInputLabel>
+  </Styled.InputLabel>
 );
 
 InputLabel.defaultProps = {

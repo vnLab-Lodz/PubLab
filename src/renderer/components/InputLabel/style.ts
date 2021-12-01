@@ -1,8 +1,8 @@
-import { InputLabel, styled } from '@mui/material';
+import { InputLabel as MUIInputLabel, styled } from '@mui/material';
 
-export const StyledInputLabel = styled(InputLabel)(({ theme }) => ({
+export const InputLabel = styled(MUIInputLabel)(({ theme }) => ({
   textTransform: 'uppercase',
-  marginBottom: '2.07em',
-  marginTop: '4.615em',
   color: theme.palette.text.primary,
+  marginBottom: '2.07em',
+  marginTop: '2.07em',
 }));
