@@ -32,7 +32,7 @@ const settingsSlice = createSlice({
   },
 });
 
-const { setSettings } = settingsSlice.actions;
+export const { setSettings } = settingsSlice.actions;
 
 export const selectAllSettings = (state: RootState) => state.appSettings;
 
