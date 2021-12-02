@@ -8,7 +8,7 @@ import { RootState } from "./../../../shared/redux/rootReducer";
 const StyledBackground = styled('div')(({ theme }) => ({
 	width: '100%',
 	height: '100%',
-	background: theme.palette.black.main,
+	background: theme.palette.background,
 }));
 
 const StyledContainer = styled('div')(({ theme }) => ({
@@ -17,7 +17,7 @@ const StyledContainer = styled('div')(({ theme }) => ({
 	display: 'flex',
 	flexDirection: 'column',
 	width: '50%',
-	background: theme.palette.black.main,
+	background: theme.palette.background,
 	paddingTop: theme.spacing(4),
 }));
 
@@ -29,12 +29,13 @@ const StepContainer = styled('div')(({ theme }) => ({
 const StyledButtonBlack = styled('button')(({ theme }) => ({
 	width: '50%',
 	height: '60px',
-	fontSize: '15px',
-	backgroundColor: 'transparent',
-	outline: 'none',
 	border: '1px solid',
-	borderColor: theme.palette.lightGray,
+	borderColor: theme.palette.text.primary,
+	outline: 'none',
 	color: theme.palette.text.primary,
+	backgroundColor: 'transparent',
+	fontSize: '15px',
+	fontWeight: 'bold',
 	'&:hover': {
 		cursor: 'pointer',
 	}
@@ -47,6 +48,7 @@ const StyledButtonGreen = styled('button')(({ theme }) => ({
 	outline: 'none',
 	background: theme.palette.green.main,
 	fontSize: '15px',
+	fontWeight: 'bold',
 	'&:hover': {
 		cursor: 'pointer',
 	}
