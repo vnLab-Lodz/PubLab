@@ -5,6 +5,7 @@ import Description from '../views/Description/Description';
 import Files from '../views/Files/Files';
 import Changes from '../views/Changes/Changes';
 import Settings from '../views/Settings/Settings';
+import AddProject from '../views/AddProject/AddProject';
 import ProjectsList from '../views/ProjectsList/ProjectsList';
 import ProjectInfo from '../views/ProjectInfo/ProjectInfo';
 import NoProjects from '../views/NoProjects/NoProjects';
@@ -19,7 +20,7 @@ export const COMPONENTS_TRANSLATIONS: Record<VIEWS, string> = {
   FILES: 'Files',
   CHANGES: 'Changes',
   SETTINGS: 'Settings',
-
+  ADD_PROJECT: 'Add project',
   PROJECTS_LIST: 'Projects list',
   APP_SETTINGS: 'App settings',
 };
@@ -29,6 +30,7 @@ export const routerComponents: RouterComponents = {
   [VIEWS.FILES]: Files,
   [VIEWS.CHANGES]: Changes,
   [VIEWS.SETTINGS]: Settings,
+  [VIEWS.ADD_PROJECT]: AddProject,
   [VIEWS.PROJECTS_LIST]: ProjectsList,
   [VIEWS.APP_SETTINGS]: AppSettings,
   [SUBVIEWS.PROJECT_INFO]: ProjectInfo,
