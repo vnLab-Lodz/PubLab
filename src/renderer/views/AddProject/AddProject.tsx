@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   decreaseStep,
   increaseStep,
-} from './../../../shared/redux/slices/addPublicationSlice';
+} from '../../../shared/redux/slices/addPublicationSlice';
 import { RootState } from '../../../shared/redux/rootReducer';
 
 const StyledBackground = styled('div')(({ theme }) => ({
@@ -75,6 +75,8 @@ const AddProject = () => {
         return 'Insert component 4';
       case 5:
         return 'Insert component 5';
+	  default:
+	    return 'Insert component 1';
     }
   };
 
