@@ -32,20 +32,12 @@ export const installNodeJs = createAsyncActionMain<void>(
   'installNode',
   () => async (dispatch) => {
     dispatch(checkingInstallation());
-    const isInstalled = await checkForNode().catch(() =>
-      dispatch(nodeNotInstalled())
-    );
-
-    if (isInstalled) {
+    try {
+      const installed = await checkForNode();
+      if (!installed) await installNode();
       dispatch(nodeInstalled());
-    } else {
-      installNode()
-        .then(() => {
-          dispatch(nodeInstalled());
-        })
-        .catch(() => {
-          dispatch(nodeNotInstalled());
-        });
+    } catch (error: any) {
+      dispatch(nodeNotInstalled());
     }
   }
 );

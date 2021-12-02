@@ -26,23 +26,52 @@ class Platform {
   }
 
   public IsSupported(): boolean {
-    const index = Platform.supportedPlatforms.findIndex(
-      (platform) => platform.os === this.os
-    );
-    return index > -1;
+    return Platform.supportedPlatforms.some(({ os }) => os === this.os);
   }
 
-  public NodeManagerInstallationCommand(): string {
+  public InstallNodeManager(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const managerInstallCommand = this.NodeManagerInstallationCommand();
+      if (managerInstallCommand !== undefined) {
+        exec(managerInstallCommand as string, (error) => {
+          if (error) {
+            appendLog(`Node.js Manager installation failed.`);
+            reject(error);
+          }
+          appendLog(`Finished installation of node manager.`);
+          resolve();
+        });
+      }
+    });
+  }
+
+  public InstallNodeJs(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const nodeInstallCommand = this.NodeInstallationCommand();
+      if (nodeInstallCommand !== undefined) {
+        exec(nodeInstallCommand as string, (error) => {
+          if (error) {
+            appendLog(`Node installation failed.`);
+            reject(error);
+          }
+          appendLog(`Finished installation of node.`);
+          resolve();
+        });
+      }
+    });
+  }
+
+  private NodeManagerInstallationCommand(): string | undefined {
     if (this === Platform.WINDOWS) return 'winget install nvs';
     if (this === Platform.LINUX || this === Platform.MAC)
       return 'npm install -g n';
-    return '';
+    return undefined;
   }
 
-  public NodeInstallationCommand(): string {
+  private NodeInstallationCommand(): string | undefined {
     if (this === Platform.WINDOWS) return 'nvs add lts; nvs link latest';
     if (this === Platform.LINUX || this === Platform.MAC) return 'n lts';
-    return '';
+    return undefined;
   }
 }
 
@@ -66,7 +95,7 @@ export function checkForNode(): Promise<boolean> {
 }
 
 /**
- * Installes globally the lateset version of node.js.
+ * Installes globally the lateset version of node.js using node manager.
  * Rejects the promise if a command execution error occurs or node verification fails.
  * @return {Promise<void>}
  */
@@ -76,22 +105,12 @@ export function installNode(): Promise<void> {
     if (platform.IsSupported()) {
       appendLog('Installing node...');
       appendLog(`Platform: ${platform.os}`);
-      exec(platform.NodeManagerInstallationCommand(), (error) => {
-        if (error) {
-          appendLog(`Node.js Manager installation failed.`);
-          reject(error);
-        }
-        appendLog(`Finished installation of node manager.`);
-        resolve();
-      });
-      exec(platform.NodeInstallationCommand(), (error) => {
-        if (error) {
-          appendLog(`Node installation failed.`);
-          reject(error);
-        }
-        appendLog(`Finished installation of node.`);
-        resolve();
-      });
+
+      platform
+        .InstallNodeManager()
+        .then(() => platform.InstallNodeJs())
+        .then(() => resolve())
+        .catch((error) => reject(error));
     } else {
       const message = `Cannot install node. Platform {${platform.os} is not supported.}`;
       appendLog(message);
