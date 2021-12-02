@@ -14,7 +14,6 @@ class Platform {
   public static LINUX: Platform = new Platform('Linux');
 
   public static MAC: Platform = new Platform('Darwin');
-<<<<<<< HEAD:src/main/node/node.ts
 
   private static supportedPlatforms: Platform[] = [
     Platform.WINDOWS,
@@ -22,14 +21,6 @@ class Platform {
     Platform.MAC,
   ];
 
-=======
-  private static supportedPlatforms: Platform[] = [
-    Platform.WINDOWS,
-    Platform.LINUX,
-    Platform.MAC,
-  ];
-
->>>>>>> ddc20e8 (Prettified Code!):src/main/node/nodeCheck.ts
   public static Current(): Platform {
     return new Platform(type());
   }
@@ -42,25 +33,15 @@ class Platform {
   }
 
   public NodeManagerInstallationCommand(): string {
-<<<<<<< HEAD:src/main/node/node.ts
     if (this === Platform.WINDOWS) return 'winget install nvs';
     if (this === Platform.LINUX || this === Platform.MAC)
-=======
-    if (this == Platform.WINDOWS) return 'winget install nvs';
-    if (this == Platform.LINUX || this == Platform.MAC)
->>>>>>> ddc20e8 (Prettified Code!):src/main/node/nodeCheck.ts
       return 'npm install -g n';
     return '';
   }
 
   public NodeInstallationCommand(): string {
-<<<<<<< HEAD:src/main/node/node.ts
     if (this === Platform.WINDOWS) return 'nvs add lts; nvs link latest';
     if (this === Platform.LINUX || this === Platform.MAC) return 'n lts';
-=======
-    if (this == Platform.WINDOWS) return 'nvs add lts; nvs link latest';
-    if (this == Platform.LINUX || this == Platform.MAC) return 'n lts';
->>>>>>> ddc20e8 (Prettified Code!):src/main/node/nodeCheck.ts
     return '';
   }
 }
@@ -91,7 +72,6 @@ export function checkForNode(): Promise<boolean> {
  */
 export function installNode(): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-<<<<<<< HEAD:src/main/node/node.ts
     const platform = Platform.Current();
     if (platform.IsSupported()) {
       appendLog('Installing node...');
@@ -105,24 +85,6 @@ export function installNode(): Promise<void> {
         resolve();
       });
       exec(platform.NodeInstallationCommand(), (error) => {
-=======
-    var platform = Platform.Current();
-    if (platform.IsSupported()) {
-      appendLog('Installing node...');
-      appendLog(`Platform: ${platform.os}`);
-      exec(
-        platform.NodeManagerInstallationCommand(),
-        (error, stdout, stderr) => {
-          if (error) {
-            appendLog(`Node.js Manager installation failed.`);
-            reject(error);
-          }
-          appendLog(`Finished installation of node manager.`);
-          resolve();
-        }
-      );
-      exec(platform.NodeInstallationCommand(), (error, stdout, stderr) => {
->>>>>>> ddc20e8 (Prettified Code!):src/main/node/nodeCheck.ts
         if (error) {
           appendLog(`Node installation failed.`);
           reject(error);
@@ -131,11 +93,7 @@ export function installNode(): Promise<void> {
         resolve();
       });
     } else {
-<<<<<<< HEAD:src/main/node/node.ts
       const message = `Cannot install node. Platform {${platform.os} is not supported.}`;
-=======
-      let message = `Cannot install node. Platform {${platform.os} is not supported.}`;
->>>>>>> ddc20e8 (Prettified Code!):src/main/node/nodeCheck.ts
       appendLog(message);
       reject(message);
     }
