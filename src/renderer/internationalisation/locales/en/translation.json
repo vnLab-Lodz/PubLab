@@ -18,6 +18,12 @@
     "button": "Log in with GitHub",
     "created": "Created by:"
   },
+  "first-time-view": {
+    "title": "Choose directory",
+    "welcome": "Hi, thanks for stopping by!",
+    "message": "Before you start, choose the directory to which you would like to sync all your projects.",
+    "button": "CHOOSE"
+  },
   "AppSettings": {
     "title": "App Settings",
     "abbreviation": "AS",
