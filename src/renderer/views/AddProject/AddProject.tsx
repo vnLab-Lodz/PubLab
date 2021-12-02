@@ -65,6 +65,8 @@ const AddProject = () => {
 
   const renderStepComponent = () => {
     switch (currentStep) {
+	  // substitute cases with components created for the issues,
+	  // then delete this comment after it becomes obsolete
       case 1:
         return 'Insert component 1';
       case 2:
