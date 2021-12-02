@@ -1,12 +1,12 @@
 import React from 'react';
 import { styled } from '@mui/system';
+import { Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   decreaseStep,
   increaseStep,
 } from './../../../shared/redux/slices/addPublicationSlice';
-import { Typography } from '@mui/material';
-import { RootState } from './../../../shared/redux/rootReducer';
+import { RootState } from '../../../shared/redux/rootReducer';
 
 const StyledBackground = styled('div')(({ theme }) => ({
   width: '100%',
