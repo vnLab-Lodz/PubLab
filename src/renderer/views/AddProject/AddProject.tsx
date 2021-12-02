@@ -77,8 +77,8 @@ const AddProject = () => {
         return 'Insert component 4';
       case 5:
         return 'Insert component 5';
-	  default:
-	    return 'Insert component 1';
+      default:
+        return 'Insert component 1';
     }
   };
 
