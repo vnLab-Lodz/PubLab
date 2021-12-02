@@ -121,7 +121,6 @@ export const theme = responsiveFontSizes(
       htmlFontSize: 10,
       h1: {
         fontSize: '2rem',
-        color: 'red',
       },
       h2: {
         fontSize: '1.8rem',
