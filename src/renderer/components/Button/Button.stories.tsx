@@ -15,7 +15,6 @@ export const WithIcon = Template.bind({});
 WithIcon.args = {
   startIcon: <img src={GitHubIcon} alt='GitHub logo' />,
   variant: 'contained',
-  color: 'lightGray',
   children: 'Log in with GitHub',
   textCase: 'sentence-case',
   fullWidth: true,
@@ -24,24 +23,22 @@ WithIcon.args = {
 export const SentenceCase = Template.bind({});
 SentenceCase.args = {
   variant: 'contained',
-  color: 'lightGray',
   children: 'Yes, log me out.',
   textCase: 'sentence-case',
   fullWidth: true,
 };
 
-export const LightUppercase = Template.bind({});
-LightUppercase.args = {
+export const Uppercase = Template.bind({});
+Uppercase.args = {
   variant: 'contained',
-  color: 'lightGray',
   children: 'choose',
   textCase: 'uppercase',
   fontWeight: 'light',
   fullWidth: true,
 };
 
-export const BoldUppercase = Template.bind({});
-BoldUppercase.args = {
+export const BoldUppercaseGreen = Template.bind({});
+BoldUppercaseGreen.args = {
   variant: 'contained',
   color: 'green',
   children: "let's go",
@@ -50,22 +47,11 @@ BoldUppercase.args = {
   fullWidth: true,
 };
 
-export const DarkOutline = Template.bind({});
-DarkOutline.args = {
+export const Outline = Template.bind({});
+Outline.args = {
   variant: 'outlined',
   children: 'back',
   textCase: 'uppercase',
   fontWeight: 'bold',
   fullWidth: true,
-  color: 'black',
-};
-
-export const LightOutline = Template.bind({});
-LightOutline.args = {
-  variant: 'outlined',
-  children: 'back',
-  textCase: 'uppercase',
-  fontWeight: 'bold',
-  fullWidth: true,
-  color: 'lightGray',
 };

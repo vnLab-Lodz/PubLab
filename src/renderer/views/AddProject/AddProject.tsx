@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { decreaseStep, increaseStep } from "./../../../shared/redux/slices/addPublicationSlice";
 import { Typography } from "@mui/material";
 import { RootState } from "./../../../shared/redux/rootReducer";
-import { theme } from "./../../../renderer/theme";
 
 const StyledBackground = styled('div')(({ theme }) => ({
 	width: '100%',

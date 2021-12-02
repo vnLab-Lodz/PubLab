@@ -72,15 +72,11 @@ const addPublicationSlice = createSlice({
       );
       state.collaborators = updatedCollaborators;
     },
-    increaseStep: (
-      state: NewPublication,
-    ) => {
+    increaseStep: (state: NewPublication) => {
       state.step += 1;
-    }, 
-    decreaseStep: (
-      state: NewPublication,
-    ) => { 
-      state.step -= 1 
+    },
+    decreaseStep: (state: NewPublication) => {
+      state.step -= 1;
     },
   },
 });

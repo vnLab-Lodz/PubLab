@@ -6,7 +6,7 @@ import { configStore } from '../../../shared/redux/configureStore';
 import Auth from '../Auth/Auth';
 import CustomRouter from '../CustomRouter/CustomRouter';
 import NavigationBar from '../NavigationBar/NavigationBar';
-import { theme } from '../../theme';
+import { mainTheme } from '../../theme';
 import observeStore from '../../../shared/redux/helpers/observeStore';
 import {
   readSettingsAsync,
@@ -29,7 +29,7 @@ const App = () => {
   );
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={mainTheme}>
         <CssBaseline />
         <Auth>
           <div className='wrapper'>

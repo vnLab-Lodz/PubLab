@@ -14,10 +14,7 @@ interface Props {
 }
 
 const RadioForm: React.FC<Props> = ({ disabled1, disabled2, defaults }) => (
-  <FormControl
-    component='fieldset'
-    style={{ background: 'black', padding: '2rem' }}
-  >
+  <FormControl component='fieldset' style={{ padding: '2rem' }}>
     <Box pb={4} pt={2}>
       <FormLabel component='legend'>
         <Typography variant='h4' color='text.primary'>
