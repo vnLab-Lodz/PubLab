@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import './AppSettings.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@mui/material';
+import { Button, ThemeProvider } from '@mui/material';
 import {
   saveSettingsAsync,
   selectAllSettings,
@@ -12,6 +12,8 @@ import AppUpdate from './subcomponents/AppUpdate';
 import LangSelect from './subcomponents/LangSelect';
 import DefaultDirSelect from './subcomponents/DefaultDirSelect';
 import NotificationIntervalSelect from './subcomponents/NotifIntervalSelect';
+import ViewContent from '../../components/ViewContent/ViewContent';
+import { altTheme } from '../../theme';
 
 const AppSettings = () => {
   const { t } = useTranslation();
@@ -26,28 +28,30 @@ const AppSettings = () => {
   }
 
   return (
-    <div>
-      {t('AppSettings.title')}
-      <AppUpdate />
-      <LangSelect
-        currentLocale={settings.currentLocale}
-        onChange={(locale) => changeSetting({ currentLocale: locale })}
-      />
-      <DefaultDirSelect
-        defaultDirPath={settings.defaultDirPath}
-        onChange={(path) => changeSetting({ defaultDirPath: path })}
-      />
-      <Button style={{ display: 'block' }} onClick={() => submitChanges()}>
-        {t('common.save')}
-      </Button>
-      <NotificationIntervalSelect
-        currentInterval={settings.notificationInterval}
-        onChange={(interval) =>
-          changeSetting({ notificationInterval: interval })
-        }
-      />
-      <Button onClick={() => submitChanges()}>{t('common.save')}</Button>
-    </div>
+    <ThemeProvider theme={altTheme}>
+      <ViewContent>
+        {t('AppSettings.title')}
+        <AppUpdate />
+        <LangSelect
+          currentLocale={settings.currentLocale}
+          onChange={(locale) => changeSetting({ currentLocale: locale })}
+        />
+        <DefaultDirSelect
+          defaultDirPath={settings.defaultDirPath}
+          onChange={(path) => changeSetting({ defaultDirPath: path })}
+        />
+        <Button style={{ display: 'block' }} onClick={() => submitChanges()}>
+          {t('common.save')}
+        </Button>
+        <NotificationIntervalSelect
+          currentInterval={settings.notificationInterval}
+          onChange={(interval) =>
+            changeSetting({ notificationInterval: interval })
+          }
+        />
+        <Button onClick={() => submitChanges()}>{t('common.save')}</Button>
+      </ViewContent>
+    </ThemeProvider>
   );
 };
 

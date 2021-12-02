@@ -2,12 +2,12 @@ import { styled } from '@mui/material/styles';
 import Radio from '@mui/material/Radio';
 
 const RadioBtn = styled(Radio)(({ theme }) => ({
-  color: theme.palette.lightGray.main,
+  color: theme.palette.primary.main,
   '&.Mui-checked': {
-    color: theme.palette.lightGray.main,
+    color: theme.palette.primary.main,
   },
   '&.Mui-disabled': {
-    color: theme.palette.darkGray.main,
+    color: theme.palette.text.disabled,
   },
 }));
 

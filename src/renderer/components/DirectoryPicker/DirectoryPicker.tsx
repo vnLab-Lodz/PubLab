@@ -27,7 +27,6 @@ const DirectoryPicker: React.FC<Props> = ({
     />
     <Button
       variant='contained'
-      color='lightGray'
       textCase='uppercase'
       fontWeight='regular'
       onClick={onClick}

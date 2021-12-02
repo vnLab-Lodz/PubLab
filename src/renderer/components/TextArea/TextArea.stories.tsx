@@ -12,20 +12,13 @@ const Template: ComponentStory<typeof TextArea> = (args) => (
   <TextArea {...args} />
 );
 
-export const Light = Template.bind({});
-Light.args = {
-  type: 'light',
-  placeholder: 'Project name ...',
-};
-
-export const Dark = Template.bind({});
-Dark.args = {
-  type: 'dark',
+export const Base = Template.bind({});
+Base.args = {
   placeholder: 'Project name ...',
 };
 
 export const Error = Template.bind({});
 Error.args = {
-  type: 'error',
+  error: true,
   placeholder: 'Project name ...',
 };

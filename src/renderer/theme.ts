@@ -65,52 +65,70 @@ const hkgroteskExtraBold = {
   `,
 };
 
-export const theme = responsiveFontSizes(
+const commonColors = {
+  black: '#111111',
+  lightGray: '#DDDDDD',
+};
+
+export const mainTheme = responsiveFontSizes(
   createTheme({
     palette: {
+      mode: 'light',
       text: {
-        primary: '#DDDDDD',
-        secondary: '#111111',
+        primary: commonColors.black,
+        secondary: commonColors.lightGray,
+        disabled: '#d1d1d1',
+      },
+      background: {
+        default: commonColors.lightGray,
+      },
+      primary: {
+        main: commonColors.black,
+        contrastText: commonColors.lightGray,
+      },
+      secondary: {
+        main: commonColors.lightGray,
+        contrastText: commonColors.black,
       },
       black: {
-        main: '#111111', // black backgrounds
-        contrastText: '#DDDDDD',
+        main: commonColors.black,
+        contrastText: commonColors.lightGray,
       },
       lightGray: {
-        main: '#DDDDDD', // light backgrounds
-        contrastText: '#111111',
+        main: commonColors.lightGray,
+        contrastText: commonColors.black,
       },
       gray: {
         main: '#d1d1d1',
-        contrastText: '#111111',
+        contrastText: commonColors.black,
       },
       darkGray: {
         main: '#505050',
-        contrastText: '#DDDDDD',
+        contrastText: commonColors.lightGray,
       },
       lightPink: {
         main: '#FFD6EA', // light pink, eg. notifications background
-        contrastText: '#111111',
+        contrastText: commonColors.black,
       },
       lightRed: {
         main: '#ff8383',
-        contrastText: '#DDDDDD',
+        contrastText: commonColors.lightGray,
       },
       green: {
         main: '#01D39F', // green, eg. button, switches when
-        contrastText: '#111111',
+        contrastText: commonColors.black,
       },
       lightGreen: {
         main: '#EBF8EA',
-        contrastText: '#111111',
+        contrastText: commonColors.black,
       },
       orange: {
         main: '#d89e01',
-        contrastText: '#111111',
+        contrastText: commonColors.black,
       },
       blue: {
         main: '#83aeff',
-        contrastText: '#111111',
+        contrastText: commonColors.black,
       },
     },
     typography: {
@@ -153,3 +171,19 @@ export const theme = responsiveFontSizes(
     },
   })
 );
+
+export const altTheme = createTheme({
+  ...mainTheme,
+  palette: {
+    ...mainTheme.palette,
+    mode: 'dark',
+    text: {
+      primary: mainTheme.palette.text.secondary,
+      secondary: mainTheme.palette.text.primary,
+      disabled: mainTheme.palette.darkGray.main,
+    },
+    background: { default: commonColors.black },
+    primary: mainTheme.palette.secondary,
+    secondary: mainTheme.palette.primary,
+  },
+});

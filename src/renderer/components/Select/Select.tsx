@@ -21,18 +21,18 @@ const StyledSelect = styled(MuiSelect)(({ theme }) => ({
 
   '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
     borderWidth: '1px',
-    borderColor: theme.palette.lightGray.main,
+    borderColor: theme.palette.primary.main,
   },
 
   '& .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.lightGray.main,
+    borderColor: theme.palette.primary.main,
   },
   '&.Mui-disabled .MuiOutlinedInput-notchedOutline': {
     borderColor: theme.palette.darkGray.main,
   },
 
   '& .MuiSelect-icon': {
-    fill: theme.palette.lightGray.main,
+    fill: theme.palette.primary.main,
   },
   '&.Mui-disabled .MuiSelect-icon': {
     fill: theme.palette.darkGray.main,
@@ -42,9 +42,9 @@ const StyledSelect = styled(MuiSelect)(({ theme }) => ({
 const menuListProps: Partial<MenuProps> = {
   MenuListProps: {
     sx: {
-      bgcolor: (theme) => theme.palette.lightGray.main,
+      bgcolor: (theme) => theme.palette.primary.main,
       '& .MuiMenuItem-root': {
-        color: (theme) => theme.palette.black.main,
+        color: (theme) => theme.palette.secondary.main,
         '&.Mui-selected, &.Mui-selected:hover': {
           bgcolor: (theme) => theme.palette.gray.main,
         },
