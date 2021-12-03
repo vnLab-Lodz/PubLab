@@ -13,6 +13,10 @@ export default styled(InputBase)(({ error, theme: { palette } }) => {
   return {
     color,
     border,
-    padding: '12px 10px 12px 10px',
+    padding: 0,
+    '& .MuiInputBase-input': {
+      lineHeight: '1.4em',
+      padding: '1em 0 0.6em 0.6em',
+    },
   };
 });
