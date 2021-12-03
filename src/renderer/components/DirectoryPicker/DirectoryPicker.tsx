@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box } from '@mui/material';
-import TextField from '../TextField/TextField';
 import Button from '../Button/Button';
+import * as Styled from './style';
 
 interface Props {
   buttonText: string;
@@ -9,6 +9,7 @@ interface Props {
   placeholder?: string;
   onClick?: () => void;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  labelledBy?: string;
 }
 
 const DirectoryPicker: React.FC<Props> = ({
@@ -17,13 +18,15 @@ const DirectoryPicker: React.FC<Props> = ({
   onChange,
   value,
   buttonText,
+  labelledBy,
 }) => (
   <Box sx={{ display: 'flex' }}>
-    <TextField
-      sx={{ flex: 1 }}
+    <Styled.TextField
       placeholder={placeholder ?? ''}
       value={value ?? ''}
       onChange={onChange}
+      spellCheck={false}
+      inputProps={{ 'aria-labelledby': labelledBy }}
     />
     <Button
       variant='contained'
@@ -41,6 +44,7 @@ DirectoryPicker.defaultProps = {
   placeholder: undefined,
   onClick: () => {},
   onChange: () => {},
+  labelledBy: undefined,
 };
 
 export default DirectoryPicker;
