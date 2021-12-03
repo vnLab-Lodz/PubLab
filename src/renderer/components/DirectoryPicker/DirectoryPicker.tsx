@@ -33,6 +33,7 @@ const DirectoryPicker: React.FC<Props> = ({
       textCase='uppercase'
       fontWeight='regular'
       onClick={onClick}
+      typographyVariant='h4'
     >
       {buttonText}
     </Button>

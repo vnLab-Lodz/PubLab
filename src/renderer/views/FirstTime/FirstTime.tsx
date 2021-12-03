@@ -29,16 +29,13 @@ const FirstTime = () => {
   const [path, setPath] = useState(false);
   const [dir, setDir] = useState('');
 
-  const [settings, changeSetting] = useReducer(
-    handleSettingChange,
-    useSelector(selectAllSettings)
-  );
+  useReducer(handleSettingChange, useSelector(selectAllSettings));
 
   return (
     <ThemeProvider theme={altTheme}>
       <ViewContent>
         <Typography
-          variant='h4'
+          variant='h1'
           sx={{
             color: (theme) => theme.palette.text.primary,
             marginTop: '20px',
@@ -48,16 +45,16 @@ const FirstTime = () => {
           {t('first-time-view.title')}
         </Typography>
         <Typography
-          variant='h4'
+          variant='h1'
           sx={{
             color: (theme) => theme.palette.text.primary,
-            marginTop: '102px',
+            marginTop: '90px',
           }}
         >
           {t('first-time-view.welcome')}
         </Typography>
         <Typography
-          variant='h4'
+          variant='h1'
           sx={{
             color: (theme) => theme.palette.text.primary,
             marginTop: '27.25px',
@@ -72,9 +69,9 @@ const FirstTime = () => {
               variant='contained'
               textCase='uppercase'
               fontWeight='light'
-              fullWidth={true}
+              fullWidth
               sx={{
-                marginTop: '78px',
+                marginTop: '90px',
                 height: '45px',
                 fontSize: '13px',
               }}
@@ -88,39 +85,51 @@ const FirstTime = () => {
                       saveSettingsAsync({ defaultDirPath: filePaths[0] })
                     );
                     if (filePaths[0] !== undefined) setPath(true);
-                    setDir(settings.defaultDirPath);
+                    setDir(filePaths[0]);
                   });
               }}
             >
-              {t('first-time-view.button')}
+              {t('common.choose')}
             </Button>
           ) : (
-            <div style={{ marginTop: '78px' }}>
+            <div style={{ marginTop: '90px' }}>
               <DirectoryPicker
                 buttonText='CHANGE'
                 value={dir}
-                onChange={(path: any) => {
-                  saveSettingsAsync({ defaultDirPath: path });
-                  setDir(path.target.value);
+                onChange={(p: any) => {
+                  saveSettingsAsync({ defaultDirPath: p });
+                  setDir(p.target.value);
+                }}
+                onClick={() => {
+                  dialog
+                    .showOpenDialog({
+                      properties: ['openDirectory'],
+                    })
+                    .then(({ filePaths }: any) => {
+                      dispatch(
+                        saveSettingsAsync({ defaultDirPath: filePaths[0] })
+                      );
+                      setDir(filePaths[0]);
+                    });
                 }}
               />
               <Button
-                disabled={dir === '' ? true : false}
+                disabled={dir === ''}
                 variant='contained'
                 color='green'
                 textCase='uppercase'
                 fontWeight='bold'
-                fullWidth={true}
+                fullWidth
+                typographyVariant='h3'
                 sx={{
-                  marginTop: '135px',
+                  marginTop: '90px',
                   height: '60px',
-                  fontSize: '13px',
                 }}
                 onClick={() => {
                   dispatch(updateCurrentView(VIEWS.PROJECTS_LIST));
                 }}
               >
-                LET'S GO
+                {t('common.go')}
               </Button>
             </div>
           )}

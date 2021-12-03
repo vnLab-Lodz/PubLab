@@ -1,7 +1,9 @@
 {
   "common": {
     "save": "save",
-    "change": "change"
+    "change": "change",
+    "choose": "choose",
+    "go": "let's go"
   },
   "auth": {
     "in_progress": "Authentication in progress:",
@@ -21,8 +23,7 @@
   "first-time-view": {
     "title": "Choose directory",
     "welcome": "Hi, thanks for stopping by!",
-    "message": "Before you start, choose the directory to which you would like to sync all your projects.",
-    "button": "CHOOSE"
+    "message": "Before you start, choose the directory to which you would like to sync all your projects."
   },
   "AppSettings": {
     "title": "App Settings",
