@@ -10,4 +10,7 @@ export const BackgroundWrapper = styled(Box)(({ theme }) => ({
 export const ContentBox = styled(Box)(() => ({
   minWidth: '400px',
   width: '50vw',
+  paddingTop: '2rem',
+  paddingBottom: '12rem',
+  // height: 'fit-content',
 }));
