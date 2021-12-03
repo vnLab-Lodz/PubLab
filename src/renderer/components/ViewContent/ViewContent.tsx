@@ -4,7 +4,7 @@ import { BackgroundWrapper, ContentBox } from './style';
 
 const ViewContent: React.FC<BoxProps> = ({ children, ...rest }) => (
   <BackgroundWrapper {...rest}>
-    <ContentBox>{children}</ContentBox>
+    <ContentBox className='view-content'>{children}</ContentBox>
   </BackgroundWrapper>
 );
 

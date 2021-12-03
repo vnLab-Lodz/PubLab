@@ -1,57 +1,24 @@
 import React, { useCallback } from 'react';
-import {
-  MenuItem,
-  styled,
-  MenuProps,
-  SelectProps,
-  Select as MuiSelect,
-} from '@mui/material';
-
-const StyledSelect = styled(MuiSelect)(({ theme }) => ({
-  borderRadius: 0,
-
-  '& .MuiSelect-select.MuiSelect-outlined.MuiOutlinedInput-input.MuiInputBase-input':
-    {
-      paddingRight: '48px',
-    },
-
-  '& .MuiOutlinedInput-input.MuiInputBase-input.Mui-disabled': {
-    '-webkit-text-fill-color': theme.palette.darkGray.main,
-  },
-
-  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    borderWidth: '1px',
-    borderColor: theme.palette.primary.main,
-  },
-
-  '& .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.primary.main,
-  },
-  '&.Mui-disabled .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.darkGray.main,
-  },
-
-  '& .MuiSelect-icon': {
-    fill: theme.palette.primary.main,
-  },
-  '&.Mui-disabled .MuiSelect-icon': {
-    fill: theme.palette.darkGray.main,
-  },
-}));
+import { alpha, MenuItem, MenuProps, SelectProps } from '@mui/material';
+import * as Styled from './style';
 
 const menuListProps: Partial<MenuProps> = {
   MenuListProps: {
     sx: {
       bgcolor: (theme) => theme.palette.primary.main,
       '& .MuiMenuItem-root': {
-        color: (theme) => theme.palette.secondary.main,
-        '&.Mui-selected, &.Mui-selected:hover': {
-          bgcolor: (theme) => theme.palette.gray.main,
+        color: (theme) => theme.palette.primary.contrastText,
+        ':hover': {
+          bgcolor: (theme) => alpha(theme.palette.secondary.main, 0.2),
+        },
+        '&.Mui-selected.Mui-selected': {
+          bgcolor: (theme) => theme.palette.secondary.main,
+          color: (theme) => theme.palette.secondary.contrastText,
         },
       },
     },
   },
-  PaperProps: { sx: { borderRadius: 0 } },
+  PaperProps: { sx: { borderRadius: 0, boxShadow: 'none' } },
 };
 
 type Props = { placeholder?: string } & SelectProps<any>;
@@ -66,14 +33,14 @@ const Select: React.FC<Props> = (props) => {
   }, [value, placeholder]);
 
   return (
-    <StyledSelect MenuProps={menuListProps} {...rest} value={getValue()}>
+    <Styled.Select MenuProps={menuListProps} {...rest} value={getValue()}>
       {placeholder && (
         <MenuItem disabled value='placeholder'>
           {placeholder}
         </MenuItem>
       )}
       {children}
-    </StyledSelect>
+    </Styled.Select>
   );
 };
 
