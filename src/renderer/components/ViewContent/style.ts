@@ -12,5 +12,4 @@ export const ContentBox = styled(Box)(() => ({
   width: '50vw',
   paddingTop: '2rem',
   paddingBottom: '12rem',
-  // height: 'fit-content',
 }));
