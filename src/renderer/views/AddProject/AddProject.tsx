@@ -21,7 +21,7 @@ const StyledContainer = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   width: '50%',
   background: theme.palette.background,
-  paddingTop: theme.spacing(4),
+  paddingTop: theme.spacing(2),
 }));
 
 const StepContainer = styled('div')(({ theme }) => ({
