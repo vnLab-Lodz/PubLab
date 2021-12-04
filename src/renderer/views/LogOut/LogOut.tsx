@@ -5,7 +5,7 @@ import { terminateSessionAsync } from "../../../shared/redux/slices/currentUserS
 import Button from '@mui/material/Button';
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-
+import './LogOut.scss';
 
 const LogOut = () => {
   const { t, i18n } = useTranslation();
