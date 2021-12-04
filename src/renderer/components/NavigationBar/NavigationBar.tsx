@@ -101,10 +101,7 @@ const NavigationBar = () => {
         {renderButton(PROJECT_BUTTON)}
         {renderListOfButtons(TOP_BUTTONS)}
       </div>
-      <div>
-        {renderListOfButtons(BOTTOM_BUTTONS)}
-
-      </div>
+      <div>{renderListOfButtons(BOTTOM_BUTTONS)}</div>
       {isExpanded && (
         <div
           className='navbar__expand-handle'

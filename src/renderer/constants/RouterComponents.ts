@@ -8,7 +8,7 @@ import Settings from '../views/Settings/Settings';
 import ProjectsList from '../views/ProjectsList/ProjectsList';
 import ProjectInfo from '../views/ProjectInfo/ProjectInfo';
 import NoProjects from '../views/NoProjects/NoProjects';
-import LogOut  from '../views/LogOut/LogOut';
+import LogOut from '../views/LogOut/LogOut';
 
 export type RouterComponents = {
   [key in VIEWS | SUBVIEWS]: React.FC<any>;
