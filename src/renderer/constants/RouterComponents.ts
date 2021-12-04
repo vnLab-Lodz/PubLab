@@ -16,7 +16,7 @@ export type RouterComponents = {
 
 // This can be changed when we introduce some i18n
 export const COMPONENTS_TRANSLATIONS: Record<VIEWS, string> = {
-  LOGOUT: 'LogOut',
+  LOGOUT: 'Log out',
   PROJECT: 'Project',
   FILES: 'Files',
   CHANGES: 'Changes',
