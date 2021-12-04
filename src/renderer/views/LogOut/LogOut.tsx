@@ -3,7 +3,6 @@ import logo from '../../assets/publab.png';
 import { Typography } from '@mui/material';
 import { terminateSessionAsync } from "../../../shared/redux/slices/currentUserSlice";
 import Button from '@mui/material/Button';
-
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
@@ -16,7 +15,7 @@ const LogOut = () => {
         <div className='container'>
           <img src={logo} alt='Logo' />
           <Typography variant='h4' className='text'>
-            <p>{t('login-screen.button')} </p>
+            <p>{t('log-out-view.message')} </p>
           </Typography>
           <div className='button'>
             <Button
@@ -26,7 +25,7 @@ const LogOut = () => {
                 dispatch(terminateSessionAsync());
               }}
             >
-               <p>{t('login-screen.button')} </p>
+               <p>{t('log-out-view.button')} </p>
             </Button>
           </div>
         </div>
