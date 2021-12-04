@@ -18,6 +18,11 @@
     "button": "Log in with GitHub",
     "created": "Created by:"
   },
+  "technology-picker": {
+    "message": "Would you like to use technology extenssions?",
+    "back-button": "Back",
+    "next-button": "Next"
+  },
   "AppSettings": {
     "title": "App Settings",
     "abbreviation": "AS",

@@ -18,6 +18,11 @@
     "button": "Zaloguj się przez GitHub",
     "created": "Stworzony przez:"
   },
+  "technology-picker": {
+    "message": "Czy chciałbyś używać następujących rozszerzeń technologii?",
+    "back-button": "Wstecz",
+    "next-button": "Następny"
+  },
   "AppSettings": {
     "title": "Ustawienia Aplikacji",
     "abbreviation": "UA",
