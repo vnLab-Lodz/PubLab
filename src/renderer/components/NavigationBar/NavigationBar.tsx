@@ -34,6 +34,7 @@ const TOP_BUTTONS: IButton[] = [
 const BOTTOM_BUTTONS: IButton[] = [
   { abbreviation: 'PL', view: VIEWS.PROJECTS_LIST },
   { abbreviation: 'AS', view: VIEWS.APP_SETTINGS },
+  { abbreviation: 'LO', view: VIEWS.LOGOUT },
 ];
 
 const NavigationBar = () => {
@@ -102,14 +103,7 @@ const NavigationBar = () => {
       </div>
       <div>
         {renderListOfButtons(BOTTOM_BUTTONS)}
-        <button
-          type='button'
-          className='navbar__button'
-          onClick={() => dispatch(terminateSessionAsync())}
-        >
-          <div className='navbar__button__icon'>LO</div>
-          <span className='navbar__button__text'>Log out</span>
-        </button>
+
       </div>
       {isExpanded && (
         <div
