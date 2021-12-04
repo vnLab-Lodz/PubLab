@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Typography } from '@mui/material';
 import { FaGithub } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
@@ -12,6 +12,7 @@ import {
   supportedLocales,
 } from '../../internationalisation/i18next';
 import { saveSettingsAsync } from '../../../shared/redux/slices/settingsSlice';
+import { saveFirstTimeFlag } from '../../../shared/redux/helpers/localStorage';
 
 const LoginComponent = () => {
   const { t, i18n } = useTranslation();
@@ -20,6 +21,8 @@ const LoginComponent = () => {
   const changeLanguage = (locale: SupportedLangCode) => {
     dispatch(saveSettingsAsync({ currentLocale: locale }));
   };
+
+  useEffect(() => saveFirstTimeFlag(true), []);
 
   return (
     <div className='background'>

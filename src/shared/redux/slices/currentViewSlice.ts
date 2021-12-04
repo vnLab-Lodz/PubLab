@@ -14,7 +14,7 @@ export type CurrentView = {
 };
 
 const initialState: CurrentView = {
-  view: VIEWS.PROJECT,
+  view: VIEWS.FIRST_TIME,
   subview: { element: SUBVIEWS.NONE },
 };
 

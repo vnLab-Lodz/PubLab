@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import './FirstTime.scss';
@@ -14,6 +14,10 @@ import {
 import DirectoryPicker from '../../components/DirectoryPicker/DirectoryPicker';
 import { VIEWS } from '../../constants/Views';
 import { updateCurrentView } from '../../../shared/redux/slices/currentViewSlice';
+import {
+  loadFirstTimeFlag,
+  saveFirstTimeFlag,
+} from '../../../shared/redux/helpers/localStorage';
 
 function handleSettingChange(
   state: Settings,
@@ -31,6 +35,11 @@ const FirstTime = () => {
 
   useReducer(handleSettingChange, useSelector(selectAllSettings));
 
+  useEffect(() => {
+    if (loadFirstTimeFlag() !== true)
+      dispatch(updateCurrentView(VIEWS.PROJECT));
+  }, []);
+
   return (
     <ThemeProvider theme={altTheme}>
       <ViewContent>
@@ -38,7 +47,6 @@ const FirstTime = () => {
           variant='h1'
           sx={{
             color: (theme) => theme.palette.text.primary,
-            marginTop: '20px',
             fontWeight: 'bold',
           }}
         >
@@ -126,6 +134,7 @@ const FirstTime = () => {
                   height: '60px',
                 }}
                 onClick={() => {
+                  saveFirstTimeFlag(false);
                   dispatch(updateCurrentView(VIEWS.PROJECTS_LIST));
                 }}
               >
