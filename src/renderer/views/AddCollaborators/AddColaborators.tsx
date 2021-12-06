@@ -7,6 +7,16 @@ import CollabPicker from '../../components/CollabPicker/CollabPicker';
 
 const AddColaborators = () => {
   const { t } = useTranslation();
+  const options = [
+    {
+      value: 'programmer',
+      label: 'Programmer',
+    },
+    {
+      value: 'editor',
+      label: 'Editor',
+    },
+  ];
   return (
     <ThemeProvider theme={altTheme}>
       <ViewContentBase>
@@ -20,6 +30,7 @@ const AddColaborators = () => {
           {t('AddColaborators.title')}
         </Typography>
         <CollabPicker
+          options={options}
           buttonText='ADD'
           selectPlaceholder='Role'
           textFieldPlaceholder='Username...'
