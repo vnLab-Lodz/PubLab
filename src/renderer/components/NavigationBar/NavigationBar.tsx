@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { COMPONENTS_TRANSLATIONS } from '../../constants/RouterComponents';
+import { VIEWS } from '../../constants/Views';
+import PlaceholderProjectImage from '../../assets/placeholder-project-image.png';
+import './NavigationBar.scss';
 import {
   selectCurrentView,
   updateCurrentView,
 } from '../../../shared/redux/slices/currentViewSlice';
-import './NavigationBar.scss';
-import { VIEWS } from '../../constants/Views';
-import { terminateSessionAsync } from '../../../shared/redux/slices/currentUserSlice';
-import PlaceholderProjectImage from '../../assets/placeholder-project-image.png';
 
 interface IButton {
   abbreviation: string;
@@ -34,6 +33,7 @@ const TOP_BUTTONS: IButton[] = [
 const BOTTOM_BUTTONS: IButton[] = [
   { abbreviation: 'PL', view: VIEWS.PROJECTS_LIST },
   { abbreviation: 'AS', view: VIEWS.APP_SETTINGS },
+  { abbreviation: 'LO', view: VIEWS.LOGOUT },
 ];
 
 const NavigationBar = () => {
@@ -100,17 +100,7 @@ const NavigationBar = () => {
         {renderButton(PROJECT_BUTTON)}
         {renderListOfButtons(TOP_BUTTONS)}
       </div>
-      <div>
-        {renderListOfButtons(BOTTOM_BUTTONS)}
-        <button
-          type='button'
-          className='navbar__button'
-          onClick={() => dispatch(terminateSessionAsync())}
-        >
-          <div className='navbar__button__icon'>LO</div>
-          <span className='navbar__button__text'>Log out</span>
-        </button>
-      </div>
+      <div>{renderListOfButtons(BOTTOM_BUTTONS)}</div>
       {isExpanded && (
         <div
           className='navbar__expand-handle'
