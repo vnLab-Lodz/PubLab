@@ -44,5 +44,8 @@
         "instant": "Chcę by pojawiały się od razu."
       }
     }
+  },
+  "AddColaborators": {
+    "title": "Czy chcesz dodać współpracowników?"
   }
 }

@@ -44,5 +44,8 @@
         "instant": "I want them instantly."
       }
     }
+  },
+  "AddColaborators": {
+    "title": "Would ypu like to add collaborators?"
   }
 }
