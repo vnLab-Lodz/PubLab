@@ -15,9 +15,7 @@ export const BlackButton = styled(StyledButton)(({ theme }) => ({
   backgroundColor: theme.palette.black,
 }));
 
-  
 export const GreenButton = styled(StyledButton)(({ theme }) => ({
-	backgroundColor: theme.palette.green.main,
-	color: theme.palette.black.main,
+  backgroundColor: theme.palette.green.main,
+  color: theme.palette.black.main,
 }));
-  

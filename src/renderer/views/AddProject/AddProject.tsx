@@ -12,7 +12,6 @@ import ViewContent from '../../../renderer/components/ViewContent/ViewContent';
 import * as Styled from './style';
 import { useTranslation } from 'react-i18next';
 
-
 const AddProject = () => {
   const currentStep = useSelector(
     (state: RootState) => state.newPublication.step
@@ -42,22 +41,22 @@ const AddProject = () => {
   return (
     <ThemeProvider theme={altTheme}>
       <ViewContent>
-        <Typography 
+        <Typography
           variant='h1'
           sx={{
             color: (theme) => theme.palette.text.primary,
-            fontWeight: 'bold'
+            fontWeight: 'bold',
           }}
         >
           {t('AddProject.header.newProject')}
         </Typography>
-        <Typography 
+        <Typography
           variant='h4'
           sx={{
             color: (theme) => theme.palette.text.primary,
           }}
         >
-           {t('AddProject.header.step')} {currentStep}/5
+          {t('AddProject.header.step')} {currentStep}/5
         </Typography>
         <Styled.StepContainer>{renderStepComponent()}</Styled.StepContainer>
         <div>
