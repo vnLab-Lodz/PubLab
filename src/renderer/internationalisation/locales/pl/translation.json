@@ -40,5 +40,15 @@
         "instant": "Chcę by pojawiały się od razu."
       }
     }
+  },
+  "AddProject": {
+    "header": {
+      "newProject": "Nowy Projekt",
+      "step": "krok"
+    },
+    "buttons": {
+      "next": "dalej",
+      "back": "wstecz"
+    }
   }
 }
