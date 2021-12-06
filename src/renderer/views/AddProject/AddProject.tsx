@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import { ThemeProvider, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -7,10 +7,9 @@ import {
   increaseStep,
 } from '../../../shared/redux/slices/addPublicationSlice';
 import { RootState } from '../../../shared/redux/rootReducer';
-import { altTheme } from './../../theme';
-import ViewContent from '../../../renderer/components/ViewContent/ViewContent';
+import { altTheme } from '../../theme';
+import ViewContent from '../../components/ViewContent/ViewContent';
 import * as Styled from './style';
-import { useTranslation } from 'react-i18next';
 
 const AddProject = () => {
   const currentStep = useSelector(

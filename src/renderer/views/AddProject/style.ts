@@ -1,5 +1,5 @@
 import { styled } from '@mui/material';
-import Button from '../../../renderer/components/Button/Button';
+import Button from '../../components/Button/Button';
 
 export const StepContainer = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(10),
