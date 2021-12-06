@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { COMPONENTS_TRANSLATIONS } from '../../constants/RouterComponents';
+import { VIEWS } from '../../constants/Views';
+import PlaceholderProjectImage from '../../assets/placeholder-project-image.png';
+import './NavigationBar.scss';
 import {
   selectCurrentView,
   updateCurrentView,
 } from '../../../shared/redux/slices/currentViewSlice';
-import './NavigationBar.scss';
-import { VIEWS } from '../../constants/Views';
-import { terminateSessionAsync } from '../../../shared/redux/slices/currentUserSlice';
-import PlaceholderProjectImage from '../../assets/placeholder-project-image.png';
 
 interface IButton {
   abbreviation: string;
