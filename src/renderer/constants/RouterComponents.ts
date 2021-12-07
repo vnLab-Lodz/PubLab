@@ -9,6 +9,7 @@ import AddProject from '../views/AddProject/AddProject';
 import ProjectsList from '../views/ProjectsList/ProjectsList';
 import ProjectInfo from '../views/ProjectInfo/ProjectInfo';
 import NoProjects from '../views/NoProjects/NoProjects';
+import LogOut from '../views/LogOut/LogOut';
 
 export type RouterComponents = {
   [key in VIEWS | SUBVIEWS]: React.FC<any>;
@@ -16,6 +17,7 @@ export type RouterComponents = {
 
 // This can be changed when we introduce some i18n
 export const COMPONENTS_TRANSLATIONS: Record<VIEWS, string> = {
+  LOGOUT: 'Log out',
   PROJECT: 'Project',
   FILES: 'Files',
   CHANGES: 'Changes',
@@ -26,6 +28,7 @@ export const COMPONENTS_TRANSLATIONS: Record<VIEWS, string> = {
 };
 
 export const routerComponents: RouterComponents = {
+  [VIEWS.LOGOUT]: LogOut,
   [VIEWS.PROJECT]: Description,
   [VIEWS.FILES]: Files,
   [VIEWS.CHANGES]: Changes,

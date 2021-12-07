@@ -18,6 +18,10 @@
     "button": "Log in with GitHub",
     "created": "Created by:"
   },
+  "log-out-view": {
+    "message": "You're sure you want to log out?",
+    "button": "Yes, log me out."
+  },
   "AppSettings": {
     "title": "App Settings",
     "abbreviation": "AS",
