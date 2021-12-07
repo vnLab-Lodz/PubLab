@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { isDirectory, isPublication } from './file-manager';
-import { Collaborator } from '../../shared/redux/slices/publicationsSlice';
+import { Collaborator } from '../../shared/redux/slices/loadPublicationsSlice';
 import { configFileName } from './config-util';
 import { Configuration } from './model/Configuration';
 

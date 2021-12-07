@@ -25,6 +25,10 @@
     "welcome": "Hi, thanks for stopping by!",
     "message": "Before you start, choose the directory to which you would like to sync all your projects."
   },
+  "log-out-view": {
+    "message": "You're sure you want to log out?",
+    "button": "Yes, log me out."
+  },
   "AppSettings": {
     "title": "App Settings",
     "abbreviation": "AS",
@@ -46,6 +50,16 @@
       "intervals": {
         "instant": "I want them instantly."
       }
+    }
+  },
+  "AddProject": {
+    "header": {
+      "newProject": "New Project",
+      "step": "step"
+    },
+    "buttons": {
+      "next": "next",
+      "back": "back"
     }
   }
 }
