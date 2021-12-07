@@ -43,15 +43,15 @@ type CollaboratorListModification<T> = {
 
 const initialState: Publication[] = [];
 
-const publicationsSlice = createSlice({
-  name: 'publications',
+const loadPublicationsSlice = createSlice({
+  name: 'loadPublications',
   initialState,
   reducers: {
     setPublicationsList: (
       state: Publication[],
       action: PayloadAction<Publication[]>
     ) => action.payload,
-    addPublication: (
+    loadPublication: (
       state: Publication[],
       action: PayloadAction<Publication>
     ) => {
@@ -66,7 +66,7 @@ const publicationsSlice = createSlice({
       );
       return updatedState;
     },
-    setPublicationField: (
+    updatePublicationField: (
       state: Publication[],
       action: PayloadAction<PublicationModification>
     ) => {
@@ -104,13 +104,14 @@ const publicationsSlice = createSlice({
 
 export const {
   setPublicationsList,
-  addPublication,
+  loadPublication,
   deletePublication,
-  setPublicationField,
+  updatePublicationField,
   addCollaborator,
   deleteCollaborator,
-} = publicationsSlice.actions;
+} = loadPublicationsSlice.actions;
 
-export const selectPublicationList = (state: RootState) => state.publications;
+export const loadedPublicationsList = (state: RootState) =>
+  state.loadedPublications;
 
-export default publicationsSlice.reducer;
+export default loadPublicationsSlice.reducer;

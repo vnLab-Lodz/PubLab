@@ -44,5 +44,15 @@
         "instant": "I want them instantly."
       }
     }
+  },
+  "AddProject": {
+    "header": {
+      "newProject": "New Project",
+      "step": "step"
+    },
+    "buttons": {
+      "next": "next",
+      "back": "back"
+    }
   }
 }
