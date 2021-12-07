@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider, Typography } from '@mui/material';
-import { altTheme } from '../../theme';
-import ViewContentBase from '../../components/ViewContent/ViewContent';
-import CollabPicker from '../../components/CollabPicker/CollabPicker';
+import { altTheme } from '../../../../theme';
+import ViewContentBase from '../../../../components/ViewContent/ViewContent';
+import CollabPicker from '../../../../components/CollabPicker/CollabPicker';
 
 const AddColaborators = () => {
   const { t } = useTranslation();

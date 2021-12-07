@@ -11,6 +11,7 @@ import {
   deleteDraft,
   increaseStep,
 } from '../../../shared/redux/slices/addPublicationSlice';
+import AddColaborators from './subcomponents/AddCollaborators/AddColaborators';
 
 const AddProject = () => {
   const currentStep = useSelector(stepSelector);
@@ -29,7 +30,7 @@ const AddProject = () => {
       // substitute cases with components created for the issues,
       // delete this comment after it becomes obsolete
       case 1:
-        return 'Insert component 1';
+        return <AddColaborators />;
       case 2:
         return 'Insert component 2';
       case 3:
