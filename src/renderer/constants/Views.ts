@@ -4,11 +4,12 @@
  * ReferenceError: $RefreshSig$ is not defined
  */
 export enum VIEWS {
+  LOGOUT = 'LOGOUT',
   PROJECT = 'PROJECT',
   FILES = 'FILES',
   CHANGES = 'CHANGES',
   SETTINGS = 'SETTINGS',
-
+  ADD_PROJECT = 'ADD_PROJECT',
   PROJECTS_LIST = 'PROJECTS_LIST',
   APP_SETTINGS = 'APP_SETTINGS',
 }

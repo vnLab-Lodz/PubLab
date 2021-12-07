@@ -1,19 +1,19 @@
 import React, { useReducer } from 'react';
-import './AppSettings.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Button, ThemeProvider } from '@mui/material';
+import { ThemeProvider, Typography } from '@mui/material';
 import {
   saveSettingsAsync,
   selectAllSettings,
   Settings,
 } from '../../../shared/redux/slices/settingsSlice';
-import AppUpdate from './subcomponents/AppUpdate';
-import LangSelect from './subcomponents/LangSelect';
-import DefaultDirSelect from './subcomponents/DefaultDirSelect';
-import NotificationIntervalSelect from './subcomponents/NotifIntervalSelect';
-import ViewContent from '../../components/ViewContent/ViewContent';
+import AppUpdate from './subcomponents/AppUpdate/AppUpdate';
+import LangSelect from './subcomponents/LangSelect/LangSelect';
+import DefaultDirSelect from './subcomponents/DefaultDirSelect/DefaultDirSelect';
+import NotificationIntervalSelect from './subcomponents/NotifIntervalSelect/NotifIntervalSelect';
 import { altTheme } from '../../theme';
+import * as Styled from './style';
+import Button from '../../components/Button/Button';
 
 const AppSettings = () => {
   const { t } = useTranslation();
@@ -29,8 +29,16 @@ const AppSettings = () => {
 
   return (
     <ThemeProvider theme={altTheme}>
-      <ViewContent>
-        {t('AppSettings.title')}
+      <Styled.ViewContent>
+        <Typography
+          variant='h1'
+          sx={{
+            color: (theme) => theme.palette.text.primary,
+            marginBottom: '8.5rem',
+          }}
+        >
+          {t('AppSettings.title')}
+        </Typography>
         <AppUpdate />
         <LangSelect
           currentLocale={settings.currentLocale}
@@ -40,17 +48,23 @@ const AppSettings = () => {
           defaultDirPath={settings.defaultDirPath}
           onChange={(path) => changeSetting({ defaultDirPath: path })}
         />
-        <Button style={{ display: 'block' }} onClick={() => submitChanges()}>
-          {t('common.save')}
-        </Button>
         <NotificationIntervalSelect
           currentInterval={settings.notificationInterval}
           onChange={(interval) =>
             changeSetting({ notificationInterval: interval })
           }
         />
-        <Button onClick={() => submitChanges()}>{t('common.save')}</Button>
-      </ViewContent>
+        <Button
+          onClick={() => submitChanges()}
+          variant='contained'
+          color='green'
+          typographyVariant='h3'
+          fontWeight='bold'
+          fullWidth
+        >
+          {t('common.save')}
+        </Button>
+      </Styled.ViewContent>
     </ThemeProvider>
   );
 };

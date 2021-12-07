@@ -1,6 +1,7 @@
-import { Button, InputLabel, TextField } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import DirectoryPicker from '../../../../components/DirectoryPicker/DirectoryPicker';
+import InputLabel from '../../../../components/InputLabel/InputLabel';
 
 const { dialog } = require('electron').remote;
 
@@ -12,20 +13,21 @@ interface Props {
 export default function DefaultDirSelect({ defaultDirPath, onChange }: Props) {
   const { t } = useTranslation();
   return (
-    <>
+    <div>
       <InputLabel id='dir-select-label'>
-        {t('AppSettings.defaultDirectory.description')}
+        {t('AppSettings.defaultDirectory.description')}:
       </InputLabel>
-      <TextField label='dir-select-label' value={defaultDirPath} />
-      <Button
+      <DirectoryPicker
+        buttonText={t('common.change')}
+        labelledBy='dir-select-label'
+        value={defaultDirPath}
         onClick={() => {
           dialog
             .showOpenDialog({ properties: ['openDirectory'] })
             .then(({ filePaths }: any) => onChange(filePaths[0]));
         }}
-      >
-        {t('common.change')}
-      </Button>
-    </>
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </div>
   );
 }

@@ -24,6 +24,7 @@ const createWindow = async (): Promise<void> => {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
       enableRemoteModule: true,
       nodeIntegration: true,
+      defaultFontSize: 10,
     },
   });
 

@@ -18,6 +18,10 @@
     "button": "Zaloguj się przez GitHub",
     "created": "Stworzony przez:"
   },
+  "log-out-view": {
+    "message": "Jesteś pewny, że chcesz się wylogować?",
+    "button": "Tak, wyloguj mnie."
+  },
   "AppSettings": {
     "title": "Ustawienia Aplikacji",
     "abbreviation": "UA",
@@ -39,6 +43,16 @@
       "intervals": {
         "instant": "Chcę by pojawiały się od razu."
       }
+    }
+  },
+  "AddProject": {
+    "header": {
+      "newProject": "Nowy Projekt",
+      "step": "krok"
+    },
+    "buttons": {
+      "next": "dalej",
+      "back": "wstecz"
     }
   }
 }
