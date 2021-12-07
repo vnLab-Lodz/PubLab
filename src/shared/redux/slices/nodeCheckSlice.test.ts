@@ -2,7 +2,7 @@ import reducer, {
   checkingInstallation,
   nodeInstalled,
   nodeNotInstalled,
-} from './nodeCheckSlice';
+} from './nodeInstallSlice';
 
 describe('nodeCheckSlice', () => {
   it('handles checkingInstallation action', () => {
