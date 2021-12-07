@@ -1,22 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ThemeProvider, Typography } from '@mui/material';
+import { ThemeProvider, Typography, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  decreaseStep,
-  increaseStep,
-} from '../../../shared/redux/slices/addPublicationSlice';
-import { RootState } from '../../../shared/redux/rootReducer';
+import Button from '../../components/Button/Button';
 import { altTheme } from '../../theme';
 import ViewContent from '../../components/ViewContent/ViewContent';
-import * as Styled from './style';
+import {
+  currentStep as stepSelector,
+  decreaseStep,
+  deleteDraft,
+  increaseStep,
+} from '../../../shared/redux/slices/addPublicationSlice';
 
 const AddProject = () => {
-  const currentStep = useSelector(
-    (state: RootState) => state.newPublication.step
-  );
+  const currentStep = useSelector(stepSelector);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  useEffect(
+    () => () => {
+      dispatch(deleteDraft());
+    },
+    []
+  );
 
   const renderStepComponent = () => {
     switch (currentStep) {
@@ -57,31 +63,36 @@ const AddProject = () => {
         >
           {t('AddProject.header.step')} {currentStep}/5
         </Typography>
-        <Styled.StepContainer>{renderStepComponent()}</Styled.StepContainer>
-        <div>
-          <Styled.BlackButton
+        <Box
+          sx={{
+            margin: ({ spacing }) => `${spacing(10)} 0px ${spacing(8)} 0px`,
+          }}
+        >
+          {renderStepComponent()}
+        </Box>
+        <Box sx={{ display: 'flex' }}>
+          <Button
+            sx={{ flex: 1, height: '6rem' }}
             textCase='uppercase'
             fontWeight='bold'
             typographyVariant='h3'
             variant='outlined'
-            onClick={() => {
-              if (currentStep > 1) dispatch(decreaseStep());
-            }}
+            onClick={() => dispatch(decreaseStep())}
           >
             {t('AddProject.buttons.back')}
-          </Styled.BlackButton>
-          <Styled.GreenButton
+          </Button>
+          <Button
+            sx={{ flex: 1, height: '6rem' }}
             textCase='uppercase'
             fontWeight='bold'
             typographyVariant='h3'
             color='green'
-            onClick={() => {
-              if (currentStep < 5) dispatch(increaseStep());
-            }}
+            variant='contained'
+            onClick={() => dispatch(increaseStep())}
           >
             {t('AddProject.buttons.next')}
-          </Styled.GreenButton>
-        </div>
+          </Button>
+        </Box>
       </ViewContent>
     </ThemeProvider>
   );

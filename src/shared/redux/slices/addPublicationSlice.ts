@@ -41,7 +41,7 @@ const initialState: NewPublication = {
   packageManager: '',
   useSass: false,
   useTypescript: false,
-  step: 0,
+  step: 1,
 };
 
 const addPublicationSlice = createSlice({
@@ -73,10 +73,10 @@ const addPublicationSlice = createSlice({
       state.collaborators = updatedCollaborators;
     },
     increaseStep: (state: NewPublication) => {
-      state.step += 1;
+      if (state.step < 5) state.step += 1;
     },
     decreaseStep: (state: NewPublication) => {
-      state.step -= 1;
+      if (state.step > 1) state.step -= 1;
     },
   },
 });
@@ -91,5 +91,7 @@ export const {
 } = addPublicationSlice.actions;
 
 export const newPublication = (state: RootState) => state.newPublication;
+
+export const currentStep = (state: RootState) => state.newPublication.step;
 
 export default addPublicationSlice.reducer;
