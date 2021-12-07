@@ -45,6 +45,16 @@
       }
     }
   },
+  "AddProject": {
+    "header": {
+      "newProject": "Nowy Projekt",
+      "step": "krok"
+    },
+    "buttons": {
+      "next": "dalej",
+      "back": "wstecz"
+    }
+  },
   "AddColaborators": {
     "title": "Czy chcesz dodać współpracowników?"
   }
