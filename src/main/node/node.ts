@@ -42,6 +42,7 @@ class Platform {
           resolve();
         });
       }
+      reject(`Node manager installation command unspecified.`);
     });
   }
 
@@ -58,6 +59,7 @@ class Platform {
           resolve();
         });
       }
+      reject(`Node installation command unspecified.`);
     });
   }
 
