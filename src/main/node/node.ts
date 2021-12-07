@@ -42,7 +42,8 @@ class Platform {
           resolve();
         });
       }
-      reject(`Node manager installation command unspecified.`);
+      const message = `Node manager installation command unspecified.`;
+      reject(message);
     });
   }
 
@@ -59,7 +60,8 @@ class Platform {
           resolve();
         });
       }
-      reject(`Node installation command unspecified.`);
+      const message = `Node installation command unspecified.`;
+      reject(message);
     });
   }
 
