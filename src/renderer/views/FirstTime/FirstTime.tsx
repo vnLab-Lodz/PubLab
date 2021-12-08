@@ -1,125 +1,70 @@
-import React, { useReducer, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import './FirstTime.scss';
-import { ThemeProvider, Typography } from '@mui/material';
+import { ThemeProvider, Typography, Box } from '@mui/material';
 import ViewContent from '../../components/ViewContent/ViewContent';
 import { altTheme } from '../../theme';
 import Button from '../../components/Button/Button';
-import {
-  saveSettingsAsync,
-  selectAllSettings,
-  Settings,
-} from '../../../shared/redux/slices/settingsSlice';
+import { saveSettingsAsync } from '../../../shared/redux/slices/settingsSlice';
 import DirectoryPicker from '../../components/DirectoryPicker/DirectoryPicker';
 import { VIEWS } from '../../constants/Views';
 import { updateCurrentView } from '../../../shared/redux/slices/currentViewSlice';
-import {
-  loadFirstTimeFlag,
-  saveFirstTimeFlag,
-} from '../../../shared/redux/helpers/localStorage';
-
-function handleSettingChange(
-  state: Settings,
-  change: Partial<Settings>
-): Settings {
-  return { ...state, ...change };
-}
+import { setLocalStorageItem } from '../../../shared/redux/helpers/localStorage';
 
 const FirstTime = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { dialog } = require('electron').remote;
   const [path, setPath] = useState(false);
   const [dir, setDir] = useState('');
 
-  useReducer(handleSettingChange, useSelector(selectAllSettings));
+  const pickDirectory = () => {
+    const { dialog } = require('electron').remote;
 
-  useEffect(() => {
-    if (loadFirstTimeFlag() !== true)
-      dispatch(updateCurrentView(VIEWS.PROJECT));
-  }, []);
+    dialog
+      .showOpenDialog({ properties: ['openDirectory'] })
+      .then(({ filePaths }: any) => {
+        dispatch(saveSettingsAsync({ defaultDirPath: filePaths[0] }));
+        if (filePaths[0] !== undefined) setPath(true);
+        setDir(filePaths[0]);
+      });
+  };
 
   return (
     <ThemeProvider theme={altTheme}>
       <ViewContent>
-        <Typography
-          variant='h1'
-          sx={{
-            color: (theme) => theme.palette.text.primary,
-            fontWeight: 'bold',
-          }}
-        >
+        <Typography variant='h1' sx={{ fontWeight: 'bold' }}>
           {t('first-time-view.title')}
         </Typography>
-        <Typography
-          variant='h1'
-          sx={{
-            color: (theme) => theme.palette.text.primary,
-            marginTop: '90px',
-          }}
-        >
+        <Typography variant='h1' sx={{ marginTop: '9rem' }}>
           {t('first-time-view.welcome')}
         </Typography>
-        <Typography
-          variant='h1'
-          sx={{
-            color: (theme) => theme.palette.text.primary,
-            marginTop: '27.25px',
-          }}
-        >
+        <Typography variant='h1' sx={{ marginTop: '2.725rem' }}>
           {t('first-time-view.message')}
         </Typography>
 
-        <div>
+        <Box>
           {!path ? (
             <Button
+              fullWidth
+              fontWeight='light'
               variant='contained'
               textCase='uppercase'
-              fontWeight='light'
-              fullWidth
-              sx={{
-                marginTop: '90px',
-                height: '45px',
-                fontSize: '13px',
-              }}
-              onClick={() => {
-                dialog
-                  .showOpenDialog({
-                    properties: ['openDirectory'],
-                  })
-                  .then(({ filePaths }: any) => {
-                    dispatch(
-                      saveSettingsAsync({ defaultDirPath: filePaths[0] })
-                    );
-                    if (filePaths[0] !== undefined) setPath(true);
-                    setDir(filePaths[0]);
-                  });
-              }}
+              sx={{ marginTop: '9rem', height: '4.5rem' }}
+              onClick={pickDirectory}
             >
               {t('common.choose')}
             </Button>
           ) : (
-            <div style={{ marginTop: '90px' }}>
+            <Box sx={{ marginTop: '9rem' }}>
               <DirectoryPicker
-                buttonText='CHANGE'
+                buttonText={t('common.change')}
                 value={dir}
-                onChange={(p: any) => {
-                  saveSettingsAsync({ defaultDirPath: p });
-                  setDir(p.target.value);
+                onChange={(event) => {
+                  const { value } = event.target;
+                  saveSettingsAsync({ defaultDirPath: value });
+                  setDir(value);
                 }}
-                onClick={() => {
-                  dialog
-                    .showOpenDialog({
-                      properties: ['openDirectory'],
-                    })
-                    .then(({ filePaths }: any) => {
-                      dispatch(
-                        saveSettingsAsync({ defaultDirPath: filePaths[0] })
-                      );
-                      setDir(filePaths[0]);
-                    });
-                }}
+                onClick={pickDirectory}
               />
               <Button
                 disabled={dir === ''}
@@ -130,19 +75,25 @@ const FirstTime = () => {
                 fullWidth
                 typographyVariant='h3'
                 sx={{
-                  marginTop: '90px',
-                  height: '60px',
+                  marginTop: '9rem',
+                  height: '6rem',
+                  ':disabled': {
+                    cursor: 'not-allowed',
+                    opacity: 0.6,
+                    color: 'text.secondary',
+                    background: (theme) => theme.palette.green.main,
+                  },
                 }}
                 onClick={() => {
-                  saveFirstTimeFlag(false);
+                  setLocalStorageItem('initialConfigFlag', false);
                   dispatch(updateCurrentView(VIEWS.PROJECTS_LIST));
                 }}
               >
                 {t('common.go')}
               </Button>
-            </div>
+            </Box>
           )}
-        </div>
+        </Box>
       </ViewContent>
     </ThemeProvider>
   );

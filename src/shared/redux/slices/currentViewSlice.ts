@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../rootReducer';
 import { SUBVIEWS, VIEWS } from '../../../renderer/constants/Views';
 import { terminateSessionFulfilled } from './currentUserSlice';
+import { getLocalStorageItem } from '../helpers/localStorage';
 
 export interface ISubview {
   element: SUBVIEWS;
@@ -14,7 +15,9 @@ export type CurrentView = {
 };
 
 const initialState: CurrentView = {
-  view: VIEWS.FIRST_TIME,
+  view: getLocalStorageItem<boolean>('initialConfigFlag', JSON.parse)
+    ? VIEWS.PROJECT
+    : VIEWS.FIRST_TIME,
   subview: { element: SUBVIEWS.NONE },
 };
 

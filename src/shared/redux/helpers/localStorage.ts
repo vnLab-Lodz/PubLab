@@ -1,20 +1,22 @@
-export const loadFirstTimeFlag = () => {
+export function getLocalStorageItem<T = string>(
+  key: string,
+  transform?: (arg: string) => T
+): T | string | undefined {
   try {
-    const firstTime = localStorage.getItem('firstTime');
-    if (firstTime === null) {
-      return undefined;
-    }
-    return JSON.parse(firstTime);
-  } catch (err) {
+    const item = localStorage.getItem(key);
+    if (item == null) return undefined;
+
+    return transform ? transform(item) : item;
+  } catch {
     return undefined;
   }
-};
+}
 
-export const saveFirstTimeFlag = (flag: any) => {
+export function setLocalStorageItem<T = string>(key: string, value: T) {
   try {
-    const firstTime = JSON.stringify(flag);
-    localStorage.setItem('firstTime', firstTime);
-  } catch {
-    console.log('empty');
+    const item = JSON.stringify(value);
+    localStorage.setItem(key, item);
+  } catch (error) {
+    console.error(error);
   }
-};
+}

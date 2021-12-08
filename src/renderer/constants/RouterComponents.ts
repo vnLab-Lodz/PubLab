@@ -29,6 +29,8 @@ export const COMPONENTS_TRANSLATIONS: Record<VIEWS, string> = {
   APP_SETTINGS: 'App settings',
 };
 
+export const FULL_SCREEN_VIEWS = [VIEWS.FIRST_TIME];
+
 export const routerComponents: RouterComponents = {
   [VIEWS.FIRST_TIME]: FirstTime,
   [VIEWS.LOGOUT]: LogOut,
