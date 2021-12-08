@@ -53,9 +53,15 @@
     "buttons": {
       "next": "next",
       "back": "back"
+    },
+    "AddCollaborators": {
+      "title": "Would you like to add collaborators?",
+      "table_title": "Added collaborators:",
+      "username": "Username",
+      "role": "Role",
+      "programmer": "Programmer",
+      "editor": "Editor",
+      "add_button": "Add"
     }
-  },
-  "AddColaborators": {
-    "title": "Would you like to add collaborators?"
   }
 }

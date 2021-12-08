@@ -53,9 +53,15 @@
     "buttons": {
       "next": "dalej",
       "back": "wstecz"
+    },
+    "AddCollaborators": {
+      "title": "Czy chcesz dodać współpracowników?",
+      "table_title": "Dodani współpracownicy:",
+      "username": "Nazwa użytkownika",
+      "role": "Rola",
+      "programmer": "Programista",
+      "editor": "Edytor",
+      "add_button": "Dodaj"
     }
-  },
-  "AddColaborators": {
-    "title": "Czy chcesz dodać współpracowników?"
   }
 }
