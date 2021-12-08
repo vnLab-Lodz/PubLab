@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Button from '../../components/Button/Button';
 import StyledSwitch from '../../components/Switch/Switch';
@@ -6,18 +6,19 @@ import './TechnologiesPicker.scss';
 
 const TechnologiesPicker = () => {
     const { t, i18n } = useTranslation();
+    let [ useSCSS, changeUseSCSS ] = useState(true);
+    let [ useTP, changeTP ] = useState(true);
 
     return (<div className='container'>
         <h2>{t('technology-picker.message')}</h2>
         
         <div className='switches'>
-        <div className='switch'><StyledSwitch/><p className='inline'> SCSS</p></div>
-        <div><StyledSwitch/><p className='inline'> TYPESCRIPT</p ></div>
-        </div>
-
-        <div>
-        <Button>{t('technology-picker.back-button')}</Button>
-        <Button>{t('technology-picker.next-button')}</Button>
+        <div className='switch'><StyledSwitch checked={useSCSS} onChange={() => {
+            changeUseSCSS(useSCSS = !useSCSS);
+        }}/><p className='inline'> SCSS</p></div>
+        <div><StyledSwitch checked={useTP} onChange={() => {
+            changeTP(useTP = !useTP);
+        }}/><p className='inline'> TYPESCRIPT</p ></div>
         </div>
     </div>);
 }
