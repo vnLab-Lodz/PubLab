@@ -15,6 +15,7 @@ const TechnologiesPicker = () => {
       <div className='switches'>
         <div className='switch'>
           <StyledSwitch
+            size='small'
             checked={useSCSS}
             onChange={() => {
               changeUseSCSS((useSCSS = !useSCSS));
@@ -24,6 +25,7 @@ const TechnologiesPicker = () => {
         </div>
         <div>
           <StyledSwitch
+            size='small'
             checked={useTP}
             onChange={() => {
               changeTP((useTP = !useTP));
