@@ -1,7 +1,9 @@
 {
   "common": {
     "save": "save",
-    "change": "change"
+    "change": "change",
+    "choose": "choose",
+    "go": "let's go"
   },
   "auth": {
     "in_progress": "Authentication in progress:",
@@ -17,6 +19,11 @@
     "message": "To begin, please log in using your GitHub account",
     "button": "Log in with GitHub",
     "created": "Created by:"
+  },
+  "first-time-view": {
+    "title": "Choose directory",
+    "welcome": "Hi, thanks for stopping by!",
+    "message": "Before you start, choose the directory to which you would like to sync all your projects."
   },
   "log-out-view": {
     "message": "You're sure you want to log out?",

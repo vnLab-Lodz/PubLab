@@ -156,6 +156,10 @@ export const mainTheme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         '@global': {
+          body: {
+            boxSizing: 'border-box',
+          },
+
           '@font-face': [
             hkgrotesk,
             hkgroteskItalic,
