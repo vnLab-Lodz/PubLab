@@ -16,7 +16,7 @@ export default styled(InputBase)(({ error, theme: { palette } }) => {
     padding: 0,
     '& .MuiInputBase-input': {
       lineHeight: '1.4em',
-      padding: '0.8em 0 0.8em 0.6em',
+      padding: '1em 0 0.6em 0.6em',
     },
   };
 });
