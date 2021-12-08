@@ -138,7 +138,6 @@ export const mainTheme = createTheme({
     htmlFontSize: 10,
     h1: {
       fontSize: '2rem',
-      color: 'red',
     },
     h2: {
       fontSize: '1.8rem',
@@ -157,6 +156,10 @@ export const mainTheme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         '@global': {
+          body: {
+            boxSizing: 'border-box',
+          },
+
           '@font-face': [
             hkgrotesk,
             hkgroteskItalic,

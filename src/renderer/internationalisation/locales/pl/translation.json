@@ -1,7 +1,9 @@
 {
   "common": {
     "save": "zapisz",
-    "change": "zmień"
+    "change": "zmień",
+    "choose": "wybierz",
+    "go": "dalej"
   },
   "auth": {
     "in_progress": "Uwierzytelnianie w toku:",
@@ -22,6 +24,15 @@
     "message": "Czy chciałbyś używać następujących rozszerzeń technologii?",
     "back-button": "Wstecz",
     "next-button": "Następny"
+  },
+  "first-time-view": {
+    "title": "Wybierz folder",
+    "welcome": "Cześć, dzięki za wpadnięcie!",
+    "message": "Zanim zaczniesz, wybierz folder, do którego chcesz zsynchronizować wszystkie swoje projekty."
+  },
+  "log-out-view": {
+    "message": "Jesteś pewny, że chcesz się wylogować?",
+    "button": "Tak, wyloguj mnie."
   },
   "AppSettings": {
     "title": "Ustawienia Aplikacji",
@@ -44,6 +55,16 @@
       "intervals": {
         "instant": "Chcę by pojawiały się od razu."
       }
+    }
+  },
+  "AddProject": {
+    "header": {
+      "newProject": "Nowy Projekt",
+      "step": "krok"
+    },
+    "buttons": {
+      "next": "dalej",
+      "back": "wstecz"
     }
   }
 }
