@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Button from '../../components/Button/Button';
 import StyledSwitch from '../../components/Switch/Switch';
 import './TechnologiesPicker.scss';
 

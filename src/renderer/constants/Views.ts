@@ -4,6 +4,7 @@
  * ReferenceError: $RefreshSig$ is not defined
  */
 export enum VIEWS {
+  TECHNOLOGYPICKER = 'TECHNOLOGYPICKER',
   PROJECT = 'PROJECT',
   FILES = 'FILES',
   CHANGES = 'CHANGES',

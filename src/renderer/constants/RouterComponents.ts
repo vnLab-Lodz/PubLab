@@ -8,6 +8,7 @@ import Settings from '../views/Settings/Settings';
 import ProjectsList from '../views/ProjectsList/ProjectsList';
 import ProjectInfo from '../views/ProjectInfo/ProjectInfo';
 import NoProjects from '../views/NoProjects/NoProjects';
+import TechnologiesPicker from '../views/TechnologyPicker/TechnologiesPicker';
 
 export type RouterComponents = {
   [key in VIEWS | SUBVIEWS]: React.FC<any>;
@@ -15,6 +16,7 @@ export type RouterComponents = {
 
 // This can be changed when we introduce some i18n
 export const COMPONENTS_TRANSLATIONS: Record<VIEWS, string> = {
+  TECHNOLOGYPICKER: 'Technology picker',
   PROJECT: 'Project',
   FILES: 'Files',
   CHANGES: 'Changes',
@@ -34,4 +36,5 @@ export const routerComponents: RouterComponents = {
   [SUBVIEWS.PROJECT_INFO]: ProjectInfo,
   [SUBVIEWS.NO_PROJECTS]: NoProjects,
   [SUBVIEWS.NONE]: () => null,
+  [VIEWS.TECHNOLOGYPICKER]: TechnologiesPicker,
 };
