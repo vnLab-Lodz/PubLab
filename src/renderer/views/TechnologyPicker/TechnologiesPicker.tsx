@@ -19,17 +19,17 @@ const TechnologiesPicker = () => {
   };
 
   return (
-    <div className='container'>
+    <div className='technology-picker__container'>
       <h2>{t('technology-picker.message')}</h2>
 
-      <div className='switches'>
-        <div className='switch'>
+      <div className='technology-picker__switches'>
+        <div>
           <StyledSwitch
            size='small'
            checked={useSass}
            onChange={toggleSass}
           />
-          <p className='inline'> SCSS</p>
+          <p className='technology-picker__inline'> SCSS</p>
         </div>
         <div>
           <StyledSwitch
@@ -37,7 +37,7 @@ const TechnologiesPicker = () => {
            checked={useTypescript}
            onChange={toggleTypescript}
           />
-          <p className='inline'> TYPESCRIPT</p>
+          <p className='technology-picker__inline'> TYPESCRIPT</p>
         </div>
       </div>
     </div>
