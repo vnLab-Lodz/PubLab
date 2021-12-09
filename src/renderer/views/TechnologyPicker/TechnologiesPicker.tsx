@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { newPublication, setPublicationField } from '../../../shared/redux/slices/addPublicationSlice';
+import {
+  newPublication,
+  setPublicationField,
+} from '../../../shared/redux/slices/addPublicationSlice';
 import StyledSwitch from '../../components/Switch/Switch';
 import './TechnologiesPicker.scss';
 
@@ -15,7 +18,9 @@ const TechnologiesPicker = () => {
   };
 
   const toggleTypescript = () => {
-    dispatch(setPublicationField({ field: 'useTypescript', value: !useTypescript }));
+    dispatch(
+      setPublicationField({ field: 'useTypescript', value: !useTypescript })
+    );
   };
 
   return (
@@ -33,9 +38,9 @@ const TechnologiesPicker = () => {
         </div>
         <div>
           <StyledSwitch
-           size='small'
-           checked={useTypescript}
-           onChange={toggleTypescript}
+            size='small'
+            checked={useTypescript}
+            onChange={toggleTypescript}
           />
           <p className='technology-picker__inline'> TYPESCRIPT</p>
         </div>
