@@ -21,9 +21,7 @@
     "created": "Stworzony przez:"
   },
   "technology-picker": {
-    "message": "Czy chciałbyś używać następujących rozszerzeń technologii?",
-    "back-button": "Wstecz",
-    "next-button": "Następny"
+    "message": "Czy chciałbyś używać następujących rozszerzeń technologii?"
   },
   "first-time-view": {
     "title": "Wybierz folder",
