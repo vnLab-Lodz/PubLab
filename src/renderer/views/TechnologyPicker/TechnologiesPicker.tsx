@@ -29,11 +29,7 @@ const TechnologiesPicker = () => {
 
       <div className='technology-picker__switches'>
         <div>
-          <StyledSwitch
-           size='small'
-           checked={useSass}
-           onChange={toggleSass}
-          />
+          <StyledSwitch size='small' checked={useSass} onChange={toggleSass} />
           <p className='technology-picker__inline'> SCSS</p>
         </div>
         <div>
