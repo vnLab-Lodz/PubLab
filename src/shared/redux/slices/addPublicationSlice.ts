@@ -37,7 +37,7 @@ type PublicationModification =
 const initialState: NewPublication = {
   publicationName: '',
   description: '',
-  collaborators: [],
+  collaborators: [{ id: '1', githubUsername: 'karom', role: 'editor' }],
   packageManager: '',
   useSass: false,
   useTypescript: false,
@@ -93,5 +93,8 @@ export const {
 export const newPublication = (state: RootState) => state.newPublication;
 
 export const currentStep = (state: RootState) => state.newPublication.step;
+
+export const collaborators = (state: RootState) =>
+  state.newPublication.collaborators;
 
 export default addPublicationSlice.reducer;
