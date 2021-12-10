@@ -3,10 +3,12 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import ClearIcon from '@mui/icons-material/Clear';
 import TableHead from '@mui/material/TableHead';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Avatar, Typography } from '@mui/material';
 import * as Styled from './style';
 import { Collaborator } from '../../../shared/redux/slices/loadPublicationsSlice';
+import { deleteCollaborator } from '../../../shared/redux/slices/addPublicationSlice';
 
 interface Props {
   collaborators: Collaborator[];
@@ -14,6 +16,12 @@ interface Props {
 
 const CollabTable: React.FC<Props> = ({ collaborators }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  const handleDelete = (id: string) => {
+    dispatch(deleteCollaborator(id));
+  };
+
   return (
     <Styled.Container>
       <Table aria-label='collaborators table'>
@@ -48,7 +56,12 @@ const CollabTable: React.FC<Props> = ({ collaborators }) => {
                   {collaborator.role}
                 </Styled.BorderedTC>
                 <Styled.BorderedTC width='30px' />
-                <Styled.BorderedTC border align='center' width='30px'>
+                <Styled.BorderedTC
+                  border
+                  align='center'
+                  width='30px'
+                  onClick={() => handleDelete(collaborator.id)}
+                >
                   <ClearIcon />
                 </Styled.BorderedTC>
               </Styled.Row>
