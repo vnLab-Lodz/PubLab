@@ -1,12 +1,13 @@
 import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
+import ClearIcon from '@mui/icons-material/Clear';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useTranslation } from 'react-i18next';
 import { Avatar, Typography } from '@mui/material';
+import * as Styled from './style';
 import { Collaborator } from '../../../shared/redux/slices/loadPublicationsSlice';
 
 interface Props {
@@ -20,33 +21,34 @@ const CollabTable: React.FC<Props> = ({ collaborators }) => {
       <Table aria-label='collaborators table'>
         <TableHead>
           <TableRow>
-            <TableCell />
-            <TableCell align='left'>
+            <Styled.BorderedTC />
+            <Styled.BorderedTC>
               <Typography variant='h5'>
                 {t('AddProject.AddCollaborators.username').toLocaleUpperCase()}
               </Typography>
-            </TableCell>
-            <TableCell align='left'>
+            </Styled.BorderedTC>
+            <Styled.BorderedTC>
               <Typography variant='h5'>
                 {t('AddProject.AddCollaborators.role').toLocaleUpperCase()}
               </Typography>
-            </TableCell>
+            </Styled.BorderedTC>
           </TableRow>
         </TableHead>
         <TableBody>
           {collaborators &&
             collaborators.map((collaborator) => (
-              <TableRow
-                key={collaborator.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component='th' scope='row'>
+              <TableRow key={collaborator.id}>
+                <Styled.BorderedTC>
                   <Avatar>{collaborator.githubUsername.charAt(0)}</Avatar>
-                </TableCell>
-                <TableCell align='left'>
+                </Styled.BorderedTC>
+                <Styled.BorderedTC>
                   {collaborator.githubUsername}
-                </TableCell>
-                <TableCell align='left'>{collaborator.role}</TableCell>
+                </Styled.BorderedTC>
+                <Styled.BorderedTC>{collaborator.role}</Styled.BorderedTC>
+                <Styled.BorderedTC />
+                <Styled.BorderedTC>
+                  <ClearIcon />
+                </Styled.BorderedTC>
               </TableRow>
             ))}
         </TableBody>
