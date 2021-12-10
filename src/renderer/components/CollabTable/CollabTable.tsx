@@ -2,9 +2,7 @@ import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import ClearIcon from '@mui/icons-material/Clear';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import { useTranslation } from 'react-i18next';
 import { Avatar, Typography } from '@mui/material';
 import * as Styled from './style';
@@ -17,10 +15,10 @@ interface Props {
 const CollabTable: React.FC<Props> = ({ collaborators }) => {
   const { t } = useTranslation();
   return (
-    <TableContainer>
+    <Styled.Container>
       <Table aria-label='collaborators table'>
         <TableHead>
-          <TableRow>
+          <Styled.Row>
             <Styled.BorderedTC />
             <Styled.BorderedTC>
               <Typography variant='h5'>
@@ -32,28 +30,32 @@ const CollabTable: React.FC<Props> = ({ collaborators }) => {
                 {t('AddProject.AddCollaborators.role').toLocaleUpperCase()}
               </Typography>
             </Styled.BorderedTC>
-          </TableRow>
+          </Styled.Row>
         </TableHead>
         <TableBody>
           {collaborators &&
             collaborators.map((collaborator) => (
-              <TableRow key={collaborator.id}>
-                <Styled.BorderedTC>
-                  <Avatar>{collaborator.githubUsername.charAt(0)}</Avatar>
+              <Styled.Row key={collaborator.id}>
+                <Styled.BorderedTC align='center' width='30px'>
+                  <Avatar sx={{ width: 25, height: 25, fontSize: '1.3rem' }}>
+                    {collaborator.githubUsername.charAt(0)}
+                  </Avatar>
                 </Styled.BorderedTC>
-                <Styled.BorderedTC>
+                <Styled.BorderedTC border usernameColumn width='255px'>
                   {collaborator.githubUsername}
                 </Styled.BorderedTC>
-                <Styled.BorderedTC>{collaborator.role}</Styled.BorderedTC>
-                <Styled.BorderedTC />
-                <Styled.BorderedTC>
+                <Styled.BorderedTC border width='255px'>
+                  {collaborator.role}
+                </Styled.BorderedTC>
+                <Styled.BorderedTC width='30px' />
+                <Styled.BorderedTC border align='center' width='30px'>
                   <ClearIcon />
                 </Styled.BorderedTC>
-              </TableRow>
+              </Styled.Row>
             ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </Styled.Container>
   );
 };
 
