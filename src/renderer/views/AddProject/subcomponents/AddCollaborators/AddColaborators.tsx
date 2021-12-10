@@ -2,15 +2,23 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider, Typography, Box } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
+import { v4 as uuid } from 'uuid';
 import { altTheme } from '../../../../theme';
 import CollabPicker from '../../../../components/CollabPicker/CollabPicker';
 import CollabTable from '../../../../components/CollabTable/CollabTable';
-import { collaborators as c } from '../../../../../shared/redux/slices/addPublicationSlice';
+import {
+  addCollaborator,
+  collaborators as c,
+} from '../../../../../shared/redux/slices/addPublicationSlice';
 
 const AddColaborators = () => {
   const { t } = useTranslation();
   const collaborators = useSelector(c);
   const dispatch = useDispatch();
+  const [currentCollaborator, setCurrentCollaborator] = React.useState({
+    username: '',
+    role: '',
+  });
 
   const options = [
     {
@@ -23,24 +31,15 @@ const AddColaborators = () => {
     },
   ];
 
-  function createCollaboratorRow(
-    avatar: string,
-    username: string,
-    role: string
-  ) {
-    return { avatar, username, role };
-  }
-
-  /* const addColaborator = (c: Collaborator) => {
-    const { avatar, username, role } = c;
-    const collaborator = createCollaboratorRow(avatar, username, role);
-    collaborators.push(collaborator);
+  const handleAdd = (username: string, role: string) => {
+    dispatch(
+      addCollaborator({
+        id: uuid(),
+        githubUsername: username,
+        role,
+      })
+    );
   };
-
-  const removeCollaborator = (i: number) => {
-    collaborators.splice(i, 1);
-    setCollaborators(collaborators);
-  }; */
 
   return (
     <ThemeProvider theme={altTheme}>
@@ -54,6 +53,9 @@ const AddColaborators = () => {
         {t('AddProject.AddCollaborators.title')}
       </Typography>
       <CollabPicker
+        value={currentCollaborator}
+        onChange={() => setCurrentCollaborator(currentCollaborator)}
+        onAdd={handleAdd}
         options={options}
         buttonText={t(
           'AddProject.AddCollaborators.add_button'

@@ -22,7 +22,7 @@ interface Props {
   selectPlaceholder?: string;
   textFieldPlaceholder?: string;
   onChange?: (value: Value | undefined) => void;
-  onAdd?: (value: Value) => void;
+  onAdd?: (username: string, role: string) => void;
 }
 
 const CollabPicker: React.FC<Props> = ({
@@ -57,7 +57,7 @@ const CollabPicker: React.FC<Props> = ({
   const handleAdd = () => {
     if (onAdd === undefined || currentValue === undefined) return;
 
-    onAdd(currentValue);
+    onAdd(currentValue.username, currentValue.role);
     setCurrentValue(undefined);
   };
 
@@ -90,6 +90,7 @@ const CollabPicker: React.FC<Props> = ({
         textCase='uppercase'
         fontWeight='regular'
         onClick={handleAdd}
+        disabled={currentUsername === '' || currentRole === ''}
       >
         {buttonText}
       </Button>

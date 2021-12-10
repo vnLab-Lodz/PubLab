@@ -30,13 +30,13 @@ const AddProject = () => {
       // substitute cases with components created for the issues,
       // delete this comment after it becomes obsolete
       case 1:
-        return <AddColaborators />;
+        return 'Insert component 1';
       case 2:
         return 'Insert component 2';
       case 3:
         return 'Insert component 3';
       case 4:
-        return 'Insert component 4';
+        return <AddColaborators />;
       case 5:
         return 'Insert component 5';
       default:
