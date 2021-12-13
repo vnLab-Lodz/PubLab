@@ -24,20 +24,11 @@ describe('addPublicationSlice', () => {
   });
 
   it('handles setPublicationField action', () => {
-    const initialState: NewPublication = {
-      publicationName: '',
-      description: '',
-      collaborators: [],
-      packageManager: '',
-      useSass: false,
-      useTypescript: false,
-      step: 1,
-    };
     const pubMob: PublicationModification = {
       field: 'useSass',
       value: true,
     };
-    expect(reducer(initialState, setPublicationField(pubMob))).toEqual({
+    expect(reducer(undefined, setPublicationField(pubMob))).toEqual({
       publicationName: '',
       description: '',
       collaborators: [],
@@ -54,16 +45,8 @@ describe('addPublicationSlice', () => {
       githubUsername: 'github_user',
       role: 'role',
     };
-    const initialState: NewPublication = {
-      publicationName: '',
-      description: '',
-      collaborators: [],
-      packageManager: '',
-      useSass: false,
-      useTypescript: false,
-      step: 1,
-    };
-    expect(reducer(initialState, addCollaborator(collaborator))).toEqual({
+
+    expect(reducer(undefined, addCollaborator(collaborator))).toEqual({
       publicationName: '',
       description: '',
       collaborators: [collaborator],
