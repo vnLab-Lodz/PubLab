@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import { Box, Typography } from '@mui/material';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import StyledSwitch from '../../components/Switch/Switch';
 import {
   newPublication,
   setPublicationField,
 } from '../../../shared/redux/slices/addPublicationSlice';
-import StyledSwitch from '../../components/Switch/Switch';
-import './TechnologiesPicker.scss';
 
 const TechnologiesPicker = () => {
   const { t } = useTranslation();
@@ -24,24 +24,36 @@ const TechnologiesPicker = () => {
   };
 
   return (
-    <div className='technology-picker__container'>
-      <h2>{t('technology-picker.message')}</h2>
+    <Box>
+      <Typography variant='h1' sx={{ marginBottom: '4.5rem' }}>
+        {t('technology-picker.message')}
+      </Typography>
 
-      <div className='technology-picker__switches'>
-        <div>
+      <Box>
+        <Box sx={{ marginBottom: '2.5rem' }}>
           <StyledSwitch size='small' checked={useSass} onChange={toggleSass} />
-          <p className='technology-picker__inline'> SCSS</p>
-        </div>
-        <div>
+          <Typography
+            variant='h4'
+            sx={{ display: 'inline', marginLeft: '1rem' }}
+          >
+            SCSS
+          </Typography>
+        </Box>
+        <Box>
           <StyledSwitch
             size='small'
             checked={useTypescript}
             onChange={toggleTypescript}
           />
-          <p className='technology-picker__inline'> TYPESCRIPT</p>
-        </div>
-      </div>
-    </div>
+          <Typography
+            variant='h4'
+            sx={{ display: 'inline', marginLeft: '1rem' }}
+          >
+            TYPESCRIPT
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
