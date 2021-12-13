@@ -10,12 +10,12 @@ import CollabPicker, {
 import CollabTable from '../../../../components/CollabTable/CollabTable';
 import {
   addCollaborator,
-  collaborators as c,
+  collaborators as selectCollaborators,
 } from '../../../../../shared/redux/slices/addPublicationSlice';
 
 const AddColaborators = () => {
   const { t } = useTranslation();
-  const collaborators = useSelector(c);
+  const collaborators = useSelector(selectCollaborators);
   const dispatch = useDispatch();
   const [currentCollaborator, setCurrentCollaborator] = React.useState({
     username: '',
