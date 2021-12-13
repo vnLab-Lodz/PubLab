@@ -90,6 +90,7 @@ const CollabPicker: React.FC<Props> = ({
         textCase='uppercase'
         fontWeight='regular'
         onClick={handleAdd}
+        disabled={currentUsername === '' || currentRole === ''}
       >
         {buttonText}
       </Button>

@@ -26,9 +26,14 @@ export const Row = styled(TableRow)`
   overflow: hidden;
 `;
 
-export const BorderedTC = styled(TableCell)<InnerProps>`
+export const BorderedTC = styled(TableCell, {
+  // Configure which props should be forwarded on DOM
+  shouldForwardProp: (prop) => prop !== 'border' && prop !== 'usernameColumn',
+  name: 'BorderedTC',
+  slot: 'Root',
+})<InnerProps>`
   &.MuiTableCell-root {
-    text-align: ${(props) => (props.align ? props.align : 'left')};
+    text-align: ${(props) => props.align ?? 'left'};
     border: ${(props) =>
       props.border ? `2px solid ${props.theme.palette.text.primary}` : 'none'};
     border-left: ${(props) => props.usernameColumn && 'none'};
