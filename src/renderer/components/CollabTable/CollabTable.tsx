@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import ClearIcon from '@mui/icons-material/Clear';
 import TableHead from '@mui/material/TableHead';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -62,7 +61,7 @@ const CollabTable: React.FC<Props> = ({ collaborators }) => {
                   width='30px'
                   onClick={() => handleDelete(collaborator.id)}
                 >
-                  <ClearIcon />
+                  <Styled.Icon />
                 </Styled.BorderedTC>
               </Styled.Row>
             ))}

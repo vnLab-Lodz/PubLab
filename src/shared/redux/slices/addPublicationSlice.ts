@@ -37,10 +37,7 @@ type PublicationModification =
 const initialState: NewPublication = {
   publicationName: '',
   description: '',
-  collaborators: [
-    { id: '1', githubUsername: 'karom', role: 'editor' },
-    { id: '2', githubUsername: 'karom', role: 'editor' },
-  ],
+  collaborators: [],
   packageManager: '',
   useSass: false,
   useTypescript: false,

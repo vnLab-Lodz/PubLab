@@ -5,7 +5,7 @@ import TextField from '../TextField/TextField';
 import Select from '../Select/Select';
 import Button from '../Button/Button';
 
-interface Value {
+export interface Value {
   username: string;
   role: string;
 }
