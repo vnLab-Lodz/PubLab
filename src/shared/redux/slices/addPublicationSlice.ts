@@ -95,3 +95,5 @@ export const newPublication = (state: RootState) => state.newPublication;
 export const currentStep = (state: RootState) => state.newPublication.step;
 
 export default addPublicationSlice.reducer;
+
+export type { PublicationModification };
