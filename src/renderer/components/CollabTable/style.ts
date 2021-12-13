@@ -5,7 +5,6 @@ import {
   TableRow,
   TableContainer,
 } from '@mui/material';
-import ClearIcon from '@mui/icons-material/Clear';
 
 interface AddedProps {
   border?: boolean;
@@ -42,9 +41,4 @@ export const BorderedTC = styled(TableCell, {
     padding: 5px;
     cursor: pointer;
   }
-`;
-
-export const Icon = styled(ClearIcon)`
-  width: 15px;
-  height: 15px;
 `;

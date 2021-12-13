@@ -4,7 +4,8 @@ import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Avatar, Typography } from '@mui/material';
+import { Avatar, IconButton, Typography } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 import * as Styled from './style';
 import { Collaborator } from '../../../shared/redux/slices/loadPublicationsSlice';
 import { deleteCollaborator } from '../../../shared/redux/slices/addPublicationSlice';
@@ -52,16 +53,19 @@ const CollabTable: React.FC<Props> = ({ collaborators }) => {
                   {collaborator.githubUsername}
                 </Styled.BorderedTC>
                 <Styled.BorderedTC border width='255px'>
-                  {collaborator.role}
+                  {collaborator.role.charAt(0).toUpperCase() +
+                    collaborator.role.slice(1)}
                 </Styled.BorderedTC>
                 <Styled.BorderedTC width='30px' />
-                <Styled.BorderedTC
-                  border
-                  align='center'
-                  width='30px'
-                  onClick={() => handleDelete(collaborator.id)}
-                >
-                  <Styled.Icon />
+                <Styled.BorderedTC border align='center' width='30px'>
+                  <IconButton
+                    color='primary'
+                    size='small'
+                    aria-label='delete collaborator'
+                    onClick={() => handleDelete(collaborator.id)}
+                  >
+                    <ClearIcon fontSize='inherit' />
+                  </IconButton>
                 </Styled.BorderedTC>
               </Styled.Row>
             ))}
