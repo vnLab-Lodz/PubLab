@@ -49,10 +49,10 @@ const CollabTable: React.FC<Props> = ({ collaborators }) => {
                     {collaborator.githubUsername.charAt(0)}
                   </Avatar>
                 </Styled.BorderedTC>
-                <Styled.BorderedTC border usernameColumn width='255px'>
+                <Styled.BorderedTC border usernameColumn>
                   {collaborator.githubUsername}
                 </Styled.BorderedTC>
-                <Styled.BorderedTC border width='255px'>
+                <Styled.BorderedTC border>
                   {collaborator.role.charAt(0).toUpperCase() +
                     collaborator.role.slice(1)}
                 </Styled.BorderedTC>

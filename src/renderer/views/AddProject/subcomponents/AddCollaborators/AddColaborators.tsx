@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ThemeProvider, Typography, Box } from '@mui/material';
+import { ThemeProvider, Typography } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { altTheme } from '../../../../theme';
@@ -77,9 +77,7 @@ const AddColaborators = () => {
           >
             {t('AddProject.AddCollaborators.table_title').toLocaleUpperCase()}
           </Typography>
-          <Box sx={{ display: 'flex' }}>
-            <CollabTable collaborators={collaborators} />
-          </Box>
+          <CollabTable collaborators={collaborators} />
         </>
       )}
     </ThemeProvider>
