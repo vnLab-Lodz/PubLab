@@ -119,3 +119,5 @@ export const loadedPublicationsList = (state: RootState) =>
   state.loadedPublications;
 
 export default loadPublicationsSlice.reducer;
+
+export type { PublicationModification, CollaboratorListModification };
