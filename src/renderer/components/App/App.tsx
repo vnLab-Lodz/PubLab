@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
-import './App.scss';
 import { Provider } from 'react-redux';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { configStore } from '../../../shared/redux/configureStore';
 import Auth from '../Auth/Auth';
-import CustomRouter from '../CustomRouter/CustomRouter';
-import NavigationBar from '../NavigationBar/NavigationBar';
 import { mainTheme } from '../../theme';
 import observeStore from '../../../shared/redux/helpers/observeStore';
+import i18next from '../../internationalisation/i18next';
+import { setLocalStorageItem } from '../../../shared/redux/helpers/localStorage';
+import Outlet from '../Outlet/Outlet';
 import {
   readSettingsAsync,
   selectCurrentLocale,
+  selectDefaultDirPath,
 } from '../../../shared/redux/slices/settingsSlice';
-import i18next from '../../internationalisation/i18next';
 
 const store = configStore('renderer');
 
@@ -20,6 +20,7 @@ const App = () => {
   useEffect(() => {
     store.dispatch(readSettingsAsync());
   }, []);
+
   useEffect(
     () =>
       observeStore(store, selectCurrentLocale, (langCode) =>
@@ -27,15 +28,21 @@ const App = () => {
       ),
     []
   );
+
+  useEffect(
+    () =>
+      observeStore(store, selectDefaultDirPath, (dirPath) =>
+        setLocalStorageItem('initialConfigFlag', !!dirPath)
+      ),
+    []
+  );
+
   return (
     <Provider store={store}>
       <ThemeProvider theme={mainTheme}>
         <CssBaseline />
         <Auth>
-          <div className='wrapper'>
-            <NavigationBar />
-            <CustomRouter />
-          </div>
+          <Outlet />
         </Auth>
       </ThemeProvider>
     </Provider>

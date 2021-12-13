@@ -1,7 +1,9 @@
 {
   "common": {
     "save": "zapisz",
-    "change": "zmień"
+    "change": "zmień",
+    "choose": "wybierz",
+    "go": "dalej"
   },
   "auth": {
     "in_progress": "Uwierzytelnianie w toku:",
@@ -17,6 +19,11 @@
     "message": "Aby rozpocząć, zaloguj się za pomocą swojego konta GitHub",
     "button": "Zaloguj się przez GitHub",
     "created": "Stworzony przez:"
+  },
+  "first-time-view": {
+    "title": "Wybierz folder",
+    "welcome": "Cześć, dzięki za wpadnięcie!",
+    "message": "Zanim zaczniesz, wybierz folder, do którego chcesz zsynchronizować wszystkie swoje projekty."
   },
   "log-out-view": {
     "message": "Jesteś pewny, że chcesz się wylogować?",
