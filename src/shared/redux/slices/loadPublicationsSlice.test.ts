@@ -10,18 +10,24 @@ import reducer, {
   PublicationModification,
 } from './loadPublicationsSlice';
 
-describe('loadPublicationsSlice', () => {
-  const publication: Publication = {
-    id: 'id',
-    dirPath: 'dir_path',
-    publicationName: 'pub_name',
-    description: 'description',
-    collaborators: [],
-    packageManager: 'package_man',
-    useSass: true,
-    useTypescript: true,
-  };
+const collaborator: Collaborator = {
+  id: 'col_id',
+  githubUsername: 'github_user',
+  role: 'role',
+};
 
+const publication: Publication = {
+  id: 'id',
+  dirPath: 'dir_path',
+  publicationName: 'pub_name',
+  description: 'description',
+  collaborators: [],
+  packageManager: 'package_man',
+  useSass: true,
+  useTypescript: true,
+};
+
+describe('loadPublicationsSlice', () => {
   it('handles setPublicationsList action', () => {
     const publications: Publication[] = [publication];
     expect(reducer(undefined, setPublicationsList(publications))).toEqual([
@@ -79,15 +85,8 @@ describe('loadPublicationsSlice', () => {
   });
 
   it('handles addCollaborator action', () => {
-    const collaborator: Collaborator = {
-      id: 'col_id',
-      githubUsername: 'github_user',
-      role: 'role',
-    };
-    const colListMod = {
-      id: 'id',
-      value: collaborator,
-    };
+    const colListMod = { id: 'id', value: collaborator };
+
     expect(reducer([publication], addCollaborator(colListMod))).toEqual([
       {
         id: 'id',
@@ -114,13 +113,7 @@ describe('loadPublicationsSlice', () => {
       dirPath: 'dir_path',
       publicationName: 'pub_name',
       description: 'description',
-      collaborators: [
-        {
-          id: 'col_id',
-          githubUsername: 'github_user',
-          role: 'role',
-        },
-      ],
+      collaborators: [collaborator],
       packageManager: 'package_man',
       useSass: true,
       useTypescript: true,
