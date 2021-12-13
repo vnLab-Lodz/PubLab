@@ -98,3 +98,5 @@ export const collaborators = (state: RootState) =>
   state.newPublication.collaborators;
 
 export default addPublicationSlice.reducer;
+
+export type { PublicationModification };

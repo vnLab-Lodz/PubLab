@@ -12,6 +12,7 @@ import {
   increaseStep,
 } from '../../../shared/redux/slices/addPublicationSlice';
 import AddColaborators from './subcomponents/AddCollaborators/AddColaborators';
+import TechnologiesPicker from '../TechnologyPicker/TechnologiesPicker';
 
 const AddProject = () => {
   const currentStep = useSelector(stepSelector);
@@ -34,7 +35,7 @@ const AddProject = () => {
       case 2:
         return 'Insert component 2';
       case 3:
-        return 'Insert component 3';
+        return <TechnologiesPicker />;
       case 4:
         return <AddColaborators />;
       case 5:
