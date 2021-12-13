@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
 import { ThemeProvider, Typography } from '@mui/material';
 import {
   saveSettingsAsync,
