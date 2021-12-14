@@ -11,6 +11,7 @@ import {
   deleteDraft,
   increaseStep,
 } from '../../../shared/redux/slices/addPublicationSlice';
+import AddColaborators from './subcomponents/AddCollaborators/AddColaborators';
 import TechnologiesPicker from '../TechnologyPicker/TechnologiesPicker';
 
 const AddProject = () => {
@@ -36,7 +37,7 @@ const AddProject = () => {
       case 3:
         return <TechnologiesPicker />;
       case 4:
-        return 'Insert component 4';
+        return <AddColaborators />;
       case 5:
         return 'Insert component 5';
       default:
