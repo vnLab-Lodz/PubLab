@@ -5,6 +5,10 @@ export type Collaborator = {
   id: string;
   githubUsername: string;
   role: string;
+  /* avatar: {
+    src: string;
+    alt: string;
+  }; */
 };
 
 export type Publication = {
@@ -115,3 +119,5 @@ export const loadedPublicationsList = (state: RootState) =>
   state.loadedPublications;
 
 export default loadPublicationsSlice.reducer;
+
+export type { PublicationModification, CollaboratorListModification };

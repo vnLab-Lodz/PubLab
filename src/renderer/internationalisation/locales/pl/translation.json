@@ -20,6 +20,9 @@
     "button": "Zaloguj się przez GitHub",
     "created": "Stworzony przez:"
   },
+  "technology-picker": {
+    "message": "Czy chciałbyś używać następujących rozszerzeń technologii?"
+  },
   "first-time-view": {
     "title": "Wybierz folder",
     "welcome": "Cześć, dzięki za wpadnięcie!",
@@ -60,6 +63,15 @@
     "buttons": {
       "next": "dalej",
       "back": "wstecz"
+    },
+    "AddCollaborators": {
+      "title": "Czy chcesz dodać współpracowników?",
+      "table_title": "Dodani współpracownicy:",
+      "username": "Nazwa użytkownika",
+      "role": "Rola",
+      "programmer": "Programista",
+      "editor": "Edytor",
+      "add_button": "Dodaj"
     }
   },
   "StepOne": {

@@ -20,6 +20,9 @@
     "button": "Log in with GitHub",
     "created": "Created by:"
   },
+  "technology-picker": {
+    "message": "Would you like to use technology extenssions?"
+  },
   "first-time-view": {
     "title": "Choose directory",
     "welcome": "Hi, thanks for stopping by!",
@@ -60,6 +63,15 @@
     "buttons": {
       "next": "next",
       "back": "back"
+    },
+    "AddCollaborators": {
+      "title": "Would you like to add collaborators?",
+      "table_title": "Added collaborators:",
+      "username": "Username",
+      "role": "Role",
+      "programmer": "Programmer",
+      "editor": "Editor",
+      "add_button": "Add"
     }
   },
   "StepOne": {
