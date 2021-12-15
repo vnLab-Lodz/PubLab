@@ -26,10 +26,6 @@ const AddProject = () => {
     []
   );
 
-  // useEffect(() => {
-  //   document.getElementById("next-button")!.disabled = true
-  // }, [nextButtonEnabled])
-
   const renderStepComponent = () => {
     switch (currentStep) {
       // substitute cases with components created for the issues,
