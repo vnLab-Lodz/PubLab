@@ -15,12 +15,11 @@ import StepOne from './StepOne/StepOne';
 import AddColaborators from './subcomponents/AddCollaborators/AddColaborators';
 import TechnologiesPicker from '../TechnologyPicker/TechnologiesPicker';
 
-
 const AddProject = () => {
   const currentStep = useSelector(stepSelector);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [nextButtonEnabled, setNextButtonEnabled] = useState(false)
+  const [nextButtonEnabled, setNextButtonEnabled] = useState(false);
 
   useEffect(
     () => () => {
@@ -34,7 +33,7 @@ const AddProject = () => {
       // substitute cases with components created for the issues,
       // delete this comment after it becomes obsolete
       case 1:
-        return <StepOne setNextButtonEnabled={setNextButtonEnabled}/>;
+        return <StepOne setNextButtonEnabled={setNextButtonEnabled} />;
       case 2:
         return 'Insert component 2';
       case 3:
@@ -94,7 +93,9 @@ const AddProject = () => {
             typographyVariant='h3'
             color='green'
             variant='contained'
-            onClick={() => {if(nextButtonEnabled) dispatch(increaseStep())}}
+            onClick={() => {
+              if (nextButtonEnabled) dispatch(increaseStep());
+            }}
           >
             {t('AddProject.buttons.next')}
           </Button>
