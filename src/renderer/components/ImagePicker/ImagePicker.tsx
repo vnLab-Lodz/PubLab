@@ -1,29 +1,43 @@
 import React from 'react';
-import './ImagePicker.scss';
+import * as Styled from './style';
 
 interface Props {
+  alt: string;
   image?: string;
   onClick?: () => void;
   error?: boolean;
 }
 
-const ImagePicker: React.FC<Props> = ({ image, error, onClick }) => {
-  if (image)
-    return <img className='img selected' src={image} alt='Example alt' />;
+const ImagePicker: React.FC<Props> = ({ image, error, onClick, alt }) => {
+  const onKeyPress: React.KeyboardEventHandler = ({ key }) => {
+    if (key !== 'Enter' || !onClick) return;
 
-  const makeClass = (base: string): string => (error ? `${base} error` : base);
+    onClick();
+  };
 
-  return (
-    <div
+  return image ? (
+    <Styled.Img
+      src={image}
+      alt={alt}
+      onClick={onClick}
+      onKeyPress={onKeyPress}
       aria-label='image picker'
       tabIndex={0}
       role='button'
-      className={makeClass('img')}
+    />
+  ) : (
+    <Styled.OuterCircle
+      error={!!error}
       onClick={onClick}
-      onKeyPress={({ key }) => key === 'Enter' && onClick()}
+      onKeyPress={onKeyPress}
+      aria-label='image picker'
+      tabIndex={0}
+      role='button'
     >
-      <div className={makeClass('imgplus')} />
-    </div>
+      <Styled.InnerCircle error={!!error}>
+        <Styled.Add error={!!error} />
+      </Styled.InnerCircle>
+    </Styled.OuterCircle>
   );
 };
 

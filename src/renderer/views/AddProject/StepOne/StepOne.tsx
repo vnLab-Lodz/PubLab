@@ -50,6 +50,7 @@ export default function StepOne(props: any) {
           {t('StepOne.projectPhoto')}
         </InputLabel>
         <ImagePicker
+          alt='Project cover'
           error={imagePickerError}
           onClick={() => handleImageValidation()}
         />
