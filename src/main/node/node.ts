@@ -67,14 +67,17 @@ class Platform {
 
   private NodeManagerInstallationCommand(): string | undefined {
     if (this === Platform.WINDOWS) return 'winget install nvs';
-    if (this === Platform.LINUX || this === Platform.MAC)
-      return 'npm install -g n';
+    if (this === Platform.LINUX) return 'npm install -g n';
+    if (this === Platform.MAC)
+      return `curl "https://nodejs.org/dist/latest/node-$\{VERSION:-$(wget -qO- https://nodejs.org/dist/latest/ | sed -nE 's|.*>node-(.*)\\.pkg</a>.*|\\1|p')}.pkg" > "$HOME/Downloads/node-latest.pkg"`;
     return undefined;
   }
 
   private NodeInstallationCommand(): string | undefined {
     if (this === Platform.WINDOWS) return 'nvs add lts; nvs link latest';
-    if (this === Platform.LINUX || this === Platform.MAC) return 'n lts';
+    if (this === Platform.LINUX) return 'n lts';
+    if (this === Platform.MAC)
+      return 'sudo installer -store -pkg "$HOME/Downloads/node-latest.pkg" -target "/"';
     return undefined;
   }
 }
