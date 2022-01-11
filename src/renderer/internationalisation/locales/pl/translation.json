@@ -73,5 +73,12 @@
       "editor": "Edytor",
       "add_button": "Dodaj"
     }
+  },
+  "StepOne": {
+    "projectPhoto": "OBRAZ PROJEKTU",
+    "projectName": "NAZWA PROJEKTU",
+    "projectNameDetails": "Nazwa projektu...",
+    "projectDescription": "OPIS PROJEKTU",
+    "projectDescriptionDetails": "Opis projektu..."
   }
 }

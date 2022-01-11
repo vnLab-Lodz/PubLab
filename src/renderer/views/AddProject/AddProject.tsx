@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider, Typography, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +11,7 @@ import {
   deleteDraft,
   increaseStep,
 } from '../../../shared/redux/slices/addPublicationSlice';
+import StepOne from './StepOne/StepOne';
 import AddColaborators from './subcomponents/AddCollaborators/AddColaborators';
 import TechnologiesPicker from '../TechnologyPicker/TechnologiesPicker';
 
@@ -18,6 +19,7 @@ const AddProject = () => {
   const currentStep = useSelector(stepSelector);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [nextButtonEnabled, setNextButtonEnabled] = useState(false);
 
   useEffect(
     () => () => {
@@ -31,7 +33,7 @@ const AddProject = () => {
       // substitute cases with components created for the issues,
       // delete this comment after it becomes obsolete
       case 1:
-        return 'Insert component 1';
+        return <StepOne setNextButtonEnabled={setNextButtonEnabled} />;
       case 2:
         return 'Insert component 2';
       case 3:
@@ -84,13 +86,16 @@ const AddProject = () => {
             {t('AddProject.buttons.back')}
           </Button>
           <Button
+            id='next-button'
             sx={{ flex: 1, height: '6rem' }}
             textCase='uppercase'
             fontWeight='bold'
             typographyVariant='h3'
             color='green'
             variant='contained'
-            onClick={() => dispatch(increaseStep())}
+            onClick={() => {
+              if (nextButtonEnabled) dispatch(increaseStep());
+            }}
           >
             {t('AddProject.buttons.next')}
           </Button>
