@@ -28,7 +28,7 @@ type CurrentUserData = {
   company: string;
 };
 
-type CurrentUser = {
+export type CurrentUser = {
   data: CurrentUserData | null;
   auth: {
     code: string | null;
