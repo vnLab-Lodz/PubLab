@@ -1,7 +1,9 @@
 {
   "common": {
     "save": "zapisz",
-    "change": "zmień"
+    "change": "zmień",
+    "choose": "wybierz",
+    "go": "dalej"
   },
   "auth": {
     "in_progress": "Uwierzytelnianie w toku:",
@@ -17,6 +19,14 @@
     "message": "Aby rozpocząć, zaloguj się za pomocą swojego konta GitHub",
     "button": "Zaloguj się przez GitHub",
     "created": "Stworzony przez:"
+  },
+  "technology-picker": {
+    "message": "Czy chciałbyś używać następujących rozszerzeń technologii?"
+  },
+  "first-time-view": {
+    "title": "Wybierz folder",
+    "welcome": "Cześć, dzięki za wpadnięcie!",
+    "message": "Zanim zaczniesz, wybierz folder, do którego chcesz zsynchronizować wszystkie swoje projekty."
   },
   "log-out-view": {
     "message": "Jesteś pewny, że chcesz się wylogować?",
@@ -53,6 +63,22 @@
     "buttons": {
       "next": "dalej",
       "back": "wstecz"
+    },
+    "AddCollaborators": {
+      "title": "Czy chcesz dodać współpracowników?",
+      "table_title": "Dodani współpracownicy:",
+      "username": "Nazwa użytkownika",
+      "role": "Rola",
+      "programmer": "Programista",
+      "editor": "Edytor",
+      "add_button": "Dodaj"
     }
+  },
+  "StepOne": {
+    "projectPhoto": "OBRAZ PROJEKTU",
+    "projectName": "NAZWA PROJEKTU",
+    "projectNameDetails": "Nazwa projektu...",
+    "projectDescription": "OPIS PROJEKTU",
+    "projectDescriptionDetails": "Opis projektu..."
   }
 }

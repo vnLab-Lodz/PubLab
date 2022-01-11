@@ -30,6 +30,11 @@ const Button: FC<ButtonProps> = ({
         backgroundColor: alpha(themeColor.main, 0.8),
       }),
     },
+    ':disabled': {
+      ...(rest.variant === 'contained' && {
+        backgroundColor: alpha(themeColor.main, 0.8),
+      }),
+    },
     ...sx,
   };
   return (

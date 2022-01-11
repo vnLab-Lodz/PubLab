@@ -1,7 +1,9 @@
 {
   "common": {
     "save": "save",
-    "change": "change"
+    "change": "change",
+    "choose": "choose",
+    "go": "let's go"
   },
   "auth": {
     "in_progress": "Authentication in progress:",
@@ -17,6 +19,14 @@
     "message": "To begin, please log in using your GitHub account",
     "button": "Log in with GitHub",
     "created": "Created by:"
+  },
+  "technology-picker": {
+    "message": "Would you like to use technology extenssions?"
+  },
+  "first-time-view": {
+    "title": "Choose directory",
+    "welcome": "Hi, thanks for stopping by!",
+    "message": "Before you start, choose the directory to which you would like to sync all your projects."
   },
   "log-out-view": {
     "message": "You're sure you want to log out?",
@@ -53,6 +63,22 @@
     "buttons": {
       "next": "next",
       "back": "back"
+    },
+    "AddCollaborators": {
+      "title": "Would you like to add collaborators?",
+      "table_title": "Added collaborators:",
+      "username": "Username",
+      "role": "Role",
+      "programmer": "Programmer",
+      "editor": "Editor",
+      "add_button": "Add"
     }
+  },
+  "StepOne": {
+    "projectPhoto": "PROJECT PHOTO",
+    "projectName": "PROJECT NAME",
+    "projectNameDetails": "Project name...",
+    "projectDescription": "PROJECT DECRIPTION",
+    "projectDescriptionDetails": "Project description..."
   }
 }

@@ -5,13 +5,13 @@ import { useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
 import { authorizeGitHubUserAsync } from '../../../shared/redux/slices/currentUserSlice';
-import './LoginComponent.scss';
+import { saveSettingsAsync } from '../../../shared/redux/slices/settingsSlice';
 import logo from '../../assets/publab.png';
+import './LoginComponent.scss';
 import {
   SupportedLangCode,
   supportedLocales,
 } from '../../internationalisation/i18next';
-import { saveSettingsAsync } from '../../../shared/redux/slices/settingsSlice';
 
 const LoginComponent = () => {
   const { t, i18n } = useTranslation();
