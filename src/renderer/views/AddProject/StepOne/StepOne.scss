@@ -1,18 +1,20 @@
-.grid-container {
-  display: grid;
-  grid-template-columns: 0.5fr 1fr;
-  gap: 20px;
-}
+.step-one {
+  &.grid-container {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+    gap: 20px;
+  }
 
-.left-column {
-  grid-column: 1;
-}
+  .left-column {
+    grid-column: 1;
+  }
 
-.right-column {
-  grid-column: 2;
-}
+  .right-column {
+    grid-column: 2;
+  }
 
-.name-input-field,
-.desc-input-field {
-  width: 100%;
+  .name-input-field,
+  .desc-input-field {
+    width: 100%;
+  }
 }

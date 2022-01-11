@@ -1,50 +1,48 @@
-/* eslint-disable prettier/prettier */
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import ImagePicker from '../../../components/ImagePicker/ImagePicker';
 import TextField from '../../../components/TextField/TextField';
 import TextArea from '../../../components/TextArea/TextArea';
 import InputLabel from '../../../components/InputLabel/InputLabel';
+import { Publication } from '../../../../shared/redux/slices/loadPublicationsSlice';
+import {
+  newPublication,
+  setPublicationField,
+} from '../../../../shared/redux/slices/addPublicationSlice';
 import './StepOne.scss';
-import { useTranslation } from 'react-i18next';
 
-export default function StepOne(props: any) {
-  const [imagePickerError, setImagePickerError] = useState(false);
+interface Props {
+  setNextButtonEnabled: (enabled: boolean) => void;
+}
+
+type SetEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
+
+export default function StepOne({ setNextButtonEnabled }: Props) {
+  const [imagePickerError] = useState(false);
   const [nameInputError, setNameInputError] = useState(false);
   const [descInputError, setDescInputError] = useState(false);
 
-  const [imageValidationTriggered, setImageValidationTriggered] =
-    useState(false);
-  const [nameValidationTriggered, setNameValidationTriggered] = useState(false);
-  const [descValidationTriggered, setDescValidationTriggered] = useState(false);
-
   const { t } = useTranslation();
 
-  const handleImageValidation = () => {
-    setImagePickerError(true);
-    setImageValidationTriggered(true);
-  };
+  const dispatch = useDispatch();
+  const { imagePath, description, publicationName } =
+    useSelector(newPublication);
 
-  const handleNameValidation = (input: string) => {
-    input === '' ? setNameInputError(true) : setNameInputError(false);
-    setNameValidationTriggered(true);
-  };
+  useEffect(
+    () => setNextButtonEnabled(!!description && !!publicationName),
+    [description, publicationName]
+  );
 
-  const handleDescValidation = (input: string) => {
-    input === '' ? setDescInputError(true) : setDescInputError(false);
-    setDescValidationTriggered(true);
+  const setField = (
+    field: keyof Pick<Publication, 'publicationName' | 'description'>,
+    { target: { value } }: SetEvent
+  ) => {
+    dispatch(setPublicationField({ field, value }));
   };
-
-  useEffect(() => {
-    //add check for imageValidationTriggered after adding image will be handled (now clicking doesn't open img selection dialog)
-    if (nameValidationTriggered && descValidationTriggered) {
-      imagePickerError || nameInputError || descInputError
-        ? props.setNextButtonEnabled(false)
-        : props.setNextButtonEnabled(true);
-    }
-  }, [imagePickerError, nameInputError, descInputError]);
 
   return (
-    <div className='grid-container'>
+    <div className='step-one grid-container'>
       <div className='left-column'>
         <InputLabel error={imagePickerError} typographyVariant='h3'>
           {t('StepOne.projectPhoto')}
@@ -52,7 +50,7 @@ export default function StepOne(props: any) {
         <ImagePicker
           alt='Project cover'
           error={imagePickerError}
-          onClick={() => handleImageValidation()}
+          image={imagePath}
         />
       </div>
       <div className='right-column'>
@@ -63,7 +61,9 @@ export default function StepOne(props: any) {
           className='name-input-field'
           placeholder={t('StepOne.projectNameDetails')}
           error={nameInputError}
-          onChange={(e) => handleNameValidation(e.target.value)}
+          value={publicationName}
+          onChange={(e) => setField('publicationName', e)}
+          onBlur={(e) => setNameInputError(e.target.value === '')}
         />
         <InputLabel error={descInputError} typographyVariant='h3'>
           {t('StepOne.projectDescription')}
@@ -72,7 +72,9 @@ export default function StepOne(props: any) {
           className='desc-input-field'
           placeholder={t('StepOne.projectDescriptionDetails')}
           error={descInputError}
-          onChange={(e) => handleDescValidation(e.target.value)}
+          value={description}
+          onChange={(e) => setField('description', e)}
+          onBlur={(e) => setDescInputError(e.target.value === '')}
         />
       </div>
     </div>
