@@ -159,15 +159,16 @@ export const mainTheme = createTheme({
           body: {
             boxSizing: 'border-box',
           },
-
-          '@font-face': [
-            hkgrotesk,
-            hkgroteskItalic,
-            hkgroteskBold,
-            hkgroteskSemiBold,
-            hkgroteskExtraBold,
-          ],
         },
+
+        '@font-face': hkgrotesk,
+        // weird fallbacks usage due to the bug described here: https://github.com/mui-org/material-ui/issues/24966
+        fallbacks: [
+          { '@font-face': hkgroteskItalic },
+          { '@font-face': hkgroteskBold },
+          { '@font-face': hkgroteskSemiBold },
+          { '@font-face': hkgroteskExtraBold },
+        ],
       },
     },
   },
