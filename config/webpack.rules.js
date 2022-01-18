@@ -55,8 +55,8 @@ module.exports = [
       {
         loader: 'file-loader',
         options: {
-          name: '[name].[ext]',
-          outputPath: 'fonts/',
+          name: 'fonts/[name].[ext]',
+          publicPath: isDevelopment ? './' : '../', // root url differs slightly because of the way webpack handles dev server and packaging
         },
       },
     ],
