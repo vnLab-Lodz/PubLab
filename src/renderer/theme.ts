@@ -152,6 +152,7 @@ export const mainTheme = createTheme({
       fontSize: '1rem',
     },
   },
+  spacing: [0, '1rem', '2.7rem', '5.5rem', '9rem'],
   components: {
     MuiCssBaseline: {
       styleOverrides: {
