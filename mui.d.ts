@@ -11,12 +11,12 @@ declare module '@mui/material/Typography' {
     h4: true; // xs
     h5: true; // xss
     h6: false;
-    subtitle1: false;
+    subtitle1: true;
     subtitle2: false;
-    body1: false;
-    body2: false;
+    body1: true;
+    body2: true;
     button: false;
-    caption: false;
+    caption: true;
     overline: false;
   }
 }

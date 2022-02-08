@@ -138,6 +138,8 @@ export const mainTheme = createTheme({
     htmlFontSize: 10,
     h1: {
       fontSize: '2rem',
+      lineHeight: '2.5rem',
+      fontWeight: 700,
     },
     h2: {
       fontSize: '1.8rem',
@@ -150,6 +152,26 @@ export const mainTheme = createTheme({
     },
     h5: {
       fontSize: '1rem',
+    },
+    subtitle1: {
+      fontSize: '2rem',
+      lineHeight: '2.5rem',
+      fontWeight: 400,
+    },
+    body1: {
+      fontSize: '1.5rem',
+      lineHeight: '2.5rem',
+      fontWeight: 400,
+    },
+    body2: {
+      fontSize: '1.3rem',
+      lineHeight: '1.5rem',
+      fontWeight: 400,
+    },
+    caption: {
+      fontSize: '1rem',
+      lineHeight: '1.5rem',
+      fontWeight: 400,
     },
   },
   spacing: [0, '1rem', '2.7rem', '5.5rem', '9rem'],
@@ -170,6 +192,16 @@ export const mainTheme = createTheme({
           { '@font-face': hkgroteskSemiBold },
           { '@font-face': hkgroteskExtraBold },
         ],
+      },
+    },
+    MuiTypography: {
+      defaultProps: {
+        variantMapping: {
+          subtitle1: 'span',
+          body1: 'span',
+          body2: 'span',
+          caption: 'span',
+        },
       },
     },
   },
