@@ -17,8 +17,8 @@ jobs:
         with:
           prettier_options: --write --config .prettierrc ./src
 
-     - name: Install modules 📦
+      - name: Install modules 📦
         run: yarn
-        
-     - name: Run ESLint 🕵️‍♂️
+
+      - name: Run ESLint 🕵️‍♂️
         run: yarn run eslint ./src
