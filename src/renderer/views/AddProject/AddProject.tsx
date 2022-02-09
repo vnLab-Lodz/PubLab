@@ -67,13 +67,7 @@ const AddProject = () => {
         >
           {t('AddProject.header.step')} {currentStep}/5
         </Typography>
-        <Box
-          sx={{
-            margin: ({ spacing }) => `${spacing(10)} 0px ${spacing(8)} 0px`,
-          }}
-        >
-          {renderStepComponent()}
-        </Box>
+        <Box sx={{ mt: 4, mb: 3 }}>{renderStepComponent()}</Box>
         <Box sx={{ display: 'flex' }}>
           <Button
             sx={{ flex: 1, height: '6rem' }}
