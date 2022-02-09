@@ -25,7 +25,7 @@ const LogOut = () => {
           }}
         >
           <img src={logo} alt='PubLab Logo' />
-          <Typography variant='h4' sx={{ margin: '5rem 0px' }}>
+          <Typography variant='h4' my={3}>
             {t('log-out-view.message')}
           </Typography>
           <Button
