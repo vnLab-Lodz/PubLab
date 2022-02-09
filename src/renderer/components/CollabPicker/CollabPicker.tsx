@@ -86,7 +86,7 @@ const CollabPicker: React.FC<Props> = ({
       </Select>
       <Button
         variant='contained'
-        color='lightGray'
+        color='primary'
         textCase='uppercase'
         fontWeight='regular'
         onClick={handleAdd}
