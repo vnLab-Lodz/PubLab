@@ -1,8 +1,6 @@
-name: CI | Prettier (check)
+name: CI | Pull Request Checks
 
-on:
-  push:
-    branches: [main]
+on: [pull_request]
 
 jobs:
   prettier:
@@ -17,4 +15,10 @@ jobs:
       - name: Prettify code 💄
         uses: creyD/prettier_action@v4.0
         with:
-          prettier_options: --check --config .prettierrc ./src
+          prettier_options: --write --config .prettierrc ./src
+
+     - name: Install modules 📦
+        run: yarn
+        
+      - name: Run ESLint 🕵️‍♂️
+        run: yarn run eslint ./src
