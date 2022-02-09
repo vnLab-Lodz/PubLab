@@ -3,7 +3,7 @@ name: CI | Pull Request Checks
 on: [pull_request]
 
 jobs:
-  prettier:
+  PR-Checks:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,5 +20,5 @@ jobs:
      - name: Install modules 📦
         run: yarn
         
-      - name: Run ESLint 🕵️‍♂️
+     - name: Run ESLint 🕵️‍♂️
         run: yarn run eslint ./src
