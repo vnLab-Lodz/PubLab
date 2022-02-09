@@ -93,32 +93,29 @@ export const mainTheme = createTheme({
       main: commonColors.black,
       contrastText: commonColors.lightGray,
     },
-    lightGray: {
-      main: commonColors.lightGray,
-      contrastText: commonColors.black,
-    },
     gray: {
+      light: commonColors.lightGray,
       main: '#d1d1d1',
+      dark: '#505050',
       contrastText: commonColors.black,
     },
-    darkGray: {
-      main: '#505050',
+    pink: {
+      main: '#FFD6EA', // light pink, eg. notifications background
+      dark: '#B13372',
+      contrastText: commonColors.black,
+    },
+    error: {
+      main: '#ff8383',
       contrastText: commonColors.lightGray,
     },
-    lightPink: {
-      main: '#FFD6EA', // light pink, eg. notifications background
-      contrastText: commonColors.black,
-    },
-    lightRed: {
+    red: {
       main: '#ff8383',
       contrastText: commonColors.lightGray,
     },
     green: {
+      light: '#33B150',
       main: '#01D39F', // green, eg. button, switches when
-      contrastText: commonColors.black,
-    },
-    lightGreen: {
-      main: '#EBF8EA',
+      dark: '#33B150',
       contrastText: commonColors.black,
     },
     orange: {
@@ -127,7 +124,11 @@ export const mainTheme = createTheme({
     },
     blue: {
       main: '#83aeff',
+      dark: '#3346B1',
       contrastText: commonColors.black,
+    },
+    salmon: {
+      main: '#E89671',
     },
   },
   typography: {
@@ -214,7 +215,7 @@ export const altTheme = createTheme({
     text: {
       primary: mainTheme.palette.text.secondary,
       secondary: mainTheme.palette.text.primary,
-      disabled: mainTheme.palette.darkGray.main,
+      disabled: mainTheme.palette.gray.dark,
     },
     background: { default: commonColors.black },
     primary: mainTheme.palette.secondary,

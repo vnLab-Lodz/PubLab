@@ -25,26 +25,22 @@ declare module '@mui/material/styles' {
   export interface Palette {
     black: PaletteColor;
     gray: PaletteColor;
-    lightGray: PaletteColor;
-    darkGray: PaletteColor;
-    lightPink: PaletteColor;
-    lightRed: PaletteColor;
+    pink: PaletteColor;
+    red: PaletteColor;
     green: PaletteColor;
-    lightGreen: PaletteColor;
     orange: PaletteColor;
     blue: PaletteColor;
+    salmon: PaletteColor;
   }
   export interface PaletteOptions {
     gray?: PaletteColorOptions;
-    lightGray?: PaletteColorOptions;
     black?: PaletteColorOptions;
-    lightPink?: PaletteColorOptions;
-    lightRed?: PaletteColorOptions;
+    pink?: PaletteColorOptions;
+    red?: PaletteColorOptions;
     green?: PaletteColorOptions;
-    lightGreen?: PaletteColorOptions;
     orange?: PaletteColorOptions;
-    darkGray?: PaletteColorOptions;
     blue?: PaletteColorOptions;
+    salmon?: PaletteColorOptions;
   }
 }
 
