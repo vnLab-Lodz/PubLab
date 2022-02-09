@@ -93,32 +93,29 @@ export const mainTheme = createTheme({
       main: commonColors.black,
       contrastText: commonColors.lightGray,
     },
-    lightGray: {
-      main: commonColors.lightGray,
-      contrastText: commonColors.black,
-    },
     gray: {
+      light: commonColors.lightGray,
       main: '#d1d1d1',
+      dark: '#505050',
       contrastText: commonColors.black,
     },
-    darkGray: {
-      main: '#505050',
+    pink: {
+      main: '#FFD6EA', // light pink, eg. notifications background
+      dark: '#B13372',
+      contrastText: commonColors.black,
+    },
+    error: {
+      main: '#ff8383',
       contrastText: commonColors.lightGray,
     },
-    lightPink: {
-      main: '#FFD6EA', // light pink, eg. notifications background
-      contrastText: commonColors.black,
-    },
-    lightRed: {
+    red: {
       main: '#ff8383',
       contrastText: commonColors.lightGray,
     },
     green: {
+      light: '#33B150',
       main: '#01D39F', // green, eg. button, switches when
-      contrastText: commonColors.black,
-    },
-    lightGreen: {
-      main: '#EBF8EA',
+      dark: '#33B150',
       contrastText: commonColors.black,
     },
     orange: {
@@ -127,7 +124,11 @@ export const mainTheme = createTheme({
     },
     blue: {
       main: '#83aeff',
+      dark: '#3346B1',
       contrastText: commonColors.black,
+    },
+    salmon: {
+      main: '#E89671',
     },
   },
   typography: {
@@ -138,6 +139,8 @@ export const mainTheme = createTheme({
     htmlFontSize: 10,
     h1: {
       fontSize: '2rem',
+      lineHeight: '2.5rem',
+      fontWeight: 700,
     },
     h2: {
       fontSize: '1.8rem',
@@ -150,6 +153,26 @@ export const mainTheme = createTheme({
     },
     h5: {
       fontSize: '1rem',
+    },
+    subtitle1: {
+      fontSize: '2rem',
+      lineHeight: '2.5rem',
+      fontWeight: 400,
+    },
+    body1: {
+      fontSize: '1.5rem',
+      lineHeight: '2.5rem',
+      fontWeight: 400,
+    },
+    body2: {
+      fontSize: '1.3rem',
+      lineHeight: '1.5rem',
+      fontWeight: 400,
+    },
+    caption: {
+      fontSize: '1rem',
+      lineHeight: '1.5rem',
+      fontWeight: 400,
     },
   },
   spacing: [0, '1rem', '2.7rem', '5.5rem', '9rem'],
@@ -172,6 +195,16 @@ export const mainTheme = createTheme({
         ],
       },
     },
+    MuiTypography: {
+      defaultProps: {
+        variantMapping: {
+          subtitle1: 'span',
+          body1: 'span',
+          body2: 'span',
+          caption: 'span',
+        },
+      },
+    },
   },
 });
 export const altTheme = createTheme({
@@ -182,7 +215,7 @@ export const altTheme = createTheme({
     text: {
       primary: mainTheme.palette.text.secondary,
       secondary: mainTheme.palette.text.primary,
-      disabled: mainTheme.palette.darkGray.main,
+      disabled: mainTheme.palette.gray.dark,
     },
     background: { default: commonColors.black },
     primary: mainTheme.palette.secondary,

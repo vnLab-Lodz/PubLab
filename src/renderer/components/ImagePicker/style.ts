@@ -16,7 +16,7 @@ export const OuterCircle = styled(Box, {
 })<{
   error: boolean;
 }>(({ theme: { palette }, error }) => ({
-  border: `1px solid ${error ? palette.lightRed.main : palette.primary.main}`,
+  border: `1px solid ${error ? palette.error.main : palette.primary.main}`,
   borderRadius: '50%',
   height: '9em',
   width: '9em',
@@ -31,7 +31,7 @@ export const InnerCircle = styled(Box, {
 })<{
   error: boolean;
 }>(({ theme: { palette }, error }) => ({
-  border: `1px solid ${error ? palette.lightRed.main : palette.primary.main}`,
+  border: `1px solid ${error ? palette.error.main : palette.primary.main}`,
   borderRadius: '50%',
   height: '1.5em',
   width: '1.5em',
@@ -51,7 +51,7 @@ export const Add = styled(AddIcon, {
 })<{
   error: boolean;
 }>(({ theme: { palette }, error }) => ({
-  color: error ? palette.lightRed.main : palette.primary.main,
+  color: error ? palette.error.main : palette.primary.main,
   height: '0.8em',
   width: '0.8em',
 }));

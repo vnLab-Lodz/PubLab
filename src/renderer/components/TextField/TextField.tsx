@@ -3,10 +3,8 @@ import './TextField.scss';
 import { styled } from '@mui/material/styles';
 
 export default styled(InputBase)(({ error, theme: { palette } }) => {
-  const { primary, lightRed } = palette;
-
-  let color = primary.main;
-  if (error) color = lightRed.main;
+  let color = palette.primary.main;
+  if (error) color = palette.error.main;
 
   const border = `1px solid ${color}`;
 
