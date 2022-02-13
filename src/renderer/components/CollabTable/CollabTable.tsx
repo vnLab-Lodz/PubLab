@@ -29,12 +29,12 @@ const CollabTable: React.FC<Props> = ({ collaborators }) => {
           <Styled.Row>
             <Styled.BorderedTC />
             <Styled.BorderedTC>
-              <Typography variant='h5'>
+              <Typography variant='caption'>
                 {t('AddProject.AddCollaborators.username').toLocaleUpperCase()}
               </Typography>
             </Styled.BorderedTC>
             <Styled.BorderedTC>
-              <Typography variant='h5'>
+              <Typography variant='caption'>
                 {t('AddProject.AddCollaborators.role').toLocaleUpperCase()}
               </Typography>
             </Styled.BorderedTC>
@@ -44,8 +44,14 @@ const CollabTable: React.FC<Props> = ({ collaborators }) => {
           {collaborators &&
             collaborators.map((collaborator) => (
               <Styled.Row key={collaborator.id}>
-                <Styled.BorderedTC align='center' width='30px'>
-                  <Avatar sx={{ width: 25, height: 25, fontSize: '1.3rem' }}>
+                <Styled.BorderedTC align='center' width='3rem'>
+                  <Avatar
+                    sx={{
+                      width: '2.5rem',
+                      height: '2.5rem',
+                      fontSize: '1.3rem',
+                    }}
+                  >
                     {collaborator.githubUsername.charAt(0)}
                   </Avatar>
                 </Styled.BorderedTC>
@@ -56,8 +62,8 @@ const CollabTable: React.FC<Props> = ({ collaborators }) => {
                   {collaborator.role.charAt(0).toUpperCase() +
                     collaborator.role.slice(1)}
                 </Styled.BorderedTC>
-                <Styled.BorderedTC width='30px' />
-                <Styled.BorderedTC border align='center' width='30px'>
+                <Styled.BorderedTC width='3rem' />
+                <Styled.BorderedTC border align='center' width='3rem'>
                   <IconButton
                     color='primary'
                     size='small'

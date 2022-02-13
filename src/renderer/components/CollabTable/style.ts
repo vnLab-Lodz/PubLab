@@ -21,8 +21,8 @@ export const Container = styled(TableContainer)`
 `;
 
 export const Row = styled(TableRow)`
-  height: 30px;
-  line-height: 30px;
+  height: 3rem;
+  line-height: 3rem;
   overflow: hidden;
 `;
 
@@ -35,16 +35,18 @@ export const BorderedTC = styled(TableCell, {
   &.MuiTableCell-root {
     text-align: ${(props) => props.align ?? 'left'};
     border: ${(props) =>
-      props.border ? `2px solid ${props.theme.palette.text.primary}` : 'none'};
+      props.border
+        ? `0.2rem solid ${props.theme.palette.text.primary}`
+        : 'none'};
     border-left: ${(props) => props.usernameColumn && 'none'};
     width: ${(props) => props.width};
     overflow: hidden;
-    padding: 5px;
+    padding: 0.5rem;
     cursor: pointer;
   }
 `;
 
 export const Icon = styled(ClearIcon)`
-  width: 15px;
-  height: 15px;
+  width: 1.5rem
+  height: 1.5rem;
 `;
