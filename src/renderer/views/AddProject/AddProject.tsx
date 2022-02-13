@@ -72,9 +72,8 @@ const AddProject = () => {
           <Button
             sx={{ flex: 1, height: '6rem' }}
             textCase='uppercase'
-            fontWeight='bold'
-            typographyVariant='h3'
             variant='outlined'
+            isMajor
             onClick={() => dispatch(decreaseStep())}
           >
             {t('AddProject.buttons.back')}
@@ -83,10 +82,9 @@ const AddProject = () => {
             id='next-button'
             sx={{ flex: 1, height: '6rem' }}
             textCase='uppercase'
-            fontWeight='bold'
-            typographyVariant='h3'
             color='green'
             variant='contained'
+            isMajor
             onClick={() => {
               if (nextButtonEnabled) dispatch(increaseStep());
             }}

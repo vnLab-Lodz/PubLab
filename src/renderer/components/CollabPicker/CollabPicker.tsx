@@ -88,7 +88,6 @@ const CollabPicker: React.FC<Props> = ({
         variant='contained'
         color='primary'
         textCase='uppercase'
-        fontWeight='regular'
         onClick={handleAdd}
         disabled={currentUsername === '' || currentRole === ''}
       >

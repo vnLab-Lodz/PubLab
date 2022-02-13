@@ -58,8 +58,7 @@ const AppSettings = () => {
           onClick={() => submitChanges()}
           variant='contained'
           color='green'
-          typographyVariant='h3'
-          fontWeight='bold'
+          isMajor
           fullWidth
         >
           {t('common.save')}
