@@ -14,7 +14,7 @@ const AuthProgress: React.FC<{ status: AUTH_STATES }> = ({ status }) => {
     <ThemeProvider theme={altTheme}>
       <Styled.Container>
         <Styled.LogoImg src={Logo} alt='PubLab' />
-        <Typography variant='h5'>
+        <Typography variant='caption'>
           {t('auth.in_progress')} {t(`auth.states.${key}` as const)}
         </Typography>
       </Styled.Container>
