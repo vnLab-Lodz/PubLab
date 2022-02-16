@@ -35,9 +35,7 @@ export const BorderedTC = styled(TableCell, {
   &.MuiTableCell-root {
     text-align: ${(props) => props.align ?? 'left'};
     border: ${(props) =>
-      props.border
-        ? `0.2rem solid ${props.theme.palette.text.primary}`
-        : 'none'};
+      props.border ? `1px solid ${props.theme.palette.text.primary}` : 'none'};
     border-left: ${(props) => props.usernameColumn && 'none'};
     width: ${(props) => props.width};
     overflow: hidden;
