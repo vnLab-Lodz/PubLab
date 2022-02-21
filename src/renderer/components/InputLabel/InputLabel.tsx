@@ -7,24 +7,17 @@ type Props = React.ComponentProps<typeof Styled.InputLabel> & {
 };
 
 const InputLabel: React.FC<Props> = ({
-  color,
   children,
   typographyVariant,
   ...rest
 }: Props) => (
-  <Styled.InputLabel
-    {...rest}
-    sx={{
-      fontSize: (theme) => theme.typography[typographyVariant || 'h4'].fontSize,
-      ...rest.sx,
-    }}
-  >
+  <Styled.InputLabel {...rest}>
     <Typography variant={typographyVariant}>{children}</Typography>
   </Styled.InputLabel>
 );
 
 InputLabel.defaultProps = {
-  typographyVariant: 'h4',
+  typographyVariant: 'body2',
 };
 
 export default InputLabel;
