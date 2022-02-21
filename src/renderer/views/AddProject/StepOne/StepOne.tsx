@@ -44,8 +44,8 @@ export default function StepOne({ setNextButtonEnabled }: Props) {
   return (
     <div className='step-one grid-container'>
       <div className='left-column'>
-        <InputLabel error={imagePickerError} typographyVariant='h3'>
-          {t('StepOne.projectPhoto')}
+        <InputLabel error={imagePickerError} id='img-picker-label'>
+          {t('StepOne.projectPhoto')}:
         </InputLabel>
         <ImagePicker
           alt='Project cover'
@@ -54,10 +54,11 @@ export default function StepOne({ setNextButtonEnabled }: Props) {
         />
       </div>
       <div className='right-column'>
-        <InputLabel error={nameInputError} typographyVariant='h3'>
-          {t('StepOne.projectName')}
+        <InputLabel error={nameInputError} id='project-name-label'>
+          {t('StepOne.projectName')}:
         </InputLabel>
         <TextField
+          aria-labelledby='project-name-label'
           className='name-input-field'
           placeholder={t('StepOne.projectNameDetails')}
           error={nameInputError}
@@ -65,10 +66,11 @@ export default function StepOne({ setNextButtonEnabled }: Props) {
           onChange={(e) => setField('publicationName', e)}
           onBlur={(e) => setNameInputError(e.target.value === '')}
         />
-        <InputLabel error={descInputError} typographyVariant='h3'>
-          {t('StepOne.projectDescription')}
+        <InputLabel error={descInputError} id='project-description-label'>
+          {t('StepOne.projectDescription')}:
         </InputLabel>
         <TextArea
+          aria-labelledby='project-description-label'
           className='desc-input-field'
           placeholder={t('StepOne.projectDescriptionDetails')}
           error={descInputError}
