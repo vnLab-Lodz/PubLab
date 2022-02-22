@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ThemeProvider, Typography } from '@mui/material';
 import { COMPONENTS_TRANSLATIONS } from '../../constants/RouterComponents';
 import { VIEWS } from '../../constants/Views';
 import PlaceholderProjectImage from '../../assets/placeholder-project-image.png';
-import './NavigationBar.scss';
 import {
   selectCurrentView,
   updateCurrentView,
 } from '../../../shared/redux/slices/currentViewSlice';
+import * as Styled from './style';
+import { altTheme } from '../../theme';
 
 interface IButton {
   abbreviation: string;
@@ -52,30 +54,24 @@ const NavigationBar = () => {
     button: IButton | IImageButton
   ): button is IImageButton => (button as IImageButton).src !== undefined;
 
-  const renderButton = (button: IButton | IImageButton) => {
-    const iconClassName = isButtonActive(button)
-      ? 'navbar__button__icon navbar__button__icon--active'
-      : 'navbar__button__icon';
-    return (
-      <button
-        type='button'
-        key={button.abbreviation}
-        className='navbar__button'
-        onClick={onNavigationButtonClick(button)}
-      >
-        <div className={iconClassName}>
-          {isImageButton(button) ? (
-            <img src={button.src} alt='Project' />
-          ) : (
-            button.abbreviation
-          )}
-        </div>
-        <span className='navbar__button__text'>
-          {COMPONENTS_TRANSLATIONS[button.view]}
-        </span>
-      </button>
-    );
-  };
+  const renderButton = (button: IButton | IImageButton) => (
+    <Styled.NavButton
+      key={button.abbreviation}
+      onClick={onNavigationButtonClick(button)}
+      isActive={isButtonActive(button)}
+      startIcon={
+        isImageButton(button) ? (
+          <img src={button.src} alt='Project' />
+        ) : (
+          <Typography variant='subtitle1'>{button.abbreviation}</Typography>
+        )
+      }
+    >
+      <Typography variant='subtitle1'>
+        {COMPONENTS_TRANSLATIONS[button.view]}
+      </Typography>
+    </Styled.NavButton>
+  );
 
   const expandNav = () => {
     const newIsExpandLocked = !isExpandLocked;
@@ -85,36 +81,36 @@ const NavigationBar = () => {
 
   const renderListOfButtons = (buttons: IButton[]) => buttons.map(renderButton);
 
-  const navbarClassName = isExpanded ? 'navbar navbar--expanded' : 'navbar';
-
   return (
-    <div
-      className={navbarClassName}
-      onMouseEnter={() => setIsExpanded(true)}
-      onMouseLeave={() => {
-        if (!isExpandLocked) {
-          setIsExpanded(false);
-        }
-      }}
-    >
-      <div>
-        {renderButton(PROJECT_BUTTON)}
-        {renderListOfButtons(TOP_BUTTONS)}
-      </div>
-      <div>{renderListOfButtons(BOTTOM_BUTTONS)}</div>
-      {isExpanded && (
-        <div
-          className='navbar__expand-handle'
-          role='button'
-          aria-label='Expand'
-          tabIndex={0}
-          onClick={expandNav}
-          onKeyPress={({ key }) => {
-            if (key === 'Enter') expandNav();
-          }}
-        />
-      )}
-    </div>
+    <ThemeProvider theme={altTheme}>
+      <Styled.NavBar
+        component='nav'
+        isExpanded={isExpanded}
+        onMouseEnter={() => setIsExpanded(true)}
+        onMouseLeave={() => {
+          if (!isExpandLocked) {
+            setIsExpanded(false);
+          }
+        }}
+      >
+        <div>
+          {renderButton(PROJECT_BUTTON)}
+          {renderListOfButtons(TOP_BUTTONS)}
+        </div>
+        <div>{renderListOfButtons(BOTTOM_BUTTONS)}</div>
+        {isExpanded && (
+          <Styled.ExpandHandle
+            role='button'
+            aria-label='Expand'
+            tabIndex={0}
+            onClick={expandNav}
+            onKeyPress={({ key }) => {
+              if (key === 'Enter') expandNav();
+            }}
+          />
+        )}
+      </Styled.NavBar>
+    </ThemeProvider>
   );
 };
 
