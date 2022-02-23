@@ -1,16 +1,14 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import OurSwitch from './Switch';
+import Switch from './Switch';
 
 export default {
-  title: 'Example/OurSwitch',
-  component: OurSwitch,
+  title: 'Example/Switch',
+  component: Switch,
   argTypes: {},
-} as ComponentMeta<typeof OurSwitch>;
+} as ComponentMeta<typeof Switch>;
 
-const Template: ComponentStory<typeof OurSwitch> = (args) => (
-  <OurSwitch {...args} />
-);
+const Template: ComponentStory<typeof Switch> = (args) => <Switch {...args} />;
 export const Normal = Template.bind({});
 Normal.args = { disabled: false };
 Normal.parameters = { backgrounds: { default: 'dark' } };

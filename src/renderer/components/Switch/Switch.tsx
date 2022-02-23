@@ -2,8 +2,8 @@ import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material';
 
 const StyledSwitch = styled(Switch)(({ theme, size }) => ({
-  width: size === 'small' ? 40 : 60,
-  height: size === 'small' ? 24 : 30,
+  width: size === 'small' ? '4rem' : '6rem',
+  height: size === 'small' ? '2.4rem' : '3rem',
   padding: 0,
   '& .MuiSwitch-switchBase': {
     padding: 0,
@@ -22,10 +22,12 @@ const StyledSwitch = styled(Switch)(({ theme, size }) => ({
 
   '& .MuiSwitch-thumb': {
     color: theme.palette.primary.main,
+    width: size === 'small' ? '1.6rem' : '2rem',
+    height: size === 'small' ? '1.6rem' : '2rem',
   },
 
   '& .MuiSwitch-track': {
-    borderRadius: 20,
+    borderRadius: '2rem',
     backgroundColor: 'transparent',
     opacity: 1,
     border: `1px solid ${theme.palette.primary.main}`,
