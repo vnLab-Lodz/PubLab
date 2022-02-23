@@ -12,20 +12,16 @@ const AppUpdate: React.FC = () => {
   return (
     <Styled.Container>
       <Styled.LogoImg src={Logo} alt='PubLab' />
-      <Typography variant='h3'>
+      <Typography>
         {t('AppSettings.updates.version')} {versionDetails.version}
       </Typography>
 
-      {!versionDetails.isUpToDate && (
+      {versionDetails.isUpToDate && (
         <Styled.UpdatePromptContainer>
-          <Typography variant='h3'>
+          <Typography>
             {t('AppSettings.updates.newVersionAvailable')}
           </Typography>
-          <Button
-            variant='contained'
-            fullWidth
-            sx={{ marginTop: '2.5rem', marginBottom: '2.5rem' }}
-          >
+          <Button variant='contained' fullWidth>
             {t('AppSettings.updates.update')}
           </Button>
         </Styled.UpdatePromptContainer>

@@ -1,8 +1,8 @@
 import { Box, styled } from '@mui/material';
 
-export const LogoImg = styled('img')(() => ({
+export const LogoImg = styled('img')(({ theme }) => ({
   display: 'block',
-  margin: '3rem',
+  margin: theme.spacing(2),
   marginTop: 0,
 }));
 
@@ -13,11 +13,11 @@ export const Container = styled(Box)(() => ({
   alignItems: 'center',
 }));
 
-export const UpdatePromptContainer = styled(Box)(() => ({
+export const UpdatePromptContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  marginTop: '8.3rem',
+  marginTop: theme.spacing(4),
   width: '100%',
 }));
