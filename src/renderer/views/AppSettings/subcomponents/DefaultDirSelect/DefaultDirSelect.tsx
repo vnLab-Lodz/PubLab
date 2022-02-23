@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import DirectoryPicker from '../../../../components/DirectoryPicker/DirectoryPicker';
 import InputLabel from '../../../../components/InputLabel/InputLabel';
+import Section from '../../../../components/Section/Section';
 
 const { dialog } = require('electron').remote;
 
@@ -13,7 +14,7 @@ interface Props {
 export default function DefaultDirSelect({ defaultDirPath, onChange }: Props) {
   const { t } = useTranslation();
   return (
-    <div>
+    <Section>
       <InputLabel id='dir-select-label'>
         {t('AppSettings.defaultDirectory.description')}:
       </InputLabel>
@@ -28,6 +29,6 @@ export default function DefaultDirSelect({ defaultDirPath, onChange }: Props) {
         }}
         onChange={(e) => onChange(e.target.value)}
       />
-    </div>
+    </Section>
   );
 }

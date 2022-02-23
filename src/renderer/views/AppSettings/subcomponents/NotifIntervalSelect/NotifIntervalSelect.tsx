@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { NOTIFICATION_INTERVAL } from '../../../../../shared/redux/slices/settingsSlice';
 import InputLabel from '../../../../components/InputLabel/InputLabel';
 import Select from '../../../../components/Select/Select';
+import Section from '../../../../components/Section/Section';
 
 interface Props {
   currentInterval: NOTIFICATION_INTERVAL;
@@ -27,7 +28,7 @@ export default function NotificationIntervalSelect({
   }
 
   return (
-    <div>
+    <Section>
       <InputLabel id='interval-select-label'>
         {t('AppSettings.notifications.notifications')}:
       </InputLabel>
@@ -40,6 +41,6 @@ export default function NotificationIntervalSelect({
       >
         {generateIntervalOptions()}
       </Select>
-    </div>
+    </Section>
   );
 }

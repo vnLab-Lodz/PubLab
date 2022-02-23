@@ -12,8 +12,8 @@ import LangSelect from './subcomponents/LangSelect/LangSelect';
 import DefaultDirSelect from './subcomponents/DefaultDirSelect/DefaultDirSelect';
 import NotificationIntervalSelect from './subcomponents/NotifIntervalSelect/NotifIntervalSelect';
 import { altTheme } from '../../theme';
-import * as Styled from './style';
 import Button from '../../components/Button/Button';
+import ViewContent from '../../components/ViewContent/ViewContent';
 
 const AppSettings = () => {
   const { t } = useTranslation();
@@ -29,14 +29,8 @@ const AppSettings = () => {
 
   return (
     <ThemeProvider theme={altTheme}>
-      <Styled.ViewContent>
-        <Typography
-          variant='h1'
-          sx={{
-            color: (theme) => theme.palette.text.primary,
-            marginBottom: '8.5rem',
-          }}
-        >
+      <ViewContent>
+        <Typography variant='h1' mb={4}>
           {t('AppSettings.title')}
         </Typography>
         <AppUpdate />
@@ -63,7 +57,7 @@ const AppSettings = () => {
         >
           {t('common.save')}
         </Button>
-      </Styled.ViewContent>
+      </ViewContent>
     </ThemeProvider>
   );
 };

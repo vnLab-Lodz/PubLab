@@ -10,13 +10,13 @@ const AppUpdate: React.FC = () => {
   const { t } = useTranslation();
   const versionDetails = getVersionDetails();
   return (
-    <Styled.Container>
+    <Styled.Container component='section'>
       <Styled.LogoImg src={Logo} alt='PubLab' />
       <Typography>
         {t('AppSettings.updates.version')} {versionDetails.version}
       </Typography>
 
-      {versionDetails.isUpToDate && (
+      {!versionDetails.isUpToDate && (
         <Styled.UpdatePromptContainer>
           <Typography>
             {t('AppSettings.updates.newVersionAvailable')}
