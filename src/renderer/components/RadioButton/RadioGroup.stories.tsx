@@ -17,7 +17,7 @@ const RadioForm: React.FC<Props> = ({ disabled1, disabled2, defaults }) => (
   <FormControl component='fieldset' style={{ padding: '2rem' }}>
     <Box pb={4} pt={2}>
       <FormLabel component='legend'>
-        <Typography variant='h4' color='text.primary'>
+        <Typography variant='body2' color='text.primary'>
           Choose the Package Manager:
         </Typography>
       </FormLabel>
@@ -28,7 +28,7 @@ const RadioForm: React.FC<Props> = ({ disabled1, disabled2, defaults }) => (
         value='yarn'
         control={<RadioBtn />}
         label={
-          <Typography variant='h5' color='default'>
+          <Typography variant='caption' color='default'>
             YARN
           </Typography>
         }
@@ -38,7 +38,7 @@ const RadioForm: React.FC<Props> = ({ disabled1, disabled2, defaults }) => (
         value='npm'
         control={<RadioBtn />}
         label={
-          <Typography variant='h5' color='default'>
+          <Typography variant='caption' color='default'>
             NPM
           </Typography>
         }
