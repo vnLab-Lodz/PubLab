@@ -1,5 +1,4 @@
 import { InputBase } from '@mui/material';
-import './TextField.scss';
 import { styled } from '@mui/material/styles';
 
 export default styled(InputBase)(({ error, theme: { palette } }) => {
@@ -15,6 +14,9 @@ export default styled(InputBase)(({ error, theme: { palette } }) => {
     '& .MuiInputBase-input': {
       lineHeight: '1.4em',
       padding: '1em 0.6em',
+      '&::placeholder': {
+        opacity: 1,
+      },
     },
   };
 });
