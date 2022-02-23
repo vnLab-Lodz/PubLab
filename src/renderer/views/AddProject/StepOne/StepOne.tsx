@@ -10,7 +10,7 @@ import {
   newPublication,
   setPublicationField,
 } from '../../../../shared/redux/slices/addPublicationSlice';
-import './StepOne.scss';
+import * as Styled from './style';
 
 interface Props {
   setNextButtonEnabled: (enabled: boolean) => void;
@@ -42,7 +42,7 @@ export default function StepOne({ setNextButtonEnabled }: Props) {
   };
 
   return (
-    <div className='step-one grid-container'>
+    <Styled.GridContainer>
       <div className='left-column'>
         <InputLabel error={imagePickerError} id='img-picker-label'>
           {t('StepOne.projectPhoto')}:
@@ -59,7 +59,7 @@ export default function StepOne({ setNextButtonEnabled }: Props) {
         </InputLabel>
         <TextField
           aria-labelledby='project-name-label'
-          className='name-input-field'
+          fullWidth
           placeholder={t('StepOne.projectNameDetails')}
           error={nameInputError}
           value={publicationName}
@@ -71,7 +71,7 @@ export default function StepOne({ setNextButtonEnabled }: Props) {
         </InputLabel>
         <TextArea
           aria-labelledby='project-description-label'
-          className='desc-input-field'
+          fullWidth
           placeholder={t('StepOne.projectDescriptionDetails')}
           error={descInputError}
           value={description}
@@ -79,6 +79,6 @@ export default function StepOne({ setNextButtonEnabled }: Props) {
           onBlur={(e) => setDescInputError(e.target.value === '')}
         />
       </div>
-    </div>
+    </Styled.GridContainer>
   );
 }
