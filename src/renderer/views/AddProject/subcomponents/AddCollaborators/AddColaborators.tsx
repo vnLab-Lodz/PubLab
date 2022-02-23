@@ -1,9 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ThemeProvider, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
-import { altTheme } from '../../../../theme';
 import CollabPicker, {
   Value,
 } from '../../../../components/CollabPicker/CollabPicker';
@@ -44,12 +43,13 @@ const AddColaborators = () => {
   };
 
   return (
-    <ThemeProvider theme={altTheme}>
+    <>
       <Typography
-        variant='h1'
+        variant='subtitle1'
+        component='p'
         sx={{
           color: (theme) => theme.palette.text.primary,
-          marginBottom: '5rem',
+          marginBottom: 3,
         }}
       >
         {t('AddProject.AddCollaborators.title')}
@@ -68,11 +68,12 @@ const AddColaborators = () => {
       {collaborators && collaborators.length > 0 && (
         <>
           <Typography
-            variant='h4'
+            variant='body2'
+            component='p'
             sx={{
               color: (theme) => theme.palette.text.primary,
-              marginTop: '8.5rem',
-              marginBottom: '2.7rem',
+              marginTop: 4,
+              marginBottom: 2,
             }}
           >
             {t('AddProject.AddCollaborators.table_title').toLocaleUpperCase()}
@@ -80,7 +81,7 @@ const AddColaborators = () => {
           <CollabTable collaborators={collaborators} />
         </>
       )}
-    </ThemeProvider>
+    </>
   );
 };
 
