@@ -1,4 +1,10 @@
-import { styled, Select as MuiSelect, alpha } from '@mui/material';
+import {
+  styled,
+  Select as MuiSelect,
+  alpha,
+  SxProps,
+  Theme,
+} from '@mui/material';
 
 export const Select = styled(MuiSelect)(({ theme }) => ({
   borderRadius: 0,
@@ -9,12 +15,8 @@ export const Select = styled(MuiSelect)(({ theme }) => ({
     },
   },
   '&&& .MuiSelect-select': {
-    padding: 0,
-    paddingRight: '48px',
-    '& > *': {
-      lineHeight: '1.5em',
-      padding: '1em 0em',
-    },
+    padding: '1.5rem 0',
+    paddingRight: '4.8rem',
   },
 
   '&&& .MuiOutlinedInput-input': {
@@ -44,3 +46,22 @@ export const Select = styled(MuiSelect)(({ theme }) => ({
     fill: theme.palette.text.disabled,
   },
 }));
+
+export const MenuListSx: SxProps<Theme> = {
+  bgcolor: (theme) => theme.palette.primary.main,
+  '& .MuiMenuItem-root': {
+    color: (theme) => theme.palette.primary.contrastText,
+    ':hover': {
+      bgcolor: (theme) => alpha(theme.palette.secondary.main, 0.2),
+    },
+    '&.Mui-selected.Mui-selected': {
+      bgcolor: (theme) => theme.palette.secondary.main,
+      color: (theme) => theme.palette.secondary.contrastText,
+    },
+  },
+};
+
+export const MenuPaperSx: SxProps = {
+  borderRadius: 0,
+  boxShadow: 'none',
+};
