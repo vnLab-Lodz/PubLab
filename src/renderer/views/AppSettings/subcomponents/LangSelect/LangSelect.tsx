@@ -19,9 +19,7 @@ export default function LangSelect({ currentLocale, onChange }: Props) {
   function generateLangOptions() {
     return supportedLocales.map((locale) => (
       <MenuItem key={locale} value={locale}>
-        <Typography variant='h3'>
-          {t(`AppSettings.language.${locale}` as const)}
-        </Typography>
+        <Typography>{t(`AppSettings.language.${locale}` as const)}</Typography>
       </MenuItem>
     ));
   }
