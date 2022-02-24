@@ -14,7 +14,7 @@ export const ViewContent = styled(ViewContentBase)(({ theme }) => ({
 export const LangBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
-  '& > *:not(:first-child)::before': {
+  '& > *:not(:first-of-type)::before': {
     content: '"/"',
     fontSize: theme.typography.body1.fontSize,
   },
