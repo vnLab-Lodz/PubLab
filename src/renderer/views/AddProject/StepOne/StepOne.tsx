@@ -10,7 +10,7 @@ import {
   newPublication,
   setPublicationField,
 } from '../../../../shared/redux/slices/addPublicationSlice';
-import './StepOne.scss';
+import * as Styled from './style';
 
 interface Props {
   setNextButtonEnabled: (enabled: boolean) => void;
@@ -42,10 +42,10 @@ export default function StepOne({ setNextButtonEnabled }: Props) {
   };
 
   return (
-    <div className='step-one grid-container'>
+    <Styled.GridContainer>
       <div className='left-column'>
-        <InputLabel error={imagePickerError} typographyVariant='h3'>
-          {t('StepOne.projectPhoto')}
+        <InputLabel error={imagePickerError} id='img-picker-label'>
+          {t('StepOne.projectPhoto')}:
         </InputLabel>
         <ImagePicker
           alt='Project cover'
@@ -54,22 +54,24 @@ export default function StepOne({ setNextButtonEnabled }: Props) {
         />
       </div>
       <div className='right-column'>
-        <InputLabel error={nameInputError} typographyVariant='h3'>
-          {t('StepOne.projectName')}
+        <InputLabel error={nameInputError} id='project-name-label'>
+          {t('StepOne.projectName')}:
         </InputLabel>
         <TextField
-          className='name-input-field'
+          aria-labelledby='project-name-label'
+          fullWidth
           placeholder={t('StepOne.projectNameDetails')}
           error={nameInputError}
           value={publicationName}
           onChange={(e) => setField('publicationName', e)}
           onBlur={(e) => setNameInputError(e.target.value === '')}
         />
-        <InputLabel error={descInputError} typographyVariant='h3'>
-          {t('StepOne.projectDescription')}
+        <InputLabel error={descInputError} id='project-description-label'>
+          {t('StepOne.projectDescription')}:
         </InputLabel>
         <TextArea
-          className='desc-input-field'
+          aria-labelledby='project-description-label'
+          fullWidth
           placeholder={t('StepOne.projectDescriptionDetails')}
           error={descInputError}
           value={description}
@@ -77,6 +79,6 @@ export default function StepOne({ setNextButtonEnabled }: Props) {
           onBlur={(e) => setDescInputError(e.target.value === '')}
         />
       </div>
-    </div>
+    </Styled.GridContainer>
   );
 }

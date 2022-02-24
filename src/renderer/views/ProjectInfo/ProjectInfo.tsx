@@ -1,17 +1,25 @@
 import React from 'react';
 import { IProject } from '../ProjectsList/IProject';
 import { formatDate } from '../../../shared/utils/formatDate';
-import './ProjectInfo.scss';
 
 interface IProps {
   project: IProject;
 }
 
 const ProjectInfo = ({ project }: IProps) => (
-  <div className='projectList__project__info'>
+  <div
+    className='projectList__project__info'
+    style={{ width: '100%', borderRadius: '8px' }}
+  >
     {project.id === -1 ? null : (
       <div style={{ color: 'white' }}>
-        <h1 className='projectList__info_header'> Project&apos;s info</h1>
+        <h1
+          className='projectList__info_header'
+          style={{ textAlign: 'center', marginTop: '25px' }}
+        >
+          {' '}
+          Project&apos;s info
+        </h1>
         <h2 style={{ marginLeft: '35px', marginRight: '35px' }}>
           Title: {project?.name}
         </h2>

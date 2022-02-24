@@ -1,8 +1,8 @@
 import { Box, styled } from '@mui/material';
 
-export const LogoImg = styled('img')({
-  marginBottom: '2.5rem',
-});
+export const LogoImg = styled('img')(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+}));
 
 export const Container = styled(Box)(({ theme }) => ({
   display: 'flex',

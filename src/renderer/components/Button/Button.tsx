@@ -7,22 +7,22 @@ import * as Styled from './style';
 
 interface ButtonProps extends MUIButtonProps {
   textCase?: 'lowercase' | 'uppercase' | 'sentence-case';
-  fontWeight?: React.ComponentProps<typeof Typography>['fontWeight'];
-  typographyVariant?: React.ComponentProps<typeof Typography>['variant'];
   color?: keyof Palette & MUIButtonProps['color'];
+  isMajor?: boolean;
 }
 
 const Button: FC<ButtonProps> = ({
   textCase,
-  fontWeight,
-  typographyVariant,
   children,
   color,
+  isMajor,
   sx,
   ...rest
 }) => {
   const themeColor = useTheme().palette[color || 'primary'];
   const combinedSx = {
+    my: isMajor ? 4 : 2,
+    padding: isMajor ? '2rem' : '1.5rem',
     border:
       rest.variant === 'outlined' ? `1px solid ${themeColor.main}` : 'none',
     ':hover': {
@@ -42,11 +42,11 @@ const Button: FC<ButtonProps> = ({
       <Typography
         sx={{
           textTransform: textCase === 'sentence-case' ? 'none' : textCase,
+          fontWeight: isMajor ? '700' : '400',
+          flexBasis: '100%',
+          mx: 1,
         }}
-        variant={typographyVariant}
-        fontWeight={fontWeight}
-        margin='1em'
-        lineHeight='1.4em'
+        variant={isMajor ? 'body1' : 'body2'}
       >
         {children}
       </Typography>
@@ -56,9 +56,8 @@ const Button: FC<ButtonProps> = ({
 
 Button.defaultProps = {
   textCase: 'uppercase',
-  fontWeight: 'normal',
-  typographyVariant: 'h4',
   color: 'primary',
+  isMajor: false,
 };
 
 export default Button;

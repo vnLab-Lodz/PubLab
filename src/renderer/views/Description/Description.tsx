@@ -1,5 +1,4 @@
 import React from 'react';
-import './Description.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../../shared/redux/slices/currentUserSlice';
 import { installGatsbyCLI } from '../../../shared/redux/slices/gatsbyInstallSlice';
@@ -18,8 +17,12 @@ const Description = () => {
 
   return (
     <div>
-      <h1 className='hello'>Hello World!</h1>
-      <p className='description'>Welcome to your Electron application.</p>
+      <h1 className='hello' style={{ color: 'red' }}>
+        Hello World!
+      </h1>
+      <p className='description' style={{ color: 'blue' }}>
+        Welcome to your Electron application.
+      </p>
       <button type='button' onClick={() => dispatch(installGatsbyCLI())}>
         Install gatsby-cli
       </button>

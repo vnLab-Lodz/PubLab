@@ -33,7 +33,6 @@ Uppercase.args = {
   variant: 'contained',
   children: 'choose',
   textCase: 'uppercase',
-  fontWeight: 'light',
   fullWidth: true,
 };
 
@@ -41,9 +40,9 @@ export const BoldUppercaseGreen = Template.bind({});
 BoldUppercaseGreen.args = {
   variant: 'contained',
   color: 'green',
+  isMajor: true,
   children: "let's go",
   textCase: 'uppercase',
-  fontWeight: 'bold',
   fullWidth: true,
 };
 
@@ -52,6 +51,5 @@ Outline.args = {
   variant: 'outlined',
   children: 'back',
   textCase: 'uppercase',
-  fontWeight: 'bold',
   fullWidth: true,
 };

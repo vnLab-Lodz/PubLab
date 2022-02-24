@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import TextField from './TextField';
-import './TextField.scss';
 
 export default {
   title: 'Example/TextField',

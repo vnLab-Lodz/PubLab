@@ -7,6 +7,7 @@ import {
   SupportedLangCode,
   supportedLocales,
 } from '../../../../internationalisation/i18next';
+import Section from '../../../../components/Section/Section';
 
 interface Props {
   currentLocale: SupportedLangCode;
@@ -19,15 +20,13 @@ export default function LangSelect({ currentLocale, onChange }: Props) {
   function generateLangOptions() {
     return supportedLocales.map((locale) => (
       <MenuItem key={locale} value={locale}>
-        <Typography variant='h3'>
-          {t(`AppSettings.language.${locale}` as const)}
-        </Typography>
+        <Typography>{t(`AppSettings.language.${locale}` as const)}</Typography>
       </MenuItem>
     ));
   }
 
   return (
-    <div>
+    <Section>
       <InputLabel id='lang-select-label'>
         {t('AppSettings.language.language')}:
       </InputLabel>
@@ -40,6 +39,6 @@ export default function LangSelect({ currentLocale, onChange }: Props) {
       >
         {generateLangOptions()}
       </Select>
-    </div>
+    </Section>
   );
 }

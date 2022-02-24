@@ -60,7 +60,6 @@ const AddProject = () => {
           {t('AddProject.header.newProject')}
         </Typography>
         <Typography
-          variant='h4'
           sx={{
             color: (theme) => theme.palette.text.primary,
           }}
@@ -70,23 +69,19 @@ const AddProject = () => {
         <Box sx={{ mt: 4, mb: 3 }}>{renderStepComponent()}</Box>
         <Box sx={{ display: 'flex' }}>
           <Button
-            sx={{ flex: 1, height: '6rem' }}
-            textCase='uppercase'
-            fontWeight='bold'
-            typographyVariant='h3'
             variant='outlined'
+            isMajor
+            fullWidth
             onClick={() => dispatch(decreaseStep())}
           >
             {t('AddProject.buttons.back')}
           </Button>
           <Button
             id='next-button'
-            sx={{ flex: 1, height: '6rem' }}
-            textCase='uppercase'
-            fontWeight='bold'
-            typographyVariant='h3'
             color='green'
             variant='contained'
+            isMajor
+            fullWidth
             onClick={() => {
               if (nextButtonEnabled) dispatch(increaseStep());
             }}

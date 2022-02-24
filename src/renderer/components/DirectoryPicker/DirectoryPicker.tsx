@@ -28,12 +28,7 @@ const DirectoryPicker: React.FC<Props> = ({
       spellCheck={false}
       inputProps={{ 'aria-labelledby': labelledBy }}
     />
-    <Button
-      variant='contained'
-      textCase='uppercase'
-      fontWeight='regular'
-      onClick={onClick}
-    >
+    <Button variant='contained' onClick={onClick} sx={{ m: 0 }}>
       {buttonText}
     </Button>
   </Box>

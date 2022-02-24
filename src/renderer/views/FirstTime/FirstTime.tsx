@@ -46,7 +46,6 @@ const FirstTime = () => {
           {!path ? (
             <Button
               fullWidth
-              fontWeight='light'
               variant='contained'
               textCase='uppercase'
               sx={{ marginTop: '9rem', height: '4.5rem' }}
@@ -70,10 +69,8 @@ const FirstTime = () => {
                 disabled={dir === ''}
                 variant='contained'
                 color='green'
-                textCase='uppercase'
-                fontWeight='bold'
+                isMajor
                 fullWidth
-                typographyVariant='h3'
                 sx={{
                   marginTop: '9rem',
                   height: '6rem',
