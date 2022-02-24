@@ -124,7 +124,7 @@
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@mui/icons-material": "^5.2.1",
-    "@mui/material": "^5.0.4",
+    "@mui/material": "^5.4.3",
     "@reduxjs/toolkit": "^1.4.0",
     "axios": "^0.21.0",
     "child_process": "^1.0.2",
