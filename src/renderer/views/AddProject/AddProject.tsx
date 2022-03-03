@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider, Typography, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,6 +15,13 @@ import ProjectDetailsInput from './subcomponents/ProjectDetailsInput/ProjectDeta
 import CollaboratorsPicker from './subcomponents/CollaboratorsPicker/CollaboratorsPicker';
 import TechnologiesPicker from './subcomponents/TechnologiesPicker/TechnologiesPicker';
 
+const steps = [
+  ProjectDetailsInput,
+  () => <>To be implemented</>,
+  TechnologiesPicker,
+  CollaboratorsPicker,
+];
+
 const AddProject = () => {
   const currentStep = useSelector(stepSelector);
   const dispatch = useDispatch();
@@ -28,26 +35,7 @@ const AddProject = () => {
     []
   );
 
-  const renderStepComponent = () => {
-    switch (currentStep) {
-      // substitute cases with components created for the issues,
-      // delete this comment after it becomes obsolete
-      case 1:
-        return (
-          <ProjectDetailsInput setNextButtonEnabled={setNextButtonEnabled} />
-        );
-      case 2:
-        return 'Insert component 2';
-      case 3:
-        return <TechnologiesPicker />;
-      case 4:
-        return <CollaboratorsPicker />;
-      case 5:
-        return 'Insert component 5';
-      default:
-        return 'Insert component 1';
-    }
-  };
+  const Step = useMemo(() => steps[currentStep - 1], [currentStep]);
 
   return (
     <ThemeProvider theme={altTheme}>
@@ -66,9 +54,11 @@ const AddProject = () => {
             color: (theme) => theme.palette.text.primary,
           }}
         >
-          {t('AddProject.header.step')} {currentStep}/5
+          {t('AddProject.header.step')} {currentStep}/{steps.length}
         </Typography>
-        <Box sx={{ mt: 4, mb: 3 }}>{renderStepComponent()}</Box>
+        <Box sx={{ mt: 4, mb: 3 }}>
+          <Step setNextButtonEnabled={setNextButtonEnabled} />
+        </Box>
         <Box sx={{ display: 'flex' }}>
           <Button
             variant='outlined'
