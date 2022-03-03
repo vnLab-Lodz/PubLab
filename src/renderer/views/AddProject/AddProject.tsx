@@ -11,9 +11,9 @@ import {
   deleteDraft,
   increaseStep,
 } from '../../../shared/redux/slices/addPublicationSlice';
-import StepOne from './StepOne/StepOne';
-import AddColaborators from './subcomponents/AddCollaborators/AddColaborators';
-import TechnologiesPicker from '../TechnologyPicker/TechnologiesPicker';
+import ProjectDetailsInput from './subcomponents/ProjectDetailsInput/ProjectDetailsInput';
+import CollaboratorsPicker from './subcomponents/CollaboratorsPicker/CollaboratorsPicker';
+import TechnologiesPicker from './subcomponents/TechnologiesPicker/TechnologiesPicker';
 
 const AddProject = () => {
   const currentStep = useSelector(stepSelector);
@@ -33,13 +33,15 @@ const AddProject = () => {
       // substitute cases with components created for the issues,
       // delete this comment after it becomes obsolete
       case 1:
-        return <StepOne setNextButtonEnabled={setNextButtonEnabled} />;
+        return (
+          <ProjectDetailsInput setNextButtonEnabled={setNextButtonEnabled} />
+        );
       case 2:
         return 'Insert component 2';
       case 3:
         return <TechnologiesPicker />;
       case 4:
-        return <AddColaborators />;
+        return <CollaboratorsPicker />;
       case 5:
         return 'Insert component 5';
       default:

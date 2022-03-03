@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import ImagePicker from '../../../components/ImagePicker/ImagePicker';
-import TextField from '../../../components/TextField/TextField';
-import TextArea from '../../../components/TextArea/TextArea';
-import InputLabel from '../../../components/InputLabel/InputLabel';
-import { Publication } from '../../../../shared/redux/slices/loadPublicationsSlice';
+import ImagePicker from '../../../../components/ImagePicker/ImagePicker';
+import TextField from '../../../../components/TextField/TextField';
+import TextArea from '../../../../components/TextArea/TextArea';
+import InputLabel from '../../../../components/InputLabel/InputLabel';
+import { Publication } from '../../../../../shared/redux/slices/loadPublicationsSlice';
 import {
   newPublication,
   setPublicationField,
-} from '../../../../shared/redux/slices/addPublicationSlice';
+} from '../../../../../shared/redux/slices/addPublicationSlice';
 import * as Styled from './style';
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
 
 type SetEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
-export default function StepOne({ setNextButtonEnabled }: Props) {
+export default function ProjectDetailsInput({ setNextButtonEnabled }: Props) {
   const [imagePickerError] = useState(false);
   const [nameInputError, setNameInputError] = useState(false);
   const [descInputError, setDescInputError] = useState(false);

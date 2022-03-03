@@ -2,11 +2,11 @@ import { Box, Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import StyledSwitch from '../../components/Switch/Switch';
+import StyledSwitch from '../../../../components/Switch/Switch';
 import {
   newPublication,
   setPublicationField,
-} from '../../../shared/redux/slices/addPublicationSlice';
+} from '../../../../../shared/redux/slices/addPublicationSlice';
 
 const TechnologiesPicker = () => {
   const { t } = useTranslation();
