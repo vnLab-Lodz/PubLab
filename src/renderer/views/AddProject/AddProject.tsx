@@ -40,20 +40,10 @@ const AddProject = () => {
   return (
     <ThemeProvider theme={altTheme}>
       <ViewContent>
-        <Typography
-          variant='h1'
-          sx={{
-            color: (theme) => theme.palette.text.primary,
-            fontWeight: 'bold',
-          }}
-        >
+        <Typography variant='h1'>
           {t('AddProject.header.newProject')}
         </Typography>
-        <Typography
-          sx={{
-            color: (theme) => theme.palette.text.primary,
-          }}
-        >
+        <Typography>
           {t('AddProject.header.step')} {currentStep}/{steps.length}
         </Typography>
         <Box sx={{ mt: 4, mb: 3 }}>
