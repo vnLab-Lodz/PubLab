@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider, Typography, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import Button from '../../components/Button/Button';
 import { altTheme } from '../../theme';
 import ViewContent from '../../components/ViewContent/ViewContent';
 import {
@@ -14,6 +13,7 @@ import {
 import ProjectDetailsInput from './subcomponents/ProjectDetailsInput/ProjectDetailsInput';
 import CollaboratorsPicker from './subcomponents/CollaboratorsPicker/CollaboratorsPicker';
 import TechnologiesPicker from './subcomponents/TechnologiesPicker/TechnologiesPicker';
+import StepControls from './subcomponents/StepControls/StepControls';
 
 const steps = [
   ProjectDetailsInput,
@@ -59,28 +59,13 @@ const AddProject = () => {
         <Box sx={{ mt: 4, mb: 3 }}>
           <Step setNextButtonEnabled={setNextButtonEnabled} />
         </Box>
-        <Box sx={{ display: 'flex' }}>
-          <Button
-            variant='outlined'
-            isMajor
-            fullWidth
-            onClick={() => dispatch(decreaseStep())}
-          >
-            {t('AddProject.buttons.back')}
-          </Button>
-          <Button
-            id='next-button'
-            color='green'
-            variant='contained'
-            isMajor
-            fullWidth
-            onClick={() => {
-              if (nextButtonEnabled) dispatch(increaseStep());
-            }}
-          >
-            {t('AddProject.buttons.next')}
-          </Button>
-        </Box>
+        <StepControls
+          onClickPrevious={() => dispatch(decreaseStep())}
+          onClickNext={() => dispatch(increaseStep())}
+          onClickFinished={() => console.log('To be implemented')}
+          isNextButtonDisabled={!nextButtonEnabled}
+          isStepLast={currentStep === steps.length}
+        />
       </ViewContent>
     </ThemeProvider>
   );

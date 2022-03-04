@@ -62,7 +62,8 @@
     },
     "buttons": {
       "next": "next",
-      "back": "back"
+      "back": "back",
+      "finalize": "finalize"
     },
     "AddCollaborators": {
       "title": "Would you like to add collaborators?",

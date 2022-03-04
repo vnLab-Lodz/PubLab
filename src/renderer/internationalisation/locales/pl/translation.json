@@ -62,7 +62,8 @@
     },
     "buttons": {
       "next": "dalej",
-      "back": "wstecz"
+      "back": "wstecz",
+      "finalize": "zakończ"
     },
     "AddCollaborators": {
       "title": "Czy chcesz dodać współpracowników?",
