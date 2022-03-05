@@ -25,17 +25,14 @@ const TechnologiesPicker = () => {
 
   return (
     <Box>
-      <Typography variant='h1' sx={{ marginBottom: '4.5rem' }}>
+      <Typography variant='subtitle1' component='p' mb={3}>
         {t('technology-picker.message')}
       </Typography>
 
       <Box>
-        <Box sx={{ marginBottom: '2.5rem' }}>
+        <Box mb={2}>
           <StyledSwitch size='small' checked={useSass} onChange={toggleSass} />
-          <Typography
-            variant='h4'
-            sx={{ display: 'inline', marginLeft: '1rem' }}
-          >
+          <Typography variant='body2' ml={1}>
             SCSS
           </Typography>
         </Box>
@@ -45,10 +42,7 @@ const TechnologiesPicker = () => {
             checked={useTypescript}
             onChange={toggleTypescript}
           />
-          <Typography
-            variant='h4'
-            sx={{ display: 'inline', marginLeft: '1rem' }}
-          >
+          <Typography variant='body2' ml={1}>
             TYPESCRIPT
           </Typography>
         </Box>

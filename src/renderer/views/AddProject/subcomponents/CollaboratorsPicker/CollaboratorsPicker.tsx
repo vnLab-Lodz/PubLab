@@ -44,14 +44,7 @@ const CollaboratorsPicker = () => {
 
   return (
     <>
-      <Typography
-        variant='subtitle1'
-        component='p'
-        sx={{
-          color: (theme) => theme.palette.text.primary,
-          marginBottom: 3,
-        }}
-      >
+      <Typography variant='subtitle1' component='p' mb={3}>
         {t('AddProject.AddCollaborators.title')}
       </Typography>
       <CollabPicker
