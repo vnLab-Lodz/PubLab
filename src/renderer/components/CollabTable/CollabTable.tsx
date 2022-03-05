@@ -24,7 +24,10 @@ const CollabTable: React.FC<Props> = ({ collaborators }) => {
 
   return (
     <Styled.Container>
-      <Table aria-label='collaborators table'>
+      <Table
+        aria-label='collaborators table'
+        sx={{ width: 'calc(100% - 1px)' }} // -1px fixes the missing rightmost border
+      >
         <TableHead>
           <Styled.Row>
             <Styled.BorderedTC />
