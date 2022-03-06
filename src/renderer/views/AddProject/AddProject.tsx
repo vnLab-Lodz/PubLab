@@ -9,6 +9,7 @@ import {
   decreaseStep,
   deleteDraft,
   increaseStep,
+  newPublication,
 } from '../../../shared/redux/slices/addPublicationSlice';
 import ProjectDetailsInput from './subcomponents/ProjectDetailsInput/ProjectDetailsInput';
 import CollaboratorsPicker from './subcomponents/CollaboratorsPicker/CollaboratorsPicker';
@@ -27,6 +28,7 @@ const AddProject = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [nextButtonEnabled, setNextButtonEnabled] = useState(false);
+  const { publicationName } = useSelector(newPublication);
 
   useEffect(
     () => () => {
@@ -42,6 +44,8 @@ const AddProject = () => {
       <ViewContent>
         <Typography variant='h1'>
           {t('AddProject.header.newProject')}
+          {publicationName ? `: ${publicationName}` : ''}
+          {}
         </Typography>
         <Typography>
           {t('AddProject.header.step')} {currentStep}/{steps.length}
