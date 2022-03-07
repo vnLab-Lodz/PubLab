@@ -45,7 +45,6 @@ const AddProject = () => {
         <Typography variant='h1'>
           {t('AddProject.header.newProject')}
           {publicationName ? `: ${publicationName}` : ''}
-          {}
         </Typography>
         <Typography>
           {t('AddProject.header.step')} {currentStep}/{steps.length}
