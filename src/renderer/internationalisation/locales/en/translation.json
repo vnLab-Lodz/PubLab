@@ -21,7 +21,7 @@
     "created": "Created by:"
   },
   "technology-picker": {
-    "message": "Would you like to use technology extenssions?"
+    "message": "Would you like to use technology extensions?"
   },
   "first-time-view": {
     "title": "Choose directory",
@@ -62,7 +62,8 @@
     },
     "buttons": {
       "next": "next",
-      "back": "back"
+      "back": "back",
+      "finalize": "finalize"
     },
     "AddCollaborators": {
       "title": "Would you like to add collaborators?",
