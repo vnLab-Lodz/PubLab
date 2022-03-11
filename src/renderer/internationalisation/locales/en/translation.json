@@ -3,7 +3,8 @@
     "save": "save",
     "change": "change",
     "choose": "choose",
-    "go": "let's go"
+    "go": "let's go",
+    "field_required": "This field is required."
   },
   "auth": {
     "in_progress": "Authentication in progress:",

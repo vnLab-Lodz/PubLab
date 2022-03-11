@@ -3,7 +3,8 @@
     "save": "zapisz",
     "change": "zmień",
     "choose": "wybierz",
-    "go": "dalej"
+    "go": "dalej",
+    "field_required": "To pole jest wymagane."
   },
   "auth": {
     "in_progress": "Uwierzytelnianie w toku:",
