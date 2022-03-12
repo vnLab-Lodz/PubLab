@@ -74,6 +74,9 @@
       "programmer": "Programmer",
       "editor": "Editor",
       "add_button": "Add"
+    },
+    "PackageManager": {
+      "message": "Choose the Package Manager:"
     }
   },
   "ProjectDetails": {
