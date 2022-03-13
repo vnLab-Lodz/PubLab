@@ -1,7 +1,8 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider, Typography } from '@mui/material';
+import { useFormik } from 'formik';
 import {
   saveSettingsAsync,
   selectAllSettings,
@@ -18,14 +19,13 @@ import ViewContent from '../../components/ViewContent/ViewContent';
 const AppSettings = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [settings, changeSetting] = useReducer(
-    handleSettingChange,
-    useSelector(selectAllSettings)
-  );
 
-  function submitChanges() {
-    dispatch(saveSettingsAsync(settings));
-  }
+  const formik = useFormik<Settings>({
+    initialValues: useSelector(selectAllSettings),
+    onSubmit: (values) => {
+      dispatch(saveSettingsAsync(values));
+    },
+  });
 
   return (
     <ThemeProvider theme={altTheme}>
@@ -34,39 +34,38 @@ const AppSettings = () => {
           {t('AppSettings.title')}
         </Typography>
         <AppUpdate />
-        <LangSelect
-          currentLocale={settings.currentLocale}
-          onChange={(locale) => changeSetting({ currentLocale: locale })}
-        />
-        <DefaultDirSelect
-          defaultDirPath={settings.defaultDirPath}
-          onChange={(path) => changeSetting({ defaultDirPath: path })}
-        />
-        <NotificationIntervalSelect
-          currentInterval={settings.notificationInterval}
-          onChange={(interval) =>
-            changeSetting({ notificationInterval: interval })
-          }
-        />
-        <Button
-          onClick={() => submitChanges()}
-          variant='contained'
-          color='green'
-          isMajor
-          fullWidth
-        >
-          {t('common.save')}
-        </Button>
+        <form onSubmit={formik.handleSubmit}>
+          <LangSelect
+            currentLocale={formik.values.currentLocale}
+            onChange={(value) => {
+              formik.setFieldValue('currentLocale', value);
+            }}
+          />
+          <DefaultDirSelect
+            defaultDirPath={formik.values.defaultDirPath}
+            onChange={(value) => {
+              formik.setFieldValue('defaultDirPath', value);
+            }}
+          />
+          <NotificationIntervalSelect
+            currentInterval={formik.values.notificationInterval}
+            onChange={(value) => {
+              formik.setFieldValue('notificationInterval', value);
+            }}
+          />
+          <Button
+            type='submit'
+            variant='contained'
+            color='green'
+            isMajor
+            fullWidth
+          >
+            {t('common.save')}
+          </Button>
+        </form>
       </ViewContent>
     </ThemeProvider>
   );
 };
 
 export default AppSettings;
-
-function handleSettingChange(
-  state: Settings,
-  change: Partial<Settings>
-): Settings {
-  return { ...state, ...change };
-}
