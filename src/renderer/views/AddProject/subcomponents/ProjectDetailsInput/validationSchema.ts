@@ -2,9 +2,9 @@ import { object, string, InferType } from 'yup';
 
 const validationSchema = object({
   name: string().required('common.field_required'),
-  description: string(),
+  description: string().max(220),
 });
 
-interface FormFields extends InferType<typeof validationSchema> {}
+type FormFields = InferType<typeof validationSchema>;
 
 export { validationSchema, FormFields };

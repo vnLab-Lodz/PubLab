@@ -25,33 +25,21 @@ export default function ProjectDetailsInput({ setNextButtonEnabled }: Props) {
     useSelector(newPublication);
 
   const formik = useFormik<FormFields>({
-    initialValues: {
-      name: publicationName,
-      description,
-    },
+    initialValues: { name: publicationName, description },
     validationSchema,
-    onSubmit: (values) => {
-      dispatch(
-        setPublicationField({ field: 'publicationName', value: values.name })
-      );
-      dispatch(
-        setPublicationField({
-          field: 'description',
-          value: values.description || '',
-        })
-      );
+    onSubmit: ({ name, description: desc = '' }, { setSubmitting }) => {
+      dispatch(setPublicationField({ field: 'publicationName', value: name }));
+      dispatch(setPublicationField({ field: 'description', value: desc }));
       setNextButtonEnabled(true);
-      formik.setSubmitting(false);
+      setSubmitting(false);
     },
   });
 
   useEffect(() => {
-    if (
-      formik.isValid &&
-      (formik.dirty || Object.keys(formik.touched).length)
-    ) {
-      formik.submitForm();
-    } else if (!formik.isValid) setNextButtonEnabled(false);
+    const { isValid, dirty, touched, submitForm } = formik;
+
+    if (isValid && (dirty || Object.keys(touched).length)) submitForm();
+    else if (!isValid) setNextButtonEnabled(false);
   }, [formik.values, formik.errors]);
 
   return (
