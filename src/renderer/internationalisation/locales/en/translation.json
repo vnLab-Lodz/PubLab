@@ -4,7 +4,8 @@
     "change": "change",
     "choose": "choose",
     "go": "let's go",
-    "field_required": "This field is required."
+    "field_required": "This field is required.",
+    "directory_not_existing": "Directory does not exist or the path is invalid."
   },
   "auth": {
     "in_progress": "Authentication in progress:",

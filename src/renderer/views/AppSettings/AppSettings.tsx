@@ -47,7 +47,11 @@ const AppSettings = () => {
           <DefaultDirSelect
             defaultDirPath={formik.values.defaultDirPath}
             error={Boolean(formik.errors.defaultDirPath)}
-            helperText={formik.errors.defaultDirPath}
+            helperText={
+              formik.errors.defaultDirPath
+                ? t(formik.errors.defaultDirPath as any)
+                : undefined
+            }
             onChange={(value) => {
               formik.setFieldValue('defaultDirPath', value);
             }}
