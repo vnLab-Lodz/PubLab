@@ -4,7 +4,8 @@
     "change": "zmień",
     "choose": "wybierz",
     "go": "dalej",
-    "field_required": "To pole jest wymagane."
+    "field_required": "To pole jest wymagane.",
+    "directory_not_existing": "Folder nie istnieje lub ścieżka jest błędna."
   },
   "auth": {
     "in_progress": "Uwierzytelnianie w toku:",

@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 import { configStore } from '../shared/redux/configureStore';
 import installDevToolsExtensions from './devToolsExtensions';
+import registerListeners from './icp';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: any;
@@ -13,6 +14,8 @@ if (require('electron-squirrel-startup')) {
 }
 
 export const mainStore = configStore('main');
+
+registerListeners();
 
 const createWindow = async (): Promise<void> => {
   // Create the browser window.
