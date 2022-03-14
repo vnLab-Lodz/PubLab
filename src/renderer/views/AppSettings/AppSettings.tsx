@@ -15,6 +15,7 @@ import NotificationIntervalSelect from './subcomponents/NotifIntervalSelect/Noti
 import { altTheme } from '../../theme';
 import Button from '../../components/Button/Button';
 import ViewContent from '../../components/ViewContent/ViewContent';
+import { validationSchema } from './validationSchema';
 
 const AppSettings = () => {
   const { t } = useTranslation();
@@ -22,8 +23,10 @@ const AppSettings = () => {
 
   const formik = useFormik<Settings>({
     initialValues: useSelector(selectAllSettings),
+    validationSchema,
     onSubmit: (values) => {
       dispatch(saveSettingsAsync(values));
+      formik.setSubmitting(false);
     },
   });
 
@@ -59,6 +62,7 @@ const AppSettings = () => {
             color='green'
             isMajor
             fullWidth
+            disabled={!formik.isValid}
           >
             {t('common.save')}
           </Button>
