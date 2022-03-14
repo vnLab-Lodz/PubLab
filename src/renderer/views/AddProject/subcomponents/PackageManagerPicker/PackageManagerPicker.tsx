@@ -14,7 +14,8 @@ const PackageManagerPicker = () => {
   const { packageManager } = useSelector(newPublication);
   const dispatch = useDispatch();
 
-  const setPackageManager = (value: NewPublication['packageManager']) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value as NewPublication['packageManager'];
     dispatch(setPublicationField({ field: 'packageManager', value }));
   };
 
@@ -25,14 +26,7 @@ const PackageManagerPicker = () => {
       </Typography>
 
       <Box mb={2}>
-        <RadioGroup
-          defaultValue={packageManager}
-          onChange={(e) =>
-            setPackageManager(
-              e.target.value as NewPublication['packageManager']
-            )
-          }
-        >
+        <RadioGroup defaultValue={packageManager} onChange={handleChange}>
           <FormControlLabel
             value='npm'
             control={<RadioBtn />}
