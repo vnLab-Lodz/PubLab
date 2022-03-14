@@ -15,10 +15,11 @@ import ProjectDetailsInput from './subcomponents/ProjectDetailsInput/ProjectDeta
 import CollaboratorsPicker from './subcomponents/CollaboratorsPicker/CollaboratorsPicker';
 import TechnologiesPicker from './subcomponents/TechnologiesPicker/TechnologiesPicker';
 import StepControls from './subcomponents/StepControls/StepControls';
+import PackageManagerPicker from './subcomponents/PackageManagerPicker/PackageManagerPicker';
 
 const steps = [
   ProjectDetailsInput,
-  () => <>To be implemented</>,
+  PackageManagerPicker,
   TechnologiesPicker,
   CollaboratorsPicker,
 ];

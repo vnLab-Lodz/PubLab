@@ -8,7 +8,7 @@ export type NewPublication = {
   publicationName: string;
   description: string;
   collaborators: Collaborator[];
-  packageManager: string;
+  packageManager: 'npm' | 'yarn';
   useSass: boolean;
   useTypescript: boolean;
   step: number;
@@ -32,13 +32,17 @@ type PublicationModification =
   | {
       field: keyof Pick<NewPublication, 'step'>;
       value: number;
+    }
+  | {
+      field: keyof Pick<NewPublication, 'packageManager'>;
+      value: NewPublication['packageManager'];
     };
 
 const initialState: NewPublication = {
   publicationName: '',
   description: '',
   collaborators: [],
-  packageManager: '',
+  packageManager: 'npm',
   useSass: false,
   useTypescript: false,
   step: 1,
