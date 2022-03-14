@@ -24,9 +24,9 @@ const AppSettings = () => {
   const formik = useFormik<Settings>({
     initialValues: useSelector(selectAllSettings),
     validationSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, { setSubmitting }) => {
       dispatch(saveSettingsAsync(values));
-      formik.setSubmitting(false);
+      setSubmitting(false);
     },
   });
 
