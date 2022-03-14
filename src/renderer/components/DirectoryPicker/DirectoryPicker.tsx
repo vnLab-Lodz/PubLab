@@ -10,6 +10,7 @@ interface Props {
   onClick?: () => void;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   labelledBy?: string;
+  error?: boolean;
 }
 
 const DirectoryPicker: React.FC<Props> = ({
@@ -19,6 +20,7 @@ const DirectoryPicker: React.FC<Props> = ({
   value,
   buttonText,
   labelledBy,
+  error,
 }) => (
   <Box sx={{ display: 'flex' }}>
     <Styled.TextField
@@ -27,6 +29,7 @@ const DirectoryPicker: React.FC<Props> = ({
       onChange={onChange}
       spellCheck={false}
       inputProps={{ 'aria-labelledby': labelledBy }}
+      error={error}
     />
     <Button variant='contained' onClick={onClick} sx={{ m: 0 }}>
       {buttonText}
@@ -40,6 +43,7 @@ DirectoryPicker.defaultProps = {
   onClick: () => {},
   onChange: () => {},
   labelledBy: undefined,
+  error: false,
 };
 
 export default DirectoryPicker;
