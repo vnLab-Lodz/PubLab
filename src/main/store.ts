@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { triggerAlias } from 'electron-redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../shared/redux/rootReducer';
@@ -9,5 +9,9 @@ export const store =
     ? require('./index').mainStore
     : configureStore({
         reducer: rootReducer,
-        middleware: [...getDefaultMiddleware(), triggerAlias, thunk],
+        middleware: (getDefaultMiddleware) => [
+          ...getDefaultMiddleware(),
+          triggerAlias,
+          thunk,
+        ],
       });
