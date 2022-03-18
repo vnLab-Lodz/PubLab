@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider, Typography, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import useUnmountEffect from '../../hooks/useUnmountEffect';
 import { altTheme } from '../../theme';
 import ViewContent from '../../components/ViewContent/ViewContent';
 import {
@@ -31,12 +32,7 @@ const AddProject = () => {
   const [nextButtonEnabled, setNextButtonEnabled] = useState(false);
   const { publicationName } = useSelector(newPublication);
 
-  useEffect(
-    () => () => {
-      dispatch(deleteDraft());
-    },
-    []
-  );
+  useUnmountEffect(() => void dispatch(deleteDraft()), []);
 
   const Step = useMemo(() => steps[currentStep - 1], [currentStep]);
 
