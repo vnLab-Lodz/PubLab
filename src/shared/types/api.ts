@@ -9,4 +9,8 @@ export const CHANNELS = {
   PUBLICATIONS: {
     GENERATE: 'publications:generate',
   },
+  GATSBY: {
+    VERIFY: 'gatsby:verify',
+    INSTALL: 'gatsby:install',
+  },
 } as const;

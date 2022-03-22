@@ -1,14 +1,11 @@
+import { ipcRenderer } from 'electron';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { CHANNELS } from 'src/shared/types/api';
 import { selectCurrentUser } from '../../../shared/redux/slices/currentUserSlice';
-import { installGatsbyCLI } from '../../../shared/redux/slices/gatsbyInstallSlice';
-import { saveSettingsAsync } from '../../../shared/redux/slices/settingsSlice';
-
-const { dialog } = require('electron').remote;
 
 const Description = () => {
   const currentUser = useSelector(selectCurrentUser);
-  const dispatch = useDispatch();
 
   return (
     <div>
@@ -18,22 +15,15 @@ const Description = () => {
       <p className='description' style={{ color: 'blue' }}>
         Welcome to your Electron application.
       </p>
-      <button type='button' onClick={() => dispatch(installGatsbyCLI())}>
-        Install gatsby-cli
-      </button>
       <button
         type='button'
-        onClick={() => {
-          dialog
-            .showOpenDialog({
-              properties: ['openDirectory'],
-            })
-            .then(({ filePaths }: any) => {
-              dispatch(saveSettingsAsync({ defaultDirPath: filePaths[0] }));
-            });
+        onClick={async () => {
+          const isInstalled = await ipcRenderer.invoke(CHANNELS.GATSBY.VERIFY);
+          console.log('gatsby-cli installation status: ', isInstalled);
+          // if (!isCliInstalled) ipcRenderer.invoke(CHANNELS.GATSBY.INSTALL);
         }}
       >
-        Pick directory
+        Install gatsby-cli
       </button>
 
       <p>
