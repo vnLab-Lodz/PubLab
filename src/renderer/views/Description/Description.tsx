@@ -25,6 +25,16 @@ const Description = () => {
       >
         Install gatsby-cli
       </button>
+      <button
+        type='button'
+        onClick={async () => {
+          const isInstalled = await ipcRenderer.invoke(CHANNELS.NODE.VERIFY);
+          console.log('node installation status: ', isInstalled);
+          // if (!isCliInstalled) ipcRenderer.invoke(CHANNELS.NODE.INSTALL);
+        }}
+      >
+        Install node
+      </button>
 
       <p>
         Welcome <b>{currentUser.data?.nick || ''}</b>!

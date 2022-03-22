@@ -13,4 +13,7 @@ export const CHANNELS = {
     VERIFY: 'gatsby:verify',
     INSTALL: 'gatsby:install',
   },
+  NODE: {
+    VERIFY: 'node:verify',
+  },
 } as const;
