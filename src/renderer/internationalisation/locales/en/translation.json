@@ -59,7 +59,10 @@
   },
   "AddProject": {
     "loading": {
-      "creating": "Generating the project based on the template: {template}"
+      "creatingGatsbyProject": "Generating gatsby project based on the template...",
+      "creatingConfigurationFile": "Creating configuration file for the publication...",
+      "modifyingPackageJson": "Modifying package.json for the publication...",
+      "modifyingGatsbyConfig": "Modifying gatsby-config.js for the publication..."
     },
     "header": {
       "newProject": "New Project",

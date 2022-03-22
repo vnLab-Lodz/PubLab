@@ -4,7 +4,10 @@ import { ipcRenderer } from 'electron';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { PUBLICATION_GENERATION_STATUS } from 'src/shared/types/redux';
-import { selectPublicationGenerationStatus } from 'src/shared/redux/slices/publications/generate';
+import {
+  selectPublicationGenerationStatus,
+  setStatus,
+} from 'src/shared/redux/slices/publications/generate';
 import { updateCurrentView } from 'src/shared/redux/slices/currentViewSlice';
 import { VIEWS } from 'src/renderer/constants/Views';
 import { CHANNELS } from '../../../shared/types/api';
@@ -42,7 +45,10 @@ const AddProject = () => {
   const status = useSelector(selectPublicationGenerationStatus);
   const publication = useSelector(newPublication);
 
-  useUnmountEffect(() => void dispatch(deleteDraft()), []);
+  useUnmountEffect(() => {
+    dispatch(deleteDraft());
+    dispatch(setStatus(IDLE));
+  }, []);
 
   useEffect(() => {
     if (status === SUCCESS) dispatch(updateCurrentView(VIEWS.PROJECT));
