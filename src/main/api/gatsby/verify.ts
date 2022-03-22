@@ -5,8 +5,7 @@ import { IpcEventHandler } from 'src/shared/types/api';
 const verify: IpcEventHandler = async () => {
   try {
     const installer = createGatsbyInstaller();
-    const isCliInstalled = await installer.verifyGatsbyCliInstallation();
-    return isCliInstalled;
+    return await installer.verifyGatsbyCliInstallation();
   } catch (error: any) {
     const logger = createLogger();
     logger.appendError(
