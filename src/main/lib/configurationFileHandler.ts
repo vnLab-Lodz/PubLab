@@ -1,0 +1,98 @@
+import util from 'util';
+import path from 'path';
+import fs from 'fs';
+import { Collaborator, Publication } from 'src/shared/types';
+import { createLogger } from '../logger';
+
+const writeFile = util.promisify(fs.writeFile);
+const readFile = util.promisify(fs.readFile);
+
+export const CONFIG_NAME = 'publab.config.json' as const;
+
+type Config = Omit<Publication, 'imagePath'>;
+
+type UpdateConfigFieldParams =
+  | {
+      field: keyof Pick<Publication, 'collaborators'>;
+      value: Collaborator[];
+    }
+  | {
+      field: keyof Pick<Publication, 'useTypescript' | 'useSass'>;
+      value: boolean;
+    }
+  | {
+      field: keyof Omit<
+        Publication,
+        'collaborators' | 'useSass' | 'useTypescript'
+      >;
+      value: string;
+    };
+
+export interface ConfigFileHandler {
+  getConfig: () => Promise<Config>;
+  setConfig: (config: Config) => Promise<void>;
+  createConfigFile: (publication: Config) => Promise<void>;
+  updateConfigField: (params: UpdateConfigFieldParams) => Promise<void>;
+}
+
+const createConfigFileHandler = (options: {
+  dirPath: string;
+  name: string;
+}): ConfigFileHandler => {
+  const logger = createLogger();
+  const { dirPath, name } = options;
+  const configPath = path.join(dirPath, name, CONFIG_NAME);
+
+  return {
+    async getConfig() {
+      try {
+        logger.appendLog(`Reading ${CONFIG_NAME}...`);
+        const configData = await readFile(configPath, 'utf-8');
+        const data: Omit<Publication, 'imagePath'> = JSON.parse(configData);
+        logger.appendLog(`Reading ${CONFIG_NAME} successful.`);
+        return data;
+      } catch (error) {
+        logger.appendError(`Reading ${CONFIG_NAME} failed.`);
+        logger.appendError(`${error}`);
+        throw new Error('Placeholder for config open error');
+      }
+    },
+    async setConfig(config) {
+      try {
+        logger.appendLog(`Writing ${CONFIG_NAME}...`);
+        await writeFile(configPath, JSON.stringify(config, null, 2));
+        logger.appendLog(`Writing ${CONFIG_NAME} successful.`);
+      } catch (error) {
+        logger.appendError(`Writing ${CONFIG_NAME} failed.`);
+        logger.appendError(`${error}`);
+        throw new Error('Placeholder for config write error');
+      }
+    },
+    async createConfigFile(publication) {
+      try {
+        logger.appendLog('Creating publication configuration file...');
+        await this.setConfig(publication);
+        logger.appendLog('Creating publication configuration file successful.');
+      } catch (error: any) {
+        logger.appendError('Creating publication configuration file failed.');
+        logger.appendError(`${error}`);
+        throw new Error(error.message);
+      }
+    },
+    async updateConfigField({ field, value }) {
+      try {
+        const data = await this.getConfig();
+        const config = { ...data, [field]: value };
+        logger.appendLog('Updating publication config file field...');
+        await this.setConfig(config);
+        logger.appendLog('Updating publication config file field successful.');
+      } catch (error: any) {
+        logger.appendError('Creating publication config file failed.');
+        logger.appendError(`${error}`);
+        throw new Error(error.message);
+      }
+    },
+  };
+};
+
+export default createConfigFileHandler;

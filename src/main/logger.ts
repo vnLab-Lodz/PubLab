@@ -9,3 +9,29 @@ export function appendLog(msg: string): void {
     `${localISOTime.replace(/T/, ' ').replace(/\..+/, '')} ${msg}\n`
   );
 }
+
+interface Logger {
+  appendLog: (msg: string) => void;
+  appendError: (msg: string) => void;
+}
+
+const developmentLogger: Logger = {
+  appendLog(msg: string): void {
+    console.log(msg);
+  },
+  appendError(msg: string): void {
+    console.error(msg);
+  },
+};
+
+const productionLogger: Logger = {
+  appendLog(msg: string): void {
+    appendLog(msg);
+  },
+  appendError(msg: string): void {
+    appendLog(msg);
+  },
+};
+
+export const createLogger = (): Logger =>
+  process.env.NODE_ENV === 'development' ? developmentLogger : productionLogger;

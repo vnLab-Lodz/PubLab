@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import reducer, {
   deleteDraft,
   setPublicationField,
@@ -12,7 +13,9 @@ import { Collaborator } from './loadPublicationsSlice';
 
 describe('addPublicationSlice', () => {
   it('handles deleteDraft action', () => {
-    expect(reducer(undefined, deleteDraft())).toEqual({
+    const { id, ...result } = reducer(undefined, deleteDraft());
+    expect(id).toBeDefined();
+    expect(result).toEqual({
       publicationName: '',
       description: '',
       collaborators: [],
@@ -28,7 +31,9 @@ describe('addPublicationSlice', () => {
       field: 'useSass',
       value: true,
     };
-    expect(reducer(undefined, setPublicationField(pubMob))).toEqual({
+    const { id, ...result } = reducer(undefined, setPublicationField(pubMob));
+    expect(id).toBeDefined();
+    expect(result).toEqual({
       publicationName: '',
       description: '',
       collaborators: [],
@@ -46,7 +51,9 @@ describe('addPublicationSlice', () => {
       role: 'role',
     };
 
-    expect(reducer(undefined, addCollaborator(collaborator))).toEqual({
+    const { id, ...result } = reducer(undefined, addCollaborator(collaborator));
+    expect(id).toBeDefined();
+    expect(result).toEqual({
       publicationName: '',
       description: '',
       collaborators: [collaborator],
@@ -63,8 +70,10 @@ describe('addPublicationSlice', () => {
       githubUsername: 'github_user',
       role: 'role',
     };
+    const id = uuidv4();
     const initialState: NewPublication = {
       publicationName: '',
+      id,
       description: '',
       collaborators: [collaborator],
       packageManager: 'npm',
@@ -73,6 +82,7 @@ describe('addPublicationSlice', () => {
       step: 1,
     };
     expect(reducer(initialState, deleteCollaborator('id'))).toEqual({
+      id,
       publicationName: '',
       description: '',
       collaborators: [],
@@ -84,7 +94,9 @@ describe('addPublicationSlice', () => {
   });
 
   it('handles increaseStep action', () => {
+    const id = uuidv4();
     const initialState: NewPublication = {
+      id,
       publicationName: '',
       description: '',
       collaborators: [],
@@ -94,6 +106,7 @@ describe('addPublicationSlice', () => {
       step: 3,
     };
     expect(reducer(initialState, increaseStep())).toEqual({
+      id,
       publicationName: '',
       description: '',
       collaborators: [],
@@ -105,7 +118,9 @@ describe('addPublicationSlice', () => {
   });
 
   it('handles decreaseStep action', () => {
+    const id = uuidv4();
     const initialState: NewPublication = {
+      id,
       publicationName: '',
       description: '',
       collaborators: [],
@@ -115,6 +130,7 @@ describe('addPublicationSlice', () => {
       step: 3,
     };
     expect(reducer(initialState, decreaseStep())).toEqual({
+      id,
       publicationName: '',
       description: '',
       collaborators: [],

@@ -2,17 +2,12 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../../shared/redux/slices/currentUserSlice';
 import { installGatsbyCLI } from '../../../shared/redux/slices/gatsbyInstallSlice';
-import { generateNewProject } from '../../../shared/redux/slices/gatsbyGenerateProjectSlice';
-import {
-  saveSettingsAsync,
-  selectDefaultDirPath,
-} from '../../../shared/redux/slices/settingsSlice';
+import { saveSettingsAsync } from '../../../shared/redux/slices/settingsSlice';
 
 const { dialog } = require('electron').remote;
 
 const Description = () => {
   const currentUser = useSelector(selectCurrentUser);
-  const dirPath = useSelector(selectDefaultDirPath);
   const dispatch = useDispatch();
 
   return (
@@ -39,25 +34,6 @@ const Description = () => {
         }}
       >
         Pick directory
-      </button>
-      <button
-        type='button'
-        onClick={() => {
-          if (!dirPath) {
-            alert('Pick a path first');
-            return;
-          }
-
-          dispatch(
-            generateNewProject({
-              publicationName: 'testProject2',
-              useSass: true,
-              useTypescript: true,
-            })
-          );
-        }}
-      >
-        Generate project
       </button>
 
       <p>

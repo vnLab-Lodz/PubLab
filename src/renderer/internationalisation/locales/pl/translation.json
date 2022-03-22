@@ -58,6 +58,9 @@
     }
   },
   "AddProject": {
+    "loading": {
+      "creating": "Generowanie projektu na bazie szablonu: {template}"
+    },
     "header": {
       "newProject": "Nowy Projekt",
       "step": "krok"

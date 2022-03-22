@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 import { configStore } from '../shared/redux/configureStore';
+import registerApiHandlers from './api';
 import installDevToolsExtensions from './devToolsExtensions';
 import registerListeners from './icp';
 
@@ -17,11 +18,13 @@ export const mainStore = configStore('main');
 
 registerListeners();
 
+registerApiHandlers();
+
 const createWindow = async (): Promise<void> => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    height: 600,
-    width: 1200,
+    height: 1024,
+    width: 1280,
     backgroundColor: '#111111',
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,

@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
 import { RootState } from '../rootReducer';
 import { Collaborator } from './loadPublicationsSlice';
 
 export type NewPublication = {
   // for now there is no image to store, to be added later
+  id: string;
   imagePath?: string;
   publicationName: string;
   description: string;
@@ -40,6 +42,7 @@ type PublicationModification =
 
 const initialState: NewPublication = {
   publicationName: '',
+  id: uuidv4(),
   description: '',
   collaborators: [],
   packageManager: 'npm',

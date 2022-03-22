@@ -1,10 +1,22 @@
-import React, { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ThemeProvider, Typography, Box } from '@mui/material';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Box, ThemeProvider, Typography } from '@mui/material';
+import { ipcRenderer } from 'electron';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { PUBLICATION_GENERATION_STATUS } from 'src/shared/types/redux';
+import { selectPublicationGenerationStatus } from 'src/shared/redux/slices/publications/generate';
+import { updateCurrentView } from 'src/shared/redux/slices/currentViewSlice';
+import { VIEWS } from 'src/renderer/constants/Views';
+import { CHANNELS } from '../../../shared/types/api';
+import CollaboratorsPicker from './subcomponents/CollaboratorsPicker/CollaboratorsPicker';
+import GenerationOverlay from './subcomponents/GenerationOverlay/GenerationOverlay';
+import PackageManagerPicker from './subcomponents/PackageManagerPicker/PackageManagerPicker';
+import ProjectDetailsInput from './subcomponents/ProjectDetailsInput/ProjectDetailsInput';
+import StepControls from './subcomponents/StepControls/StepControls';
+import TechnologiesPicker from './subcomponents/TechnologiesPicker/TechnologiesPicker';
 import useUnmountEffect from '../../hooks/useUnmountEffect';
-import { altTheme } from '../../theme';
 import ViewContent from '../../components/ViewContent/ViewContent';
+import { altTheme } from '../../theme';
 import {
   currentStep as stepSelector,
   decreaseStep,
@@ -12,11 +24,8 @@ import {
   increaseStep,
   newPublication,
 } from '../../../shared/redux/slices/addPublicationSlice';
-import ProjectDetailsInput from './subcomponents/ProjectDetailsInput/ProjectDetailsInput';
-import CollaboratorsPicker from './subcomponents/CollaboratorsPicker/CollaboratorsPicker';
-import TechnologiesPicker from './subcomponents/TechnologiesPicker/TechnologiesPicker';
-import StepControls from './subcomponents/StepControls/StepControls';
-import PackageManagerPicker from './subcomponents/PackageManagerPicker/PackageManagerPicker';
+
+const { IDLE, FAILURE, SUCCESS } = PUBLICATION_GENERATION_STATUS;
 
 const steps = [
   ProjectDetailsInput,
@@ -30,18 +39,32 @@ const AddProject = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [nextButtonEnabled, setNextButtonEnabled] = useState(false);
-  const { publicationName } = useSelector(newPublication);
+  const status = useSelector(selectPublicationGenerationStatus);
+  const publication = useSelector(newPublication);
 
   useUnmountEffect(() => void dispatch(deleteDraft()), []);
 
+  useEffect(() => {
+    if (status === SUCCESS) dispatch(updateCurrentView(VIEWS.PROJECT));
+  }, [status]);
+
+  const handleFinish = () => {
+    const { step, publicationName: name, ...rest } = publication;
+    ipcRenderer.invoke(CHANNELS.PUBLICATIONS.GENERATE, { ...rest, name });
+  };
+
   const Step = useMemo(() => steps[currentStep - 1], [currentStep]);
+
+  const isGenerationInProgress = ![IDLE, FAILURE, SUCCESS].includes(status);
 
   return (
     <ThemeProvider theme={altTheme}>
       <ViewContent>
         <Typography variant='h1'>
           {t('AddProject.header.newProject')}
-          {publicationName ? `: ${publicationName}` : ''}
+          {publication.publicationName
+            ? `: ${publication.publicationName}`
+            : ''}
         </Typography>
         <Typography>
           {t('AddProject.header.step')} {currentStep}/{steps.length}
@@ -52,11 +75,12 @@ const AddProject = () => {
         <StepControls
           onClickPrevious={() => dispatch(decreaseStep())}
           onClickNext={() => dispatch(increaseStep())}
-          onClickFinished={() => console.log('To be implemented')}
+          onClickFinished={handleFinish}
           isNextButtonDisabled={!nextButtonEnabled}
           isStepLast={currentStep === steps.length}
         />
       </ViewContent>
+      {isGenerationInProgress && <GenerationOverlay />}
     </ThemeProvider>
   );
 };

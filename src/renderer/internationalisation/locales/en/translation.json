@@ -58,6 +58,9 @@
     }
   },
   "AddProject": {
+    "loading": {
+      "creating": "Generating the project based on the template: {template}"
+    },
     "header": {
       "newProject": "New Project",
       "step": "step"

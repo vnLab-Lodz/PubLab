@@ -6,7 +6,7 @@ import loadPublicationsReducer from './slices/loadPublicationsSlice';
 import addPublicationReducer from './slices/addPublicationSlice';
 import nodeCheckReducer from './slices/nodeCheckSlice';
 import currentViewReducer from './slices/currentViewSlice';
-import gatsbyGenerateProjectReducer from './slices/gatsbyGenerateProjectSlice';
+import publicationGenerationReducer from './slices/publications/generate';
 
 const rootReducer = combineReducers({
   currentUser: currentUserReducer,
@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
   newPublication: addPublicationReducer,
   loadedPublications: loadPublicationsReducer,
   currentView: currentViewReducer,
-  gatsbyGenerateProject: gatsbyGenerateProjectReducer,
+  publicationGeneration: publicationGenerationReducer,
 });
 
 // export state to use with selectors
