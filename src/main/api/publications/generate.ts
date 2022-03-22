@@ -4,13 +4,15 @@ import { createLogger } from 'src/main/logger';
 import { mainStore as store } from 'src/main';
 import { Publication } from 'src/shared/types';
 import { IpcEventHandler } from 'src/shared/types/api';
-import { setStatus } from 'src/shared/redux/slices/publications/generate';
-import { PUBLICATION_GENERATION_STATUS as STATUS } from 'src/shared/types/redux';
 import createAuthorFromCollaborators from 'src/shared/util/createAuthorFromCollaborators';
 import createGatsbyProjectGenerator from 'src/main/lib/gatsbyProjectGenerator';
 import createConfigFileHandler from 'src/main/lib/configurationFileHandler';
 import createPackageHandler from 'src/main/lib/packageHandler';
 import createGatsbyConfigHandler from 'src/main/lib/gatsbyConfigHandler';
+import {
+  setStatus,
+  PUBLICATION_GENERATION_STATUS as STATUS,
+} from 'src/shared/redux/slices/publications/generate';
 
 type GenerateParams = Publication;
 

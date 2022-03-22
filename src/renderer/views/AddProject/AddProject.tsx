@@ -3,10 +3,10 @@ import { Box, ThemeProvider, Typography } from '@mui/material';
 import { ipcRenderer } from 'electron';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { PUBLICATION_GENERATION_STATUS } from 'src/shared/types/redux';
 import {
   selectPublicationGenerationStatus,
   setStatus,
+  PUBLICATION_GENERATION_STATUS,
 } from 'src/shared/redux/slices/publications/generate';
 import { updateCurrentView } from 'src/shared/redux/slices/currentViewSlice';
 import { VIEWS } from 'src/renderer/constants/Views';

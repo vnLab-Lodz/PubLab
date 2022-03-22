@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { selectPublicationGenerationStatus } from 'src/shared/redux/slices/publications/generate';
-import { PUBLICATION_GENERATION_STATUS as STATUS } from 'src/shared/types/redux';
+import {
+  selectPublicationGenerationStatus,
+  PUBLICATION_GENERATION_STATUS as STATUS,
+} from 'src/shared/redux/slices/publications/generate';
 import LoadingOverlay from '../../../../components/LoadingOverlay/LoadingOverlay';
 import * as Styled from './style';
 

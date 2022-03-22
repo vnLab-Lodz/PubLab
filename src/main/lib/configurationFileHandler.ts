@@ -1,11 +1,7 @@
-import util from 'util';
 import path from 'path';
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import { Collaborator, Publication } from 'src/shared/types';
 import { createLogger } from '../logger';
-
-const writeFile = util.promisify(fs.writeFile);
-const readFile = util.promisify(fs.readFile);
 
 export const CONFIG_NAME = 'publab.config.json' as const;
 
@@ -47,7 +43,7 @@ const createConfigFileHandler = (options: {
     async getConfig() {
       try {
         logger.appendLog(`Reading ${CONFIG_NAME}...`);
-        const configData = await readFile(configPath, 'utf-8');
+        const configData = await fs.readFile(configPath, 'utf-8');
         const data: Omit<Publication, 'imagePath'> = JSON.parse(configData);
         logger.appendLog(`Reading ${CONFIG_NAME} successful.`);
         return data;
@@ -60,7 +56,7 @@ const createConfigFileHandler = (options: {
     async setConfig(config) {
       try {
         logger.appendLog(`Writing ${CONFIG_NAME}...`);
-        await writeFile(configPath, JSON.stringify(config, null, 2));
+        await fs.writeFile(configPath, JSON.stringify(config, null, 2));
         logger.appendLog(`Writing ${CONFIG_NAME} successful.`);
       } catch (error) {
         logger.appendError(`Writing ${CONFIG_NAME} failed.`);

@@ -1,10 +1,6 @@
-import util from 'util';
 import path from 'path';
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import { createLogger } from '../logger';
-
-const writeFile = util.promisify(fs.writeFile);
-const readFile = util.promisify(fs.readFile);
 
 export const PACKAGE_NAME = 'package.json' as const;
 
@@ -32,7 +28,7 @@ const createPackageHandler = (options: {
     async getPackage() {
       try {
         logger.appendLog('Reading package.json...');
-        const packageData = await readFile(packagePath, 'utf-8');
+        const packageData = await fs.readFile(packagePath, 'utf-8');
         const data = JSON.parse(packageData);
         logger.appendLog('Reading package.json successful.');
         return data;
@@ -45,7 +41,7 @@ const createPackageHandler = (options: {
     async setPackage(packageData) {
       try {
         logger.appendLog('Writing package.json...');
-        await writeFile(packagePath, JSON.stringify(packageData, null, 2));
+        await fs.writeFile(packagePath, JSON.stringify(packageData, null, 2));
         logger.appendLog('Writing package.json successful.');
       } catch (error) {
         logger.appendError('Writing package.json failed.');

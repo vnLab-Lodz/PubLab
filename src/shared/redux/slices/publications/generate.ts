@@ -1,9 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-  PublicationGenerationSlice,
-  PUBLICATION_GENERATION_STATUS,
-  RootState,
-} from 'src/shared/types/redux';
+import { RootState } from '../../rootReducer';
+
+export enum PUBLICATION_GENERATION_STATUS {
+  IDLE,
+  GENERATING_GATSBY_PROJECT,
+  CREATING_CONFIGURATION_FILE,
+  MODIFYING_PACKAGE_JSON,
+  MODIFYING_GATSBY_CONFIG,
+  SUCCESS,
+  FAILURE,
+}
+
+export interface PublicationGenerationSlice {
+  status: PUBLICATION_GENERATION_STATUS;
+}
 
 const initialState: PublicationGenerationSlice = {
   status: PUBLICATION_GENERATION_STATUS.IDLE,
