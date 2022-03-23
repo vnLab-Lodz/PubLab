@@ -33,7 +33,9 @@ const DefaultDirSelect = ({
         onClick={() => {
           dialog
             .showOpenDialog({ properties: ['openDirectory'] })
-            .then(({ filePaths }: any) => onChange(filePaths[0]));
+            .then(({ filePaths }: any) =>
+              onChange(filePaths[0] ?? defaultDirPath)
+            );
         }}
         onChange={(e) => onChange(e.target.value)}
         error={error}
