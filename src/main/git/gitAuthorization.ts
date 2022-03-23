@@ -6,6 +6,7 @@ import { appendLog } from '../logger';
 /**
  * Authorizes GitHub user within an external window
  * @param callback function that is to be executed on authorization success
+ * TODO: @deprecated This should be moved to the api in the near future
  */
 export function authorizeWithGithub(
   silent: boolean,
@@ -56,6 +57,7 @@ export function authorizeWithGithub(
  * Requests access_token from GitHub API.
  * @param code code received from GitHub API authorization
  * @returns object with access_token info or object with error
+ * TODO: @deprecated This should be moved to the api in the near future
  */
 export async function requestAccessToken(code: string): Promise<any> {
   try {

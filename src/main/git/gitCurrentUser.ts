@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+/**
+ * TODO: @deprecated This should be moved to the api in the near future
+ */
 export async function fetchUserData(token: string) {
   try {
     const response = await axios.get('https://api.github.com/user', {

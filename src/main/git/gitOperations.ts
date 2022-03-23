@@ -4,6 +4,8 @@ import { Repository, WEB_PUB_REPO_NAME } from './gitTypes';
 /**
  * return array of objects with name of repository, author of repository and url to repository
  * @param accessToken - accessToken
+ * @deprecated
+ * TODO: Verify if this should still be in the project as is
  */
 export function getUserRepositories(accessToken: string): Repository[] {
   const repositories: Repository[] = [];
@@ -34,6 +36,8 @@ export function getUserRepositories(accessToken: string): Repository[] {
  * @param accessToken - accessToken
  * @param repoName - name of the repository
  * @param description - description of repository(optional)
+ * @deprecated
+ * TODO: Verify if this should still be in the project as is
  */
 export function createNewRepository(
   accessToken: string,

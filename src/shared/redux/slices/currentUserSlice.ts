@@ -135,6 +135,9 @@ export const {
 
 export const selectCurrentUser = (state: RootState) => state.currentUser;
 
+/**
+ * TODO: @deprecated This should be moved to the api in the near future
+ */
 export const authorizeGitHubUserAsync = createAsyncActionMain<boolean>(
   'currentUser/requestAuthCode',
   (silent = false) =>
@@ -146,6 +149,9 @@ export const authorizeGitHubUserAsync = createAsyncActionMain<boolean>(
     }
 );
 
+/**
+ * TODO: @deprecated This should be moved to the api in the near future
+ */
 export const requestAccessTokenAsync = createAsyncActionMain<string>(
   'currentUser/requestAccessToken',
   (code) => async (dispatch) => {
@@ -166,6 +172,9 @@ export const requestAccessTokenAsync = createAsyncActionMain<string>(
   }
 );
 
+/**
+ * TODO: @deprecated This should be moved to the api in the near future
+ */
 export const fetchUserDataAsync = createAsyncActionMain<string>(
   'currentUser/fetchData',
   (token) => async (dispatch) => {
@@ -180,6 +189,9 @@ export const fetchUserDataAsync = createAsyncActionMain<string>(
   }
 );
 
+/**
+ * TODO: @deprecated This should be moved to the api in the near future
+ */
 export const terminateSessionAsync = createAsyncActionMain<void>(
   'currentUser/terminateSession',
   () => async (dispatch) => {
