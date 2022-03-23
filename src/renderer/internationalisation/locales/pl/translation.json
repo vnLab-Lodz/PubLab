@@ -92,5 +92,16 @@
     "projectNameDetails": "Nazwa projektu...",
     "projectDescription": "OPIS PROJEKTU",
     "projectDescriptionDetails": "Opis projektu..."
+  },
+  "views": {
+    "first_time": "Pierwszy raz",
+    "project": "Projekt",
+    "files": "Pliki",
+    "changes": "Zmiany",
+    "add_project": "Dodaj projekt",
+    "projects_list": "Lista projektów",
+    "settings": "Ustawienia",
+    "app_settings": "Ustawienia aplikacji",
+    "logout": "Wyloguj"
   }
 }

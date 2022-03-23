@@ -1,40 +1,44 @@
 import { Box, Button, styled } from '@mui/material';
 
-export const NavBar = styled(Box)<{ isExpanded?: boolean }>(
-  ({ theme, isExpanded }) => ({
-    position: 'relative',
-    boxSizing: 'border-box',
-    maxHeight: '100vh',
-    flex: '0 22rem,',
-    minWidth: isExpanded ? '22rem' : '7.4rem',
-    maxWidth: isExpanded ? '22rem' : '7.4rem',
-    padding: '1rem 4px',
-    overflowY: 'auto',
-    overflowX: 'hidden',
-    borderRight: `1px solid ${theme.palette.primary.main}`,
+export const NavBar = styled(Box)<{ isExpanded?: boolean; wider?: boolean }>(
+  ({ theme, isExpanded, wider }) => {
+    const width = wider ? '28.5rem' : '22rem';
 
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    return {
+      position: 'relative',
+      boxSizing: 'border-box',
+      maxHeight: '100vh',
+      flex: `0 ${width},`,
+      minWidth: isExpanded ? width : '7.4rem',
+      maxWidth: isExpanded ? width : '7.4rem',
+      padding: '1rem 4px',
+      overflowY: 'auto',
+      overflowX: 'hidden',
+      borderRight: `1px solid ${theme.palette.primary.main}`,
 
-    background: theme.palette.background.default,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
 
-    transition: 'all 0.3s',
+      background: theme.palette.background.default,
 
-    '&::-webkit-scrollbar': {
-      width: '0.6rem',
-    },
+      transition: 'all 0.3s',
 
-    '&::-webkit-scrollbar-track': {
-      backgroundColor: 'inherit',
-    },
+      '&::-webkit-scrollbar': {
+        width: '0.6rem',
+      },
 
-    '&::-webkit-scrollbar-thumb': {
-      backgroundColor: '#505050',
-      borderRadius: '1rem',
-    },
-  })
+      '&::-webkit-scrollbar-track': {
+        backgroundColor: 'inherit',
+      },
+
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: '#505050',
+        borderRadius: '1rem',
+      },
+    };
+  }
 );
 
 export const NavButton = styled(Button, {

@@ -16,20 +16,6 @@ export type RouterComponents = {
   [key in VIEWS | SUBVIEWS]: React.FC<any>;
 };
 
-// TODO: Localize the sidebar
-// This can be changed when we introduce some i18n
-export const COMPONENTS_TRANSLATIONS: Record<VIEWS, string> = {
-  FIRST_TIME: 'First time',
-  LOGOUT: 'Log out',
-  PROJECT: 'Project',
-  FILES: 'Files',
-  CHANGES: 'Changes',
-  SETTINGS: 'Settings',
-  ADD_PROJECT: 'Add project',
-  PROJECTS_LIST: 'Projects list',
-  APP_SETTINGS: 'App settings',
-};
-
 export const FULL_SCREEN_VIEWS = [VIEWS.FIRST_TIME];
 
 export const routerComponents: RouterComponents = {

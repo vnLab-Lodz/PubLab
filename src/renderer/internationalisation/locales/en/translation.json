@@ -92,5 +92,16 @@
     "projectNameDetails": "Project name...",
     "projectDescription": "PROJECT DECRIPTION",
     "projectDescriptionDetails": "Project description..."
+  },
+  "views": {
+    "first_time": "First time",
+    "project": "Project",
+    "files": "Files",
+    "changes": "Changes",
+    "add_project": "Add Project",
+    "projects_list": "Projects list",
+    "settings": "Settings",
+    "app_settings": "App settings",
+    "logout": "Log out"
   }
 }
