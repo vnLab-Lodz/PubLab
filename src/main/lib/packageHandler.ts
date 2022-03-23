@@ -1,19 +1,15 @@
 import path from 'path';
-import { promises as fs } from 'fs';
+import { Json } from 'src/shared/types';
 import { createLogger } from '../logger';
+import createFileIO from './fileIO';
 
 export const PACKAGE_NAME = 'package.json' as const;
 
-export type PackageJSON = { [key: string]: string | boolean | number };
-
 export interface PackageHandler {
-  getPackage: () => Promise<PackageJSON>;
-  setPackage: (packageData: PackageJSON) => Promise<void>;
-  modifyPackage: (modifier: (pckg: PackageJSON) => void) => Promise<void>;
-  modifyField: (
-    field: string,
-    value: string | boolean | number
-  ) => Promise<void>;
+  getPackage: () => Promise<Json>;
+  setPackage: (packageData: Json) => Promise<void>;
+  modifyPackage: (modifier: (pckg: Json) => void) => Promise<void>;
+  modifyField: (field: string, value: Json['key']) => Promise<void>;
 }
 
 const createPackageHandler = (options: {
@@ -23,13 +19,13 @@ const createPackageHandler = (options: {
   const logger = createLogger();
   const { dirPath, name } = options;
   const packagePath = path.join(dirPath, name, PACKAGE_NAME);
+  const io = createFileIO();
 
   return {
     async getPackage() {
       try {
         logger.appendLog('Reading package.json...');
-        const packageData = await fs.readFile(packagePath, 'utf-8');
-        const data = JSON.parse(packageData);
+        const data = await io.readJSON<Json>(packagePath);
         logger.appendLog('Reading package.json successful.');
         return data;
       } catch (error) {
@@ -41,7 +37,7 @@ const createPackageHandler = (options: {
     async setPackage(packageData) {
       try {
         logger.appendLog('Writing package.json...');
-        await fs.writeFile(packagePath, JSON.stringify(packageData, null, 2));
+        await io.writeJSON(packagePath, packageData);
         logger.appendLog('Writing package.json successful.');
       } catch (error) {
         logger.appendError('Writing package.json failed.');

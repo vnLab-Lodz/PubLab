@@ -1,7 +1,7 @@
 import path from 'path';
-import { promises as fs } from 'fs';
 import { Collaborator, Publication } from 'src/shared/types';
 import { createLogger } from '../logger';
+import createFileIO from './fileIO';
 
 export const CONFIG_NAME = 'publab.config.json' as const;
 
@@ -38,13 +38,13 @@ const createConfigFileHandler = (options: {
   const logger = createLogger();
   const { dirPath, name } = options;
   const configPath = path.join(dirPath, name, CONFIG_NAME);
+  const io = createFileIO();
 
   return {
     async getConfig() {
       try {
         logger.appendLog(`Reading ${CONFIG_NAME}...`);
-        const configData = await fs.readFile(configPath, 'utf-8');
-        const data: Omit<Publication, 'imagePath'> = JSON.parse(configData);
+        const data = await io.readJSON<Config>(configPath);
         logger.appendLog(`Reading ${CONFIG_NAME} successful.`);
         return data;
       } catch (error) {
@@ -56,7 +56,7 @@ const createConfigFileHandler = (options: {
     async setConfig(config) {
       try {
         logger.appendLog(`Writing ${CONFIG_NAME}...`);
-        await fs.writeFile(configPath, JSON.stringify(config, null, 2));
+        await io.writeJSON(configPath, config);
         logger.appendLog(`Writing ${CONFIG_NAME} successful.`);
       } catch (error) {
         logger.appendError(`Writing ${CONFIG_NAME} failed.`);

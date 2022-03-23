@@ -1,6 +1,6 @@
 import path from 'path';
-import { promises as fs } from 'fs';
 import { createLogger } from '../logger';
+import createFileIO from './fileIO';
 
 export interface GatsbyConfigHandler {
   getConfig: () => Promise<string>;
@@ -19,12 +19,13 @@ const createGatsbyConfigHandler = (options: {
   const gatsbyConfig = `gatsby-config.${fileExtension}`;
   const prefix = usesTypescript ? ['config'] : [];
   const gatsbyConfigPath = path.join(dirPath, name, ...prefix, gatsbyConfig);
+  const io = createFileIO();
 
   return {
     async getConfig() {
       try {
         logger.appendLog(`Reading ${gatsbyConfig}...`);
-        const data = await fs.readFile(gatsbyConfigPath, 'utf-8');
+        const data = await io.readString(gatsbyConfigPath);
         logger.appendLog(`Reading ${gatsbyConfig} successful.`);
         return data;
       } catch (error) {
@@ -36,7 +37,7 @@ const createGatsbyConfigHandler = (options: {
     async setConfig(config) {
       try {
         logger.appendLog(`Writing ${gatsbyConfig}...`);
-        await fs.writeFile(gatsbyConfigPath, config, 'utf-8');
+        await io.writeString(gatsbyConfigPath, config);
         logger.appendLog(`Writing ${gatsbyConfig} successful.`);
       } catch (error) {
         logger.appendError(`Writing ${gatsbyConfig} failed.`);
