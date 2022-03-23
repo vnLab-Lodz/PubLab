@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import { ipcRenderer } from 'electron';
+import { CHANNELS } from 'src/shared/types/api';
 import { configStore } from '../../../shared/redux/configureStore';
 import Auth from '../Auth/Auth';
 import { mainTheme } from '../../theme';
@@ -9,7 +11,6 @@ import i18next from '../../internationalisation/i18next';
 import { setLocalStorageItem } from '../../../shared/redux/helpers/localStorage';
 import Outlet from '../Outlet/Outlet';
 import {
-  readSettingsAsync,
   selectCurrentLocale,
   selectDefaultDirPath,
 } from '../../../shared/redux/slices/settingsSlice';
@@ -18,7 +19,7 @@ const store = configStore('renderer');
 
 const App = () => {
   useEffect(() => {
-    store.dispatch(readSettingsAsync());
+    ipcRenderer.invoke(CHANNELS.SETTINGS.READ);
   }, []);
 
   useEffect(

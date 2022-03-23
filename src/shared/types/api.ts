@@ -16,4 +16,11 @@ export const CHANNELS = {
   NODE: {
     VERIFY: 'node:verify',
   },
+  SETTINGS: {
+    SAVE: 'settings:save',
+    READ: 'settings:read',
+  },
+  FILES: {
+    VERIFY_PATH: 'files:verify-path',
+  },
 } as const;

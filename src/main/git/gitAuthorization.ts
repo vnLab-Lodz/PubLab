@@ -12,8 +12,8 @@ export function authorizeWithGithub(
   callback: (response: { code: string | null; error: any }) => void
 ): void {
   const authWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 900,
+    height: 800,
     show: false,
     webPreferences: { nodeIntegration: false },
   });

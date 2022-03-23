@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider, Typography, Box } from '@mui/material';
+import { ipcRenderer } from 'electron';
+import { CHANNELS } from 'src/shared/types/api';
 import ViewContent from '../../components/ViewContent/ViewContent';
 import { altTheme } from '../../theme';
 import Button from '../../components/Button/Button';
-import { saveSettingsAsync } from '../../../shared/redux/slices/settingsSlice';
 import DirectoryPicker from '../../components/DirectoryPicker/DirectoryPicker';
 import { VIEWS } from '../../constants/Views';
 import { updateCurrentView } from '../../../shared/redux/slices/currentViewSlice';
@@ -23,7 +24,9 @@ const FirstTime = () => {
     dialog
       .showOpenDialog({ properties: ['openDirectory'] })
       .then(({ filePaths }: any) => {
-        dispatch(saveSettingsAsync({ defaultDirPath: filePaths[0] }));
+        ipcRenderer.invoke(CHANNELS.SETTINGS.SAVE, {
+          defaultDirPath: filePaths[0],
+        });
         if (filePaths[0] !== undefined) setPath(true);
         setDir(filePaths[0]);
       });
@@ -60,7 +63,9 @@ const FirstTime = () => {
                 value={dir}
                 onChange={(event) => {
                   const { value } = event.target;
-                  saveSettingsAsync({ defaultDirPath: value });
+                  ipcRenderer.invoke(CHANNELS.SETTINGS.SAVE, {
+                    defaultDirPath: value,
+                  });
                   setDir(value);
                 }}
                 onClick={pickDirectory}

@@ -4,7 +4,7 @@ import { createLogger } from 'src/main/logger';
 import { mainStore as store } from 'src/main';
 import { Publication } from 'src/shared/types';
 import { IpcEventHandler } from 'src/shared/types/api';
-import createAuthorFromCollaborators from 'src/shared/util/createAuthorFromCollaborators';
+import createAuthorFromCollaborators from 'src/shared/utils/createAuthorFromCollaborators';
 import createGatsbyProjectGenerator from 'src/main/lib/gatsbyProjectGenerator';
 import createConfigFileHandler from 'src/main/lib/configurationFileHandler';
 import createPackageHandler from 'src/main/lib/packageHandler';

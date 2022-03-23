@@ -1,3 +1,7 @@
+export interface Json {
+  [key: string]: string | number | boolean;
+}
+
 export interface Collaborator {
   id: string;
   githubUsername: string;

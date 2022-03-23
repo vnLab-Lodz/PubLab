@@ -3,8 +3,9 @@ import { ThemeProvider, Typography } from '@mui/material';
 import { FaGithub } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { ipcRenderer } from 'electron';
+import { CHANNELS } from 'src/shared/types/api';
 import { authorizeGitHubUserAsync } from '../../../shared/redux/slices/currentUserSlice';
-import { saveSettingsAsync } from '../../../shared/redux/slices/settingsSlice';
 import logo from '../../assets/publab.png';
 import {
   SupportedLangCode,
@@ -19,7 +20,7 @@ const LoginComponent = () => {
   const dispatch = useDispatch();
 
   const changeLanguage = (locale: SupportedLangCode) => {
-    dispatch(saveSettingsAsync({ currentLocale: locale }));
+    ipcRenderer.invoke(CHANNELS.SETTINGS.SAVE, { currentLocale: locale });
   };
 
   return (
