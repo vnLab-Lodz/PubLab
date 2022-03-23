@@ -18,7 +18,7 @@ const initialState: CurrentView = {
   view: getLocalStorageItem<boolean>('initialConfigFlag', JSON.parse)
     ? VIEWS.PROJECT
     : VIEWS.FIRST_TIME,
-  subview: { element: SUBVIEWS.NONE },
+  subview: { element: SUBVIEWS.NO_PROJECTS },
 };
 
 const CurrentViewSlice = createSlice({

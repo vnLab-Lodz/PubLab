@@ -5,7 +5,8 @@
     "choose": "choose",
     "go": "let's go",
     "field_required": "This field is required.",
-    "directory_not_existing": "Directory does not exist or the path is invalid."
+    "directory_not_existing": "Directory does not exist or the path is invalid.",
+    "notification": "Notification"
   },
   "auth": {
     "in_progress": "Authentication in progress:",

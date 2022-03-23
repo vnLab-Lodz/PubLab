@@ -108,6 +108,15 @@ export const mainTheme = createTheme({
       main: '#ff8383',
       contrastText: commonColors.lightGray,
     },
+    info: {
+      main: '#FFD6EA',
+    },
+    warning: {
+      main: '#FFD86D',
+    },
+    success: {
+      main: '#C7FFF1',
+    },
     red: {
       main: '#ff8383',
       contrastText: commonColors.lightGray,
