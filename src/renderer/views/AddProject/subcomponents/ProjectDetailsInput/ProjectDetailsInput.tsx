@@ -9,7 +9,7 @@ import InputLabel from '../../../../components/InputLabel/InputLabel';
 import {
   newPublication,
   setPublicationField,
-} from '../../../../../shared/redux/slices/addPublicationSlice';
+} from '../../../../../shared/redux/slices/addPublicationWizardSlice';
 import * as Styled from './style';
 import { FormFields, validationSchema } from './validationSchema';
 
@@ -21,14 +21,16 @@ export default function ProjectDetailsInput({ setNextButtonEnabled }: Props) {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
-  const { imagePath, description, publicationName } =
-    useSelector(newPublication);
+  const publication = useSelector(newPublication);
 
   const formik = useFormik<FormFields>({
-    initialValues: { name: publicationName, description },
+    initialValues: {
+      name: publication.name,
+      description: publication.description,
+    },
     validationSchema,
     onSubmit: ({ name, description: desc = '' }, { setSubmitting }) => {
-      dispatch(setPublicationField({ field: 'publicationName', value: name }));
+      dispatch(setPublicationField({ field: 'name', value: name }));
       dispatch(setPublicationField({ field: 'description', value: desc }));
       setNextButtonEnabled(true);
       setSubmitting(false);
@@ -48,7 +50,7 @@ export default function ProjectDetailsInput({ setNextButtonEnabled }: Props) {
         <InputLabel id='img-picker-label'>
           {t('ProjectDetails.projectPhoto')}:
         </InputLabel>
-        <ImagePicker alt='Project cover' image={imagePath} />
+        <ImagePicker alt='Project cover' image={publication.imagePath} />
       </div>
       <div className='right-column'>
         <InputLabel id='project-name-label' error={Boolean(formik.errors.name)}>

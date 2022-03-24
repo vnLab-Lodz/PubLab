@@ -2,11 +2,11 @@ import { Box, FormControlLabel, RadioGroup, Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { PublicationBase } from 'src/shared/types';
 import {
-  NewPublication,
   newPublication,
   setPublicationField,
-} from '../../../../../shared/redux/slices/addPublicationSlice';
+} from '../../../../../shared/redux/slices/addPublicationWizardSlice';
 import RadioBtn from '../../../../components/RadioButton/RadioBtn';
 
 const PackageManagerPicker = () => {
@@ -15,7 +15,7 @@ const PackageManagerPicker = () => {
   const dispatch = useDispatch();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value as NewPublication['packageManager'];
+    const value = event.target.value as PublicationBase['packageManager'];
     dispatch(setPublicationField({ field: 'packageManager', value }));
   };
 

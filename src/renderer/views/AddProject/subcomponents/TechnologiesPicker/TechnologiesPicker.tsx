@@ -6,7 +6,7 @@ import StyledSwitch from '../../../../components/Switch/Switch';
 import {
   newPublication,
   setPublicationField,
-} from '../../../../../shared/redux/slices/addPublicationSlice';
+} from '../../../../../shared/redux/slices/addPublicationWizardSlice';
 
 const TechnologiesPicker = () => {
   const { t } = useTranslation();

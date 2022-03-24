@@ -7,7 +7,7 @@ import {
   selectPublicationGenerationStatus,
   setStatus,
   PUBLICATION_GENERATION_STATUS,
-} from 'src/shared/redux/slices/publications/generate';
+} from 'src/shared/redux/slices/publicationGenerationSlice';
 import { updateCurrentView } from 'src/shared/redux/slices/currentViewSlice';
 import { VIEWS } from 'src/renderer/constants/Views';
 import { CHANNELS } from '../../../shared/types/api';
@@ -26,7 +26,7 @@ import {
   deleteDraft,
   increaseStep,
   newPublication,
-} from '../../../shared/redux/slices/addPublicationSlice';
+} from '../../../shared/redux/slices/addPublicationWizardSlice';
 
 const { IDLE, FAILURE, SUCCESS } = PUBLICATION_GENERATION_STATUS;
 
@@ -55,8 +55,7 @@ const AddProject = () => {
   }, [status]);
 
   const handleFinish = () => {
-    const { step, publicationName: name, ...rest } = publication;
-    ipcRenderer.invoke(CHANNELS.PUBLICATIONS.GENERATE, { ...rest, name });
+    ipcRenderer.invoke(CHANNELS.PUBLICATIONS.GENERATE, publication);
   };
 
   const Step = useMemo(() => steps[currentStep - 1], [currentStep]);
@@ -68,9 +67,7 @@ const AddProject = () => {
       <ViewContent>
         <Typography variant='h1'>
           {t('AddProject.header.newProject')}
-          {publication.publicationName
-            ? `: ${publication.publicationName}`
-            : ''}
+          {publication.name ? `: ${publication.name}` : ''}
         </Typography>
         <Typography>
           {t('AddProject.header.step')} {currentStep}/{steps.length}

@@ -1,33 +1,30 @@
 import path from 'path';
-import { Collaborator, Publication } from 'src/shared/types';
+import { Collaborator, Publication, PublicationBase } from 'src/shared/types';
 import { createLogger } from '../logger';
 import createFileIO from './fileIO';
 
 export const CONFIG_NAME = 'publab.config.json' as const;
 
-type Config = Omit<Publication, 'imagePath'>;
+type Config = Omit<Publication, 'imagePath' | 'lastUpdate' | 'status'>;
 
 type UpdateConfigFieldParams =
   | {
-      field: keyof Pick<Publication, 'collaborators'>;
+      field: keyof Pick<Config, 'collaborators'>;
       value: Collaborator[];
     }
   | {
-      field: keyof Pick<Publication, 'useTypescript' | 'useSass'>;
+      field: keyof Pick<Config, 'useTypescript' | 'useSass'>;
       value: boolean;
     }
   | {
-      field: keyof Omit<
-        Publication,
-        'collaborators' | 'useSass' | 'useTypescript'
-      >;
+      field: keyof Omit<Config, 'collaborators' | 'useSass' | 'useTypescript'>;
       value: string;
     };
 
 export interface ConfigFileHandler {
   getConfig: () => Promise<Config>;
   setConfig: (config: Config) => Promise<void>;
-  createConfigFile: (publication: Config) => Promise<void>;
+  createConfigFile: (publication: PublicationBase) => Promise<void>;
   updateConfigField: (params: UpdateConfigFieldParams) => Promise<void>;
 }
 
@@ -67,7 +64,8 @@ const createConfigFileHandler = (options: {
     async createConfigFile(publication) {
       try {
         logger.appendLog('Creating publication configuration file...');
-        await this.setConfig(publication);
+        const creationDate = +new Date();
+        await this.setConfig({ ...publication, creationDate, tags: [] });
         logger.appendLog('Creating publication configuration file successful.');
       } catch (error: any) {
         logger.appendError('Creating publication configuration file failed.');

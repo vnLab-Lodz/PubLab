@@ -2,17 +2,17 @@ import { combineReducers } from 'redux';
 import currentUserReducer from './slices/currentUserSlice';
 import appSettingsReducer from './slices/settingsSlice';
 import loadPublicationsReducer from './slices/loadPublicationsSlice';
-import addPublicationReducer from './slices/addPublicationSlice';
 import currentViewReducer from './slices/currentViewSlice';
-import publicationGenerationReducer from './slices/publications/generate';
+import publicationGenerationReducer from './slices/publicationGenerationSlice';
+import addPublicationWizardReducer from './slices/addPublicationWizardSlice';
 
 const rootReducer = combineReducers({
-  currentUser: currentUserReducer,
-  appSettings: appSettingsReducer,
-  newPublication: addPublicationReducer,
-  loadedPublications: loadPublicationsReducer,
   currentView: currentViewReducer,
+  appSettings: appSettingsReducer,
+  currentUser: currentUserReducer,
+  addPublicationWizard: addPublicationWizardReducer,
   publicationGeneration: publicationGenerationReducer,
+  loadedPublications: loadPublicationsReducer,
 });
 
 // export state to use with selectors

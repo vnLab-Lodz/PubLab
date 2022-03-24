@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import {
   selectPublicationGenerationStatus,
   PUBLICATION_GENERATION_STATUS as STATUS,
-} from 'src/shared/redux/slices/publications/generate';
+} from 'src/shared/redux/slices/publicationGenerationSlice';
 import LoadingOverlay from '../../../../components/LoadingOverlay/LoadingOverlay';
 import * as Styled from './style';
 

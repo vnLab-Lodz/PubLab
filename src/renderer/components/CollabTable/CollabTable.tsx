@@ -8,7 +8,7 @@ import { Avatar, IconButton, Typography } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import * as Styled from './style';
 import { Collaborator } from '../../../shared/redux/slices/loadPublicationsSlice';
-import { deleteCollaborator } from '../../../shared/redux/slices/addPublicationSlice';
+import { deleteCollaborator } from '../../../shared/redux/slices/addPublicationWizardSlice';
 
 interface Props {
   collaborators: Collaborator[];
@@ -62,8 +62,7 @@ const CollabTable: React.FC<Props> = ({ collaborators }) => {
                   {collaborator.githubUsername}
                 </Styled.BorderedTC>
                 <Styled.BorderedTC border>
-                  {collaborator.role.charAt(0).toUpperCase() +
-                    collaborator.role.slice(1)}
+                  {t(`AddProject.AddCollaborators.${collaborator.role}` as any)}
                 </Styled.BorderedTC>
                 <Styled.BorderedTC width='3rem' />
                 <Styled.BorderedTC border align='center' width='3rem'>

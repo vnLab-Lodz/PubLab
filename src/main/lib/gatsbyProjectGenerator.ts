@@ -1,4 +1,4 @@
-import { Publication } from 'src/shared/types';
+import { PublicationBase } from 'src/shared/types';
 import child_process from 'child_process';
 import util from 'util';
 import { createLogger } from '../logger';
@@ -16,7 +16,7 @@ export interface GatsbyProjectGenerator {
 }
 
 const createGatsbyProjectGenerator = (
-  publication: Publication
+  publication: PublicationBase
 ): GatsbyProjectGenerator => ({
   getTemplateUrl() {
     const { useSass, useTypescript } = publication;

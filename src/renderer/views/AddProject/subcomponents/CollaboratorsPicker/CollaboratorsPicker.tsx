@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
+import { USER_ROLES } from 'src/shared/types';
 import CollabPicker, {
   Value,
 } from '../../../../components/CollabPicker/CollabPicker';
@@ -10,7 +11,7 @@ import CollabTable from '../../../../components/CollabTable/CollabTable';
 import {
   addCollaborator,
   collaborators as selectCollaborators,
-} from '../../../../../shared/redux/slices/addPublicationSlice';
+} from '../../../../../shared/redux/slices/addPublicationWizardSlice';
 
 const CollaboratorsPicker = () => {
   const { t } = useTranslation();
@@ -23,11 +24,11 @@ const CollaboratorsPicker = () => {
 
   const options = [
     {
-      value: t('AddProject.AddCollaborators.programmer').toLocaleLowerCase(),
-      label: t('AddProject.AddCollaborators.programmer'),
+      value: USER_ROLES.DEVELOPER,
+      label: t('AddProject.AddCollaborators.developer'),
     },
     {
-      value: t('AddProject.AddCollaborators.editor').toLocaleLowerCase(),
+      value: USER_ROLES.EDITOR,
       label: t('AddProject.AddCollaborators.editor'),
     },
   ];
@@ -37,7 +38,7 @@ const CollaboratorsPicker = () => {
       addCollaborator({
         id: uuid(),
         githubUsername: value.username,
-        role: value.role,
+        role: value.role as USER_ROLES,
       })
     );
   };

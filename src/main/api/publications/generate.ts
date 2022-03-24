@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 import { createLogger } from 'src/main/logger';
 import { mainStore as store } from 'src/main';
-import { Publication } from 'src/shared/types';
+import { PublicationBase } from 'src/shared/types';
 import { IpcEventHandler } from 'src/shared/types/api';
 import createAuthorFromCollaborators from 'src/shared/utils/createAuthorFromCollaborators';
 import createGatsbyProjectGenerator from 'src/main/lib/gatsbyProjectGenerator';
@@ -12,11 +12,9 @@ import createGatsbyConfigHandler from 'src/main/lib/gatsbyConfigHandler';
 import {
   setStatus,
   PUBLICATION_GENERATION_STATUS as STATUS,
-} from 'src/shared/redux/slices/publications/generate';
+} from 'src/shared/redux/slices/publicationGenerationSlice';
 
-type GenerateParams = Publication;
-
-const generate: IpcEventHandler = async (_, params: GenerateParams) => {
+const generate: IpcEventHandler = async (_, params: PublicationBase) => {
   const logger = createLogger();
 
   try {
