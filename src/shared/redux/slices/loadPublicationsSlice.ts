@@ -1,26 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Collaborator, Publication } from 'src/shared/types';
 import { RootState } from '../rootReducer';
-
-export type Collaborator = {
-  id: string;
-  githubUsername: string;
-  role: string;
-  /* avatar: {
-    src: string;
-    alt: string;
-  }; */
-};
-
-export type Publication = {
-  id: string;
-  dirPath: string;
-  publicationName: string;
-  description: string;
-  collaborators: Collaborator[];
-  packageManager: string;
-  useSass: boolean;
-  useTypescript: boolean;
-};
 
 // type created to avoid an issue with both unclear modification type
 // and index access writes on union of keys, which would complicate the
@@ -30,7 +10,7 @@ type PublicationModification =
       id: string;
       field: keyof Omit<
         Publication,
-        'useTypescript' | 'useSass' | 'collaborators'
+        'useTypescript' | 'useSass' | 'collaborators' | 'creationDate'
       >;
       value: string;
     }
@@ -51,10 +31,8 @@ const loadPublicationsSlice = createSlice({
   name: 'loadPublications',
   initialState,
   reducers: {
-    setPublicationsList: (
-      state: Publication[],
-      action: PayloadAction<Publication[]>
-    ) => action.payload,
+    setPublicationsList: (_, action: PayloadAction<Publication[]>) =>
+      action.payload,
     loadPublication: (
       state: Publication[],
       action: PayloadAction<Publication>
