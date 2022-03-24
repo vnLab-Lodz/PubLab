@@ -71,6 +71,7 @@ const CollabTable: React.FC<Props> = ({ collaborators }) => {
                     size='small'
                     aria-label='delete collaborator'
                     onClick={() => handleDelete(collaborator.id)}
+                    sx={{ cursor: 'pointer' }}
                   >
                     <ClearIcon fontSize='inherit' />
                   </IconButton>

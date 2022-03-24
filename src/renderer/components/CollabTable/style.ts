@@ -40,7 +40,6 @@ export const BorderedTC = styled(TableCell, {
     width: ${(props) => props.width};
     overflow: hidden;
     padding: 0.5rem;
-    cursor: pointer;
   }
 `;
 
