@@ -9,11 +9,6 @@ import {
   selectAllSettings,
   Settings,
 } from 'src/shared/redux/slices/settingsSlice';
-import Notification, {
-  NotificationText,
-  NotificationTitle,
-  NOTIFICATION_TYPES,
-} from 'src/renderer/components/Notification/Notification';
 import AppUpdate from './subcomponents/AppUpdate/AppUpdate';
 import LangSelect from './subcomponents/LangSelect/LangSelect';
 import DefaultDirSelect from './subcomponents/DefaultDirSelect/DefaultDirSelect';
@@ -37,13 +32,6 @@ const AppSettings = () => {
 
   return (
     <ThemeProvider theme={altTheme}>
-      <Notification type={NOTIFICATION_TYPES.INFO}>
-        <NotificationTitle>Notification title</NotificationTitle>
-        <NotificationText>
-          hello this is a new notification that you can use to show things
-          haiayha
-        </NotificationText>
-      </Notification>
       <ViewContent>
         <Typography variant='h1' mb={4}>
           {t('AppSettings.title')}

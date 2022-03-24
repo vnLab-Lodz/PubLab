@@ -1,5 +1,5 @@
-import { Collaborator, USER_ROLES } from 'src/shared/types';
 import { v4 as uuidv4 } from 'uuid';
+import { Collaborator, USER_ROLES } from '../../types';
 import reducer, {
   deleteDraft,
   setPublicationField,

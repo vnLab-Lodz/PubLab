@@ -23,6 +23,9 @@ export const createActionMain = <T>(type: string) =>
     payload,
   }));
 
+/**
+ * @deprecated Use the ipc api for invoking actions on main instead
+ */
 export const createAsyncActionMain: AsyncActionMainCreator = (type, thunk) =>
   // @ts-expect-error
   createAliasedAction(type, thunk);
