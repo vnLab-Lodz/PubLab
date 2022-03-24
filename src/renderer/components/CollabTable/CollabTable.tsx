@@ -9,6 +9,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { Collaborator } from 'src/shared/types';
 import * as Styled from './style';
 import { deleteCollaborator } from '../../../shared/redux/slices/addPublicationWizardSlice';
+import TableCell from '../TableCell/TableCell';
 
 interface Props {
   collaborators: Collaborator[];
@@ -30,24 +31,24 @@ const CollabTable: React.FC<Props> = ({ collaborators }) => {
       >
         <TableHead>
           <Styled.Row>
-            <Styled.BorderedTC />
-            <Styled.BorderedTC>
+            <TableCell />
+            <TableCell>
               <Typography variant='caption'>
                 {t('AddProject.AddCollaborators.username').toLocaleUpperCase()}
               </Typography>
-            </Styled.BorderedTC>
-            <Styled.BorderedTC>
+            </TableCell>
+            <TableCell>
               <Typography variant='caption'>
                 {t('AddProject.AddCollaborators.role').toLocaleUpperCase()}
               </Typography>
-            </Styled.BorderedTC>
+            </TableCell>
           </Styled.Row>
         </TableHead>
         <TableBody>
           {collaborators &&
             collaborators.map((collaborator) => (
               <Styled.Row key={collaborator.id}>
-                <Styled.BorderedTC align='center' width='3rem'>
+                <TableCell align='center' width='3rem'>
                   <Avatar
                     sx={{
                       width: '2.5rem',
@@ -57,15 +58,18 @@ const CollabTable: React.FC<Props> = ({ collaborators }) => {
                   >
                     {collaborator.githubUsername.charAt(0)}
                   </Avatar>
-                </Styled.BorderedTC>
-                <Styled.BorderedTC border usernameColumn>
-                  {collaborator.githubUsername}
-                </Styled.BorderedTC>
-                <Styled.BorderedTC border>
+                </TableCell>
+                <TableCell border>{collaborator.githubUsername}</TableCell>
+                <TableCell border>
                   {t(`AddProject.AddCollaborators.${collaborator.role}` as any)}
-                </Styled.BorderedTC>
-                <Styled.BorderedTC width='3rem' />
-                <Styled.BorderedTC border align='center' width='3rem'>
+                </TableCell>
+                <TableCell width='3rem' />
+                <TableCell
+                  border
+                  align='center'
+                  width='3rem'
+                  sx={{ borderLeft: '1px solid' }}
+                >
                   <IconButton
                     color='primary'
                     size='small'
@@ -75,7 +79,7 @@ const CollabTable: React.FC<Props> = ({ collaborators }) => {
                   >
                     <ClearIcon fontSize='inherit' />
                   </IconButton>
-                </Styled.BorderedTC>
+                </TableCell>
               </Styled.Row>
             ))}
         </TableBody>
