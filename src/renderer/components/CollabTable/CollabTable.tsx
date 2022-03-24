@@ -6,8 +6,8 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Avatar, IconButton, Typography } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
+import { Collaborator } from 'src/shared/types';
 import * as Styled from './style';
-import { Collaborator } from '../../../shared/redux/slices/loadPublicationsSlice';
 import { deleteCollaborator } from '../../../shared/redux/slices/addPublicationWizardSlice';
 
 interface Props {
