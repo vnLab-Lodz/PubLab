@@ -112,8 +112,8 @@
     "created_on": "created on",
     "change_date": "change date",
     "status": "status",
-    "cloned": "sklonowany",
-    "remote": "zdalny"
+    "cloned": "cloned",
+    "remote": "remote"
   },
   "ProjectList": {
     "projectDetails": "project details",
