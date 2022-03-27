@@ -4,6 +4,8 @@
     "change": "change",
     "choose": "choose",
     "go": "let's go",
+    "view": "view",
+    "hide": "hide",
     "field_required": "This field is required.",
     "directory_not_existing": "Directory does not exist or the path is invalid.",
     "notification": "Notification"
@@ -104,5 +106,17 @@
     "settings": "Settings",
     "app_settings": "App settings",
     "logout": "Log out"
+  },
+  "publication": {
+    "title": "title",
+    "created_on": "created on",
+    "change_date": "change date",
+    "status": "status",
+    "cloned": "sklonowany",
+    "remote": "zdalny"
+  },
+  "ProjectList": {
+    "projectDetails": "project details",
+    "create": "Create a project"
   }
 }
