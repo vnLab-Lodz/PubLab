@@ -76,7 +76,13 @@ const AddProject = () => {
           <Step setNextButtonEnabled={setNextButtonEnabled} />
         </Box>
         <StepControls
-          onClickPrevious={() => dispatch(decreaseStep())}
+          onClickPrevious={() =>
+            dispatch(
+              currentStep === 1
+                ? updateCurrentView(VIEWS.PROJECTS_LIST)
+                : decreaseStep()
+            )
+          }
           onClickNext={() => dispatch(increaseStep())}
           onClickFinished={handleFinish}
           isNextButtonDisabled={!nextButtonEnabled}

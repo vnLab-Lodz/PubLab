@@ -1,4 +1,4 @@
-import { Box, ThemeProvider, Typography } from '@mui/material';
+import { Box, Chip, ThemeProvider, Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
