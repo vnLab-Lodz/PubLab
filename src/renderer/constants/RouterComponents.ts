@@ -8,7 +8,6 @@ import Settings from '../views/Settings/Settings';
 import AddProject from '../views/AddProject/AddProject';
 import ProjectsList from '../views/ProjectsList/ProjectsList';
 import ProjectInfo from '../views/ProjectInfo/ProjectInfo';
-import NoProjects from '../views/NoProjects/NoProjects';
 import FirstTime from '../views/FirstTime/FirstTime';
 import LogOut from '../views/LogOut/LogOut';
 
@@ -29,6 +28,5 @@ export const routerComponents: RouterComponents = {
   [VIEWS.PROJECTS_LIST]: ProjectsList,
   [VIEWS.APP_SETTINGS]: AppSettings,
   [SUBVIEWS.PROJECT_INFO]: ProjectInfo,
-  [SUBVIEWS.NO_PROJECTS]: NoProjects,
   [SUBVIEWS.NONE]: () => null,
 };

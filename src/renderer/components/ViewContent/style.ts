@@ -7,6 +7,7 @@ export const BackgroundWrapper = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   color: theme.palette.text.primary,
   overflowY: 'auto',
+  overflowX: 'hidden',
 
   '&::-webkit-scrollbar': {
     width: '0.6rem',

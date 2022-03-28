@@ -1,64 +1,54 @@
+import { Box, ThemeProvider, Typography } from '@mui/material';
 import React from 'react';
-import { IProject } from '../ProjectsList/IProject';
-import { formatDate } from '../../../shared/utils/formatDate';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { updateSubview } from '../../../shared/redux/slices/currentViewSlice';
+import { Publication } from '../../../shared/types';
+import { SUBVIEWS } from '../../constants/Views';
+import { mainTheme } from '../../theme';
+import ViewContent from '../../components/ViewContent/ViewContent';
+import CloseButton from '../../components/CloseButton/CloseButton';
 
-interface IProps {
-  project: IProject;
+interface Props {
+  project: Publication;
 }
 
-const ProjectInfo = ({ project }: IProps) => (
-  <div
-    className='projectList__project__info'
-    style={{ width: '100%', borderRadius: '8px' }}
-  >
-    {project.id === -1 ? null : (
-      <div style={{ color: 'white' }}>
-        <h1
-          className='projectList__info_header'
-          style={{ textAlign: 'center', marginTop: '25px' }}
+const ProjectInfo = ({ project }: Props) => {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  return (
+    <ThemeProvider theme={mainTheme}>
+      <ViewContent isSubview>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            mb: 2,
+          }}
         >
-          {' '}
-          Project&apos;s info
-        </h1>
-        <h2 style={{ marginLeft: '35px', marginRight: '35px' }}>
-          Title: {project?.name}
-        </h2>
-        <div style={{ marginLeft: '35px', marginRight: '35px' }}>
-          <h3>Date of creation: {formatDate(project?.date_creation)}</h3>
-          <h3>Last modified: {formatDate(project?.date_edition)}</h3>
-          <h3>Last modified by: {project?.last_modified_by}</h3>
-          <h3 style={{ display: 'flex', flexDirection: 'row' }}>
-            {' '}
-            Coauthors:
-            {project?.coauthors.map((tag) => (
-              <div className='projectList__tags' key={tag}>
-                {tag}
-              </div>
-            ))}
-          </h3>
-          <h3 style={{ display: 'flex', flexDirection: 'row' }}>
-            {' '}
-            Technologies:
-            {project?.technologies.map((tag) => (
-              <div className='projectList__tags' key={tag}>
-                {tag}
-              </div>
-            ))}
-          </h3>
-          <h3 style={{ display: 'flex', flexDirection: 'row' }}>
-            {' '}
-            Tags:
-            {project?.tags.map((tag) => (
-              <div className='projectList__tags' key={tag}>
-                {tag}
-              </div>
-            ))}
-          </h3>
-          <h3>Description: {project?.description}</h3>
-        </div>
-      </div>
-    )}
-  </div>
-);
+          <Typography variant='caption' component='h2'>
+            {t('ProjectList.projectDetails').toLocaleUpperCase()}:
+          </Typography>
+          <CloseButton
+            onClick={() => dispatch(updateSubview({ element: SUBVIEWS.NONE }))}
+          />
+        </Box>
+        <Typography variant='h1' component='h3'>
+          {project.name}
+        </Typography>
+        <Box my={2}>
+          {project.tags.map((tag) => (
+            <Chip label={tag} sx={{ m: '0.5rem' }} />
+          ))}
+        </Box>
+
+        <Box component='p' mt={1} pb={3} sx={{ borderBottom: '1px solid' }}>
+          <Typography> {project.description}</Typography>
+        </Box>
+      </ViewContent>
+    </ThemeProvider>
+  );
+};
 
 export default ProjectInfo;
