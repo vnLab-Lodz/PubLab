@@ -6,6 +6,7 @@
     "go": "let's go",
     "view": "view",
     "hide": "hide",
+    "close": "close",
     "field_required": "This field is required.",
     "directory_not_existing": "Directory does not exist or the path is invalid.",
     "notification": "Notification"

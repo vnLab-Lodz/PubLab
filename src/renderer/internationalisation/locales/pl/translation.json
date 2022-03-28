@@ -6,6 +6,7 @@
     "go": "dalej",
     "view": "pokaż",
     "hide": "ukryj",
+    "close": "zamknij",
     "field_required": "To pole jest wymagane.",
     "directory_not_existing": "Folder nie istnieje lub ścieżka jest błędna.",
     "notification": "Powiadomienie"
