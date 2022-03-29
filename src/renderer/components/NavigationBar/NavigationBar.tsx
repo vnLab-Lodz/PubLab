@@ -34,7 +34,6 @@ const TOP_BUTTONS: IButton[] = [
 ];
 
 const BOTTOM_BUTTONS: IButton[] = [
-  { abbreviation: 'AP', view: VIEWS.ADD_PROJECT },
   { abbreviation: 'PL', view: VIEWS.PROJECTS_LIST },
   { abbreviation: 'AS', view: VIEWS.APP_SETTINGS },
   { abbreviation: 'LO', view: VIEWS.LOGOUT },

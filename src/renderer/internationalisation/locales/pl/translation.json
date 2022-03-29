@@ -4,6 +4,9 @@
     "change": "zmień",
     "choose": "wybierz",
     "go": "dalej",
+    "view": "pokaż",
+    "hide": "ukryj",
+    "close": "zamknij",
     "field_required": "To pole jest wymagane.",
     "directory_not_existing": "Folder nie istnieje lub ścieżka jest błędna.",
     "notification": "Powiadomienie"
@@ -104,5 +107,17 @@
     "settings": "Ustawienia",
     "app_settings": "Ustawienia aplikacji",
     "logout": "Wyloguj"
+  },
+  "publication": {
+    "title": "tytuł",
+    "created_on": "utworzono",
+    "change_date": "ostatnia zmiana",
+    "status": "stan",
+    "cloned": "lokalny",
+    "remote": "zdalny"
+  },
+  "ProjectList": {
+    "projectDetails": "szczegóły projektu",
+    "create": "Stwórz projekt"
   }
 }

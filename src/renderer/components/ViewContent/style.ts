@@ -7,6 +7,7 @@ export const BackgroundWrapper = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   color: theme.palette.text.primary,
   overflowY: 'auto',
+  overflowX: 'hidden',
 
   '&::-webkit-scrollbar': {
     width: '0.6rem',
@@ -22,9 +23,13 @@ export const BackgroundWrapper = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const ContentBox = styled(Box)(() => ({
+export const MainContentBox = styled(Box)(() => ({
   minWidth: '400px',
   width: '50vw',
-  paddingTop: '2rem',
-  paddingBottom: '12rem',
+  marginTop: '2rem',
+  marginBottom: '12rem',
+}));
+
+export const SubviewContentBox = styled(Box)(() => ({
+  margin: '2rem 2rem 12rem',
 }));

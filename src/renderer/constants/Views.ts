@@ -17,6 +17,5 @@ export enum VIEWS {
 
 export enum SUBVIEWS {
   PROJECT_INFO = 'PROJECT_INFO',
-  NO_PROJECTS = 'NO_PROJECTS',
   NONE = 'NONE',
 }

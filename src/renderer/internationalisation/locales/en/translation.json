@@ -4,6 +4,9 @@
     "change": "change",
     "choose": "choose",
     "go": "let's go",
+    "view": "view",
+    "hide": "hide",
+    "close": "close",
     "field_required": "This field is required.",
     "directory_not_existing": "Directory does not exist or the path is invalid.",
     "notification": "Notification"
@@ -91,7 +94,7 @@
     "projectPhoto": "PROJECT PHOTO",
     "projectName": "PROJECT NAME",
     "projectNameDetails": "Project name...",
-    "projectDescription": "PROJECT DECRIPTION",
+    "projectDescription": "PROJECT DESCRIPTION",
     "projectDescriptionDetails": "Project description..."
   },
   "views": {
@@ -104,5 +107,17 @@
     "settings": "Settings",
     "app_settings": "App settings",
     "logout": "Log out"
+  },
+  "publication": {
+    "title": "title",
+    "created_on": "created on",
+    "change_date": "change date",
+    "status": "status",
+    "cloned": "cloned",
+    "remote": "remote"
+  },
+  "ProjectList": {
+    "projectDetails": "project details",
+    "create": "Create a project"
   }
 }
