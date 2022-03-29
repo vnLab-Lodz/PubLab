@@ -37,9 +37,14 @@ const ProjectInfo = ({ project }: Props) => {
         <Typography variant='h1' component='h3'>
           {project.name}
         </Typography>
-        <Box my={2}>
+        <Box mb={2}>
           {project.tags.map((tag) => (
-            <Chip label={tag} sx={{ m: '0.5rem' }} />
+            <Chip
+              size='small'
+              key={`project_${project.id}_${tag}`}
+              label={tag}
+              sx={{ mr: '0.5rem', mt: '0.5rem' }}
+            />
           ))}
         </Box>
 
