@@ -19,9 +19,7 @@ const ProjectRow: React.FC<Props> = ({ publication, isSelected }) => {
 
   return (
     <ThemeProvider theme={isSelected ? mainTheme : altTheme}>
-      <TableRow
-      // sx={(theme) => ({ background: theme.palette.background.default })}
-      >
+      <TableRow>
         <TableCell
           align='left'
           sx={{ overflow: 'visible', width: '6rem', position: 'relative' }}
