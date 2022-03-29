@@ -18,10 +18,10 @@ interface Props {
 const ProjectTable: React.FC<Props> = ({ publications }) => {
   const dispatch = useDispatch();
 
-  const selectedProject = (useSelector(selectCurrentView).subview.props
-    ?.project || null) as Publication | null;
+  const selectedProject: Publication | undefined =
+    useSelector(selectCurrentView).subview.props?.project;
 
-  const selectProject = (project: Publication | null) => {
+  const selectProject = (project: Publication | undefined) => {
     dispatch(
       updateSubview({
         element: project ? SUBVIEWS.PROJECT_INFO : SUBVIEWS.NONE,
@@ -41,10 +41,8 @@ const ProjectTable: React.FC<Props> = ({ publications }) => {
             <ProjectRow publication={publication} isSelected={isSelected} />
             <SideviewIndicatorRow
               isSelected={isSelected}
-              onClick={
-                isSelected
-                  ? () => selectProject(null)
-                  : () => selectProject(publication)
+              onClick={() =>
+                selectProject(isSelected ? undefined : publication)
               }
             />
           </TableBody>
