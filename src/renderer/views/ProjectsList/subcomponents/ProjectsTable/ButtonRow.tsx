@@ -8,7 +8,7 @@ interface Props {
   onClick: () => void;
 }
 
-const SideviewIndicatorRow: React.FC<Props> = ({ isSelected, onClick }) => {
+const ButtonRow: React.FC<Props> = ({ isSelected, onClick }) => {
   const { t } = useTranslation();
 
   return (
@@ -28,4 +28,4 @@ const SideviewIndicatorRow: React.FC<Props> = ({ isSelected, onClick }) => {
   );
 };
 
-export default SideviewIndicatorRow;
+export default ButtonRow;

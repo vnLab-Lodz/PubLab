@@ -8,7 +8,7 @@ import {
 import { Publication } from '../../../../../shared/types';
 import { SUBVIEWS } from '../../../../constants/Views';
 import ProjectRow from './ProjectRow';
-import SideviewIndicatorRow from './SideviewIndicatorRow';
+import ButtonRow from './ButtonRow';
 import TableHeader from './TableHeaders';
 
 interface Props {
@@ -39,7 +39,7 @@ const ProjectTable: React.FC<Props> = ({ publications }) => {
         return (
           <TableBody key={publication.id}>
             <ProjectRow publication={publication} isSelected={isSelected} />
-            <SideviewIndicatorRow
+            <ButtonRow
               isSelected={isSelected}
               onClick={() =>
                 selectProject(isSelected ? undefined : publication)
