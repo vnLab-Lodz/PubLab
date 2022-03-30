@@ -6,13 +6,13 @@ import { VIEWS } from '../../constants/Views';
 const useViewRedirects = (currentView: CurrentView): CurrentView => {
   let redirectedView = currentView;
 
+  const { FILES, CHANGES, SETTINGS, PROJECT } = VIEWS;
+  const projectViews = [FILES, CHANGES, SETTINGS, PROJECT];
+
   const isProjectActive = Boolean(useSelector(activePublication));
-  if (
-    [VIEWS.FILES, VIEWS.CHANGES, VIEWS.SETTINGS, VIEWS.PROJECT].includes(
-      currentView.view
-    ) &&
-    !isProjectActive
-  ) {
+  const isProjectView = projectViews.includes(currentView.view);
+
+  if (isProjectView && !isProjectActive) {
     redirectedView = { ...currentView, view: VIEWS.NO_ACTIVE_PROJECT };
   }
 
