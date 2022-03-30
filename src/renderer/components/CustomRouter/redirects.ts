@@ -13,7 +13,7 @@ const useViewRedirects = (currentView: CurrentView): CurrentView => {
     ) &&
     !isProjectActive
   ) {
-    redirectedView = { ...currentView, ...{ view: VIEWS.NO_ACTIVE_PROJECT } };
+    redirectedView = { ...currentView, view: VIEWS.NO_ACTIVE_PROJECT };
   }
 
   return redirectedView;

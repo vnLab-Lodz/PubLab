@@ -94,7 +94,7 @@ describe('loadPublicationsSlice', () => {
       )
     ).toEqual({
       activePublicationId: null,
-      publications: [{ ...publication, ...{ useSass: false } }],
+      publications: [{ ...publication, useSass: false }],
     });
   });
 
@@ -114,14 +114,14 @@ describe('loadPublicationsSlice', () => {
       )
     ).toEqual({
       activePublicationId: null,
-      publications: [{ ...publication, ...{ collaborators: [collaborator] } }],
+      publications: [{ ...publication, collaborators: [collaborator] }],
     });
   });
 
   it('handles deleteCollaborator action', () => {
     const publicationWithCollaborator: Publication = {
       ...publication,
-      ...{ collaborators: [collaborator] },
+      collaborators: [collaborator],
     };
     const colListMod = {
       id: 'id',
