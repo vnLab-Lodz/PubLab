@@ -5,6 +5,10 @@ import {
   selectCurrentView,
   updateSubview,
 } from '../../../../../shared/redux/slices/currentViewSlice';
+import {
+  activePublication,
+  setActivePublication,
+} from '../../../../../shared/redux/slices/loadPublicationsSlice';
 import { Publication } from '../../../../../shared/types';
 import { SUBVIEWS } from '../../../../constants/Views';
 import ProjectRow from './ProjectRow';
@@ -30,19 +34,30 @@ const ProjectTable: React.FC<Props> = ({ publications }) => {
     );
   };
 
+  const activePublicationID: string | undefined =
+    useSelector(activePublication)?.id;
+
   return (
     <Table sx={{ position: 'relative', zIndex: 1 }}>
       <TableHeader />
 
       {publications.map((publication) => {
-        const isSelected = selectedProject?.id === publication.id;
+        const isDescriptionVisible = selectedProject?.id === publication.id;
+        const isActive = activePublicationID === publication.id;
         return (
           <TableBody key={publication.id}>
-            <ProjectRow publication={publication} isSelected={isSelected} />
+            <ProjectRow
+              publication={publication}
+              isSelected={isDescriptionVisible}
+            />
             <ButtonRow
-              isSelected={isSelected}
-              onClick={() =>
-                selectProject(isSelected ? undefined : publication)
+              isDescriptionVisible={isDescriptionVisible}
+              onClickDescription={() =>
+                selectProject(isDescriptionVisible ? undefined : publication)
+              }
+              isProjectActive={isActive}
+              onClickActivePublication={() =>
+                dispatch(setActivePublication(publication.id))
               }
             />
           </TableBody>
