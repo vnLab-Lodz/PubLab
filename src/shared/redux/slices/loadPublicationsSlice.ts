@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Collaborator, Publication } from 'src/shared/types';
 import { RootState } from '../rootReducer';
+import PlaceholderProjectImage from '../../../renderer/assets/placeholder-project-image.png';
 
 // type created to avoid an issue with both unclear modification type
 // and index access writes on union of keys, which would complicate the
@@ -39,6 +40,7 @@ const initialState: PublicationsState = {
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris',
       name: 'A name',
       packageManager: 'npm',
+      imagePath: PlaceholderProjectImage,
       useSass: true,
       useTypescript: true,
       creationDate: 1648141413139,
