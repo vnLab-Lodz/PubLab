@@ -123,7 +123,7 @@
     "set_active": "Ustaw jako aktywny"
   },
   "NoActiveProject": {
-    "message": "No project selected as active",
-    "buttonText": "Go to project list"
+    "message": "Nie wybrano aktywnego projektu.",
+    "buttonText": "Przejdź do listy projektów"
   }
 }

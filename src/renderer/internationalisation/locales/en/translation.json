@@ -123,7 +123,7 @@
     "set_active": "set as active"
   },
   "NoActiveProject": {
-    "message": "No project selected as active",
+    "message": "No project selected as active.",
     "buttonText": "Go to project list"
   }
 }
