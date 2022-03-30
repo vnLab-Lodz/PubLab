@@ -4,9 +4,10 @@ import { useSelector } from 'react-redux';
 import { selectCurrentView } from '../../../shared/redux/slices/currentViewSlice';
 import { routerComponents } from '../../constants/RouterComponents';
 import { SUBVIEWS } from '../../constants/Views';
+import useViewRedirects from './redirects';
 
 const CustomRouter = () => {
-  const { view, subview } = useSelector(selectCurrentView);
+  const { view, subview } = useViewRedirects(useSelector(selectCurrentView));
   const View: React.FC = routerComponents[view];
   const Subview: React.FC = routerComponents[subview.element];
 
