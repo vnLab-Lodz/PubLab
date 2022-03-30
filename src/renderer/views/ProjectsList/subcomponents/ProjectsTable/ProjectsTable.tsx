@@ -3,6 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectCurrentView,
+  updateCurrentView,
   updateSubview,
 } from '../../../../../shared/redux/slices/currentViewSlice';
 import {
@@ -10,7 +11,7 @@ import {
   setActivePublication,
 } from '../../../../../shared/redux/slices/loadPublicationsSlice';
 import { Publication } from '../../../../../shared/types';
-import { SUBVIEWS } from '../../../../constants/Views';
+import { SUBVIEWS, VIEWS } from '../../../../constants/Views';
 import ProjectRow from './ProjectRow';
 import ButtonRow from './ButtonRow';
 import TableHeader from './TableHeaders';
@@ -56,9 +57,10 @@ const ProjectTable: React.FC<Props> = ({ publications }) => {
                 selectProject(isDescriptionVisible ? undefined : publication)
               }
               isProjectActive={isActive}
-              onClickActivePublication={() =>
-                dispatch(setActivePublication(publication.id))
-              }
+              onClickActivePublication={() => {
+                dispatch(setActivePublication(publication.id));
+                dispatch(updateCurrentView(VIEWS.PROJECT));
+              }}
             />
           </TableBody>
         );
