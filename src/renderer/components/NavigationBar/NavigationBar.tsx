@@ -1,29 +1,24 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, ThemeProvider, Typography } from '@mui/material';
+import { Avatar, Box, ThemeProvider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { SupportedLangCode } from 'src/renderer/internationalisation/i18next';
 import { VIEWS } from '../../constants/Views';
-import PlaceholderProjectImage from '../../assets/placeholder-project-image.png';
 import {
   selectCurrentView,
   updateCurrentView,
 } from '../../../shared/redux/slices/currentViewSlice';
 import * as Styled from './style';
 import { altTheme } from '../../theme';
+import { activePublication } from '../../../shared/redux/slices/loadPublicationsSlice';
 
 interface IButton {
   abbreviation: string;
   view: VIEWS;
 }
 
-interface IImageButton extends IButton {
-  src: any;
-}
-
-const PROJECT_BUTTON: IImageButton = {
+const PROJECT_BUTTON: IButton = {
   abbreviation: 'P',
-  src: PlaceholderProjectImage,
   view: VIEWS.PROJECT,
 };
 
@@ -44,6 +39,7 @@ const NavigationBar = () => {
   const [isExpandLocked, setIsExpandLocked] = useState<boolean>(false);
   const dispatch = useDispatch();
   const currentView = useSelector(selectCurrentView);
+  const activeProject = useSelector(activePublication);
   const { t, i18n } = useTranslation();
 
   const onNavigationButtonClick = (button: IButton) => () => {
@@ -51,11 +47,8 @@ const NavigationBar = () => {
   };
 
   const isButtonActive = (button: IButton) => button.view === currentView.view;
-  const isImageButton = (
-    button: IButton | IImageButton
-  ): button is IImageButton => (button as IImageButton).src !== undefined;
 
-  const renderButton = (button: IButton | IImageButton) => {
+  const renderButton = (button: IButton, isProjectButton?: boolean) => {
     const view: string = t(`views.${button.view.toLowerCase()}` as any);
     const abbreviation =
       view.split(' ').reduce((p, c) => p + c[0].toUpperCase(), '') ??
@@ -67,8 +60,10 @@ const NavigationBar = () => {
         onClick={onNavigationButtonClick(button)}
         isActive={isButtonActive(button)}
         startIcon={
-          isImageButton(button) ? (
-            <img src={button.src} alt='Project' />
+          isProjectButton ? (
+            <Avatar src={activeProject?.imagePath} alt='Project'>
+              {activeProject?.name.charAt(0) || '-'}
+            </Avatar>
           ) : (
             <Typography variant='subtitle1'>{abbreviation}</Typography>
           )
@@ -85,7 +80,8 @@ const NavigationBar = () => {
     setIsExpandLocked(newIsExpandLocked);
   };
 
-  const renderListOfButtons = (buttons: IButton[]) => buttons.map(renderButton);
+  const renderListOfButtons = (buttons: IButton[]) =>
+    buttons.map((button) => renderButton(button));
 
   const isNavBarWide = (i18n.language as SupportedLangCode) === 'pl';
 
@@ -103,7 +99,7 @@ const NavigationBar = () => {
         }}
       >
         <Box width='100%'>
-          {renderButton(PROJECT_BUTTON)}
+          {renderButton(PROJECT_BUTTON, true)}
           {renderListOfButtons(TOP_BUTTONS)}
         </Box>
         <Box width='100%'>{renderListOfButtons(BOTTOM_BUTTONS)}</Box>
