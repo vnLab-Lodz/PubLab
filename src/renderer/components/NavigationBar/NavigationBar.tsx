@@ -48,7 +48,10 @@ const NavigationBar = () => {
 
   const isButtonActive = (button: IButton) => button.view === currentView.view;
 
-  const renderButton = (button: IButton, isProjectButton?: boolean) => {
+  const renderButton = (
+    button: IButton,
+    options?: { isProjectButton?: boolean }
+  ) => {
     const view: string = t(`views.${button.view.toLowerCase()}` as any);
     const abbreviation =
       view.split(' ').reduce((p, c) => p + c[0].toUpperCase(), '') ??
@@ -60,7 +63,7 @@ const NavigationBar = () => {
         onClick={onNavigationButtonClick(button)}
         isActive={isButtonActive(button)}
         startIcon={
-          isProjectButton ? (
+          options?.isProjectButton ? (
             <Avatar src={activeProject?.imagePath} alt='Project'>
               {activeProject?.name.charAt(0) || '-'}
             </Avatar>
@@ -99,7 +102,7 @@ const NavigationBar = () => {
         }}
       >
         <Box width='100%'>
-          {renderButton(PROJECT_BUTTON, true)}
+          {renderButton(PROJECT_BUTTON, { isProjectButton: true })}
           {renderListOfButtons(TOP_BUTTONS)}
         </Box>
         <Box width='100%'>{renderListOfButtons(BOTTOM_BUTTONS)}</Box>
