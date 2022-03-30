@@ -10,6 +10,7 @@ import ProjectsList from '../views/ProjectsList/ProjectsList';
 import ProjectInfo from '../views/ProjectInfo/ProjectInfo';
 import FirstTime from '../views/FirstTime/FirstTime';
 import LogOut from '../views/LogOut/LogOut';
+import NoActiveProject from '../views/NoActiveProject/NoActiveProject';
 
 export type RouterComponents = {
   [key in VIEWS | SUBVIEWS]: React.FC<any>;
@@ -21,6 +22,7 @@ export const routerComponents: RouterComponents = {
   [VIEWS.FIRST_TIME]: FirstTime,
   [VIEWS.LOGOUT]: LogOut,
   [VIEWS.PROJECT]: Description,
+  [VIEWS.NO_ACTIVE_PROJECT]: NoActiveProject,
   [VIEWS.FILES]: Files,
   [VIEWS.CHANGES]: Changes,
   [VIEWS.SETTINGS]: Settings,
