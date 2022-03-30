@@ -114,10 +114,16 @@
     "change_date": "ostatnia zmiana",
     "status": "stan",
     "cloned": "lokalny",
-    "remote": "zdalny"
+    "remote": "zdalny",
+    "active": "aktywny"
   },
   "ProjectList": {
     "projectDetails": "szczegóły projektu",
-    "create": "Stwórz projekt"
+    "create": "Stwórz projekt",
+    "set_active": "Ustaw jako aktywny"
+  },
+  "NoActiveProject": {
+    "message": "No project selected as active",
+    "buttonText": "Go to project list"
   }
 }

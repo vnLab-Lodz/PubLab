@@ -114,10 +114,16 @@
     "change_date": "change date",
     "status": "status",
     "cloned": "cloned",
-    "remote": "remote"
+    "remote": "remote",
+    "active": "active"
   },
   "ProjectList": {
     "projectDetails": "project details",
-    "create": "Create a project"
+    "create": "Create a project",
+    "set_active": "set as active"
+  },
+  "NoActiveProject": {
+    "message": "No project selected as active",
+    "buttonText": "Go to project list"
   }
 }
