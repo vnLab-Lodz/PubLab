@@ -3,11 +3,11 @@ import { CurrentView } from '../../../shared/redux/slices/currentViewSlice';
 import { activePublication } from '../../../shared/redux/slices/loadPublicationsSlice';
 import { VIEWS } from '../../constants/Views';
 
+const { FILES, CHANGES, SETTINGS, PROJECT } = VIEWS;
+const projectViews = [FILES, CHANGES, SETTINGS, PROJECT];
+
 const useViewRedirects = (currentView: CurrentView): CurrentView => {
   let redirectedView = currentView;
-
-  const { FILES, CHANGES, SETTINGS, PROJECT } = VIEWS;
-  const projectViews = [FILES, CHANGES, SETTINGS, PROJECT];
 
   const isProjectActive = Boolean(useSelector(activePublication));
   const isProjectView = projectViews.includes(currentView.view);
