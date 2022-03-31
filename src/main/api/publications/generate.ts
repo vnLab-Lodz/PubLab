@@ -13,6 +13,10 @@ import {
   setStatus,
   PUBLICATION_GENERATION_STATUS as STATUS,
 } from 'src/shared/redux/slices/publicationGenerationSlice';
+import {
+  loadPublication,
+  setActivePublication,
+} from 'src/shared/redux/slices/loadPublicationsSlice';
 
 const generate: IpcEventHandler = async (_, params: PublicationBase) => {
   const logger = createLogger();
@@ -29,7 +33,7 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
     const configHandler = createConfigFileHandler({ dirPath, name });
     const { imagePath, ...config } = params;
     store.dispatch(setStatus(STATUS.CREATING_CONFIGURATION_FILE));
-    await configHandler.createConfigFile(config);
+    const savedConfig = await configHandler.createConfigFile(config);
 
     const packageHandler = createPackageHandler({ dirPath, name });
     store.dispatch(setStatus(STATUS.MODIFYING_PACKAGE_JSON));
@@ -48,6 +52,15 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
         .replace(/author: `.*?`,/g, `author: \`${author}\`,`)
         .replace(/description: `.*?`,/g, `description: \`${description}\`,`)
     );
+
+    store.dispatch(
+      loadPublication({
+        ...savedConfig,
+        status: 'cloned',
+        lastUpdate: savedConfig.creationDate,
+      })
+    );
+    store.dispatch(setActivePublication(savedConfig.id));
 
     logger.appendLog(`Publication generation successful.`);
     store.dispatch(setStatus(STATUS.SUCCESS));

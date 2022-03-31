@@ -24,7 +24,7 @@ type UpdateConfigFieldParams =
 export interface ConfigFileHandler {
   getConfig: () => Promise<Config>;
   setConfig: (config: Config) => Promise<void>;
-  createConfigFile: (publication: PublicationBase) => Promise<void>;
+  createConfigFile: (publication: PublicationBase) => Promise<Config>;
   updateConfigField: (params: UpdateConfigFieldParams) => Promise<void>;
   checkIfConfigExists: () => Promise<boolean>;
 }
@@ -66,8 +66,10 @@ const createConfigFileHandler = (options: {
       try {
         logger.appendLog('Creating publication configuration file...');
         const creationDate = +new Date();
-        await this.setConfig({ ...publication, creationDate, tags: [] });
+        const config: Config = { ...publication, creationDate, tags: [] };
+        await this.setConfig(config);
         logger.appendLog('Creating publication configuration file successful.');
+        return config;
       } catch (error: any) {
         logger.appendError('Creating publication configuration file failed.');
         logger.appendError(`${error}`);

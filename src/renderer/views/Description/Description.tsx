@@ -1,11 +1,13 @@
 import { ipcRenderer } from 'electron';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { activePublication } from 'src/shared/redux/slices/loadPublicationsSlice';
 import { CHANNELS } from 'src/shared/types/api';
 import { selectCurrentUser } from '../../../shared/redux/slices/currentUserSlice';
 
 const Description = () => {
   const currentUser = useSelector(selectCurrentUser);
+  const publication = useSelector(activePublication);
 
   return (
     <div>
@@ -39,9 +41,12 @@ const Description = () => {
       <p>
         Welcome <b>{currentUser.data?.nick || ''}</b>!
       </p>
-      <img src={currentUser.data?.avatar || ''} alt='User avatar' />
+      <img src={currentUser.data?.avatar || ''} alt='User avatar' height={64} />
       <p>
         Your work in <b>{currentUser.data?.company || ''}</b>
+      </p>
+      <p style={{ whiteSpace: 'break-spaces' }}>
+        {JSON.stringify(publication, null, 2)}
       </p>
     </div>
   );
