@@ -3,12 +3,17 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectCurrentView,
+  updateCurrentView,
   updateSubview,
 } from '../../../../../shared/redux/slices/currentViewSlice';
+import {
+  activePublication,
+  setActivePublication,
+} from '../../../../../shared/redux/slices/loadPublicationsSlice';
 import { Publication } from '../../../../../shared/types';
-import { SUBVIEWS } from '../../../../constants/Views';
+import { SUBVIEWS, VIEWS } from '../../../../constants/Views';
 import ProjectRow from './ProjectRow';
-import SideviewIndicatorRow from './SideviewIndicatorRow';
+import ButtonRow from './ButtonRow';
 import TableHeader from './TableHeaders';
 
 interface Props {
@@ -30,20 +35,32 @@ const ProjectTable: React.FC<Props> = ({ publications }) => {
     );
   };
 
+  const activePublicationID: string | undefined =
+    useSelector(activePublication)?.id;
+
   return (
     <Table sx={{ position: 'relative', zIndex: 1 }}>
       <TableHeader />
 
       {publications.map((publication) => {
-        const isSelected = selectedProject?.id === publication.id;
+        const isDescriptionVisible = selectedProject?.id === publication.id;
+        const isActive = activePublicationID === publication.id;
         return (
           <TableBody key={publication.id}>
-            <ProjectRow publication={publication} isSelected={isSelected} />
-            <SideviewIndicatorRow
-              isSelected={isSelected}
-              onClick={() =>
-                selectProject(isSelected ? undefined : publication)
+            <ProjectRow
+              publication={publication}
+              isSelected={isDescriptionVisible}
+            />
+            <ButtonRow
+              isDescriptionVisible={isDescriptionVisible}
+              onClickDescription={() =>
+                selectProject(isDescriptionVisible ? undefined : publication)
               }
+              isProjectActive={isActive}
+              onClickActivePublication={() => {
+                dispatch(setActivePublication(publication.id));
+                dispatch(updateCurrentView(VIEWS.PROJECT));
+              }}
             />
           </TableBody>
         );

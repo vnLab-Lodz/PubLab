@@ -1,3 +1,4 @@
+import { Collaborator, Publication, USER_ROLES } from '../../types';
 import reducer, {
   setPublicationsList,
   loadPublication,
@@ -5,24 +6,27 @@ import reducer, {
   updatePublicationField,
   addCollaborator,
   deleteCollaborator,
-  Publication,
-  Collaborator,
   PublicationModification,
+  CollaboratorListModification,
+  setActivePublication,
 } from './loadPublicationsSlice';
 
 const collaborator: Collaborator = {
   id: 'col_id',
   githubUsername: 'github_user',
-  role: 'role',
+  role: USER_ROLES.DEVELOPER,
 };
 
 const publication: Publication = {
   id: 'id',
-  dirPath: 'dir_path',
-  publicationName: 'pub_name',
+  creationDate: Date.now(),
+  lastUpdate: Date.now(),
+  status: 'cloned',
+  tags: ['tag'],
+  name: 'pub_name',
   description: 'description',
   collaborators: [],
-  packageManager: 'package_man',
+  packageManager: 'npm',
   useSass: true,
   useTypescript: true,
 };
@@ -30,111 +34,107 @@ const publication: Publication = {
 describe('loadPublicationsSlice', () => {
   it('handles setPublicationsList action', () => {
     const publications: Publication[] = [publication];
-    expect(reducer(undefined, setPublicationsList(publications))).toEqual([
-      {
-        id: 'id',
-        dirPath: 'dir_path',
-        publicationName: 'pub_name',
-        description: 'description',
-        collaborators: [],
-        packageManager: 'package_man',
-        useSass: true,
-        useTypescript: true,
-      },
-    ]);
+    expect(
+      reducer(
+        { activePublicationId: null, publications: [] },
+        setPublicationsList(publications)
+      )
+    ).toEqual({
+      activePublicationId: null,
+      publications: [publication],
+    });
+  });
+
+  it('handles setActivePublication action', () => {
+    expect(
+      reducer(
+        { activePublicationId: null, publications: [publication] },
+        setActivePublication(publication.id)
+      )
+    ).toEqual({
+      activePublicationId: publication.id,
+      publications: [publication],
+    });
   });
 
   it('handles loadPublication action', () => {
-    const publications: Publication[] = [];
-    expect(reducer(publications, loadPublication(publication))).toEqual([
-      {
-        id: 'id',
-        dirPath: 'dir_path',
-        publicationName: 'pub_name',
-        description: 'description',
-        collaborators: [],
-        packageManager: 'package_man',
-        useSass: true,
-        useTypescript: true,
-      },
-    ]);
+    expect(
+      reducer(
+        { activePublicationId: null, publications: [] },
+        loadPublication(publication)
+      )
+    ).toEqual({
+      activePublicationId: null,
+      publications: [publication],
+    });
   });
 
   it('handles deletePublication action', () => {
-    expect(reducer([publication], deletePublication('id'))).toEqual([]);
+    expect(
+      reducer(
+        { activePublicationId: null, publications: [publication] },
+        deletePublication('id')
+      )
+    ).toEqual({
+      activePublicationId: null,
+      publications: [],
+    });
   });
 
   it('handles updatePublicationField action', () => {
-    const pubMob: PublicationModification = {
+    const pubMod: PublicationModification = {
       id: 'id',
       field: 'useSass',
       value: false,
     };
-    expect(reducer([publication], updatePublicationField(pubMob))).toEqual([
-      {
-        id: 'id',
-        dirPath: 'dir_path',
-        publicationName: 'pub_name',
-        description: 'description',
-        collaborators: [],
-        packageManager: 'package_man',
-        useSass: false,
-        useTypescript: true,
-      },
-    ]);
+    expect(
+      reducer(
+        { activePublicationId: null, publications: [publication] },
+        updatePublicationField(pubMod)
+      )
+    ).toEqual({
+      activePublicationId: null,
+      publications: [{ ...publication, useSass: false }],
+    });
   });
 
   it('handles addCollaborator action', () => {
-    const colListMod = { id: 'id', value: collaborator };
+    const colListMod: CollaboratorListModification<Collaborator> = {
+      id: 'id',
+      value: collaborator,
+    };
 
-    expect(reducer([publication], addCollaborator(colListMod))).toEqual([
-      {
-        id: 'id',
-        dirPath: 'dir_path',
-        publicationName: 'pub_name',
-        description: 'description',
-        collaborators: [
-          {
-            id: 'col_id',
-            githubUsername: 'github_user',
-            role: 'role',
-          },
-        ],
-        packageManager: 'package_man',
-        useSass: true,
-        useTypescript: true,
-      },
-    ]);
+    expect(
+      reducer(
+        {
+          activePublicationId: null,
+          publications: [publication],
+        },
+        addCollaborator(colListMod)
+      )
+    ).toEqual({
+      activePublicationId: null,
+      publications: [{ ...publication, collaborators: [collaborator] }],
+    });
   });
 
   it('handles deleteCollaborator action', () => {
     const publicationWithCollaborator: Publication = {
-      id: 'id',
-      dirPath: 'dir_path',
-      publicationName: 'pub_name',
-      description: 'description',
+      ...publication,
       collaborators: [collaborator],
-      packageManager: 'package_man',
-      useSass: true,
-      useTypescript: true,
     };
     const colListMod = {
       id: 'id',
       value: 'col_id',
     };
     expect(
-      reducer([publicationWithCollaborator], deleteCollaborator(colListMod))
-    ).toEqual([
-      {
-        id: 'id',
-        dirPath: 'dir_path',
-        publicationName: 'pub_name',
-        description: 'description',
-        collaborators: [],
-        packageManager: 'package_man',
-        useSass: true,
-        useTypescript: true,
-      },
-    ]);
+      reducer(
+        {
+          activePublicationId: null,
+          publications: [publicationWithCollaborator],
+        },
+        deleteCollaborator(colListMod)
+      )
+    ).toEqual({ activePublicationId: null, publications: [publication] });
   });
 });
