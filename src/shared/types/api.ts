@@ -8,6 +8,7 @@ export type IpcEventHandler<R = any> = (
 export const CHANNELS = {
   PUBLICATIONS: {
     GENERATE: 'publications:generate',
+    FIND: 'publications:find',
   },
   GATSBY: {
     VERIFY: 'gatsby:verify',

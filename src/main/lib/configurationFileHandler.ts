@@ -1,9 +1,9 @@
 import path from 'path';
+import { CONFIG_NAME } from 'src/shared/constants';
 import { Collaborator, Publication, PublicationBase } from 'src/shared/types';
+import { promises as fs, constants } from 'fs';
 import { createLogger } from '../logger';
 import createFileIO from './fileIO';
-
-export const CONFIG_NAME = 'publab.config.json' as const;
 
 type Config = Omit<Publication, 'imagePath' | 'lastUpdate' | 'status'>;
 
@@ -26,6 +26,7 @@ export interface ConfigFileHandler {
   setConfig: (config: Config) => Promise<void>;
   createConfigFile: (publication: PublicationBase) => Promise<void>;
   updateConfigField: (params: UpdateConfigFieldParams) => Promise<void>;
+  checkIfConfigExists: () => Promise<boolean>;
 }
 
 const createConfigFileHandler = (options: {
@@ -84,6 +85,18 @@ const createConfigFileHandler = (options: {
         logger.appendError('Creating publication config file failed.');
         logger.appendError(`${error}`);
         throw new Error(error.message);
+      }
+    },
+    async checkIfConfigExists() {
+      try {
+        logger.appendLog(`Checking ${CONFIG_NAME} existence...`);
+        await fs.access(configPath, constants.F_OK);
+        logger.appendLog(`Checking ${CONFIG_NAME} existence successful.`);
+        return true;
+      } catch (error) {
+        logger.appendError(`Checking ${CONFIG_NAME} existence failed.`);
+        logger.appendError(`${error}`);
+        return false;
       }
     },
   };

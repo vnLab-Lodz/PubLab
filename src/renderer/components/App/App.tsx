@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ipcRenderer } from 'electron';
 import { CHANNELS } from 'src/shared/types/api';
+import { setPublicationsList } from 'src/shared/redux/slices/loadPublicationsSlice';
 import { configStore } from '../../../shared/redux/configureStore';
 import Auth from '../Auth/Auth';
 import { mainTheme } from '../../theme';
@@ -18,6 +19,11 @@ import {
 const store = configStore('renderer');
 
 const App = () => {
+  const readPublications = async () => {
+    const publications = await ipcRenderer.invoke(CHANNELS.PUBLICATIONS.FIND);
+    store.dispatch(setPublicationsList(publications));
+  };
+
   useEffect(() => {
     ipcRenderer.invoke(CHANNELS.SETTINGS.READ);
   }, []);
@@ -32,9 +38,10 @@ const App = () => {
 
   useEffect(
     () =>
-      observeStore(store, selectDefaultDirPath, (dirPath) =>
-        setLocalStorageItem('initialConfigFlag', !!dirPath)
-      ),
+      observeStore(store, selectDefaultDirPath, (dirPath) => {
+        setLocalStorageItem('initialConfigFlag', !!dirPath);
+        if (dirPath) readPublications();
+      }),
     []
   );
 

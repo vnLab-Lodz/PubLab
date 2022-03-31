@@ -7,9 +7,11 @@ import verifyNode from './node/verify';
 import saveSettings from './settings/save';
 import readSettings from './settings/read';
 import verifyPath from './files/verifyPath';
+import find from './publications/find';
 
 const registerApiHandlers = () => {
   ipc.handle(CHANNELS.PUBLICATIONS.GENERATE, generate);
+  ipc.handle(CHANNELS.PUBLICATIONS.FIND, find);
   ipc.handle(CHANNELS.GATSBY.VERIFY, verifyGatsby);
   ipc.handle(CHANNELS.GATSBY.INSTALL, installGatsby);
   ipc.handle(CHANNELS.NODE.VERIFY, verifyNode);

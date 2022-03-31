@@ -1,9 +1,8 @@
 import path from 'path';
+import { PACKAGE_NAME } from 'src/shared/constants';
 import { Json } from 'src/shared/types';
 import { createLogger } from '../logger';
 import createFileIO from './fileIO';
-
-export const PACKAGE_NAME = 'package.json' as const;
 
 export interface PackageHandler {
   getPackage: () => Promise<Json>;
