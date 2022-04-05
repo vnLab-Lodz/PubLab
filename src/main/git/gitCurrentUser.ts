@@ -1,24 +1,21 @@
-import axios from 'axios';
+import { Octokit } from '@octokit/rest';
 
 /**
  * TODO: @deprecated This should be moved to the api in the near future
  */
 export async function fetchUserData(token: string) {
+  const octokit = new Octokit({ auth: token });
+  const { getAuthenticated } = octokit.rest.users;
+  const { listMembershipsForAuthenticatedUser } = octokit.rest.orgs;
+
   try {
-    const response = await axios.get('https://api.github.com/user', {
-      headers: {
-        Accept: 'application/vnd.github.v3+json',
-        Authorization: `token ${token}`,
-      },
-    });
+    const { data: user } = await getAuthenticated();
+    const { data: orgs } = await listMembershipsForAuthenticatedUser();
 
-    const userData = {
-      nick: response.data.login,
-      avatar: response.data.avatar_url,
-      company: response.data.company,
-    };
+    const { login: nick, avatar_url: avatar } = user;
+    const organizations = orgs.map(({ organization }) => organization.login);
 
-    return userData;
+    return { nick, avatar, organizations };
   } catch (error: any) {
     console.error(error.response);
     return undefined;

@@ -20,7 +20,7 @@ export function authorizeWithGithub(
   });
 
   authWindow.loadURL(
-    `${URLS.AUTHORIZE_URL}?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${URLS.REDIRECT_URI}&scope=user%20repo`
+    `${URLS.AUTHORIZE_URL}?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${URLS.REDIRECT_URI}&scope=user%20repo%20read:org`
   );
 
   if (!silent) {

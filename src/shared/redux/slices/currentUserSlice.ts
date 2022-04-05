@@ -25,7 +25,7 @@ type AccessToken = {
 type CurrentUserData = {
   nick: string;
   avatar: string;
-  company: string;
+  organizations: string[];
 };
 
 export type CurrentUser = {
@@ -93,11 +93,7 @@ const currentUserSlice = createSlice({
       action: PayloadAction<CurrentUserData>
     ) => {
       state.loading = false;
-      state.data = {
-        nick: action.payload.nick,
-        avatar: action.payload.avatar,
-        company: action.payload.company,
-      };
+      state.data = action.payload;
       state.status = AUTH_STATES.AUTHED;
     },
     fetchUserDataRejected: (state: CurrentUser) => {
@@ -180,6 +176,7 @@ export const fetchUserDataAsync = createAsyncActionMain<string>(
   (token) => async (dispatch) => {
     dispatch(fetchUserDataStarted());
     const data = await fetchUserData(token);
+    console.log(data);
 
     if (data) {
       dispatch(fetchUserDataFulfilled(data));

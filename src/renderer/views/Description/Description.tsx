@@ -37,13 +37,24 @@ const Description = () => {
       >
         Install node
       </button>
+      <button
+        type='button'
+        onClick={async () => {
+          const data = await ipcRenderer.invoke(
+            CHANNELS.PUBLICATIONS.FIND_REMOTE
+          );
+          console.log(data);
+        }}
+      >
+        Fine remote
+      </button>
 
       <p>
         Welcome <b>{currentUser.data?.nick || ''}</b>!
       </p>
       <img src={currentUser.data?.avatar || ''} alt='User avatar' height={64} />
       <p>
-        Your work in <b>{currentUser.data?.company || ''}</b>
+        Organizations: <b>{currentUser.data?.organizations.toString() || ''}</b>
       </p>
       <p style={{ whiteSpace: 'break-spaces' }}>
         {JSON.stringify(publication, null, 2)}
