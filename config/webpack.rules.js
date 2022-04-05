@@ -1,5 +1,8 @@
 const { isDevelopment } = require('./constants');
 
+// * root url differs slightly because of the way webpack handles dev server and packaging
+const publicPath = isDevelopment ? './' : '../';
+
 module.exports = [
   {
     test: /\.node$/,
@@ -9,10 +12,8 @@ module.exports = [
     test: /\.(m?js|node)$/,
     parser: { amd: false },
     use: {
-      loader: '@marshallofsound/webpack-asset-relocator-loader',
-      options: {
-        outputAssetBase: 'native_modules',
-      },
+      loader: '@vercel/webpack-asset-relocator-loader',
+      options: { outputAssetBase: 'native_modules' },
     },
   },
   {
@@ -43,21 +44,14 @@ module.exports = [
   },
   {
     test: /\.(png|jpe?g|gif)$/i,
-    use: [
-      {
-        loader: 'file-loader',
-      },
-    ],
+    use: [{ loader: 'file-loader', options: { publicPath } }],
   },
   {
     test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
     use: [
       {
         loader: 'file-loader',
-        options: {
-          name: 'fonts/[name].[ext]',
-          publicPath: isDevelopment ? './' : '../', // root url differs slightly because of the way webpack handles dev server and packaging
-        },
+        options: { name: 'fonts/[name].[ext]', publicPath },
       },
     ],
   },
