@@ -176,7 +176,6 @@ export const fetchUserDataAsync = createAsyncActionMain<string>(
   (token) => async (dispatch) => {
     dispatch(fetchUserDataStarted());
     const data = await fetchUserData(token);
-    console.log(data);
 
     if (data) {
       dispatch(fetchUserDataFulfilled(data));
