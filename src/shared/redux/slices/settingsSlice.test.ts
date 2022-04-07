@@ -10,11 +10,13 @@ describe('settings', () => {
       defaultDirPath: 'default_path',
       currentLocale: 'en',
       notificationInterval: NOTIFICATION_INTERVAL.INSTANT,
+      syncLocations: [{ name: 'Profile', enabled: true }],
     };
     expect(reducer(undefined, setSettings(settings))).toEqual({
       defaultDirPath: 'default_path',
       currentLocale: 'en',
       notificationInterval: NOTIFICATION_INTERVAL.INSTANT,
+      syncLocations: [{ name: 'Profile', enabled: true }],
     });
   });
 });

@@ -17,6 +17,7 @@ import { altTheme } from '../../theme';
 import Button from '../../components/Button/Button';
 import ViewContent from '../../components/ViewContent/ViewContent';
 import { validationSchema } from './validationSchema';
+import RepoSyncSettings from './subcomponents/RepoSyncSettings/RepoSyncSettings';
 
 const AppSettings = () => {
   const { t } = useTranslation();
@@ -61,6 +62,10 @@ const AppSettings = () => {
             onChange={(value) => {
               formik.setFieldValue('notificationInterval', value);
             }}
+          />
+          <RepoSyncSettings
+            locations={formik.values.syncLocations}
+            setFieldValue={formik.setFieldValue}
           />
           <Button
             type='submit'

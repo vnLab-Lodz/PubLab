@@ -130,6 +130,8 @@ export const {
 } = currentUserSlice.actions;
 
 export const selectCurrentUser = (state: RootState) => state.currentUser;
+export const selectCurrentUserData = (state: RootState) =>
+  state.currentUser.data;
 
 /**
  * TODO: @deprecated This should be moved to the api in the near future

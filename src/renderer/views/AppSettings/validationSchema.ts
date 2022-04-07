@@ -1,4 +1,4 @@
-import { object, string, SchemaOf, StringSchema } from 'yup';
+import { object, string, SchemaOf, StringSchema, array, boolean } from 'yup';
 import { Settings } from '../../../shared/redux/slices/settingsSlice';
 import { verifyPath } from '../../ipc';
 
@@ -13,6 +13,9 @@ const validationSchema: SchemaOf<Settings> = object({
   notificationInterval: string().required() as StringSchema<
     Settings['notificationInterval']
   >,
+  syncLocations: array(
+    object({ name: string().required(), enabled: boolean().required() })
+  ),
 });
 
 export { validationSchema };

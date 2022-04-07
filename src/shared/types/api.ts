@@ -8,7 +8,8 @@ export type IpcEventHandler<R = any> = (
 export const CHANNELS = {
   PUBLICATIONS: {
     GENERATE: 'publications:generate',
-    FIND: 'publications:find',
+    FIND_LOCAL: 'publications:find-local',
+    FIND_REMOTE: 'publications:find-remote',
   },
   GATSBY: {
     VERIFY: 'gatsby:verify',
@@ -20,6 +21,7 @@ export const CHANNELS = {
   SETTINGS: {
     SAVE: 'settings:save',
     READ: 'settings:read',
+    READ_SYNC_LOCATIONS: 'settings:read-sync-locations',
   },
   FILES: {
     VERIFY_PATH: 'files:verify-path',

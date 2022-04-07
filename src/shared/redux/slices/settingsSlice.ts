@@ -6,16 +6,20 @@ export enum NOTIFICATION_INTERVAL { // TODO: Define it in better place when the 
   INSTANT = 'instant',
 }
 
+export type SyncLocations = Array<{ name: string; enabled: boolean }>;
+
 export type Settings = {
   defaultDirPath: string;
   currentLocale: SupportedLangCode;
   notificationInterval: NOTIFICATION_INTERVAL;
+  syncLocations: SyncLocations;
 };
 
 const initialState: Settings = {
   defaultDirPath: '',
   currentLocale: 'en',
   notificationInterval: NOTIFICATION_INTERVAL.INSTANT,
+  syncLocations: [],
 };
 
 const settingsSlice = createSlice({
@@ -35,5 +39,8 @@ export const selectDefaultDirPath = (state: RootState) =>
 
 export const selectCurrentLocale = (state: RootState) =>
   state.appSettings.currentLocale;
+
+export const selectSyncLocations = (state: RootState) =>
+  state.appSettings.syncLocations;
 
 export default settingsSlice.reducer;

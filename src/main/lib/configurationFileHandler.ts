@@ -5,7 +5,7 @@ import { promises as fs, constants } from 'fs';
 import { createLogger } from '../logger';
 import createFileIO from './fileIO';
 
-type Config = Omit<Publication, 'imagePath' | 'lastUpdate' | 'status'>;
+export type Config = Omit<Publication, 'imagePath' | 'lastUpdate' | 'status'>;
 
 type UpdateConfigFieldParams =
   | {

@@ -59,6 +59,9 @@
       "intervals": {
         "instant": "Chcę by pojawiały się od razu."
       }
+    },
+    "repoSync": {
+      "title": "Żródła synchronizacji repozytoriów:"
     }
   },
   "AddProject": {

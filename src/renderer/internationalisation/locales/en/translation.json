@@ -59,6 +59,9 @@
       "intervals": {
         "instant": "I want them instantly."
       }
+    },
+    "repoSync": {
+      "title": "Repository synchronization sources:"
     }
   },
   "AddProject": {
