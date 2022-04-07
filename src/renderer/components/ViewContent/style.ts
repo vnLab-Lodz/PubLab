@@ -32,4 +32,5 @@ export const MainContentBox = styled(Box)(() => ({
 
 export const SubviewContentBox = styled(Box)(() => ({
   margin: '2rem 2rem 12rem',
+  width: '100%',
 }));
