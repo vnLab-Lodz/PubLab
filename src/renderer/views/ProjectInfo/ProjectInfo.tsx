@@ -47,10 +47,11 @@ const ProjectInfo = ({ project }: Props) => {
             />
           ))}
         </Box>
-
-        <Box component='p' mt={1} pb={3} sx={{ borderBottom: '1px solid' }}>
-          <Typography> {project.description}</Typography>
-        </Box>
+        {!!project.description && (
+          <Box component='p' mt={1} pb={3} sx={{ borderBottom: '1px solid' }}>
+            <Typography> {project.description}</Typography>
+          </Box>
+        )}
       </ViewContent>
     </ThemeProvider>
   );
