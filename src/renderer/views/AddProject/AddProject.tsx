@@ -10,6 +10,9 @@ import {
 } from 'src/shared/redux/slices/publicationGenerationSlice';
 import { updateCurrentView } from 'src/shared/redux/slices/currentViewSlice';
 import { VIEWS } from 'src/renderer/constants/Views';
+import { v4 } from 'uuid';
+import { USER_ROLES } from 'src/shared/types';
+import { selectCurrentUserData } from 'src/shared/redux/slices/currentUserSlice';
 import { CHANNELS } from '../../../shared/types/api';
 import CollaboratorsPicker from './subcomponents/CollaboratorsPicker/CollaboratorsPicker';
 import GenerationOverlay from './subcomponents/GenerationOverlay/GenerationOverlay';
@@ -21,6 +24,7 @@ import useUnmountEffect from '../../hooks/useUnmountEffect';
 import ViewContent from '../../components/ViewContent/ViewContent';
 import { altTheme } from '../../theme';
 import {
+  addCollaborator,
   currentStep as stepSelector,
   decreaseStep,
   deleteDraft,
@@ -43,6 +47,7 @@ const AddProject = () => {
   const { t } = useTranslation();
   const [nextButtonEnabled, setNextButtonEnabled] = useState(false);
   const status = useSelector(selectPublicationGenerationStatus);
+  const user = useSelector(selectCurrentUserData);
   const publication = useSelector(newPublication);
 
   useUnmountEffect(() => {
@@ -53,6 +58,18 @@ const AddProject = () => {
   useEffect(() => {
     if (status === SUCCESS) dispatch(updateCurrentView(VIEWS.PROJECT));
   }, [status]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    dispatch(
+      addCollaborator({
+        id: v4(),
+        role: USER_ROLES.DEVELOPER,
+        githubUsername: user.nick,
+      })
+    );
+  }, [user]);
 
   const handleFinish = () => {
     ipcRenderer.invoke(CHANNELS.PUBLICATIONS.GENERATE, publication);

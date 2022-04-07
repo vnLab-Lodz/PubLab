@@ -15,7 +15,6 @@ import {
 
 const CollaboratorsPicker = () => {
   const { t } = useTranslation();
-  // TODO: Add current user as a default collaborator
   const collaborators = useSelector(selectCollaborators);
   const dispatch = useDispatch();
   const [currentCollaborator, setCurrentCollaborator] = React.useState({
