@@ -1,13 +1,15 @@
 import { ipcRenderer } from 'electron';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { activePublication } from 'src/shared/redux/slices/loadPublicationsSlice';
+import { sendNotification } from 'src/shared/redux/slices/notificationsSlice';
 import { CHANNELS } from 'src/shared/types/api';
 import { selectCurrentUser } from '../../../shared/redux/slices/currentUserSlice';
 
 const Description = () => {
   const currentUser = useSelector(selectCurrentUser);
   const publication = useSelector(activePublication);
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -47,6 +49,67 @@ const Description = () => {
         }}
       >
         Fine remote
+      </button>
+      <button
+        type='button'
+        onClick={() => {
+          dispatch(
+            sendNotification({
+              message:
+                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, voluptas cum eveniet enim laborum qui exercitationem delectus quod voluptatum, minima reprehenderit. Nobis eos obcaecati iure sapiente molestias alias dolore minima!',
+              title: 'Title',
+              type: 'info',
+            })
+          );
+        }}
+      >
+        Info Notification
+      </button>
+      <button
+        type='button'
+        onClick={() => {
+          dispatch(
+            sendNotification({
+              message:
+                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, voluptas cum eveniet enim laborum qui exercitationem delectus quod voluptatum, minima reprehenderit. Nobis eos obcaecati iure sapiente molestias alias dolore minima!',
+              title: 'Title',
+              type: 'error',
+            })
+          );
+        }}
+      >
+        Error Notification
+      </button>
+      <button
+        type='button'
+        onClick={() => {
+          dispatch(
+            sendNotification({
+              message:
+                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, voluptas cum eveniet enim laborum qui exercitationem delectus quod voluptatum, minima reprehenderit. Nobis eos obcaecati iure sapiente molestias alias dolore minima!',
+              type: 'success',
+              autoDismiss: true,
+              delay: 2000,
+            })
+          );
+        }}
+      >
+        Success Notification
+      </button>
+      <button
+        type='button'
+        onClick={() => {
+          dispatch(
+            sendNotification({
+              message:
+                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, voluptas cum eveniet enim laborum qui exercitationem delectus quod voluptatum, minima reprehenderit. Nobis eos obcaecati iure sapiente molestias alias dolore minima!',
+              title: 'Title',
+              type: 'warning',
+            })
+          );
+        }}
+      >
+        Warning Notification
       </button>
 
       <p>

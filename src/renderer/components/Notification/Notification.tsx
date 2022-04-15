@@ -1,7 +1,9 @@
 import { Close } from '@mui/icons-material';
-import { IconButton, Typography } from '@mui/material';
-import React from 'react';
+import { Box, Collapse, IconButton, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { dismissNotification } from 'src/shared/redux/slices/notificationsSlice';
 import * as Styled from './style';
 
 export enum NOTIFICATION_TYPES {
@@ -13,40 +15,87 @@ export enum NOTIFICATION_TYPES {
 
 interface Props {
   type: NOTIFICATION_TYPES;
+  id: string;
+  autoDismiss?: boolean;
+  delay?: number;
+  isExpanded: boolean;
+  expand: () => void;
 }
 
-const Notification: React.FC<Props> = ({ children, type }) => {
+const Notification: React.FC<Props> = ({
+  children,
+  type,
+  id,
+  isExpanded,
+  expand,
+  autoDismiss,
+  delay,
+}) => {
+  const [progress, setProgress] = useState(100);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const handleClose = () => {
-    console.log('close');
+    dispatch(dismissNotification(id));
   };
+
+  useEffect(() => {
+    if (!autoDismiss) return;
+
+    const interval = setInterval(
+      () => setProgress((prev) => prev - 1),
+      delay! / 100
+    );
+
+    const timeout = setTimeout(() => {
+      dispatch(dismissNotification(id));
+    }, delay);
+
+    // eslint-disable-next-line consistent-return
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, []);
 
   return (
     <Styled.NotificationContainer
-      sx={{
-        background: (theme) => theme.palette[type].main,
-      }}
+      sx={{ background: (theme) => theme.palette[type].main }}
+      onMouseEnter={expand}
     >
-      <Styled.NotificationHeader>
+      <Styled.NotificationHeader withMargin={isExpanded}>
         <Typography variant='body2' mt='0.3rem'>
-          {t('common.notification').toUpperCase()}
+          {t(`Notification.${type}`).toUpperCase()}
         </Typography>
-        <IconButton
-          size='small'
-          sx={{ borderRadius: 0, padding: 0 }}
-          onClick={handleClose}
-        >
-          <Close sx={{ height: '1.2em', width: '1.2em' }} />
-        </IconButton>
+        <Box>
+          {autoDismiss && (
+            <Styled.DelayProgress
+              variant='determinate'
+              value={progress}
+              size={16}
+            />
+          )}
+          <IconButton
+            size='small'
+            sx={{ borderRadius: 0, padding: 0 }}
+            onClick={handleClose}
+          >
+            <Close sx={{ height: '1.2em', width: '1.2em' }} />
+          </IconButton>
+        </Box>
       </Styled.NotificationHeader>
-      {children}
+      <Collapse in={isExpanded}>{children}</Collapse>
     </Styled.NotificationContainer>
   );
 };
 
+Notification.defaultProps = {
+  autoDismiss: false,
+  delay: 4000,
+};
+
 export const NotificationTitle: React.FC = ({ children }) => (
-  <Typography variant='h1' mb={(theme) => theme.spacing(3)}>
+  <Typography variant='h1' mb={(theme) => theme.spacing(2)}>
     {children}
   </Typography>
 );

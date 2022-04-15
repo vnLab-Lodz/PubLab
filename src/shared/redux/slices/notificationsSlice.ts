@@ -1,0 +1,41 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { NOTIFICATION_TYPES } from 'src/renderer/components/Notification/Notification';
+import { v4 as uuidv4 } from 'uuid';
+import { RootState } from '../rootReducer';
+
+interface Notification {
+  id: string;
+  type: Lowercase<keyof typeof NOTIFICATION_TYPES>;
+  autoDismiss?: boolean;
+  delay?: number;
+  title?: string;
+  message?: string;
+}
+
+const initialState: Notification[] = [];
+
+const notificationsSlice = createSlice({
+  name: 'addPublicationWizard',
+  initialState,
+  reducers: {
+    sendNotification: (
+      state,
+      action: PayloadAction<Omit<Notification, 'id'>>
+    ) => {
+      state.push({ id: uuidv4(), ...action.payload });
+    },
+    dismissNotification: (state, action: PayloadAction<string>) => {
+      state.splice(
+        state.findIndex((n) => n.id === action.payload),
+        1
+      );
+    },
+  },
+});
+
+export const { sendNotification, dismissNotification } =
+  notificationsSlice.actions;
+
+export const selectNotifications = (state: RootState) => state.notifications;
+
+export default notificationsSlice.reducer;
