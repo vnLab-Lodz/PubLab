@@ -4,6 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { ThemeProvider, Typography, Box } from '@mui/material';
 import { ipcRenderer } from 'electron';
 import { CHANNELS } from 'src/shared/types/api';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import { verifyPath } from 'src/renderer/ipc';
+import { sendNotification } from 'src/shared/redux/slices/notificationsSlice';
 import ViewContent from '../../components/ViewContent/ViewContent';
 import { altTheme } from '../../theme';
 import Button from '../../components/Button/Button';
@@ -16,7 +20,23 @@ const FirstTime = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [path, setPath] = useState(false);
-  const [dir, setDir] = useState('');
+
+  const formik = useFormik({
+    initialValues: { dir: '' },
+    validationSchema: yup.object({
+      dir: yup
+        .string()
+        .required('common.field_required')
+        .test('isPathValid', 'common.directory_not_existing', async (value) => {
+          const result = await verifyPath(value || '');
+          return result;
+        }),
+    }),
+    onSubmit: () => {
+      setLocalStorageItem('initialConfigFlag', false);
+      dispatch(updateCurrentView(VIEWS.PROJECTS_LIST));
+    },
+  });
 
   const pickDirectory = () => {
     const { dialog } = require('electron').remote;
@@ -28,7 +48,7 @@ const FirstTime = () => {
           defaultDirPath: filePaths[0],
         });
         if (filePaths[0] !== undefined) setPath(true);
-        setDir(filePaths[0]);
+        formik.setFieldValue('dir', filePaths[0]);
       });
   };
 
@@ -60,18 +80,34 @@ const FirstTime = () => {
             <Box sx={{ marginTop: '9rem' }}>
               <DirectoryPicker
                 buttonText={t('common.change')}
-                value={dir}
+                error={!!formik.errors.dir}
+                value={formik.values.dir}
                 onChange={(event) => {
                   const { value } = event.target;
-                  ipcRenderer.invoke(CHANNELS.SETTINGS.SAVE, {
-                    defaultDirPath: value,
-                  });
-                  setDir(value);
+                  formik.setFieldValue('dir', value);
+                }}
+                onBlur={(event) => {
+                  if (!formik.isValid) {
+                    dispatch(
+                      sendNotification({
+                        type: 'error',
+                        message: t('notifications.directory_not_existing', {
+                          dir: event.target.value,
+                        }),
+                        autoDismiss: true,
+                        delay: 6000,
+                      })
+                    );
+                  } else {
+                    ipcRenderer.invoke(CHANNELS.SETTINGS.SAVE, {
+                      defaultDirPath: event.target.value,
+                    });
+                  }
                 }}
                 onClick={pickDirectory}
               />
               <Button
-                disabled={dir === ''}
+                disabled={!formik.isValid}
                 variant='contained'
                 color='green'
                 isMajor
@@ -86,10 +122,7 @@ const FirstTime = () => {
                     background: (theme) => theme.palette.green.main,
                   },
                 }}
-                onClick={() => {
-                  setLocalStorageItem('initialConfigFlag', false);
-                  dispatch(updateCurrentView(VIEWS.PROJECTS_LIST));
-                }}
+                onClick={() => formik.handleSubmit()}
               >
                 {t('common.go')}
               </Button>

@@ -12,7 +12,7 @@
     "notification": "Powiadomienie"
   },
   "notifications": {
-    "directory_not_existing": "Folder {{dir}} nie istnieje lub ścieżka jest błędna."
+    "directory_not_existing": "Folder {{dir}} nie istnieje lub ścieżka jest błędna. Sprawdź ścieżkę i spróbuj ponownie."
   },
   "auth": {
     "in_progress": "Uwierzytelnianie w toku:",

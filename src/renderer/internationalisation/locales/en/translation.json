@@ -12,7 +12,7 @@
     "notification": "Notification"
   },
   "notifications": {
-    "directory_not_existing": "{{dir}} directory does not exist or the path is invalid."
+    "directory_not_existing": "{{dir}} directory does not exist or the path is invalid. Check the path and try again."
   },
   "auth": {
     "in_progress": "Authentication in progress:",
