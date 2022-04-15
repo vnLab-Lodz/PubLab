@@ -56,8 +56,10 @@ const createPublicationFinder = (): PublicationFinder => {
         store.dispatch(
           sendNotification({
             type: 'error',
-            messageI18n: 'notifications.directory_not_existing',
-            i18nParams: { dir: dirPath },
+            i18n: {
+              key: 'notifications.directory_not_existing',
+              params: { dir: dirPath },
+            },
           })
         );
         return [];

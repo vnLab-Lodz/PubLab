@@ -10,8 +10,7 @@ export interface Notification {
   delay?: number;
   title?: string;
   message?: string;
-  messageI18n?: string;
-  i18nParams?: { [key: string]: string };
+  i18n?: { key: string; params?: { [key: string]: string } };
 }
 
 const initialState: Notification[] = [];
@@ -24,10 +23,8 @@ const notificationsSlice = createSlice({
       state,
       action: PayloadAction<Omit<Notification, 'id'>>
     ) => {
-      if (action.payload.message && action.payload.messageI18n) {
-        throw new Error(
-          "Can't pass message and messageI18n to the same notification"
-        );
+      if (action.payload.message && action.payload.i18n) {
+        throw new Error("Can't pass message and i18n to the same notification");
       }
 
       state.push({ id: uuidv4(), ...action.payload });

@@ -26,13 +26,9 @@ const NotificationsOutlet = () => {
 
   const debounceSetExpandedId = debounce(setExpandedId, 75);
 
-  const getNotificationMessage = ({
-    message,
-    messageI18n,
-    i18nParams,
-  }: INotification) => {
+  const getNotificationMessage = ({ message, i18n }: INotification) => {
     if (message) return message;
-    if (messageI18n) return t(messageI18n as any, i18nParams);
+    if (i18n) return t(i18n.key as any, i18n.params);
     return '';
   };
 
@@ -51,7 +47,7 @@ const NotificationsOutlet = () => {
           {notification.title && (
             <NotificationTitle>{notification.title}</NotificationTitle>
           )}
-          {(notification.message || notification.messageI18n) && (
+          {(notification.message || notification.i18n) && (
             <NotificationText>
               {getNotificationMessage(notification)}
             </NotificationText>
