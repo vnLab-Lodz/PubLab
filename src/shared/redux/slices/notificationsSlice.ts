@@ -3,13 +3,15 @@ import { NOTIFICATION_TYPES } from 'src/renderer/components/Notification/Notific
 import { v4 as uuidv4 } from 'uuid';
 import { RootState } from '../rootReducer';
 
-interface Notification {
+export interface Notification {
   id: string;
   type: Lowercase<keyof typeof NOTIFICATION_TYPES>;
   autoDismiss?: boolean;
   delay?: number;
   title?: string;
   message?: string;
+  messageI18n?: string;
+  i18nParams?: { [key: string]: string };
 }
 
 const initialState: Notification[] = [];
@@ -22,6 +24,12 @@ const notificationsSlice = createSlice({
       state,
       action: PayloadAction<Omit<Notification, 'id'>>
     ) => {
+      if (action.payload.message && action.payload.messageI18n) {
+        throw new Error(
+          "Can't pass message and messageI18n to the same notification"
+        );
+      }
+
       state.push({ id: uuidv4(), ...action.payload });
     },
     dismissNotification: (state, action: PayloadAction<string>) => {

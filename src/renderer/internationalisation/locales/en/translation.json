@@ -11,6 +11,9 @@
     "directory_not_existing": "Directory does not exist or the path is invalid.",
     "notification": "Notification"
   },
+  "notifications": {
+    "directory_not_existing": "{{dir}} directory does not exist or the path is invalid."
+  },
   "auth": {
     "in_progress": "Authentication in progress:",
     "states": {
