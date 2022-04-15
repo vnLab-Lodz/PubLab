@@ -9,6 +9,7 @@ interface Props {
   placeholder?: string;
   onClick?: () => void;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   labelledBy?: string;
   error?: boolean;
 }
@@ -17,6 +18,7 @@ const DirectoryPicker: React.FC<Props> = ({
   placeholder,
   onClick,
   onChange,
+  onBlur,
   value,
   buttonText,
   labelledBy,
@@ -27,6 +29,7 @@ const DirectoryPicker: React.FC<Props> = ({
       placeholder={placeholder ?? ''}
       value={value ?? ''}
       onChange={onChange}
+      onBlur={onBlur}
       spellCheck={false}
       inputProps={{ 'aria-labelledby': labelledBy }}
       error={error}
@@ -42,6 +45,7 @@ DirectoryPicker.defaultProps = {
   placeholder: undefined,
   onClick: () => {},
   onChange: () => {},
+  onBlur: () => {},
   labelledBy: undefined,
   error: false,
 };
