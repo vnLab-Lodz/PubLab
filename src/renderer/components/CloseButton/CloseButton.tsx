@@ -1,5 +1,5 @@
 import { IconButton } from '@mui/material';
-import ClearIcon from '@mui/icons-material/Clear';
+import { Close } from '@mui/icons-material';
 import { t } from 'i18next';
 import React from 'react';
 
@@ -11,9 +11,10 @@ const CloseButton: React.FC<Props> = ({ onClick }) => (
   <IconButton
     aria-label={t('common.close')}
     onClick={onClick}
-    sx={{ p: 1, m: -1 }}
+    size='small'
+    sx={{ borderRadius: 0, padding: 0 }}
   >
-    <ClearIcon fontSize='inherit' sx={{ height: '2rem' }} />
+    <Close sx={{ height: '1.2em', width: '1.2em' }} />
   </IconButton>
 );
 

@@ -1,9 +1,9 @@
-import { Close } from '@mui/icons-material';
-import { Box, Collapse, IconButton, Typography } from '@mui/material';
+import { Box, Collapse, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { dismissNotification } from 'src/shared/redux/slices/notificationsSlice';
+import CloseButton from '../CloseButton/CloseButton';
 import * as Styled from './style';
 
 export enum NOTIFICATION_TYPES {
@@ -75,13 +75,7 @@ const Notification: React.FC<Props> = ({
               size={16}
             />
           )}
-          <IconButton
-            size='small'
-            sx={{ borderRadius: 0, padding: 0 }}
-            onClick={handleClose}
-          >
-            <Close sx={{ height: '1.2em', width: '1.2em' }} />
-          </IconButton>
+          <CloseButton onClick={handleClose} />
         </Box>
       </Styled.NotificationHeader>
       <Collapse in={isExpanded}>{children}</Collapse>
