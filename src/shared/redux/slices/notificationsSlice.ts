@@ -15,7 +15,7 @@ interface Notification {
 const initialState: Notification[] = [];
 
 const notificationsSlice = createSlice({
-  name: 'addPublicationWizard',
+  name: 'notifications',
   initialState,
   reducers: {
     sendNotification: (
