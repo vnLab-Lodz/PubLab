@@ -128,5 +128,11 @@
   "NoActiveProject": {
     "message": "No project selected as active.",
     "buttonText": "Go to project list"
+  },
+  "Notification": {
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Info"
   }
 }
