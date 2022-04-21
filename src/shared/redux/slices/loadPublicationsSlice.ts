@@ -10,7 +10,11 @@ type PublicationModification =
       id: string;
       field: keyof Omit<
         Publication,
-        'useTypescript' | 'useSass' | 'collaborators' | 'creationDate'
+        | 'useTypescript'
+        | 'useSass'
+        | 'collaborators'
+        | 'creationDate'
+        | 'status'
       >;
       value: string;
     }
@@ -18,6 +22,11 @@ type PublicationModification =
       id: string;
       field: keyof Pick<Publication, 'useTypescript' | 'useSass'>;
       value: boolean;
+    }
+  | {
+      id: string;
+      field: keyof Pick<Publication, 'status'>;
+      value: 'cloned' | 'remote';
     };
 
 type CollaboratorListModification<T> = {

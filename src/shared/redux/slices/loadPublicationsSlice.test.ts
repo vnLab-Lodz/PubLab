@@ -22,6 +22,7 @@ const publication: Publication = {
   creationDate: Date.now(),
   lastUpdate: Date.now(),
   status: 'cloned',
+  dirPath: 'path',
   tags: ['tag'],
   name: 'pub_name',
   description: 'description',
