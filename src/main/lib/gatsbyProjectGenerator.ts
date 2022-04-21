@@ -12,7 +12,7 @@ export enum TEMPLATE_URLS {
 
 export interface GatsbyProjectGenerator {
   getTemplateUrl(): string;
-  generate(cwd: string): Promise<void>;
+  generate(cwd: string, repoName?: string): Promise<void>;
 }
 
 const createGatsbyProjectGenerator = (
@@ -25,13 +25,13 @@ const createGatsbyProjectGenerator = (
       ? TEMPLATE_URLS.PAAW_I18N
       : TEMPLATE_URLS.PAAW_BASIC;
   },
-  async generate(cwd) {
+  async generate(cwd, repoName = publication.name) {
     const logger = createLogger();
     const templateUrl = this.getTemplateUrl();
 
     try {
       logger.appendLog('Generating new project...');
-      const command = `gatsby new ${publication.name} ${templateUrl}`;
+      const command = `gatsby new ${repoName} ${templateUrl}`;
       const { stdout, stderr } = await exec(command, { cwd });
       logger.appendLog(`Project generation standard output: ${stdout}`);
       logger.appendLog(`Project generation error output: ${stderr}`);
