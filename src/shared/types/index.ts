@@ -38,6 +38,7 @@ export interface LocalPublication extends IPublication {
 export interface RemotePublication extends IPublication {
   status: 'remote';
   cloneUrl: string;
+  repoName: string;
 }
 
 export type Publication = LocalPublication | RemotePublication;

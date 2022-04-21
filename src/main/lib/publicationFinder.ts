@@ -117,6 +117,7 @@ const createPublicationFinder = (): PublicationFinder => {
                   status: 'remote',
                   lastUpdate: 0,
                   cloneUrl: repo.cloneUrl,
+                  repoName: repo.name,
                 });
               } else {
                 logger.appendLog(
