@@ -95,7 +95,9 @@ export const NotificationTitle: React.FC = ({ children }) => (
 );
 
 export const NotificationText: React.FC = ({ children }) => (
-  <Typography variant='body1'>{children}</Typography>
+  <Typography variant='body1' sx={{ wordBreak: 'break-word' }}>
+    {children}
+  </Typography>
 );
 
 export default Notification;

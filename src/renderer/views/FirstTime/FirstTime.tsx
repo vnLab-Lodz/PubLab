@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { ThemeProvider, Typography, Box } from '@mui/material';
 import { ipcRenderer } from 'electron';
 import { CHANNELS } from 'src/shared/types/api';
+import { useFormik } from 'formik';
+import { sendNotification } from 'src/shared/redux/slices/notificationsSlice';
 import ViewContent from '../../components/ViewContent/ViewContent';
 import { altTheme } from '../../theme';
 import Button from '../../components/Button/Button';
@@ -11,12 +13,22 @@ import DirectoryPicker from '../../components/DirectoryPicker/DirectoryPicker';
 import { VIEWS } from '../../constants/Views';
 import { updateCurrentView } from '../../../shared/redux/slices/currentViewSlice';
 import { setLocalStorageItem } from '../../../shared/redux/helpers/localStorage';
+import { validationSchema } from './validationSchema';
+import * as Styled from './style';
 
 const FirstTime = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [path, setPath] = useState(false);
-  const [dir, setDir] = useState('');
+
+  const formik = useFormik({
+    initialValues: { dir: '' },
+    validationSchema,
+    onSubmit: () => {
+      setLocalStorageItem('initialConfigFlag', false);
+      dispatch(updateCurrentView(VIEWS.PROJECTS_LIST));
+    },
+  });
 
   const pickDirectory = () => {
     const { dialog } = require('electron').remote;
@@ -28,8 +40,33 @@ const FirstTime = () => {
           defaultDirPath: filePaths[0],
         });
         if (filePaths[0] !== undefined) setPath(true);
-        setDir(filePaths[0]);
+        formik.setFieldValue('dir', filePaths[0]);
       });
+  };
+
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const { value } = event.target;
+    formik.setFieldValue('dir', value);
+  };
+
+  const handleBlur: React.FocusEventHandler<HTMLInputElement> = (event) => {
+    if (formik.isValid) {
+      ipcRenderer.invoke(CHANNELS.SETTINGS.SAVE, {
+        defaultDirPath: event.target.value,
+      });
+      return;
+    }
+
+    dispatch(
+      sendNotification({
+        type: 'error',
+        message: t('notifications.directory_not_existing', {
+          dir: event.target.value,
+        }),
+        autoDismiss: true,
+        delay: 6000,
+      })
+    );
   };
 
   return (
@@ -60,39 +97,22 @@ const FirstTime = () => {
             <Box sx={{ marginTop: '9rem' }}>
               <DirectoryPicker
                 buttonText={t('common.change')}
-                value={dir}
-                onChange={(event) => {
-                  const { value } = event.target;
-                  ipcRenderer.invoke(CHANNELS.SETTINGS.SAVE, {
-                    defaultDirPath: value,
-                  });
-                  setDir(value);
-                }}
+                error={!!formik.errors.dir}
+                value={formik.values.dir}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 onClick={pickDirectory}
               />
-              <Button
-                disabled={dir === ''}
+              <Styled.SubmitButton
+                disabled={!formik.isValid}
                 variant='contained'
                 color='green'
                 isMajor
                 fullWidth
-                sx={{
-                  marginTop: '9rem',
-                  height: '6rem',
-                  ':disabled': {
-                    cursor: 'not-allowed',
-                    opacity: 0.6,
-                    color: 'text.secondary',
-                    background: (theme) => theme.palette.green.main,
-                  },
-                }}
-                onClick={() => {
-                  setLocalStorageItem('initialConfigFlag', false);
-                  dispatch(updateCurrentView(VIEWS.PROJECTS_LIST));
-                }}
+                onClick={() => formik.handleSubmit()}
               >
                 {t('common.go')}
-              </Button>
+              </Styled.SubmitButton>
             </Box>
           )}
         </Box>

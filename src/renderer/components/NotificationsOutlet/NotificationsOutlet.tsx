@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectNotifications } from 'src/shared/redux/slices/notificationsSlice';
+import { useTranslation } from 'react-i18next';
 import { debounce } from '@mui/material';
+import {
+  Notification as INotification,
+  selectNotifications,
+} from 'src/shared/redux/slices/notificationsSlice';
+import * as Styled from './style';
 import Notification, {
   NotificationText,
   NotificationTitle,
   NOTIFICATION_TYPES,
 } from '../Notification/Notification';
-import * as Styled from './style';
 
 const NotificationsOutlet = () => {
   const notifications = useSelector(selectNotifications);
   const [expandedId, setExpandedId] = useState<string | undefined>();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (notifications.length === 0) return;
@@ -20,6 +25,12 @@ const NotificationsOutlet = () => {
   }, [notifications]);
 
   const debounceSetExpandedId = debounce(setExpandedId, 75);
+
+  const getNotificationMessage = ({ message, i18n }: INotification) => {
+    if (message) return message;
+    if (i18n) return t(i18n.key as any, i18n.params);
+    return '';
+  };
 
   return (
     <Styled.NotificationsContainer>
@@ -36,8 +47,10 @@ const NotificationsOutlet = () => {
           {notification.title && (
             <NotificationTitle>{notification.title}</NotificationTitle>
           )}
-          {notification.message && (
-            <NotificationText>{notification.message}</NotificationText>
+          {(notification.message || notification.i18n) && (
+            <NotificationText>
+              {getNotificationMessage(notification)}
+            </NotificationText>
           )}
         </Notification>
       ))}

@@ -2,6 +2,7 @@ import { Publication } from 'src/shared/types';
 import { promises as fs, Dirent } from 'fs';
 import { Octokit } from '@octokit/rest';
 import { CONFIG_NAME } from 'src/shared/constants';
+import { sendNotification } from 'src/shared/redux/slices/notificationsSlice';
 import { mainStore as store } from '..';
 import createConfigFileHandler, { Config } from './configurationFileHandler';
 import { createLogger } from '../logger';
@@ -25,28 +26,44 @@ const createPublicationFinder = (): PublicationFinder => {
       const { defaultDirPath: dirPath } = appSettings;
       const user = currentUser.data;
 
-      const options = { withFileTypes: true } as const;
-      const contents = await fs.readdir(dirPath, options);
-      const directories = contents.filter((d) => d.isDirectory());
-      const publications = [] as Publication[];
+      try {
+        const options = { withFileTypes: true } as const;
+        const contents = await fs.readdir(dirPath, options);
+        const directories = contents.filter((d) => d.isDirectory());
+        const publications = [] as Publication[];
 
-      const read = async ({
-        name,
-      }: Dirent): Promise<Publication | undefined> => {
-        const handler = createConfigFileHandler({ dirPath, name });
-        const configExists = await handler.checkIfConfigExists();
-        if (!configExists) return;
+        const read = async ({
+          name,
+        }: Dirent): Promise<Publication | undefined> => {
+          const handler = createConfigFileHandler({ dirPath, name });
+          const configExists = await handler.checkIfConfigExists();
+          if (!configExists) return;
 
-        const config = await handler.getConfig();
-        if (config.collaborators.find((c) => c.githubUsername === user?.nick)) {
-          // TODO: handle the last update parameter
-          publications.push({ ...config, status: 'cloned', lastUpdate: 0 });
-        }
-      };
+          const config = await handler.getConfig();
+          if (
+            config.collaborators.find((c) => c.githubUsername === user?.nick)
+          ) {
+            // TODO: handle the last update parameter
+            publications.push({ ...config, status: 'cloned', lastUpdate: 0 });
+          }
+        };
 
-      await Promise.all(directories.map(read));
+        await Promise.all(directories.map(read));
 
-      return publications;
+        return publications;
+      } catch (error: any) {
+        logger.appendLog(error);
+        store.dispatch(
+          sendNotification({
+            type: 'error',
+            i18n: {
+              key: 'notifications.directory_not_existing',
+              params: { dir: dirPath },
+            },
+          })
+        );
+        return [];
+      }
     },
     async findRemotePublications() {
       const token = store.getState().currentUser.auth.accessToken?.value;
