@@ -67,6 +67,7 @@ const App = () => {
         readPublications({ findLocal: !!defaultDirPath });
       }),
 
+      // * Deactivate project when default dir path is changed
       observeStore(store, selectDefaultDirPath, () => {
         store.dispatch(setActivePublication(null));
       })
