@@ -1,6 +1,8 @@
 import { Table, TableBody } from '@mui/material';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ipcRenderer } from 'electron';
+import { CHANNELS } from 'src/shared/types/api';
 import {
   selectCurrentView,
   updateCurrentView,
@@ -35,6 +37,19 @@ const ProjectTable: React.FC<Props> = ({ publications }) => {
     );
   };
 
+  const activatePublication = async (publication: Publication) => {
+    if (publication.status === 'remote') {
+      await ipcRenderer.invoke(
+        CHANNELS.GIT.CLONE,
+        publication.id,
+        publication.repoName,
+        publication.cloneUrl
+      );
+    }
+    dispatch(setActivePublication(publication.id));
+    dispatch(updateCurrentView(VIEWS.PROJECT));
+  };
+
   const activePublicationID: string | undefined =
     useSelector(activePublication)?.id;
 
@@ -45,6 +60,7 @@ const ProjectTable: React.FC<Props> = ({ publications }) => {
       {publications.map((publication) => {
         const isDescriptionVisible = selectedProject?.id === publication.id;
         const isActive = activePublicationID === publication.id;
+
         return (
           <TableBody key={publication.id}>
             <ProjectRow
@@ -53,13 +69,12 @@ const ProjectTable: React.FC<Props> = ({ publications }) => {
             />
             <ButtonRow
               isDescriptionVisible={isDescriptionVisible}
-              onClickDescription={() =>
-                selectProject(isDescriptionVisible ? undefined : publication)
-              }
+              onClickDescription={() => {
+                selectProject(isDescriptionVisible ? undefined : publication);
+              }}
               isProjectActive={isActive}
               onClickActivePublication={() => {
-                dispatch(setActivePublication(publication.id));
-                dispatch(updateCurrentView(VIEWS.PROJECT));
+                activatePublication(publication);
               }}
             />
           </TableBody>
