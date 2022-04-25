@@ -12,7 +12,10 @@
     "notification": "Powiadomienie"
   },
   "notifications": {
-    "directory_not_existing": "Folder {{dir}} nie istnieje lub ścieżka jest błędna. Sprawdź ścieżkę i spróbuj ponownie."
+    "directory_not_existing": "Folder {{dir}} nie istnieje lub ścieżka jest błędna. Sprawdź ścieżkę i spróbuj ponownie.",
+    "github_clone_auth_failed": "Uwierzytelnianie w czasie klonowania repozytorium z GitHuba nie powiodło się. Sprawdź logi by uzyskać więcej informacji.",
+    "clone_success": "{{name}} zostało pomyślnie zklonowane do {{dir}}",
+    "error": "Coś poszło nie tak. Sprawdź logi by uzyskać więcej informacji."
   },
   "auth": {
     "in_progress": "Uwierzytelnianie w toku:",

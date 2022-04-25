@@ -6,6 +6,7 @@ import currentViewReducer from './slices/currentViewSlice';
 import publicationGenerationReducer from './slices/publicationGenerationSlice';
 import addPublicationWizardReducer from './slices/addPublicationWizardSlice';
 import notificationsReducer from './slices/notificationsSlice';
+import loadersReducer from './slices/loadersSlice';
 
 const rootReducer = combineReducers({
   currentView: currentViewReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   publicationGeneration: publicationGenerationReducer,
   loadedPublications: loadPublicationsReducer,
   notifications: notificationsReducer,
+  loaders: loadersReducer,
 });
 
 // export state to use with selectors

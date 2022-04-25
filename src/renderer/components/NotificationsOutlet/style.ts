@@ -1,7 +1,7 @@
 import { Box, styled } from '@mui/material';
 
 export const NotificationsContainer = styled(Box)({
-  zIndex: 2,
+  zIndex: 3,
   position: 'fixed',
   top: '0',
   right: '0',
