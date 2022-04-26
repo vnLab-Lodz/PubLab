@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ipcRenderer } from 'electron';
 import { CHANNELS } from 'src/shared/types/api';
 import { v4 as uuidv4 } from 'uuid';
-import LoaderOverlay from 'src/renderer/components/LoaderOverlay';
+import LoaderOverlay from 'src/renderer/components/LoaderOverlay/LoaderOverlay';
 import { Publication } from '../../../../../shared/types';
 import { SUBVIEWS, VIEWS } from '../../../../constants/Views';
 import ProjectRow from './ProjectRow';

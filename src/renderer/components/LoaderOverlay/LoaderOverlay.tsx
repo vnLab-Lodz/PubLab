@@ -8,9 +8,10 @@ import LoadingOverlay from '../LoadingOverlay/LoadingOverlay';
 
 type Props = {
   id: string;
+  position?: 'fixed' | 'absolute';
 };
 
-const LoaderOverlay: React.FC<Props> = ({ id }) => {
+const LoaderOverlay: React.FC<Props> = ({ id, position }) => {
   const { t } = useTranslation();
   const loader = useSelector((state: RootState) => selectLoader(state, id));
 
@@ -23,7 +24,7 @@ const LoaderOverlay: React.FC<Props> = ({ id }) => {
   };
 
   return (
-    <LoadingOverlay>
+    <LoadingOverlay position={position}>
       <Typography
         variant='body1'
         sx={{
@@ -36,6 +37,10 @@ const LoaderOverlay: React.FC<Props> = ({ id }) => {
       </Typography>
     </LoadingOverlay>
   );
+};
+
+LoaderOverlay.defaultProps = {
+  position: 'fixed',
 };
 
 export default LoaderOverlay;
