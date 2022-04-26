@@ -86,6 +86,8 @@ const clone: IpcEventHandler = async (
     store.dispatch(
       sendNotification({
         type: 'success',
+        autoDismiss: true,
+        delay: 3000,
         i18n: {
           key: 'notifications.clone_success',
           params: { name, dir },
