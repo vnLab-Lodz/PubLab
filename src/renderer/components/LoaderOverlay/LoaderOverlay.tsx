@@ -30,6 +30,7 @@ const LoaderOverlay: React.FC<Props> = ({ id, position }) => {
         sx={{
           mt: (theme) => theme.spacing(3),
           color: (theme) => theme.palette.green.main,
+          textAlign: 'center',
           width: '70%',
         }}
       >
