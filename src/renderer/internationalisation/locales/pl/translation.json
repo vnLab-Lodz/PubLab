@@ -17,6 +17,14 @@
     "clone_success": "{{name}} zostało pomyślnie zklonowane do {{dir}}",
     "error": "Coś poszło nie tak. Sprawdź logi by uzyskać więcej informacji."
   },
+  "loaders": {
+    "cloning": "Klonowanie repozytorium z {{url}} do folderu {{dir}}",
+    "compressing_objects": "{{progress}} Kompresja obiektów",
+    "receiving_objects": "{{progress}} Odbieranie obiektów",
+    "resolving_deltas": "{{progress}} Rozwiązywanie delt",
+    "analyzing_workdir": "{{progress}} Analizowanie folderu roboczego",
+    "updating_workdir": "{{progress}} Aktualizowanie katalogu roboczego"
+  },
   "auth": {
     "in_progress": "Uwierzytelnianie w toku:",
     "states": {

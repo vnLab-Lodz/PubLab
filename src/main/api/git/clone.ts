@@ -47,16 +47,28 @@ const clone: IpcEventHandler = async (
   };
 
   const onProgress: ProgressCallback = (e) => {
-    // TODO: Possible use of translations
-    // Compressing objects | Resolving deltas | Updating workdir
-    const value = e.total ? `${e.loaded}/${e.total} ${e.phase}` : e.phase;
-    store.dispatch(modifyLoader({ id: loaderId, key: 'message', value }));
+    const progress = `${e.loaded}/${e.total}`;
+    const value = e.total ? `${progress} ${e.phase}` : e.phase;
+    store.dispatch(
+      modifyLoader({
+        id: loaderId,
+        key: 'i18n',
+        value: {
+          key: `loaders.${e.phase.toLowerCase().replaceAll(' ', '_')}`,
+          params: { progress: e.total ? progress : '' },
+          default: value,
+        },
+      })
+    );
   };
 
   try {
     logger.appendLog(`Cloning repo from ${url} to ${dir}`);
     store.dispatch(
-      addLoader({ id: loaderId, message: `Cloning repo from ${url} to ${dir}` })
+      addLoader({
+        id: loaderId,
+        i18n: { key: 'loaders.cloning', params: { url, dir } },
+      })
     );
 
     await git.clone({
