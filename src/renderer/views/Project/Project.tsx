@@ -73,7 +73,7 @@ const Description = () => {
             <Snippets project={project} isAccordion noLabel />
           </Styled.Section>
 
-          <Styled.Section sx={{ border: 'none' }}>
+          <Styled.Section>
             <Typography variant='body2' component='p'>
               {t('publication.package_manager').toLocaleUpperCase()}
               {': '}

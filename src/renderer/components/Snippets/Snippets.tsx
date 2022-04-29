@@ -1,10 +1,10 @@
-import { Typography } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import Section from '../Section/Section';
 import * as Snippet from './Snippet';
 import { PlainUl } from '../List/List';
 import { Publication } from '../../../shared/types';
+import * as Styled from './style';
 
 interface Props {
   project: Publication;
@@ -29,7 +29,7 @@ const mockSnippets = [
     </video>`,
   },
   {
-    id:'3131231',
+    id: '3131231',
     name: 'Snippet o długiej nazwie, która nie mieści się w jednym wierszu',
     code: `<video width=„640” height=„360” controls>
         <source src=„__VIDEO__.MP4” type=„video/mp4” /> 
@@ -49,7 +49,7 @@ const Snippets = ({ project, noLabel, isAccordion }: Props) => {
   const { t } = useTranslation();
 
   return (
-    <Section mt={0} mb={2}>
+    <Box mt={0} mb={2}>
       {!noLabel && (
         <Typography variant='caption' component='h2' mb={2}>
           {t('publication.snippets').toLocaleUpperCase()}:
@@ -57,16 +57,16 @@ const Snippets = ({ project, noLabel, isAccordion }: Props) => {
       )}
       <PlainUl>
         {mockSnippets.map((snippet, index) => (
-          <li key={snippet.id}>
+          <Styled.Li key={snippet.id} isAccordion={!!isAccordion}>
             {isAccordion ? (
               <Snippet.Accordion snippet={snippet} index={index} />
             ) : (
               <Snippet.Plain snippet={snippet} />
             )}
-          </li>
+          </Styled.Li>
         ))}
       </PlainUl>
-    </Section>
+    </Box>
   );
 };
 

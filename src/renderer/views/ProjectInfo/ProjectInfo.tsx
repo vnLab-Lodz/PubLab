@@ -28,39 +28,43 @@ const ProjectInfo = ({ project, useMainTheme, showAllSubsections }: Props) => {
             onClick={() => dispatch(updateSubview({ element: SUBVIEWS.NONE }))}
           />
         )}
-
-        {!showAllSubsections && project.keepDescriptionVisible && (
-          <Styled.CloseButton
-            onClick={() =>
-              dispatch(
-                updatePublicationField({
-                  id: project.id,
-                  field: 'keepDescriptionVisible',
-                  value: false,
-                })
-              )
-            }
-          />
-        )}
         {(showAllSubsections || project.keepDescriptionVisible) && (
-          <ProjectDetails project={project} />
-        )}
+          <Styled.Section>
+            {!showAllSubsections && project.keepDescriptionVisible && (
+              <Styled.CloseButton
+                onClick={() =>
+                  dispatch(
+                    updatePublicationField({
+                      id: project.id,
+                      field: 'keepDescriptionVisible',
+                      value: false,
+                    })
+                  )
+                }
+              />
+            )}
 
-        {!showAllSubsections && project.keepSnippetsVisible && (
-          <Styled.CloseButton
-            onClick={() =>
-              dispatch(
-                updatePublicationField({
-                  id: project.id,
-                  field: 'keepSnippetsVisible',
-                  value: false,
-                })
-              )
-            }
-          />
+            <ProjectDetails project={project} />
+          </Styled.Section>
         )}
         {(showAllSubsections || project.keepSnippetsVisible) && (
-          <Snippets project={project} />
+          <Styled.Section>
+            {!showAllSubsections && project.keepSnippetsVisible && (
+              <Styled.CloseButton
+                onClick={() =>
+                  dispatch(
+                    updatePublicationField({
+                      id: project.id,
+                      field: 'keepSnippetsVisible',
+                      value: false,
+                    })
+                  )
+                }
+              />
+            )}
+
+            <Snippets project={project} />
+          </Styled.Section>
         )}
       </ViewContent>
     </ThemeProvider>

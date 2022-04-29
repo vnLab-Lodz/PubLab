@@ -4,4 +4,7 @@ import SectionBase from '../../components/Section/Section';
 export const Section = styled(SectionBase)(({ theme }) => ({
   borderBottom: `1px solid ${theme.palette.gray.main}`,
   margin: `${theme.spacing(3)} 0`,
+  '&:last-of-type': {
+    border: 'none',
+  },
 }));

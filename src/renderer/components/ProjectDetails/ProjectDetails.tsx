@@ -2,7 +2,6 @@ import { Box, Chip, Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Publication } from '../../../shared/types';
-import Section from '../Section/Section';
 
 interface Props {
   project: Publication;
@@ -14,7 +13,7 @@ const ProjectDetails = ({ project, noLabel, biggerText }: Props) => {
   const { t } = useTranslation();
 
   return (
-    <Section mt={0} mb={2}>
+    <Box mt={0} mb={3}>
       {!noLabel && (
         <>
           <Typography variant='caption' component='h2' mb={2}>
@@ -42,7 +41,7 @@ const ProjectDetails = ({ project, noLabel, biggerText }: Props) => {
           {project?.description}
         </Typography>
       </Box>
-    </Section>
+    </Box>
   );
 };
 

@@ -1,32 +1,41 @@
 import { ArrowRight } from '@mui/icons-material';
-import { Typography, Button } from '@mui/material';
+import { Typography } from '@mui/material';
 import { clipboard } from 'electron';
 import React from 'react';
 import { Snippet } from '../../../shared/types';
 import * as Styled from './style';
 
-export const Plain = ({ snippet }: { snippet: Snippet }) => (
+const Plain = ({
+  snippet,
+  biggerText = false,
+}: {
+  snippet: Snippet;
+  biggerText?: boolean;
+}) => (
   <>
-    <Typography variant='subtitle1'>{snippet.name}</Typography>
-    <Button
-      sx={{ textTransform: 'lowercase', fontWeight: 700 }}
+    <Typography
+      sx={{ display: 'inline-block' }}
+      variant={biggerText ? 'subtitle1' : 'body1'}
+    >
+      {snippet.name}
+    </Typography>
+    <Styled.CopyButton
+      biggerText
       onClick={(e: React.MouseEvent) => {
         e.stopPropagation();
         clipboard.writeText(snippet.code);
       }}
     >
       <Typography variant='caption'>Copy</Typography>
-    </Button>
+    </Styled.CopyButton>
   </>
 );
 
-export const Accordion = ({
-  snippet,
-  index,
-}: {
-  snippet: Snippet;
-  index: number;
-}) => {
+Plain.defaultProps = {
+  biggerText: false,
+};
+
+const Accordion = ({ snippet, index }: { snippet: Snippet; index: number }) => {
   const id = `snippet${index}-${snippet.name}`;
 
   return (
@@ -36,7 +45,7 @@ export const Accordion = ({
         id={`${id}-header`}
         aria-controls={`${id}-content`}
       >
-        <Plain snippet={snippet} />
+        <Plain snippet={snippet} biggerText />
       </Styled.AccordionSummary>
       <Styled.AccordionDetails>
         <Typography>{snippet.code}</Typography>
@@ -44,3 +53,5 @@ export const Accordion = ({
     </Styled.Accordion>
   );
 };
+
+export { Plain, Accordion };
