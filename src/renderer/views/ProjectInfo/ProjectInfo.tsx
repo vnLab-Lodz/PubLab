@@ -9,6 +9,7 @@ import { altTheme, mainTheme } from '../../theme';
 import ProjectDetails from '../../components/ProjectDetails/ProjectDetails';
 import * as Styled from './style';
 import { updatePublicationField } from '../../../shared/redux/slices/loadPublicationsSlice';
+import Snippets from '../../components/Snippets/Snippets';
 
 interface Props {
   project: Publication;
@@ -41,7 +42,26 @@ const ProjectInfo = ({ project, useMainTheme, showAllSubsections }: Props) => {
             }
           />
         )}
-        <ProjectDetails project={project} />
+        {(showAllSubsections || project.keepDescriptionVisible) && (
+          <ProjectDetails project={project} />
+        )}
+
+        {!showAllSubsections && project.keepSnippetsVisible && (
+          <Styled.CloseButton
+            onClick={() =>
+              dispatch(
+                updatePublicationField({
+                  id: project.id,
+                  field: 'keepSnippetsVisible',
+                  value: false,
+                })
+              )
+            }
+          />
+        )}
+        {(showAllSubsections || project.keepSnippetsVisible) && (
+          <Snippets project={project} />
+        )}
       </ViewContent>
     </ThemeProvider>
   );
