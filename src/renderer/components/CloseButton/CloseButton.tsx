@@ -7,7 +7,7 @@ interface Props {
   onClick: () => void;
 }
 
-const CloseButton: React.FC<Props> = ({ onClick }) => (
+const CloseButton: React.FC<Props> = ({ onClick, ...rest }) => (
   <IconButton
     aria-label={t('common.close')}
     onClick={onClick}
