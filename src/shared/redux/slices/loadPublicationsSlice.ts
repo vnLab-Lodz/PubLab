@@ -15,12 +15,20 @@ type PublicationModification =
         | 'collaborators'
         | 'creationDate'
         | 'status'
+        | 'keepDescriptionVisible'
+        | 'keepSnippetsVisible'
       >;
       value: string;
     }
   | {
       id: string;
-      field: keyof Pick<Publication, 'useTypescript' | 'useSass'>;
+      field: keyof Pick<
+        Publication,
+        | 'useTypescript'
+        | 'useSass'
+        | 'keepDescriptionVisible'
+        | 'keepSnippetsVisible'
+      >;
       value: boolean;
     }
   | {

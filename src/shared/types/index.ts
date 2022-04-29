@@ -28,6 +28,8 @@ export interface IPublication extends PublicationBase {
   creationDate: number;
   lastUpdate: number;
   tags: string[];
+  keepDescriptionVisible: boolean;
+  keepSnippetsVisible: boolean;
 }
 
 export interface LocalPublication extends IPublication {
