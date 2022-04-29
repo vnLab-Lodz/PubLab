@@ -9,6 +9,7 @@
     "close": "close",
     "field_required": "This field is required.",
     "directory_not_existing": "Directory does not exist or the path is invalid.",
+    "invalid_folder_name": "Field contains invalid characters or reserved keywords.",
     "notification": "Notification"
   },
   "notifications": {
@@ -88,7 +89,7 @@
       "table_title": "Added collaborators:",
       "username": "Username",
       "role": "Role",
-      "developer": "developer",
+      "developer": "Developer",
       "editor": "Editor",
       "add_button": "Add"
     },

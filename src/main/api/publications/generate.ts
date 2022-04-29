@@ -24,18 +24,19 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
   try {
     const { name, description, collaborators, useTypescript } = params;
     const author = createAuthorFromCollaborators(collaborators);
+    const repoName = name.toLowerCase().replaceAll(' ', '-');
     const { defaultDirPath: dirPath } = store.getState().appSettings;
 
     const projectGenerator = createGatsbyProjectGenerator(params);
     store.dispatch(setStatus(STATUS.GENERATING_GATSBY_PROJECT));
-    await projectGenerator.generate(dirPath);
+    await projectGenerator.generate(dirPath, repoName);
 
-    const configHandler = createConfigFileHandler({ dirPath, name });
+    const configHandler = createConfigFileHandler({ dirPath, name: repoName });
     const { imagePath, ...config } = params;
     store.dispatch(setStatus(STATUS.CREATING_CONFIGURATION_FILE));
     const savedConfig = await configHandler.createConfigFile(config);
 
-    const packageHandler = createPackageHandler({ dirPath, name });
+    const packageHandler = createPackageHandler({ dirPath, name: repoName });
     store.dispatch(setStatus(STATUS.MODIFYING_PACKAGE_JSON));
     await packageHandler.modifyPackage((packageJSON) => {
       packageJSON.name = name;
@@ -43,7 +44,7 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
       packageJSON.description = description;
     });
 
-    const options = { dirPath, name, usesTypescript: useTypescript };
+    const options = { dirPath, usesTypescript: useTypescript, name: repoName };
     const gatsbyConfigHandler = createGatsbyConfigHandler(options);
     store.dispatch(setStatus(STATUS.MODIFYING_GATSBY_CONFIG));
     await gatsbyConfigHandler.modifyConfig((data) =>

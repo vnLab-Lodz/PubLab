@@ -48,7 +48,12 @@ const ProjectInfo = ({ project }: Props) => {
           ))}
         </Box>
         {!!project.description && (
-          <Box component='p' mt={1} pb={3} sx={{ borderBottom: '1px solid' }}>
+          <Box
+            component='p'
+            mt={1}
+            pb={3}
+            sx={{ borderBottom: '1px solid', whiteSpace: 'pre-line' }}
+          >
             <Typography> {project.description}</Typography>
           </Box>
         )}

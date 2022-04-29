@@ -15,7 +15,8 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "jsx": "react",
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "lib": ["ES2021", "DOM"]
   },
   "include": [
     "src/**/*",

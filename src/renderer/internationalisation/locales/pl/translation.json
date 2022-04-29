@@ -9,6 +9,7 @@
     "close": "zamknij",
     "field_required": "To pole jest wymagane.",
     "directory_not_existing": "Folder nie istnieje lub ścieżka jest błędna.",
+    "invalid_folder_name": "Pole nie może zawerać znaków specjalnych i zarezerwowanych słów.",
     "notification": "Powiadomienie"
   },
   "notifications": {
