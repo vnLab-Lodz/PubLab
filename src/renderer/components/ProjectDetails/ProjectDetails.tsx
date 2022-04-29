@@ -37,7 +37,6 @@ const ProjectDetails = ({ project, noLabel, biggerText }: Props) => {
       </Box>
       <Box component='p' mt={1} mb={3}>
         <Typography variant={biggerText ? 'subtitle1' : 'body1'}>
-          {' '}
           {project?.description}
         </Typography>
       </Box>
