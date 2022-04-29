@@ -1,4 +1,4 @@
-import { Typography, Button } from '@mui/material';
+import { Typography } from '@mui/material';
 import { t } from 'i18next';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,6 +6,7 @@ import {
   activePublication,
   updatePublicationField,
 } from 'src/shared/redux/slices/loadPublicationsSlice';
+import Button from '../../components/Button/Button';
 import ProjectDetails from '../../components/ProjectDetails/ProjectDetails';
 import ViewContent from '../../components/ViewContent/ViewContent';
 
@@ -15,8 +16,8 @@ const Description = () => {
 
   return (
     <ViewContent>
-      <Typography component='h2' variant='body2'>
-        {t('ProjectDetails.projectDescription').toLocaleUpperCase()}:
+      <Typography variant='h1' mb={4}>
+        {project?.name}
       </Typography>
       {project && (
         <>

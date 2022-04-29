@@ -15,13 +15,16 @@ const ProjectDetails = ({ project, noLabel }: Props) => {
   return (
     <Section mt={0} mb={2}>
       {!noLabel && (
-        <Typography variant='caption' component='h2' mb={2}>
-          {t('ProjectList.projectDetails').toLocaleUpperCase()}:
-        </Typography>
+        <>
+          <Typography variant='caption' component='h2' mb={2}>
+            {t('ProjectList.projectDetails').toLocaleUpperCase()}:
+          </Typography>
+
+          <Typography variant='h1' component='h3'>
+            {project.name}
+          </Typography>
+        </>
       )}
-      <Typography variant='h1' component='h3'>
-        {project.name}
-      </Typography>
       <Box mb={2}>
         {project.tags.map((tag) => (
           <Chip

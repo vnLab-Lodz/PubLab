@@ -8,6 +8,7 @@ import ViewContent from '../../components/ViewContent/ViewContent';
 import { altTheme, mainTheme } from '../../theme';
 import ProjectDetails from '../../components/ProjectDetails/ProjectDetails';
 import * as Styled from './style';
+import { updatePublicationField } from '../../../shared/redux/slices/loadPublicationsSlice';
 
 interface Props {
   project: Publication;
@@ -24,6 +25,20 @@ const ProjectInfo = ({ project, useMainTheme, showAllSubsections }: Props) => {
         {showAllSubsections && (
           <Styled.CloseButton
             onClick={() => dispatch(updateSubview({ element: SUBVIEWS.NONE }))}
+          />
+        )}
+
+        {!showAllSubsections && project.keepDescriptionVisible && (
+          <Styled.CloseButton
+            onClick={() =>
+              dispatch(
+                updatePublicationField({
+                  id: project.id,
+                  field: 'keepDescriptionVisible',
+                  value: false,
+                })
+              )
+            }
           />
         )}
         <ProjectDetails project={project} />
