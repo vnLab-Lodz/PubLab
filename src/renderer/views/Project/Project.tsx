@@ -10,6 +10,7 @@ import Button from '../../components/Button/Button';
 import ProjectDetails from '../../components/ProjectDetails/ProjectDetails';
 import Snippets from '../../components/Snippets/Snippets';
 import ViewContent from '../../components/ViewContent/ViewContent';
+import * as Styled from './style';
 
 const Description = () => {
   const project = useSelector(activePublication);
@@ -22,7 +23,8 @@ const Description = () => {
       </Typography>
       {project && (
         <>
-          <Typography variant='caption' component='h2'>
+          <Styled.Section>
+            <Typography variant='body2' component='h2'>
             {t('ProjectList.projectDetails').toLocaleUpperCase()}:
           </Typography>
           <Button
@@ -43,9 +45,11 @@ const Description = () => {
               label: t('ProjectDetails.projectDescription'),
             })}
           </Button>
-          <ProjectDetails project={project} noLabel />
+            <ProjectDetails project={project} noLabel biggerText />
+          </Styled.Section>
 
-          <Typography variant='caption' component='h2'>
+          <Styled.Section>
+            <Typography variant='body2' component='h2'>
             {t('publication.snippets').toLocaleUpperCase()}:
           </Typography>
           <Button
@@ -67,6 +71,7 @@ const Description = () => {
             })}
           </Button>
           <Snippets project={project} isAccordion noLabel />
+          </Styled.Section>
         </>
       )}
     </ViewContent>

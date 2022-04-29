@@ -7,9 +7,10 @@ import Section from '../Section/Section';
 interface Props {
   project: Publication;
   noLabel?: boolean;
+  biggerText?: boolean;
 }
 
-const ProjectDetails = ({ project, noLabel }: Props) => {
+const ProjectDetails = ({ project, noLabel, biggerText }: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -36,7 +37,10 @@ const ProjectDetails = ({ project, noLabel }: Props) => {
         ))}
       </Box>
       <Box component='p' mt={1} mb={3}>
-        <Typography> {project?.description}</Typography>
+        <Typography variant={biggerText ? 'subtitle1' : 'body1'}>
+          {' '}
+          {project?.description}
+        </Typography>
       </Box>
     </Section>
   );
@@ -44,6 +48,7 @@ const ProjectDetails = ({ project, noLabel }: Props) => {
 
 ProjectDetails.defaultProps = {
   noLabel: false,
+  biggerText: false,
 };
 
 export default ProjectDetails;
