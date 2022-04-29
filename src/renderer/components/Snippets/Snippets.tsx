@@ -45,6 +45,7 @@ const mockSnippets = [
   },
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Snippets = ({ project, noLabel, isAccordion }: Props) => {
   const { t } = useTranslation();
 
