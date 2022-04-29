@@ -1,7 +1,7 @@
 import React from 'react';
 import { SUBVIEWS, VIEWS } from './Views';
 import AppSettings from '../views/AppSettings/AppSettings';
-import Description from '../views/Description/Description';
+import Project from '../views/Project/Project';
 import Files from '../views/Files/Files';
 import Changes from '../views/Changes/Changes';
 import Settings from '../views/Settings/Settings';
@@ -21,7 +21,7 @@ export const FULL_SCREEN_VIEWS = [VIEWS.FIRST_TIME];
 export const routerComponents: RouterComponents = {
   [VIEWS.FIRST_TIME]: FirstTime,
   [VIEWS.LOGOUT]: LogOut,
-  [VIEWS.PROJECT]: Description,
+  [VIEWS.PROJECT]: Project,
   [VIEWS.NO_ACTIVE_PROJECT]: NoActiveProject,
   [VIEWS.FILES]: Files,
   [VIEWS.CHANGES]: Changes,
