@@ -133,7 +133,8 @@
     "status": "status",
     "cloned": "cloned",
     "remote": "remote",
-    "active": "active"
+    "active": "active",
+    "snippets": "snippets"
   },
   "ProjectList": {
     "projectDetails": "project details",
@@ -149,5 +150,9 @@
     "success": "Success",
     "warning": "Warning",
     "info": "Info"
+  },
+  "ProjectInfo": {
+    "buttonText_one": "keep {{label}} visible all the time",
+    "buttonText_other": "keep {{label}} visible all the time"
   }
 }

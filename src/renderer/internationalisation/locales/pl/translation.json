@@ -133,7 +133,8 @@
     "status": "stan",
     "cloned": "lokalny",
     "remote": "zdalny",
-    "active": "aktywny"
+    "active": "aktywny",
+    "snippets": "fragmenty"
   },
   "ProjectList": {
     "projectDetails": "szczegóły projektu",
@@ -149,5 +150,9 @@
     "success": "Sukces",
     "warning": "Ostrzeżenie",
     "info": "Informacja"
+  },
+  "ProjectInfo": {
+    "buttonText_one": "utrzymuj {{label}} wyświetlony cały czas",
+    "buttonText_few": "utrzymuj {{label}} wyświetlone cały czas"
   }
 }
