@@ -8,6 +8,7 @@ import {
 } from 'src/shared/redux/slices/loadPublicationsSlice';
 import Button from '../../components/Button/Button';
 import ProjectDetails from '../../components/ProjectDetails/ProjectDetails';
+import Snippets from '../../components/Snippets/Snippets';
 import ViewContent from '../../components/ViewContent/ViewContent';
 
 const Description = () => {
@@ -43,6 +44,29 @@ const Description = () => {
             })}
           </Button>
           <ProjectDetails project={project} noLabel />
+
+          <Typography variant='caption' component='h2'>
+            {t('publication.snippets').toLocaleUpperCase()}:
+          </Typography>
+          <Button
+            fullWidth
+            variant='contained'
+            onClick={() =>
+              dispatch(
+                updatePublicationField({
+                  id: project.id,
+                  field: 'keepSnippetsVisible',
+                  value: true,
+                })
+              )
+            }
+          >
+            {t('ProjectInfo.buttonText', {
+              count: 2,
+              label: t('publication.snippets'),
+            })}
+          </Button>
+          <Snippets project={project} isAccordion noLabel />
         </>
       )}
     </ViewContent>
