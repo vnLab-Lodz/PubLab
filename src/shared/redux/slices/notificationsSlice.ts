@@ -10,7 +10,7 @@ export interface Notification {
   delay?: number;
   title?: string;
   message?: string;
-  i18n?: { key: string; params?: { [key: string]: string } };
+  i18n?: { key: string; params?: { [key: string]: string }; default?: string };
 }
 
 const initialState: Notification[] = [];

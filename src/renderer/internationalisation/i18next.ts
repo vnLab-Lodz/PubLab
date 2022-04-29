@@ -14,6 +14,7 @@ export const supportedLocales = Object.keys(resources) as SupportedLangCode[];
 
 i18n.use(initReactI18next).init({
   fallbackLng: 'en',
+  interpolation: { escapeValue: false },
   resources,
 });
 

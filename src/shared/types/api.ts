@@ -26,4 +26,7 @@ export const CHANNELS = {
   FILES: {
     VERIFY_PATH: 'files:verify-path',
   },
+  GIT: {
+    CLONE: 'git:clone',
+  },
 } as const;

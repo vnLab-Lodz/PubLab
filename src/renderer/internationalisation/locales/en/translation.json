@@ -13,7 +13,18 @@
     "notification": "Notification"
   },
   "notifications": {
-    "directory_not_existing": "{{dir}} directory does not exist or the path is invalid. Check the path and try again."
+    "directory_not_existing": "{{dir}} directory does not exist or the path is invalid. Check the path and try again.",
+    "github_clone_auth_failed": "GitHub authentication failed while cloning the repository. For more information check logs.",
+    "clone_success": "{{name}} has been successfully cloned to {{dir}}",
+    "error": "Something went wrong. For more information check logs."
+  },
+  "loaders": {
+    "cloning": "Cloning repository from {{url}} to folder {{dir}}",
+    "compressing_objects": "{{progress}} Compressing objects",
+    "receiving_objects": "{{progress}} Receiving objects",
+    "resolving_deltas": "{{progress}} Resolving deltas",
+    "analyzing_workdir": "{{progress}} Analyzing workdir",
+    "updating_workdir": "{{progress}} Updating working directory"
   },
   "auth": {
     "in_progress": "Authentication in progress:",

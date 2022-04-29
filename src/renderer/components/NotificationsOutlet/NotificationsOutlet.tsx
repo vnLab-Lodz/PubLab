@@ -28,7 +28,7 @@ const NotificationsOutlet = () => {
 
   const getNotificationMessage = ({ message, i18n }: INotification) => {
     if (message) return message;
-    if (i18n) return t(i18n.key as any, i18n.params);
+    if (i18n) return t(i18n.key as any, i18n.default, i18n.params);
     return '';
   };
 

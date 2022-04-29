@@ -3,6 +3,7 @@ import { promises as fs, Dirent } from 'fs';
 import { Octokit } from '@octokit/rest';
 import { CONFIG_NAME } from 'src/shared/constants';
 import { sendNotification } from 'src/shared/redux/slices/notificationsSlice';
+import path from 'path';
 import { mainStore as store } from '..';
 import createConfigFileHandler, { Config } from './configurationFileHandler';
 import { createLogger } from '../logger';
@@ -10,6 +11,7 @@ import { createLogger } from '../logger';
 interface Repository {
   name: string;
   owner: string;
+  cloneUrl: string;
 }
 
 export interface PublicationFinder {
@@ -44,7 +46,12 @@ const createPublicationFinder = (): PublicationFinder => {
             config.collaborators.find((c) => c.githubUsername === user?.nick)
           ) {
             // TODO: handle the last update parameter
-            publications.push({ ...config, status: 'cloned', lastUpdate: 0 });
+            publications.push({
+              ...config,
+              status: 'cloned',
+              lastUpdate: 0,
+              dirPath: path.join(dirPath, name),
+            });
           }
         };
 
@@ -85,7 +92,11 @@ const createPublicationFinder = (): PublicationFinder => {
 
           const { data } = await request();
           data.forEach((r) =>
-            repositories.push({ name: r.name, owner: r.owner.login })
+            repositories.push({
+              name: r.name,
+              owner: r.owner.login,
+              cloneUrl: r.clone_url!,
+            })
           );
 
           const contentPromises = repositories.map(async (repo) => {
@@ -105,6 +116,8 @@ const createPublicationFinder = (): PublicationFinder => {
                   ...config,
                   status: 'remote',
                   lastUpdate: 0,
+                  cloneUrl: repo.cloneUrl,
+                  repoName: repo.name,
                 });
               } else {
                 logger.appendLog(

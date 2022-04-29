@@ -10,6 +10,7 @@ import verifyPath from './files/verifyPath';
 import findLocal from './publications/findLocal';
 import findRemote from './publications/findRemote';
 import readSyncLocations from './settings/readSyncLocations';
+import clone from './git/clone';
 
 const registerApiHandlers = () => {
   ipc.handle(CHANNELS.PUBLICATIONS.GENERATE, generate);
@@ -22,6 +23,7 @@ const registerApiHandlers = () => {
   ipc.handle(CHANNELS.SETTINGS.READ, readSettings);
   ipc.handle(CHANNELS.SETTINGS.READ_SYNC_LOCATIONS, readSyncLocations);
   ipc.handle(CHANNELS.FILES.VERIFY_PATH, verifyPath);
+  ipc.handle(CHANNELS.GIT.CLONE, clone);
 };
 
 export default registerApiHandlers;

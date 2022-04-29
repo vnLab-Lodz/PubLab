@@ -10,7 +10,11 @@ type PublicationModification =
       id: string;
       field: keyof Omit<
         Publication,
-        'useTypescript' | 'useSass' | 'collaborators' | 'creationDate'
+        | 'useTypescript'
+        | 'useSass'
+        | 'collaborators'
+        | 'creationDate'
+        | 'status'
       >;
       value: string;
     }
@@ -18,6 +22,11 @@ type PublicationModification =
       id: string;
       field: keyof Pick<Publication, 'useTypescript' | 'useSass'>;
       value: boolean;
+    }
+  | {
+      id: string;
+      field: keyof Pick<Publication, 'status'>;
+      value: 'cloned' | 'remote';
     };
 
 type CollaboratorListModification<T> = {
@@ -80,6 +89,19 @@ const loadPublicationsSlice = createSlice({
       const collaborator = action.payload.value as Collaborator;
       state.publications[chosenPubIndex].collaborators.push(collaborator);
     },
+    convertPublicationToLocal: (
+      state,
+      { payload }: PayloadAction<{ id: string; dir: string }>
+    ) => {
+      state.publications = state.publications.map((publication) => {
+        if (publication.id !== payload.id || publication.status === 'cloned') {
+          return publication;
+        }
+
+        const { repoName, cloneUrl, status, ...rest } = publication;
+        return { ...rest, status: 'cloned', dirPath: payload.dir };
+      });
+    },
     deleteCollaborator: (
       state: PublicationsState,
       action: PayloadAction<CollaboratorListModification<string>>
@@ -106,6 +128,7 @@ export const {
   updatePublicationField,
   addCollaborator,
   deleteCollaborator,
+  convertPublicationToLocal,
 } = loadPublicationsSlice.actions;
 
 export const loadedPublicationsList = (state: RootState) =>

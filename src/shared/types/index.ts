@@ -24,9 +24,21 @@ export interface PublicationBase {
   useTypescript: boolean;
 }
 
-export interface Publication extends PublicationBase {
+export interface IPublication extends PublicationBase {
   creationDate: number;
   lastUpdate: number;
-  status: 'cloned' | 'remote';
   tags: string[];
 }
+
+export interface LocalPublication extends IPublication {
+  status: 'cloned';
+  dirPath: string;
+}
+
+export interface RemotePublication extends IPublication {
+  status: 'remote';
+  cloneUrl: string;
+  repoName: string;
+}
+
+export type Publication = LocalPublication | RemotePublication;

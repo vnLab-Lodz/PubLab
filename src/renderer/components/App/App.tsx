@@ -3,7 +3,10 @@ import { Provider } from 'react-redux';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ipcRenderer } from 'electron';
 import { CHANNELS } from 'src/shared/types/api';
-import { setPublicationsList } from 'src/shared/redux/slices/loadPublicationsSlice';
+import {
+  setActivePublication,
+  setPublicationsList,
+} from 'src/shared/redux/slices/loadPublicationsSlice';
 import { selectCurrentUserData } from 'src/shared/redux/slices/currentUserSlice';
 import { Unsubscribe } from 'redux';
 import { configStore } from '../../../shared/redux/configureStore';
@@ -62,6 +65,11 @@ const App = () => {
       // * Load publications
       observeStore(store, selectAllSettings, ({ defaultDirPath }) => {
         readPublications({ findLocal: !!defaultDirPath });
+      }),
+
+      // * Deactivate project when default dir path is changed
+      observeStore(store, selectDefaultDirPath, () => {
+        store.dispatch(setActivePublication(null));
       })
     );
 
