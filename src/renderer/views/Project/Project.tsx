@@ -41,8 +41,7 @@ const Description = () => {
               }
             >
               {t('ProjectInfo.buttonText', {
-                count: 1,
-                label: t('ProjectDetails.projectDescription'),
+                label: t('ProjectList.projectDetails'),
               })}
             </Button>
             <ProjectDetails project={project} noLabel biggerText />
@@ -66,7 +65,6 @@ const Description = () => {
               }
             >
               {t('ProjectInfo.buttonText', {
-                count: 2,
                 label: t('publication.snippets'),
               })}
             </Button>

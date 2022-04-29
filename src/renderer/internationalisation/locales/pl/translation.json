@@ -7,6 +7,7 @@
     "view": "pokaż",
     "hide": "ukryj",
     "close": "zamknij",
+    "copy": "skopiuj",
     "field_required": "To pole jest wymagane.",
     "directory_not_existing": "Folder nie istnieje lub ścieżka jest błędna.",
     "invalid_folder_name": "Pole nie może zawerać znaków specjalnych i zarezerwowanych słów.",
@@ -154,7 +155,6 @@
     "info": "Informacja"
   },
   "ProjectInfo": {
-    "buttonText_one": "utrzymuj {{label}} wyświetlony cały czas",
-    "buttonText_few": "utrzymuj {{label}} wyświetlone cały czas"
+    "buttonText": "utrzymuj {{label}} cały czas widoczne"
   }
 }

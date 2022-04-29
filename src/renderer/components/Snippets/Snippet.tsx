@@ -2,6 +2,7 @@ import { ArrowRight } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { clipboard } from 'electron';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Snippet } from '../../../shared/types';
 import * as Styled from './style';
 
@@ -11,25 +12,29 @@ const Plain = ({
 }: {
   snippet: Snippet;
   biggerText?: boolean;
-}) => (
-  <>
-    <Typography
-      sx={{ display: 'inline-block' }}
-      variant={biggerText ? 'subtitle1' : 'body1'}
-    >
-      {snippet.name}
-    </Typography>
-    <Styled.CopyButton
-      biggerText
-      onClick={(e: React.MouseEvent) => {
-        e.stopPropagation();
-        clipboard.writeText(snippet.code);
-      }}
-    >
-      <Typography variant='caption'>Copy</Typography>
-    </Styled.CopyButton>
-  </>
-);
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <>
+      <Typography
+        sx={{ display: 'inline-block' }}
+        variant={biggerText ? 'subtitle1' : 'body1'}
+      >
+        {snippet.name}
+      </Typography>
+      <Styled.CopyButton
+        biggerText
+        onClick={(e: React.MouseEvent) => {
+          e.stopPropagation();
+          clipboard.writeText(snippet.code);
+        }}
+      >
+        <Typography variant='caption'>{t('common.copy')}</Typography>
+      </Styled.CopyButton>
+    </>
+  );
+};
 
 Plain.defaultProps = {
   biggerText: false,
