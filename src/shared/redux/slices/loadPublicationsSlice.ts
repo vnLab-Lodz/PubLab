@@ -5,29 +5,17 @@ import { RootState } from '../rootReducer';
 // type created to avoid an issue with both unclear modification type
 // and index access writes on union of keys, which would complicate the
 // code significantly more
-type PublicationModification =
-  | {
+
+type PublicationModification = Exclude<
+  {
+    [FieldName in keyof Publication]: {
       id: string;
-      field: keyof Omit<
-        Publication,
-        | 'useTypescript'
-        | 'useSass'
-        | 'collaborators'
-        | 'creationDate'
-        | 'status'
-      >;
-      value: string;
-    }
-  | {
-      id: string;
-      field: keyof Pick<Publication, 'useTypescript' | 'useSass'>;
-      value: boolean;
-    }
-  | {
-      id: string;
-      field: keyof Pick<Publication, 'status'>;
-      value: 'cloned' | 'remote';
+      field: FieldName;
+      value: Publication[FieldName];
     };
+  }[keyof Publication],
+  undefined
+>;
 
 type CollaboratorListModification<T> = {
   id: string;
