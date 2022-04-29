@@ -134,7 +134,9 @@
     "cloned": "cloned",
     "remote": "remote",
     "active": "active",
-    "snippets": "snippets"
+    "snippets": "snippets",
+    "package_manager": "package manager",
+    "technology_extensions": "technology extensions"
   },
   "ProjectList": {
     "projectDetails": "project details",

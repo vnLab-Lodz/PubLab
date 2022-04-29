@@ -134,7 +134,9 @@
     "cloned": "lokalny",
     "remote": "zdalny",
     "active": "aktywny",
-    "snippets": "fragmenty"
+    "snippets": "fragmenty",
+    "package_manager": "menadżer pakietów",
+    "technology_extensions": "rozszerzenia technologii"
   },
   "ProjectList": {
     "projectDetails": "szczegóły projektu",

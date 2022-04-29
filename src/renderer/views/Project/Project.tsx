@@ -25,52 +25,70 @@ const Description = () => {
         <>
           <Styled.Section>
             <Typography variant='body2' component='h2'>
-            {t('ProjectList.projectDetails').toLocaleUpperCase()}:
-          </Typography>
-          <Button
-            fullWidth
-            variant='contained'
-            onClick={() =>
-              dispatch(
-                updatePublicationField({
-                  id: project.id,
-                  field: 'keepDescriptionVisible',
-                  value: true,
-                })
-              )
-            }
-          >
-            {t('ProjectInfo.buttonText', {
-              count: 1,
-              label: t('ProjectDetails.projectDescription'),
-            })}
-          </Button>
+              {t('ProjectList.projectDetails').toLocaleUpperCase()}:
+            </Typography>
+            <Button
+              fullWidth
+              variant='contained'
+              onClick={() =>
+                dispatch(
+                  updatePublicationField({
+                    id: project.id,
+                    field: 'keepDescriptionVisible',
+                    value: true,
+                  })
+                )
+              }
+            >
+              {t('ProjectInfo.buttonText', {
+                count: 1,
+                label: t('ProjectDetails.projectDescription'),
+              })}
+            </Button>
             <ProjectDetails project={project} noLabel biggerText />
           </Styled.Section>
 
           <Styled.Section>
             <Typography variant='body2' component='h2'>
-            {t('publication.snippets').toLocaleUpperCase()}:
-          </Typography>
-          <Button
-            fullWidth
-            variant='contained'
-            onClick={() =>
-              dispatch(
-                updatePublicationField({
-                  id: project.id,
-                  field: 'keepSnippetsVisible',
-                  value: true,
-                })
-              )
-            }
-          >
-            {t('ProjectInfo.buttonText', {
-              count: 2,
-              label: t('publication.snippets'),
-            })}
-          </Button>
-          <Snippets project={project} isAccordion noLabel />
+              {t('publication.snippets').toLocaleUpperCase()}:
+            </Typography>
+            <Button
+              fullWidth
+              variant='contained'
+              onClick={() =>
+                dispatch(
+                  updatePublicationField({
+                    id: project.id,
+                    field: 'keepSnippetsVisible',
+                    value: true,
+                  })
+                )
+              }
+            >
+              {t('ProjectInfo.buttonText', {
+                count: 2,
+                label: t('publication.snippets'),
+              })}
+            </Button>
+            <Snippets project={project} isAccordion noLabel />
+          </Styled.Section>
+
+          <Styled.Section sx={{ border: 'none' }}>
+            <Typography variant='body2' component='p'>
+              {t('publication.package_manager').toLocaleUpperCase()}
+              {': '}
+              <b> {project.packageManager.toLocaleUpperCase()}</b>
+            </Typography>
+            <Typography variant='body2' component='p'>
+              {t('publication.technology_extensions').toLocaleUpperCase()}
+              {': '}
+              <b>
+                {listTechnologyExtensions({
+                  ts: project.useTypescript,
+                  sass: project.useSass,
+                })}
+              </b>
+            </Typography>
           </Styled.Section>
         </>
       )}
@@ -79,3 +97,10 @@ const Description = () => {
 };
 
 export default Description;
+
+function listTechnologyExtensions(include: { ts: boolean; sass: boolean }) {
+  const list = [];
+  if (include.ts) list.push('typescript');
+  if (include.sass) list.push('sass');
+  return list.join(', ').toLocaleUpperCase();
+}
