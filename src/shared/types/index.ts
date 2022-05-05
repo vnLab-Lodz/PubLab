@@ -13,6 +13,12 @@ export interface Collaborator {
   role: USER_ROLES;
 }
 
+export interface Snippet {
+  id: string;
+  name: string;
+  code: string;
+}
+
 export interface PublicationBase {
   id: string;
   imagePath?: string;
@@ -28,6 +34,9 @@ export interface IPublication extends PublicationBase {
   creationDate: number;
   lastUpdate: number;
   tags: string[];
+  snippets: Snippet[];
+  keepDescriptionVisible: boolean;
+  keepSnippetsVisible: boolean;
 }
 
 export interface LocalPublication extends IPublication {

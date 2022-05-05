@@ -1,65 +1,79 @@
-import { Box, Chip, ThemeProvider, Typography } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { updateSubview } from '../../../shared/redux/slices/currentViewSlice';
 import { Publication } from '../../../shared/types';
 import { SUBVIEWS } from '../../constants/Views';
-import { mainTheme } from '../../theme';
 import ViewContent from '../../components/ViewContent/ViewContent';
-import CloseButton from '../../components/CloseButton/CloseButton';
+import { altTheme, mainTheme } from '../../theme';
+import ProjectDetails from '../../components/ProjectDetails/ProjectDetails';
+import * as Styled from './style';
+import { updatePublicationField } from '../../../shared/redux/slices/loadPublicationsSlice';
+import Snippets from '../../components/Snippets/Snippets';
 
 interface Props {
   project: Publication;
+  useMainTheme?: boolean;
+  showAllSubsections?: boolean;
 }
 
-const ProjectInfo = ({ project }: Props) => {
-  const { t } = useTranslation();
+const ProjectInfo = ({ project, useMainTheme, showAllSubsections }: Props) => {
   const dispatch = useDispatch();
 
   return (
-    <ThemeProvider theme={mainTheme}>
+    <ThemeProvider theme={useMainTheme ? mainTheme : altTheme}>
       <ViewContent isSubview>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            mb: 2,
-          }}
-        >
-          <Typography variant='caption' component='h2'>
-            {t('ProjectList.projectDetails').toLocaleUpperCase()}:
-          </Typography>
-          <CloseButton
+        {showAllSubsections && (
+          <Styled.CloseButton
             onClick={() => dispatch(updateSubview({ element: SUBVIEWS.NONE }))}
           />
-        </Box>
-        <Typography variant='h1' component='h3'>
-          {project.name}
-        </Typography>
-        <Box mb={2}>
-          {project.tags.map((tag) => (
-            <Chip
-              size='small'
-              key={`project_${project.id}_${tag}`}
-              label={tag}
-              sx={{ mr: '0.5rem', mt: '0.5rem' }}
-            />
-          ))}
-        </Box>
-        {!!project.description && (
-          <Box
-            component='p'
-            mt={1}
-            pb={3}
-            sx={{ borderBottom: '1px solid', whiteSpace: 'pre-line' }}
-          >
-            <Typography> {project.description}</Typography>
-          </Box>
+        )}
+        {(showAllSubsections || project.keepDescriptionVisible) && (
+          <Styled.Section>
+            {!showAllSubsections && project.keepDescriptionVisible && (
+              <Styled.CloseButton
+                onClick={() =>
+                  dispatch(
+                    updatePublicationField({
+                      id: project.id,
+                      field: 'keepDescriptionVisible',
+                      value: false,
+                    })
+                  )
+                }
+              />
+            )}
+
+            <ProjectDetails project={project} />
+          </Styled.Section>
+        )}
+        {(showAllSubsections || project.keepSnippetsVisible) && (
+          <Styled.Section>
+            {!showAllSubsections && project.keepSnippetsVisible && (
+              <Styled.CloseButton
+                onClick={() =>
+                  dispatch(
+                    updatePublicationField({
+                      id: project.id,
+                      field: 'keepSnippetsVisible',
+                      value: false,
+                    })
+                  )
+                }
+              />
+            )}
+
+            <Snippets project={project} />
+          </Styled.Section>
         )}
       </ViewContent>
     </ThemeProvider>
   );
+};
+
+ProjectInfo.defaultProps = {
+  showAllSubsections: false,
+  useMainTheme: false,
 };
 
 export default ProjectInfo;

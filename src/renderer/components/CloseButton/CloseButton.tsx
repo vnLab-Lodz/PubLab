@@ -7,12 +7,13 @@ interface Props {
   onClick: () => void;
 }
 
-const CloseButton: React.FC<Props> = ({ onClick }) => (
+const CloseButton: React.FC<Props> = ({ onClick, ...rest }) => (
   <IconButton
     aria-label={t('common.close')}
     onClick={onClick}
     size='small'
-    sx={{ borderRadius: 0, padding: 0 }}
+    sx={{ borderRadius: 0, padding: 0, color: 'text.primary' }}
+    {...rest}
   >
     <Close sx={{ height: '1.2em', width: '1.2em' }} />
   </IconButton>

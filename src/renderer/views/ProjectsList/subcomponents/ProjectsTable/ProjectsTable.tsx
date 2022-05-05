@@ -35,7 +35,7 @@ const ProjectTable: React.FC<Props> = ({ publications }) => {
     dispatch(
       updateSubview({
         element: project ? SUBVIEWS.PROJECT_INFO : SUBVIEWS.NONE,
-        props: { project },
+        props: { project, useMainTheme: true, showAllSubsections: true },
       })
     );
   };

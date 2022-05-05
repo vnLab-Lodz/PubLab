@@ -7,6 +7,7 @@
     "view": "view",
     "hide": "hide",
     "close": "close",
+    "copy": "copy",
     "field_required": "This field is required.",
     "directory_not_existing": "Directory does not exist or the path is invalid.",
     "invalid_folder_name": "Field contains invalid characters or reserved keywords.",
@@ -133,7 +134,10 @@
     "status": "status",
     "cloned": "cloned",
     "remote": "remote",
-    "active": "active"
+    "active": "active",
+    "snippets": "snippets",
+    "package_manager": "package manager",
+    "technology_extensions": "technology extensions"
   },
   "ProjectList": {
     "projectDetails": "project details",
@@ -149,5 +153,8 @@
     "success": "Success",
     "warning": "Warning",
     "info": "Info"
+  },
+  "ProjectInfo": {
+    "buttonText": "keep {{label}} visible all the time"
   }
 }
