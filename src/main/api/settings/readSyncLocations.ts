@@ -17,24 +17,35 @@ const readSyncLocations: IpcEventHandler = async () => {
   const userData = app.getPath('userData');
   const syncLocationsPath = `${userData}/${user.nick}-sync-locations.json`;
   const settings = store.getState().appSettings;
+  let syncLocations: SyncLocations = [];
+  let locationsCount = 0;
 
   try {
-    const syncLocations = await io.readJSON<SyncLocations>(syncLocationsPath);
-    user.organizations.forEach((org) => {
-      if (!syncLocations.find((l) => l.name === org)) {
-        syncLocations.push({ name: org, enabled: true });
-      }
-    });
-    store.dispatch(setSettings({ ...settings, syncLocations }));
+    syncLocations = await io.readJSON<SyncLocations>(syncLocationsPath);
+    locationsCount = syncLocations.length;
   } catch (error: any) {
     logger.appendError(error);
     logger.appendLog('No sync locations found. Creating new from user data.');
-    const syncLocations: SyncLocations = [
-      { name: 'Profile', enabled: true },
-      ...user.organizations.map((org) => ({ name: org, enabled: false })),
-    ];
+  } finally {
+    if (!syncLocations.some(hasLocation('Profile'))) {
+      syncLocations.unshift({ name: 'Profile', enabled: true });
+    }
+
+    user.organizations.forEach((name) => {
+      if (!syncLocations.some(hasLocation(name))) {
+        syncLocations.push({ name, enabled: true });
+      }
+    });
+
     store.dispatch(setSettings({ ...settings, syncLocations }));
+    if (locationsCount !== syncLocations.length) {
+      await io.writeJSON(syncLocationsPath, syncLocations);
+    }
   }
 };
+
+function hasLocation(name: string) {
+  return (location: SyncLocations[0]) => location.name === name;
+}
 
 export default readSyncLocations;
