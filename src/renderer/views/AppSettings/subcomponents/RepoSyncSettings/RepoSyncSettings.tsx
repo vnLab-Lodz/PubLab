@@ -26,7 +26,12 @@ const RepoSyncSettings: React.FC<Props> = ({ locations, setFieldValue }) => {
               setFieldValue(`syncLocations[${index}].enabled`, !org.enabled);
             }}
           />
-          <Typography ml='1rem'>{org.name}</Typography>
+          <Typography ml='1rem'>
+            {t(
+              `AppSettings.repoSync.${org.name.toLowerCase()}` as any,
+              org.name
+            )}
+          </Typography>
         </Box>
       ))}
     </Section>
