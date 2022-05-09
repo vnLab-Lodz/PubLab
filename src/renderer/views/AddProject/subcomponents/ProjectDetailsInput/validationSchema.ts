@@ -4,7 +4,7 @@ import { object, string, InferType } from 'yup';
 // Naming Files, Paths, and Namespaces:
 // https://docs.microsoft.com/pl-pl/windows/win32/fileio/naming-a-file?redirectedfrom=MSDN
 const invalidRegex =
-  /[,.:=+^%&$@!~`'{}[\]()<>:"/\\|?*\x00-\x1F]|^(?:aux|con|clock\$|nul|prn|com[1-9]|lpt[1-9])$/;
+  /[,.:;#=+^%&$@!~`'{}[\]()<>:"/\\|?*\x00-\x1F]|^(?:aux|con|clock\$|nul|prn|com[1-9]|lpt[1-9])$/;
 
 const validationSchema = object({
   name: string()
