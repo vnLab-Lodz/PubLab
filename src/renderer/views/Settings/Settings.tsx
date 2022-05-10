@@ -51,6 +51,7 @@ const Settings = () => {
       <SeparatedSection pb={3}>
         <CollaboratorsPicker
           state={projectSettings}
+          compact
           onAdd={(collaborator) =>
             handleChange({
               collaborators: [...projectSettings.collaborators, collaborator],
