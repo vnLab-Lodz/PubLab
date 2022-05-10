@@ -4,7 +4,7 @@ import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Avatar, IconButton, Typography } from '@mui/material';
+import { alpha, Avatar, IconButton, Typography } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Collaborator } from 'src/shared/types';
 import { selectCurrentUserData } from 'src/shared/redux/slices/currentUserSlice';
@@ -73,10 +73,12 @@ const CollabTable: React.FC<Props> = ({ collaborators, onDelete }) => {
                     size='small'
                     aria-label='delete collaborator'
                     onClick={() => onDelete(collaborator.id)}
-                    sx={{
+                    sx={(theme) => ({
                       cursor: 'pointer',
-                      '&:disabled': { color: 'rgba(255, 255, 255, 0.5)' },
-                    }}
+                      '&:disabled': {
+                        color: alpha(theme.palette.text.primary, 0.3),
+                      },
+                    })}
                   >
                     <ClearIcon fontSize='inherit' />
                   </IconButton>
