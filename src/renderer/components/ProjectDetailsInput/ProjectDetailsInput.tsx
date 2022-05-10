@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import ImagePicker from '../../../../components/ImagePicker/ImagePicker';
-import TextField from '../../../../components/TextField/TextField';
-import TextArea from '../../../../components/TextArea/TextArea';
-import InputLabel from '../../../../components/InputLabel/InputLabel';
+import ImagePicker from '../ImagePicker/ImagePicker';
+import TextField from '../TextField/TextField';
+import TextArea from '../TextArea/TextArea';
+import InputLabel from '../InputLabel/InputLabel';
 import * as Styled from './style';
 import { FormFields, validationSchema } from './validationSchema';
-import { Publication } from '../../../../../shared/types';
+import { Publication } from '../../../shared/types';
 
 type State = Pick<Publication, 'name' | 'description' | 'imagePath'>;
 

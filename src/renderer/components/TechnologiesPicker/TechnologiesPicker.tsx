@@ -1,8 +1,8 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Publication } from '../../../../../shared/types';
-import StyledSwitch from '../../../../components/Switch/Switch';
+import { Publication } from '../../../shared/types';
+import StyledSwitch from '../Switch/Switch';
 
 type State = Pick<Publication, 'useSass' | 'useTypescript'>;
 

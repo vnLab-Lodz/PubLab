@@ -6,10 +6,10 @@ import {
   setPublicationField,
 } from '../../../../../shared/redux/slices/addPublicationWizardSlice';
 import { PublicationBase } from '../../../../../shared/types';
-import CollaboratorsPicker from '../CollaboratorsPicker/CollaboratorsPicker';
-import PackageManagerPicker from '../PackageManagerPicker/PackageManagerPicker';
-import ProjectDetailsInput from '../ProjectDetailsInput/ProjectDetailsInput';
-import TechnologiesPicker from '../TechnologiesPicker/TechnologiesPicker';
+import CollaboratorsPicker from '../../../../components/CollaboratorsPicker/CollaboratorsPicker';
+import PackageManagerPicker from '../../../../components/PackageManagerPicker/PackageManagerPicker';
+import ProjectDetailsInput from '../../../../components/ProjectDetailsInput/ProjectDetailsInput';
+import TechnologiesPicker from '../../../../components/TechnologiesPicker/TechnologiesPicker';
 
 interface Props {
   publication: PublicationBase;

@@ -2,7 +2,7 @@ import { Box, FormControlLabel, RadioGroup, Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Publication, PublicationBase } from 'src/shared/types';
-import RadioBtn from '../../../../components/RadioButton/RadioBtn';
+import RadioBtn from '../RadioButton/RadioBtn';
 
 type State = Pick<Publication, 'packageManager'>;
 

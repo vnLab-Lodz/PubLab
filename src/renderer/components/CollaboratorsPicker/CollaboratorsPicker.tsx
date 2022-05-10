@@ -3,10 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 import { Collaborator, Publication, USER_ROLES } from 'src/shared/types';
-import CollabPicker, {
-  Value,
-} from '../../../../components/CollabPicker/CollabPicker';
-import CollabTable from '../../../../components/CollabTable/CollabTable';
+import CollabPicker, { Value } from '../CollabPicker/CollabPicker';
+import CollabTable from '../CollabTable/CollabTable';
 
 type State = Pick<Publication, 'collaborators'>;
 
