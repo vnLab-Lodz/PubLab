@@ -2,28 +2,23 @@ import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Avatar, IconButton, Typography } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Collaborator } from 'src/shared/types';
 import { selectCurrentUserData } from 'src/shared/redux/slices/currentUserSlice';
 import * as Styled from './style';
-import { deleteCollaborator } from '../../../shared/redux/slices/addPublicationWizardSlice';
 import TableCell from '../TableCell/TableCell';
 
 interface Props {
   collaborators: Collaborator[];
+  onDelete: (id: string) => void;
 }
 
-const CollabTable: React.FC<Props> = ({ collaborators }) => {
+const CollabTable: React.FC<Props> = ({ collaborators, onDelete }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const user = useSelector(selectCurrentUserData);
-
-  const handleDelete = (id: string) => {
-    dispatch(deleteCollaborator(id));
-  };
 
   return (
     <Styled.Container>
@@ -77,7 +72,7 @@ const CollabTable: React.FC<Props> = ({ collaborators }) => {
                     color='primary'
                     size='small'
                     aria-label='delete collaborator'
-                    onClick={() => handleDelete(collaborator.id)}
+                    onClick={() => onDelete(collaborator.id)}
                     sx={{
                       cursor: 'pointer',
                       '&:disabled': { color: 'rgba(255, 255, 255, 0.5)' },

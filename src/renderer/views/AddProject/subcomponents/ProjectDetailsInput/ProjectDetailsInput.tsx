@@ -1,40 +1,38 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import ImagePicker from '../../../../components/ImagePicker/ImagePicker';
 import TextField from '../../../../components/TextField/TextField';
 import TextArea from '../../../../components/TextArea/TextArea';
 import InputLabel from '../../../../components/InputLabel/InputLabel';
-import {
-  newPublication,
-  setPublicationField,
-} from '../../../../../shared/redux/slices/addPublicationWizardSlice';
 import * as Styled from './style';
 import { FormFields, validationSchema } from './validationSchema';
+import { Publication } from '../../../../../shared/types';
+
+type State = Pick<Publication, 'name' | 'description' | 'imagePath'>;
 
 interface Props {
-  setNextButtonEnabled: (enabled: boolean) => void;
+  onValidationStateChange: (didValidationPass: boolean) => void;
+  onSubmit: (state: State) => void;
+  state: State;
 }
 
-export default function ProjectDetailsInput({ setNextButtonEnabled }: Props) {
+export default function ProjectDetailsInput({
+  onValidationStateChange,
+  onSubmit,
+  state,
+}: Props) {
   const { t } = useTranslation();
-
-  const dispatch = useDispatch();
-  const publication = useSelector(newPublication);
 
   const formik = useFormik<FormFields>({
     initialValues: {
-      name: publication.name,
-      description: publication.description,
+      name: state.name,
+      description: state.description,
     },
     validationSchema,
-    onSubmit: ({ name, description: desc = '' }, { setSubmitting }) => {
-      dispatch(setPublicationField({ field: 'name', value: name.trim() }));
-      dispatch(
-        setPublicationField({ field: 'description', value: desc.trim() })
-      );
-      setNextButtonEnabled(true);
+    onSubmit: ({ name, description = '' }, { setSubmitting }) => {
+      onSubmit({ ...state, name, description });
+      onValidationStateChange(true);
       setSubmitting(false);
     },
   });
@@ -43,7 +41,7 @@ export default function ProjectDetailsInput({ setNextButtonEnabled }: Props) {
     const { isValid, dirty, touched, submitForm } = formik;
 
     if (isValid && (dirty || Object.keys(touched).length)) submitForm();
-    else if (!isValid) setNextButtonEnabled(false);
+    else if (!isValid) onValidationStateChange(false);
   }, [formik.values, formik.errors]);
 
   return (
@@ -52,7 +50,7 @@ export default function ProjectDetailsInput({ setNextButtonEnabled }: Props) {
         <InputLabel id='img-picker-label'>
           {t('ProjectDetails.projectPhoto')}:
         </InputLabel>
-        <ImagePicker alt='Project cover' image={publication.imagePath} />
+        <ImagePicker alt='Project cover' image={state.imagePath} />
       </div>
       <div className='right-column'>
         <InputLabel id='project-name-label' error={Boolean(formik.errors.name)}>

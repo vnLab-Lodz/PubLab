@@ -1,26 +1,24 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { Publication } from '../../../../../shared/types';
 import StyledSwitch from '../../../../components/Switch/Switch';
-import {
-  newPublication,
-  setPublicationField,
-} from '../../../../../shared/redux/slices/addPublicationWizardSlice';
 
-const TechnologiesPicker = () => {
+type State = Pick<Publication, 'useSass' | 'useTypescript'>;
+
+interface Props {
+  onSubmit: (state: State) => void;
+  state: State;
+}
+
+const TechnologiesPicker = ({ onSubmit, state }: Props) => {
   const { t } = useTranslation();
-  const { useSass, useTypescript } = useSelector(newPublication);
-  const dispatch = useDispatch();
 
   const toggleSass = () => {
-    dispatch(setPublicationField({ field: 'useSass', value: !useSass }));
+    onSubmit({ ...state, useSass: !state.useSass });
   };
-
   const toggleTypescript = () => {
-    dispatch(
-      setPublicationField({ field: 'useTypescript', value: !useTypescript })
-    );
+    onSubmit({ ...state, useTypescript: !state.useTypescript });
   };
 
   return (
@@ -31,7 +29,11 @@ const TechnologiesPicker = () => {
 
       <Box>
         <Box mb={2}>
-          <StyledSwitch size='small' checked={useSass} onChange={toggleSass} />
+          <StyledSwitch
+            size='small'
+            checked={state.useSass}
+            onChange={toggleSass}
+          />
           <Typography variant='body2' ml={1}>
             SCSS
           </Typography>
@@ -39,7 +41,7 @@ const TechnologiesPicker = () => {
         <Box>
           <StyledSwitch
             size='small'
-            checked={useTypescript}
+            checked={state.useTypescript}
             onChange={toggleTypescript}
           />
           <Typography variant='body2' ml={1}>

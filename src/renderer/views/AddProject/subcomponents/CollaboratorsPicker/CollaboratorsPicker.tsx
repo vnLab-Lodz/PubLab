@@ -1,22 +1,24 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
-import { USER_ROLES } from 'src/shared/types';
+import { Collaborator, Publication, USER_ROLES } from 'src/shared/types';
 import CollabPicker, {
   Value,
 } from '../../../../components/CollabPicker/CollabPicker';
 import CollabTable from '../../../../components/CollabTable/CollabTable';
-import {
-  addCollaborator,
-  collaborators as selectCollaborators,
-} from '../../../../../shared/redux/slices/addPublicationWizardSlice';
 
-const CollaboratorsPicker = () => {
+type State = Pick<Publication, 'collaborators'>;
+
+interface Props {
+  onAdd: (value: Collaborator) => void;
+  onDelete: (id: string) => void;
+  state: State;
+}
+
+const CollaboratorsPicker = ({ onAdd, onDelete, state }: Props) => {
   const { t } = useTranslation();
-  const collaborators = useSelector(selectCollaborators);
-  const dispatch = useDispatch();
+
   const [currentCollaborator, setCurrentCollaborator] = React.useState({
     username: '',
     role: '',
@@ -34,13 +36,11 @@ const CollaboratorsPicker = () => {
   ];
 
   const handleAdd = (value: Value) => {
-    dispatch(
-      addCollaborator({
-        id: uuid(),
-        githubUsername: value.username,
-        role: value.role as USER_ROLES,
-      })
-    );
+    onAdd({
+      id: uuid(),
+      githubUsername: value.username,
+      role: value.role as USER_ROLES,
+    });
   };
 
   return (
@@ -59,7 +59,7 @@ const CollaboratorsPicker = () => {
         selectPlaceholder={t('AddProject.AddCollaborators.role')}
         textFieldPlaceholder={`${t('AddProject.AddCollaborators.username')}...`}
       />
-      {collaborators && collaborators.length > 0 && (
+      {state.collaborators && state.collaborators.length > 0 && (
         <>
           <Typography
             variant='body2'
@@ -72,7 +72,10 @@ const CollaboratorsPicker = () => {
           >
             {t('AddProject.AddCollaborators.table_title').toLocaleUpperCase()}
           </Typography>
-          <CollabTable collaborators={collaborators} />
+          <CollabTable
+            collaborators={state.collaborators}
+            onDelete={onDelete}
+          />
         </>
       )}
     </>

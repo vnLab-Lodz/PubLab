@@ -1,22 +1,22 @@
 import { Box, FormControlLabel, RadioGroup, Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { PublicationBase } from 'src/shared/types';
-import {
-  newPublication,
-  setPublicationField,
-} from '../../../../../shared/redux/slices/addPublicationWizardSlice';
+import { Publication, PublicationBase } from 'src/shared/types';
 import RadioBtn from '../../../../components/RadioButton/RadioBtn';
 
-const PackageManagerPicker = () => {
+type State = Pick<Publication, 'packageManager'>;
+
+interface Props {
+  onSubmit: (state: State) => void;
+  state: State;
+}
+
+const PackageManagerPicker = ({ onSubmit, state }: Props) => {
   const { t } = useTranslation();
-  const { packageManager } = useSelector(newPublication);
-  const dispatch = useDispatch();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value as PublicationBase['packageManager'];
-    dispatch(setPublicationField({ field: 'packageManager', value }));
+    onSubmit({ ...state, packageManager: value });
   };
 
   return (
@@ -26,7 +26,7 @@ const PackageManagerPicker = () => {
       </Typography>
 
       <Box mb={2}>
-        <RadioGroup defaultValue={packageManager} onChange={handleChange}>
+        <RadioGroup defaultValue={state.packageManager} onChange={handleChange}>
           <FormControlLabel
             value='npm'
             control={<RadioBtn />}
