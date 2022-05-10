@@ -30,8 +30,10 @@ export default function ProjectDetailsInput({ setNextButtonEnabled }: Props) {
     },
     validationSchema,
     onSubmit: ({ name, description: desc = '' }, { setSubmitting }) => {
-      dispatch(setPublicationField({ field: 'name', value: name }));
-      dispatch(setPublicationField({ field: 'description', value: desc }));
+      dispatch(setPublicationField({ field: 'name', value: name.trim() }));
+      dispatch(
+        setPublicationField({ field: 'description', value: desc.trim() })
+      );
       setNextButtonEnabled(true);
       setSubmitting(false);
     },
@@ -66,7 +68,10 @@ export default function ProjectDetailsInput({ setNextButtonEnabled }: Props) {
           error={Boolean(formik.errors.name)}
           value={formik.values.name}
           onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          onBlur={(e) => {
+            formik.setFieldValue('name', e.target.value.trim());
+            formik.handleBlur(e);
+          }}
         />
         <InputLabel
           id='project-description-label'
@@ -82,7 +87,10 @@ export default function ProjectDetailsInput({ setNextButtonEnabled }: Props) {
           error={Boolean(formik.errors.description)}
           value={formik.values.description}
           onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          onBlur={(e) => {
+            formik.setFieldValue('description', e.target.value.trim());
+            formik.handleBlur(e);
+          }}
         />
       </div>
     </Styled.GridContainer>
