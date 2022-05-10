@@ -9,6 +9,9 @@
     "close": "close",
     "copy": "copy",
     "add": "add",
+    "delete": "delete",
+    "name": "name",
+    "code": "code",
     "field_required": "This field is required.",
     "directory_not_existing": "Directory does not exist or the path is invalid.",
     "invalid_folder_name": "Field contains invalid characters or reserved keywords.",
@@ -161,6 +164,7 @@
     "buttonText": "keep {{label}} visible all the time"
   },
   "ProjectSettings": {
-    "input_tag": "Write a tag..."
+    "input_tag": "Write a tag...",
+    "snippet": "Snippet"
   }
 }

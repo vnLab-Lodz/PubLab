@@ -12,42 +12,9 @@ interface Props {
   isAccordion?: boolean;
 }
 
-const mockSnippets = [
-  {
-    id: '23124',
-    name: 'Snippet 1',
-    code: `<video width=„640” height=„360” controls>
-        <source src=„__VIDEO__.MP4” type=„video/mp4” /> 
-        <source src=„__VIDEO__.OGV” type=„video/ogg” /> 
-        <object width=„640” height=„360” type=„application/x-shockwave-flash” data=„__FLASH__.SWF”> 
-            <param name=„movie” value=„__FLASH__.SWF” /> 
-            <param name=„flashvars” value=„controlbar=over&amp;image=__POSTER__.JPG&amp;file=__VIDEO__.MP4” />
-            
-            <img src=„__VIDEO__.JPG” width=„640” height=„360” alt=„__TITLE__” 
-                title=„No video playback capabilities, please download the video below” /> 
-        </object> 
-    </video>`,
-  },
-  {
-    id: '3131231',
-    name: 'Snippet o długiej nazwie, która nie mieści się w jednym wierszu',
-    code: `<video width=„640” height=„360” controls>
-        <source src=„__VIDEO__.MP4” type=„video/mp4” /> 
-        <source src=„__VIDEO__.OGV” type=„video/ogg” /> 
-        <object width=„640” height=„360” type=„application/x-shockwave-flash” data=„__FLASH__.SWF”> 
-            <param name=„movie” value=„__FLASH__.SWF” /> 
-            <param name=„flashvars” value=„controlbar=over&amp;image=__POSTER__.JPG&amp;file=__VIDEO__.MP4” />
-            
-            <img src=„__VIDEO__.JPG” width=„640” height=„360” alt=„__TITLE__” 
-                title=„No video playback capabilities, please download the video below” /> 
-        </object> 
-    </video>`,
-  },
-];
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Snippets = ({ project, noLabel, isAccordion }: Props) => {
   const { t } = useTranslation();
+  const snippets = project.snippets || [];
 
   return (
     <Box mt={0} mb={2}>
@@ -57,7 +24,7 @@ const Snippets = ({ project, noLabel, isAccordion }: Props) => {
         </Typography>
       )}
       <PlainUl>
-        {mockSnippets.map((snippet, index) => (
+        {snippets.map((snippet, index) => (
           <Styled.Li key={snippet.id} isAccordion={!!isAccordion}>
             {isAccordion ? (
               <Snippet.Accordion snippet={snippet} index={index} />

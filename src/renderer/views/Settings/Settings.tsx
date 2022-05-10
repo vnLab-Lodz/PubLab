@@ -16,6 +16,7 @@ import { Config } from '../../../main/lib/configurationFileHandler';
 import { updateConfig } from '../../ipc';
 import { sendNotification } from '../../../shared/redux/slices/notificationsSlice';
 import TagsManager from './subcomponents/TagsManager/TagsManager';
+import SnippetsManager from './subcomponents/SnippetsManager/SnippetsManager';
 
 const Settings = () => {
   const { t } = useTranslation();
@@ -65,9 +66,13 @@ const Settings = () => {
         />
       </SeparatedSection>
       <SeparatedSection pb={3}>
+        <SnippetsManager state={projectSettings} onSubmit={handleChange} />
+      </SeparatedSection>
+      <SeparatedSection pb={3}>
         <Button
           variant='contained'
           color='green'
+          sx={{ m: 0 }}
           isMajor
           fullWidth
           disabled={!canSubmit}

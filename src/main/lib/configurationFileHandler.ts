@@ -66,7 +66,12 @@ const createConfigFileHandler = (options: {
       try {
         logger.appendLog('Creating publication configuration file...');
         const creationDate = +new Date();
-        const config: Config = { ...publication, creationDate, tags: [] };
+        const config: Config = {
+          ...publication,
+          creationDate,
+          tags: [],
+          snippets: [],
+        };
         await this.setConfig(config);
         logger.appendLog('Creating publication configuration file successful.');
         return config;

@@ -9,6 +9,9 @@
     "close": "zamknij",
     "copy": "skopiuj",
     "add" : "dodaj",
+    "delete": "usuń",
+    "name": "nazwa",
+    "code": "kod",
     "field_required": "To pole jest wymagane.",
     "directory_not_existing": "Folder nie istnieje lub ścieżka jest błędna.",
     "invalid_folder_name": "Pole nie może zawerać znaków specjalnych i zarezerwowanych słów.",
@@ -161,6 +164,7 @@
     "buttonText": "utrzymuj {{label}} cały czas widoczne"
   },
   "ProjectSettings": {
-    "input_tag": "Wpisz tag..."
+    "input_tag": "Wpisz tag...",
+    "snippet": "Fragment"
   }
 }
