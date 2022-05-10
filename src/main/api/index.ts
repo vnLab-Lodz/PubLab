@@ -11,11 +11,13 @@ import findLocal from './publications/findLocal';
 import findRemote from './publications/findRemote';
 import readSyncLocations from './settings/readSyncLocations';
 import clone from './git/clone';
+import updateConfig from './publications/updateConfig';
 
 const registerApiHandlers = () => {
   ipc.handle(CHANNELS.PUBLICATIONS.GENERATE, generate);
   ipc.handle(CHANNELS.PUBLICATIONS.FIND_LOCAL, findLocal);
   ipc.handle(CHANNELS.PUBLICATIONS.FIND_REMOTE, findRemote);
+  ipc.handle(CHANNELS.PUBLICATIONS.UPDATE_CONFIG, updateConfig);
   ipc.handle(CHANNELS.GATSBY.VERIFY, verifyGatsby);
   ipc.handle(CHANNELS.GATSBY.INSTALL, installGatsby);
   ipc.handle(CHANNELS.NODE.VERIFY, verifyNode);

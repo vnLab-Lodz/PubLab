@@ -31,11 +31,11 @@ export interface ConfigFileHandler {
 
 const createConfigFileHandler = (options: {
   dirPath: string;
-  name: string;
+  name?: string;
 }): ConfigFileHandler => {
   const logger = createLogger();
   const { dirPath, name } = options;
-  const configPath = path.join(dirPath, name, CONFIG_NAME);
+  const configPath = path.join(dirPath, name || '', CONFIG_NAME);
   const io = createFileIO();
 
   return {
@@ -51,7 +51,7 @@ const createConfigFileHandler = (options: {
         throw new Error('Placeholder for config open error');
       }
     },
-    async setConfig(config) {
+    async setConfig(config: Config) {
       try {
         logger.appendLog(`Writing ${CONFIG_NAME}...`);
         await io.writeJSON(configPath, config);

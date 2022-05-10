@@ -10,6 +10,7 @@ export const CHANNELS = {
     GENERATE: 'publications:generate',
     FIND_LOCAL: 'publications:find-local',
     FIND_REMOTE: 'publications:find-remote',
+    UPDATE_CONFIG: 'publications:update-config',
   },
   GATSBY: {
     VERIFY: 'gatsby:verify',
