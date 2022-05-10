@@ -15,6 +15,7 @@ import { LocalPublication } from '../../../shared/types';
 import { Config } from '../../../main/lib/configurationFileHandler';
 import { updateConfig } from '../../ipc';
 import { sendNotification } from '../../../shared/redux/slices/notificationsSlice';
+import TagsManager from './subcomponents/TagsManager/TagsManager';
 
 const Settings = () => {
   const { t } = useTranslation();
@@ -42,6 +43,9 @@ const Settings = () => {
           onSubmit={handleChange}
           onValidationStateChange={setCanSubmit}
         />
+      </SeparatedSection>
+      <SeparatedSection pb={3}>
+        <TagsManager state={projectSettings} onSubmit={handleChange} />
       </SeparatedSection>
       <SeparatedSection pb={3}>
         <CollaboratorsPicker

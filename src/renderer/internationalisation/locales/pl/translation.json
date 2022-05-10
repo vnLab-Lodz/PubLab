@@ -8,6 +8,7 @@
     "hide": "ukryj",
     "close": "zamknij",
     "copy": "skopiuj",
+    "add" : "dodaj",
     "field_required": "To pole jest wymagane.",
     "directory_not_existing": "Folder nie istnieje lub ścieżka jest błędna.",
     "invalid_folder_name": "Pole nie może zawerać znaków specjalnych i zarezerwowanych słów.",
@@ -138,7 +139,8 @@
     "active": "aktywny",
     "snippets": "fragmenty",
     "package_manager": "menadżer pakietów",
-    "technology_extensions": "rozszerzenia technologii"
+    "technology_extensions": "rozszerzenia technologii",
+    "tags": "tagi"
   },
   "ProjectList": {
     "projectDetails": "szczegóły projektu",
@@ -157,5 +159,8 @@
   },
   "ProjectInfo": {
     "buttonText": "utrzymuj {{label}} cały czas widoczne"
+  },
+  "ProjectSettings": {
+    "input_tag": "Wpisz tag..."
   }
 }
