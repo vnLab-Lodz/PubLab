@@ -77,7 +77,8 @@
       }
     },
     "repoSync": {
-      "title": "Repository synchronization sources:"
+      "title": "Repository synchronization sources:",
+      "profile": "GitHub Profile"
     }
   },
   "AddProject": {
