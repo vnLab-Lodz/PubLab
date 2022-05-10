@@ -10,13 +10,10 @@ export async function verifyPath(path: string) {
   return result;
 }
 
-export async function updateConfig(
-  handlerOptions: { dirPath: string },
-  changes: Partial<Config>
-) {
+export async function updateConfig(dirPath: string, changes: Partial<Config>) {
   await ipcRenderer.invoke(
     CHANNELS.PUBLICATIONS.UPDATE_CONFIG,
-    handlerOptions,
+    dirPath,
     changes
   );
 }
