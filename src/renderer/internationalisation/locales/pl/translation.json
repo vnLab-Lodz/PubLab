@@ -165,6 +165,10 @@
   },
   "ProjectSettings": {
     "input_tag": "Wpisz tag...",
-    "snippet": "Fragment"
+    "snippet": "Fragment",
+    "notification": {
+      "title": "Zapis udany",
+      "message": "Twoje zmiany konfiguracji zostały zapisane"
+    }
   }
 }

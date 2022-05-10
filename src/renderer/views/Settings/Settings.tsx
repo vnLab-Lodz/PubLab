@@ -81,8 +81,8 @@ const Settings = () => {
             dispatch(updatePublication({ ...project, ...changes }));
             dispatch(
               sendNotification({
-                title: 'Save successful',
-                message: 'Your config changes were saved',
+                title: t('ProjectSettings.notification.title'),
+                message: t('ProjectSettings.notification.message'),
                 type: 'success',
                 autoDismiss: true,
               })
