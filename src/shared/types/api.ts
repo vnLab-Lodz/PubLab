@@ -5,6 +5,13 @@ export type IpcEventHandler<R = any> = (
   ...args: any[]
 ) => Promise<R>;
 
+export type DirectoryEntryInfo = {
+  name: string;
+  details:
+    | { isDirectory: false }
+    | { isDirectory: true; content: DirectoryEntryInfo[] | undefined };
+};
+
 export const CHANNELS = {
   PUBLICATIONS: {
     GENERATE: 'publications:generate',
@@ -26,6 +33,7 @@ export const CHANNELS = {
   },
   FILES: {
     VERIFY_PATH: 'files:verify-path',
+    READ_DIRECTORY: 'files:read-directory',
   },
   GIT: {
     CLONE: 'git:clone',
