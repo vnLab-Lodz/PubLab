@@ -53,13 +53,13 @@ export default function SnippetsManager({ onSubmit, state }: Props) {
             </Styled.SnippetHeader>
 
             <Styled.SnippetName
-              value={snippets[index].name}
+              value={snippet.name}
               onChange={(e) =>
                 onSubmit(updateSnippet({ name: e.target.value }, index))
               }
             />
             <TextArea
-              value={snippets[index].code}
+              value={snippet.code}
               onChange={(e) =>
                 onSubmit(updateSnippet({ code: e.target.value }, index))
               }
