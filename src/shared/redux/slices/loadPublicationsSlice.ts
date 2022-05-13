@@ -57,6 +57,15 @@ const loadPublicationsSlice = createSlice({
       );
       return state;
     },
+    updatePublication: (
+      state: PublicationsState,
+      action: PayloadAction<Publication>
+    ) => {
+      const index = state.publications.findIndex(
+        (publication) => publication.id === action.payload.id
+      );
+      state.publications[index] = action.payload;
+    },
     updatePublicationField: (
       state: PublicationsState,
       action: PayloadAction<PublicationModification>
@@ -113,6 +122,7 @@ export const {
   setActivePublication,
   loadPublication,
   deletePublication,
+  updatePublication,
   updatePublicationField,
   addCollaborator,
   deleteCollaborator,

@@ -8,9 +8,9 @@ import {
 } from 'src/shared/redux/slices/loadPublicationsSlice';
 import Button from '../../components/Button/Button';
 import ProjectDetails from '../../components/ProjectDetails/ProjectDetails';
+import { SeparatedSection } from '../../components/Section/Section';
 import Snippets from '../../components/Snippets/Snippets';
 import ViewContent from '../../components/ViewContent/ViewContent';
-import * as Styled from './style';
 
 const Description = () => {
   const project = useSelector(activePublication);
@@ -23,7 +23,7 @@ const Description = () => {
       </Typography>
       {project && (
         <>
-          <Styled.Section>
+          <SeparatedSection>
             <Typography variant='body2' component='h2'>
               {t('ProjectList.projectDetails').toLocaleUpperCase()}:
             </Typography>
@@ -45,9 +45,9 @@ const Description = () => {
               })}
             </Button>
             <ProjectDetails project={project} noLabel biggerText />
-          </Styled.Section>
+          </SeparatedSection>
 
-          <Styled.Section>
+          <SeparatedSection>
             <Typography variant='body2' component='h2'>
               {t('publication.snippets').toLocaleUpperCase()}:
             </Typography>
@@ -69,9 +69,9 @@ const Description = () => {
               })}
             </Button>
             <Snippets project={project} isAccordion noLabel />
-          </Styled.Section>
+          </SeparatedSection>
 
-          <Styled.Section>
+          <SeparatedSection>
             <Typography variant='body2' component='p'>
               {t('publication.package_manager').toLocaleUpperCase()}
               {': '}
@@ -87,7 +87,7 @@ const Description = () => {
                 })}
               </b>
             </Typography>
-          </Styled.Section>
+          </SeparatedSection>
         </>
       )}
     </ViewContent>

@@ -14,12 +14,8 @@ import { v4 } from 'uuid';
 import { USER_ROLES } from 'src/shared/types';
 import { selectCurrentUserData } from 'src/shared/redux/slices/currentUserSlice';
 import { CHANNELS } from '../../../shared/types/api';
-import CollaboratorsPicker from './subcomponents/CollaboratorsPicker/CollaboratorsPicker';
 import GenerationOverlay from './subcomponents/GenerationOverlay/GenerationOverlay';
-import PackageManagerPicker from './subcomponents/PackageManagerPicker/PackageManagerPicker';
-import ProjectDetailsInput from './subcomponents/ProjectDetailsInput/ProjectDetailsInput';
 import StepControls from './subcomponents/StepControls/StepControls';
-import TechnologiesPicker from './subcomponents/TechnologiesPicker/TechnologiesPicker';
 import useUnmountEffect from '../../hooks/useUnmountEffect';
 import ViewContent from '../../components/ViewContent/ViewContent';
 import { altTheme } from '../../theme';
@@ -31,15 +27,9 @@ import {
   increaseStep,
   newPublication,
 } from '../../../shared/redux/slices/addPublicationWizardSlice';
+import steps from './subcomponents/Steps/Steps';
 
 const { IDLE, FAILURE, SUCCESS } = PUBLICATION_GENERATION_STATUS;
-
-const steps = [
-  ProjectDetailsInput,
-  PackageManagerPicker,
-  TechnologiesPicker,
-  CollaboratorsPicker,
-];
 
 const AddProject = () => {
   const currentStep = useSelector(stepSelector);
@@ -90,7 +80,10 @@ const AddProject = () => {
           {t('AddProject.header.step')} {currentStep}/{steps.length}
         </Typography>
         <Box sx={{ mt: 4, mb: 3 }}>
-          <Step setNextButtonEnabled={setNextButtonEnabled} />
+          <Step
+            publication={publication}
+            onValidationStateChange={setNextButtonEnabled}
+          />
         </Box>
         <StepControls
           onClickPrevious={() =>

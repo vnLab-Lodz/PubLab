@@ -51,6 +51,8 @@ const createPublicationFinder = (): PublicationFinder => {
               status: 'cloned',
               lastUpdate: 0,
               dirPath: path.join(dirPath, name),
+              keepDescriptionVisible: false,
+              keepSnippetsVisible: false,
             });
           }
         };
@@ -118,6 +120,8 @@ const createPublicationFinder = (): PublicationFinder => {
                   lastUpdate: 0,
                   cloneUrl: repo.cloneUrl,
                   repoName: repo.name,
+                  keepDescriptionVisible: false,
+                  keepSnippetsVisible: false,
                 });
               } else {
                 logger.appendLog(

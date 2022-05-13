@@ -5,7 +5,14 @@ import { promises as fs, constants } from 'fs';
 import { createLogger } from '../logger';
 import createFileIO from './fileIO';
 
-export type Config = Omit<Publication, 'imagePath' | 'lastUpdate' | 'status'>;
+export type Config = Omit<
+  Publication,
+  | 'imagePath'
+  | 'lastUpdate'
+  | 'status'
+  | 'keepSnippetsVisible'
+  | 'keepDescriptionVisible'
+>;
 
 type UpdateConfigFieldParams =
   | {
@@ -31,11 +38,11 @@ export interface ConfigFileHandler {
 
 const createConfigFileHandler = (options: {
   dirPath: string;
-  name: string;
+  name?: string;
 }): ConfigFileHandler => {
   const logger = createLogger();
   const { dirPath, name } = options;
-  const configPath = path.join(dirPath, name, CONFIG_NAME);
+  const configPath = path.join(dirPath, name || '', CONFIG_NAME);
   const io = createFileIO();
 
   return {
@@ -51,7 +58,7 @@ const createConfigFileHandler = (options: {
         throw new Error('Placeholder for config open error');
       }
     },
-    async setConfig(config) {
+    async setConfig(config: Config) {
       try {
         logger.appendLog(`Writing ${CONFIG_NAME}...`);
         await io.writeJSON(configPath, config);
@@ -66,7 +73,12 @@ const createConfigFileHandler = (options: {
       try {
         logger.appendLog('Creating publication configuration file...');
         const creationDate = +new Date();
-        const config: Config = { ...publication, creationDate, tags: [] };
+        const config: Config = {
+          ...publication,
+          creationDate,
+          tags: [],
+          snippets: [],
+        };
         await this.setConfig(config);
         logger.appendLog('Creating publication configuration file successful.');
         return config;
