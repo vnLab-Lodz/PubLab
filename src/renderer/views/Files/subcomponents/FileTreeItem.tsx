@@ -6,7 +6,7 @@ import FileDisplay from '../../../components/FileDisplay/FileDisplay';
 import * as Styled from '../style';
 
 interface Props {
-  entry: DirectoryEntryInfo;
+  entry: Required<DirectoryEntryInfo>;
   dirPath: string;
   expandedNodes: string[];
   treeLevel: number;
@@ -22,19 +22,19 @@ const FileTreeItem = ({
   expandedNodes,
   treeLevel,
 }: Props) => {
-  const dirContent = entry.details.isDirectory
-    ? entry.details.content
+  const dirContent = entry.directory.isDirectory
+    ? (entry.directory.content as Required<DirectoryEntryInfo>[])
     : undefined;
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState(
-    [] as DirectoryEntryInfo[] | undefined
+    [] as Required<DirectoryEntryInfo>[] | undefined
   );
 
   useEffect(() => {
-    if (entry.details.isDirectory && !dirContent && preload) {
+    if (entry.directory.isDirectory && !dirContent && preload) {
       setIsLoading(true);
-      readDirectory(dirPath, depth).then((value) => {
-        setContent(value);
+      readDirectory(dirPath, { depth, withDetails: true }).then((value) => {
+        setContent(value as Required<DirectoryEntryInfo>[]);
         setIsLoading(false);
       });
     } else setContent(dirContent);
@@ -68,7 +68,7 @@ FileTreeItem.defaultProps = {
 export default FileTreeItem;
 
 export function contentMap(
-  content: DirectoryEntryInfo[] | undefined,
+  content: Required<DirectoryEntryInfo>[] | undefined,
   props: Pick<Props, 'depth' | 'dirPath' | 'expandedNodes' | 'treeLevel'>
 ) {
   if (!content) return [];

@@ -1,9 +1,10 @@
 import { Json } from 'src/shared/types';
-import { Dirent, promises as fs } from 'fs';
+import { Dirent, promises as fs, Stats } from 'fs';
 import { createLogger } from '../logger';
 
 export interface FileIO {
   readDirectory: (path: string) => Promise<Dirent[]>;
+  getDetails: (path: string) => Promise<Stats>;
   readJSON: <T = Json>(path: string) => Promise<T>;
   writeJSON: <T = Json>(path: string, content: T) => Promise<void>;
   readString: (path: string) => Promise<string>;
@@ -18,6 +19,16 @@ const createFileIO = (): FileIO => {
     async readDirectory(path: string) {
       try {
         return await fs.readdir(path, { withFileTypes: true });
+      } catch (error) {
+        logger.appendError(
+          `Reading directory content at ${path} failed. Error: ${error}`
+        );
+        throw new Error(`Error writing ${path}`);
+      }
+    },
+    async getDetails(path: string) {
+      try {
+        return await fs.stat(path);
       } catch (error) {
         logger.appendError(
           `Reading directory content at ${path} failed. Error: ${error}`

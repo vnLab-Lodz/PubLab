@@ -7,14 +7,17 @@ export type IpcEventHandler<R = any> = (
 
 export interface DirectoryEntryBase {
   name: string;
+  details?: {
+    dateModifiedMs: number;
+  };
 }
 
 export interface FolderInfo extends DirectoryEntryBase {
-  details: { isDirectory: true; content: DirectoryEntryInfo[] | undefined };
+  directory: { isDirectory: true; content: DirectoryEntryInfo[] | undefined };
 }
 
 export interface FileInfo extends DirectoryEntryBase {
-  details: { isDirectory: false };
+  directory: { isDirectory: false; content: null };
 }
 
 export type DirectoryEntryInfo = FolderInfo | FileInfo;

@@ -33,7 +33,8 @@ const Files = () => {
         <FileTreeItem
           entry={{
             name: project.name,
-            details: { isDirectory: true, content: undefined },
+            directory: { isDirectory: true, content: undefined },
+            details: { dateModifiedMs: 0 },
           }}
           dirPath={path.join(project.dirPath)}
           depth={1}

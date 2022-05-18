@@ -11,11 +11,14 @@ export async function verifyPath(path: string) {
   return result;
 }
 
-export async function readDirectory(path: string, depth?: number) {
+export async function readDirectory(
+  path: string,
+  options?: { depth?: number; withDetails?: boolean }
+) {
   const result = await ipcRenderer.invoke(
     CHANNELS.FILES.READ_DIRECTORY,
     path,
-    depth
+    options
   );
   return result as DirectoryEntryInfo[];
 }
