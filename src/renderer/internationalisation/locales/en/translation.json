@@ -15,7 +15,9 @@
     "field_required": "This field is required.",
     "directory_not_existing": "Directory does not exist or the path is invalid.",
     "invalid_folder_name": "Field contains invalid characters or reserved keywords.",
-    "notification": "Notification"
+    "notification": "Notification",
+    "change_date": "change date"
+
   },
   "notifications": {
     "directory_not_existing": "{{dir}} directory does not exist or the path is invalid. Check the path and try again.",
@@ -170,6 +172,15 @@
     "notification": {
       "title": "Save successful",
       "message": "Your config changes were saved"
+    }
+  },
+  "Files":{
+    "status": {
+      "added": "added",
+      "modified": "modified",
+      "deleted": "deleted",
+      "moved": "moved",
+      "unchanged": ""
     }
   }
 }

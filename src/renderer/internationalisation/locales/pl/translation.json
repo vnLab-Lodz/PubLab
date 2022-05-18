@@ -15,7 +15,8 @@
     "field_required": "To pole jest wymagane.",
     "directory_not_existing": "Folder nie istnieje lub ścieżka jest błędna.",
     "invalid_folder_name": "Pole nie może zawerać znaków specjalnych i zarezerwowanych słów.",
-    "notification": "Powiadomienie"
+    "notification": "Powiadomienie",
+    "change_date": "data modyfikacji"
   },
   "notifications": {
     "directory_not_existing": "Folder {{dir}} nie istnieje lub ścieżka jest błędna. Sprawdź ścieżkę i spróbuj ponownie.",
@@ -170,6 +171,15 @@
     "notification": {
       "title": "Zapis udany",
       "message": "Twoje zmiany konfiguracji zostały zapisane"
+    }
+  },
+  "Files":{
+    "status": {
+      "added": "nowy",
+      "modified": "zmodyfikowany",
+      "deleted": "usunięty",
+      "moved": "przeniesiony",
+      "unchanged": ""
     }
   }
 }
