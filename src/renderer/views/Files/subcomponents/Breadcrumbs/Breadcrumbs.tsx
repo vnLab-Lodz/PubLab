@@ -22,19 +22,25 @@ export default function Breadcrumbs({
     '.',
     ...path.relative(projectRootPath, dirPath).split(path.sep),
   ];
-  const crumbs = splitPath.map((directory, index) => (
-    <Button
-      onClick={() =>
-        onClick(path.join(projectRootPath, ...splitPath.slice(0, index + 1)))
-      }
-      disabled={splitPath.length === index + 1}
-      sx={{ minWidth: 0 }}
-    >
-      <Typography variant='body2' textTransform='lowercase' color='primary'>
-        {directory}
-      </Typography>
-    </Button>
-  ));
+  const crumbs = splitPath.map((directory, index) => {
+    const crumbPath = path.join(
+      projectRootPath,
+      ...splitPath.slice(0, index + 1)
+    );
+    return (
+      <Button
+        key={crumbPath}
+        onClick={() => onClick(crumbPath)}
+        disabled={splitPath.length === index + 1}
+        sx={{ minWidth: 0 }}
+      >
+        <Typography variant='body2' textTransform='lowercase' color='primary'>
+          {directory}
+        </Typography>
+      </Button>
+    );
+  });
+
   return (
     <MUIBreadcrumbs
       sx={(theme) => ({
