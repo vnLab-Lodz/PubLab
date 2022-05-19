@@ -9,4 +9,7 @@ export const DataField = styled(Box)(({ theme }) => ({
   borderRight: `1px solid ${theme.palette.gray.main}`,
   padding: `0.2rem ${theme.spacing(1)}`,
   overflow: 'hidden',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
 }));

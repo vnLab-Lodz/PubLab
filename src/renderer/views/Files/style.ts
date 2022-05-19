@@ -7,7 +7,7 @@ export const TreeItem = styled(TreeItemBase, {
   '& .MuiTreeItem-content': {
     padding: 0,
   },
-  '& .MuiTreeItem-label': {
+  '&& .MuiTreeItem-label': {
     padding: 0,
   },
   '& .MuiCollapse-root': {

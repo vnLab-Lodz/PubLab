@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import FileIcon from '@mui/icons-material/InsertDriveFileOutlined';
-import { FolderOutlined } from '@mui/icons-material';
-import { Typography } from '@mui/material';
+import FolderIcon from '@mui/icons-material/FolderOpenTwoTone';
+import { Typography, useTheme } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { DirectoryEntryInfo } from '../../../shared/types/api';
 import * as Styled from './style';
 
@@ -11,30 +12,39 @@ interface Props {
 }
 
 const [statuses, colors] = [
-  ['added', 'modified', 'deleted', ''],
-  ['green', 'blue', 'red', 'primary'],
-]; // placeholder
+  ['added', 'modified', 'deleted', 'moved', 'unchanged'],
+  ['green', 'blue', 'red', 'orange', 'primary'],
+] as const; // placeholder
 
 const FileDisplay = ({ entry, treeLevel }: Props) => {
+  const { t } = useTranslation();
   const dateM = new Date(entry.details.dateModifiedMs);
-  const statusIndex = Math.floor(Math.random() * 4);
+  const statusIndex = useMemo(() => Math.floor(Math.random() * 5), []);
+  const statusColor = useTheme().palette[colors[statusIndex]].main;
   return (
     <Styled.DataContainer>
       <Styled.DataField
-        sx={{ width: '50%', paddingLeft: `${treeLevel! * 2}rem` }}
+        sx={{
+          width: '50%',
+          justifyContent: 'start',
+          paddingLeft: `${treeLevel! * 2}rem`,
+        }}
       >
-        {entry.directory.isDirectory ? <FolderOutlined /> : <FileIcon />}
+        {entry.directory.isDirectory ? (
+          <FolderIcon htmlColor={statusColor} />
+        ) : (
+          <FileIcon htmlColor={statusColor} />
+        )}{' '}
         {entry.name}
       </Styled.DataField>
-      <Styled.DataField>{`${dateM.getDay()}/${dateM.getMonth()}/${dateM.getFullYear()}`}</Styled.DataField>
-      <Styled.DataField>
-        <Typography
-          color={
-            // @ts-expect-error placeholder
-            (theme) => theme.palette[colors[statusIndex]].main
-          }
-        >
-          {statuses[statusIndex]}
+      <Styled.DataField sx={{ width: '25%' }}>
+        <Typography>
+          {`${dateM.getDay()}/${dateM.getMonth()}/${dateM.getFullYear()}`}
+        </Typography>
+      </Styled.DataField>
+      <Styled.DataField sx={{ width: '25%' }}>
+        <Typography color={statusColor}>
+          {t(`Files.status.${statuses[statusIndex]}`)}
         </Typography>
       </Styled.DataField>
     </Styled.DataContainer>
