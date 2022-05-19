@@ -173,7 +173,7 @@
       "message": "Twoje zmiany konfiguracji zostały zapisane"
     }
   },
-  "Files":{
+  "Files": {
     "status": {
       "added": "nowy",
       "modified": "zmodyfikowany",
