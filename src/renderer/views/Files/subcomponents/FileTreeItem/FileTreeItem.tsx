@@ -1,9 +1,9 @@
 import path from 'path';
 import React, { useEffect, useState } from 'react';
-import { DirectoryEntryInfo } from '../../../../shared/types/api';
-import { readDirectory } from '../../../ipc';
-import FileDisplay from '../../../components/FileDisplay/FileDisplay';
-import * as Styled from '../style';
+import { DirectoryEntryInfo } from '../../../../../shared/types/api';
+import { readDirectory } from '../../../../ipc';
+import FileDisplay from '../../../../components/FileDisplay/FileDisplay';
+import * as Styled from './style';
 
 interface Props {
   entry: Required<DirectoryEntryInfo>;

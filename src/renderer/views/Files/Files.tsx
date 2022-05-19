@@ -6,7 +6,7 @@ import { ArrowDropDown, ArrowRight } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { activePublication } from '../../../shared/redux/slices/loadPublicationsSlice';
 import { LocalPublication } from '../../../shared/types';
-import FileTreeItem from './subcomponents/FileTreeItem';
+import FileTreeItem from './subcomponents/FileTreeItem/FileTreeItem';
 import ViewContent from '../../components/ViewContent/ViewContent';
 import { Header } from '../../components/FileDisplay/Columns';
 import Section from '../../components/Section/Section';
