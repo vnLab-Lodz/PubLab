@@ -19,6 +19,7 @@ import {
   isKeyboardEvent,
 } from '../../../shared/types/eventTypeguards';
 import { openInDefaultApp } from '../../ipc';
+import Breadcrumbs from './subcomponents/Breadcrumbs/Breadcrumbs';
 
 const Files = () => {
   const project = useSelector(activePublication) as LocalPublication;
@@ -46,6 +47,11 @@ const Files = () => {
   return (
     <ViewContent>
       <Typography variant='h1'>{project.name}</Typography>
+      <Breadcrumbs
+        projectRootPath={project.dirPath}
+        dirPath={currentDirectory}
+        onClick={setCurrentDirectory}
+      />
       <Section>
         <Header />
         <TreeView
