@@ -25,7 +25,7 @@ const createFileIO = (): FileIO => {
         logger.appendError(
           `Reading directory content at ${path} failed. Error: ${error}`
         );
-        throw new Error(`Error writing ${path}`);
+        throw new Error(`Error reading directory ${path}`);
       }
     },
     async getDetails(path: string) {
