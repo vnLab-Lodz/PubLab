@@ -11,6 +11,11 @@ export async function verifyPath(path: string) {
   return result;
 }
 
+export async function openInDefaultApp(path: string) {
+  const result = await ipcRenderer.invoke(CHANNELS.FILES.OPEN_DEFAULT, path);
+  return result;
+}
+
 export async function readDirectory(
   path: string,
   options?: { depth?: number; withDetails?: boolean }

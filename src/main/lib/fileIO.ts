@@ -1,5 +1,6 @@
 import { Json } from 'src/shared/types';
 import { Dirent, promises as fs, Stats } from 'fs';
+import { shell } from 'electron';
 import { createLogger } from '../logger';
 
 export interface FileIO {
@@ -10,6 +11,7 @@ export interface FileIO {
   readString: (path: string) => Promise<string>;
   writeString: (path: string, content: string) => Promise<void>;
   verifyPath: (path: string) => Promise<boolean>;
+  openPath: (path: string) => Promise<void>;
 }
 
 const createFileIO = (): FileIO => {
@@ -76,6 +78,14 @@ const createFileIO = (): FileIO => {
         return true;
       } catch (error: any) {
         return false;
+      }
+    },
+    async openPath(path: string) {
+      try {
+        await shell.openPath(path);
+      } catch (error: any) {
+        logger.appendError(`Opening ${path} failed. Error: ${error}`);
+        throw new Error(`Error opening ${path}`);
       }
     },
   };

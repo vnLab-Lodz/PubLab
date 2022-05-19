@@ -6,45 +6,69 @@ import { ArrowDropDown, ArrowRight } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { activePublication } from '../../../shared/redux/slices/loadPublicationsSlice';
 import { LocalPublication } from '../../../shared/types';
-import FileTreeItem from './subcomponents/FileTreeItem/FileTreeItem';
+import FileTreeItem, {
+  parseNodeId,
+} from './subcomponents/FileTreeItem/FileTreeItem';
 import ViewContent from '../../components/ViewContent/ViewContent';
 import { Header } from '../../components/FileDisplay/Columns';
 import Section from '../../components/Section/Section';
+import { TreeItem } from './subcomponents/FileTreeItem/style';
+import ToParentFolder from './subcomponents/ToParentFolder/ToParentFolder';
+import {
+  isClickEvent,
+  isKeyboardEvent,
+} from '../../../shared/types/eventTypeguards';
+import { openInDefaultApp } from '../../ipc';
 
 const Files = () => {
   const project = useSelector(activePublication) as LocalPublication;
+  const [focused, setFocused] = React.useState<string>('');
   const [expanded, setExpanded] = React.useState<string[]>([]);
-  const [selected, setSelected] = React.useState<string[]>([]);
+  const [currentDirectory, setCurrentDirectory] = React.useState(
+    path.join(project.dirPath, 'publication')
+  );
 
   const handleToggle = (event: React.SyntheticEvent, nodeIds: string[]) => {
-    setExpanded(nodeIds);
+    const node = parseNodeId(focused);
+    if (isOpenInteraction(event)) setCurrentDirectory(node.dirPath);
+    else setExpanded(nodeIds);
   };
 
-  const handleSelect = (event: React.SyntheticEvent, nodeIds: string[]) => {
-    setSelected(nodeIds);
+  const handleSelect = (event: React.SyntheticEvent) => {
+    const node = parseNodeId(focused);
+    if (focused === '..') {
+      setCurrentDirectory(path.join(currentDirectory, focused));
+      return;
+    }
+    if (isOpenInteraction(event) && !node.isDirectory)
+      openInDefaultApp(node.dirPath);
   };
   return (
     <ViewContent>
-      <Typography variant='h1' mb={4}>
-        {project.name}
-      </Typography>
+      <Typography variant='h1'>{project.name}</Typography>
       <Section>
         <Header />
         <TreeView
           expanded={expanded}
-          selected={selected}
+          selected={[]} // disable default selection behavior
           defaultCollapseIcon={<ArrowDropDown />}
           defaultExpandIcon={<ArrowRight />}
+          onNodeFocus={(e, value) => {
+            setFocused(value);
+          }}
           onNodeToggle={handleToggle}
           onNodeSelect={handleSelect}
         >
+          {currentDirectory !== project.dirPath && (
+            <TreeItem label={<ToParentFolder />} nodeId='..' treeLevel={0} />
+          )}
           <FileTreeItem
             entry={{
               name: project.name,
               directory: { isDirectory: true, content: undefined },
               details: { dateModifiedMs: 0 },
             }}
-            dirPath={path.join(project.dirPath)}
+            dirPath={currentDirectory}
             depth={1}
             preload
             treeLevel={0}
@@ -57,3 +81,10 @@ const Files = () => {
 };
 
 export default Files;
+
+function isOpenInteraction(event: React.SyntheticEvent) {
+  return (
+    (isKeyboardEvent(event) && event?.key === 'Enter') ||
+    (isClickEvent(event) && event.detail === 2)
+  );
+}

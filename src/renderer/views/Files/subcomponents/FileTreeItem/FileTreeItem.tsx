@@ -22,6 +22,7 @@ const FileTreeItem = ({
   expandedNodes,
   treeLevel,
 }: Props) => {
+  const nodeId = createNodeId(dirPath, entry.directory.isDirectory);
   const dirContent = entry.directory.isDirectory
     ? (entry.directory.content as Required<DirectoryEntryInfo>[])
     : undefined;
@@ -38,10 +39,10 @@ const FileTreeItem = ({
         setIsLoading(false);
       });
     } else setContent(dirContent);
-  }, [preload, dirContent]);
+  }, [preload, dirContent, dirPath]);
 
   const renderContent = () =>
-    contentMap(content, {
+    contentMap(nodeId, content, {
       dirPath,
       depth,
       expandedNodes,
@@ -51,7 +52,7 @@ const FileTreeItem = ({
   if (treeLevel === 0) return <>{isLoading ? 'Loading' : renderContent()}</>;
   return (
     <Styled.TreeItem
-      nodeId={dirPath}
+      nodeId={nodeId}
       treeLevel={treeLevel}
       label={<FileDisplay entry={entry} treeLevel={treeLevel} />}
     >
@@ -68,6 +69,7 @@ FileTreeItem.defaultProps = {
 export default FileTreeItem;
 
 export function contentMap(
+  parentNodeId: string,
   content: Required<DirectoryEntryInfo>[] | undefined,
   props: Pick<Props, 'depth' | 'dirPath' | 'expandedNodes' | 'treeLevel'>
 ) {
@@ -75,7 +77,7 @@ export function contentMap(
   return content.map((entry) => {
     const entryPath = path.join(props.dirPath, entry.name);
     const preload =
-      props.expandedNodes.includes(props.dirPath) || props.treeLevel === 0;
+      props.expandedNodes.includes(parentNodeId) || props.treeLevel === 0;
     return (
       <FileTreeItem
         entry={entry}
@@ -88,4 +90,17 @@ export function contentMap(
       />
     );
   });
+}
+
+const idStrings = { directory: 'dir|', file: 'fil|' };
+
+export function createNodeId(dirPath: string, isDirectory?: boolean) {
+  return `${isDirectory ? idStrings.directory : idStrings.file}${dirPath}`;
+}
+
+export function parseNodeId(id: string) {
+  return {
+    dirPath: id.slice(4),
+    isDirectory: id.slice(0, 4) === idStrings.directory,
+  };
 }

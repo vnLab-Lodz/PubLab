@@ -44,6 +44,7 @@ export const CHANNELS = {
   FILES: {
     VERIFY_PATH: 'files:verify-path',
     READ_DIRECTORY: 'files:read-directory',
+    OPEN_DEFAULT: 'files:open-in-default-app',
   },
   GIT: {
     CLONE: 'git:clone',
