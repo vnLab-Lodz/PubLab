@@ -34,7 +34,7 @@ export default function Breadcrumbs({
         disabled={splitPath.length === index + 1}
         sx={{ minWidth: 0 }}
       >
-        <Typography variant='body2' textTransform='lowercase' color='primary'>
+        <Typography variant='body2' textTransform='lowercase' color='gray.dark'>
           {directory}
         </Typography>
       </Button>
@@ -45,7 +45,7 @@ export default function Breadcrumbs({
     <MUIBreadcrumbs
       sx={(theme) => ({
         '& .MuiBreadcrumbs-separator': {
-          color: theme.palette.text.primary,
+          color: theme.palette.gray.dark,
           margin: '0 0.3rem',
         },
       })}
