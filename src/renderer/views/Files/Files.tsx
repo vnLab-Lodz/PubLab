@@ -31,16 +31,17 @@ const Files = () => {
 
   const handleToggle = (event: React.SyntheticEvent, nodeIds: string[]) => {
     const node = parseNodeId(focused);
+    console.log(node.dirPath);
     if (isOpenInteraction(event)) setCurrentDirectory(node.dirPath);
     else setExpanded(nodeIds);
   };
 
   const handleSelect = (event: React.SyntheticEvent) => {
-    const node = parseNodeId(focused);
     if (focused === '..') {
       setCurrentDirectory(path.join(currentDirectory, focused));
       return;
     }
+    const node = parseNodeId(focused);
     if (isOpenInteraction(event) && !node.isDirectory)
       openInDefaultApp(node.dirPath);
   };
@@ -56,7 +57,7 @@ const Files = () => {
         <Header />
         <TreeView
           expanded={expanded}
-          selected={[]} // disable default selection behavior
+          selected='' // disable default selection behavior
           defaultCollapseIcon={<ArrowDropDown />}
           defaultExpandIcon={<ArrowRight />}
           onNodeFocus={(e, value) => {
