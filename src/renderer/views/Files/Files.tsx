@@ -31,7 +31,6 @@ const Files = () => {
 
   const handleToggle = (event: React.SyntheticEvent, nodeIds: string[]) => {
     const node = parseNodeId(focused);
-    console.log(node.dirPath);
     if (isOpenInteraction(event)) setCurrentDirectory(node.dirPath);
     else setExpanded(nodeIds);
   };
