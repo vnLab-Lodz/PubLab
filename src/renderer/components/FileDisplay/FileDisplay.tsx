@@ -5,6 +5,7 @@ import { Typography, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { DirectoryEntryInfo } from '../../../shared/types/api';
 import * as Styled from './style';
+import { widths } from './Columns';
 
 interface Props {
   entry: Required<DirectoryEntryInfo>;
@@ -25,7 +26,7 @@ const FileDisplay = ({ entry, treeLevel }: Props) => {
     <Styled.DataContainer>
       <Styled.DataField
         sx={{
-          width: '50%',
+          width: widths[0],
           justifyContent: 'start',
           paddingLeft: `${treeLevel! * 2}rem`,
         }}
@@ -37,13 +38,13 @@ const FileDisplay = ({ entry, treeLevel }: Props) => {
         )}{' '}
         {entry.name}
       </Styled.DataField>
-      <Styled.DataField sx={{ width: '25%' }}>
-        <Typography>
+      <Styled.DataField sx={{ width: widths[1] }}>
+        <Typography variant='body2'>
           {`${dateM.getDay()}/${dateM.getMonth()}/${dateM.getFullYear()}`}
         </Typography>
       </Styled.DataField>
-      <Styled.DataField sx={{ width: '25%' }}>
-        <Typography color={statusColor}>
+      <Styled.DataField sx={{ width: widths[2] }}>
+        <Typography color={statusColor} variant='body2'>
           {t(`Files.status.${statuses[statusIndex]}`)}
         </Typography>
       </Styled.DataField>
