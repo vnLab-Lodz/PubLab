@@ -1,9 +1,10 @@
 import path from 'path';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { DirectoryEntryInfo } from '../../../../../shared/types/api';
 import { readDirectory } from '../../../../ipc';
 import FileDisplay from '../../../../components/FileDisplay/FileDisplay';
 import * as Styled from './style';
+import usePromiseSubscription from '../../../../hooks/usePromiseSubscription';
 
 interface Props {
   entry: Required<DirectoryEntryInfo>;
@@ -26,20 +27,23 @@ const FileTreeItem = ({
   const dirContent = entry.directory.isDirectory
     ? (entry.directory.content as Required<DirectoryEntryInfo>[])
     : undefined;
-  const [isLoading, setIsLoading] = useState(false);
-  const [content, setContent] = useState(
-    [] as Required<DirectoryEntryInfo>[] | undefined
-  );
 
-  useEffect(() => {
-    if (entry.directory.isDirectory && !dirContent && preload) {
-      setIsLoading(true);
-      readDirectory(dirPath, { depth, withDetails: true }).then((value) => {
-        setContent(value as Required<DirectoryEntryInfo>[]);
-        setIsLoading(false);
-      });
-    } else setContent(dirContent);
-  }, [preload, dirContent, dirPath]);
+  const [content, , isPending] = usePromiseSubscription<
+    Required<DirectoryEntryInfo>[] | undefined
+  >(
+    (async () => {
+      let value = dirContent;
+      if (entry.directory.isDirectory && !dirContent && preload) {
+        value = (await readDirectory(dirPath, {
+          depth,
+          withDetails: true,
+        })) as Required<DirectoryEntryInfo>[];
+      }
+      return value;
+    })(),
+    undefined,
+    [preload, dirContent, dirPath]
+  );
 
   const renderContent = () =>
     contentMap(nodeId, content, {
@@ -49,14 +53,14 @@ const FileTreeItem = ({
       treeLevel,
     });
 
-  if (treeLevel === 0) return <>{isLoading ? 'Loading' : renderContent()}</>;
+  if (treeLevel === 0) return <>{isPending ? 'Loading' : renderContent()}</>;
   return (
     <Styled.TreeItem
       nodeId={nodeId}
       treeLevel={treeLevel}
       label={<FileDisplay entry={entry} treeLevel={treeLevel} />}
     >
-      {isLoading ? 'Loading' : renderContent()}
+      {isPending ? 'Loading' : renderContent()}
     </Styled.TreeItem>
   );
 };
