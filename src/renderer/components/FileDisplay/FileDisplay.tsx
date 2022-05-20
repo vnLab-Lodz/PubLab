@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import FileIcon from '@mui/icons-material/InsertDriveFileOutlined';
-import FolderIcon from '@mui/icons-material/FolderOpenTwoTone';
 import { Typography, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import FileIcon from 'src/renderer/assets/FileIcon/FileIcon';
+import FolderIcon from 'src/renderer/assets/FolderIcon/FolderIcon';
 import { DirectoryEntryInfo } from '../../../shared/types/api';
 import * as Styled from './style';
 import { widths } from './Columns';
@@ -32,11 +32,11 @@ const FileDisplay = ({ entry, treeLevel }: Props) => {
         }}
       >
         {entry.directory.isDirectory ? (
-          <FolderIcon htmlColor={statusColor} />
+          <FolderIcon color={statusColor} />
         ) : (
-          <FileIcon htmlColor={statusColor} />
-        )}{' '}
-        {entry.name}
+          <FileIcon color={statusColor} />
+        )}
+        <Typography ml='0.75rem'>{entry.name}</Typography>
       </Styled.DataField>
       <Styled.DataField sx={{ width: widths[1] }}>
         <Typography variant='body2'>
