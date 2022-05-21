@@ -65,9 +65,12 @@ const Files = () => {
           onNodeToggle={handleToggle}
           onNodeSelect={handleSelect}
         >
-          {currentDirectory !== project.dirPath && (
-            <TreeItem label={<ToParentFolder />} nodeId='..' treeLevel={0} />
-          )}
+          <TreeItem
+            label={<ToParentFolder />}
+            nodeId='..'
+            treeLevel={0}
+            disabled={currentDirectory === project.dirPath}
+          />
           <FileTreeItem
             entry={{
               name: project.name,

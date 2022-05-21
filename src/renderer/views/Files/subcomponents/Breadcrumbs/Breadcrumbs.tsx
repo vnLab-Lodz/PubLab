@@ -17,7 +17,6 @@ export default function Breadcrumbs({
   dirPath,
   onClick,
 }: Props) {
-  if (projectRootPath === dirPath) return <></>;
   const splitPath = [
     '.',
     ...path.relative(projectRootPath, dirPath).split(path.sep),
