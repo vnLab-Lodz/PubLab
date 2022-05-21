@@ -8,11 +8,7 @@ const readDirectory: IpcEventHandler<DirectoryEntryInfo[]> = async (
   dirPath: string,
   options?: { depth?: number; withDetails?: boolean }
 ) => {
-  const optionsWithDefaults = {
-    depth: 0,
-    withDetails: false,
-    ...options,
-  };
+  const optionsWithDefaults = { depth: 0, withDetails: false, ...options };
   const out = await read(dirPath, optionsWithDefaults);
   return out || [];
 };
@@ -25,7 +21,6 @@ async function read(
 ): Promise<DirectoryEntryInfo[] | undefined> {
   const io = createFileIO();
   const result = await io.readDirectory(dirPath);
-  // @ts-expect-error - typescript considers output type unassignable to DirectoryEntryInfo[], even though all elements properties are individually typed
   const output: DirectoryEntryInfo[] = await Promise.all(
     result.map(async (dirent) => {
       const isDirectory = dirent.isDirectory();
@@ -53,7 +48,7 @@ async function read(
         name: dirent.name,
         directory,
         details,
-      };
+      } as DirectoryEntryInfo;
     })
   );
   return output;

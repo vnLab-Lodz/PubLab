@@ -6,6 +6,8 @@ import FolderIcon from 'src/renderer/assets/FolderIcon/FolderIcon';
 import { DirectoryEntryInfo } from '../../../shared/types/api';
 import * as Styled from './style';
 import { widths } from './Columns';
+import getDateString from '../../utils/getDateString';
+import i18n, { SupportedLangCode } from '../../internationalisation/i18next';
 
 interface Props {
   entry: Required<DirectoryEntryInfo>;
@@ -19,7 +21,6 @@ const [statuses, colors] = [
 
 const FileDisplay = ({ entry, treeLevel }: Props) => {
   const { t } = useTranslation();
-  const dateM = new Date(entry.details.dateModifiedMs);
   const statusIndex = useMemo(() => Math.floor(Math.random() * 5), []);
   const statusColor = useTheme().palette[colors[statusIndex]].main;
   return (
@@ -40,7 +41,10 @@ const FileDisplay = ({ entry, treeLevel }: Props) => {
       </Styled.DataField>
       <Styled.DataField sx={{ width: widths[1] }}>
         <Typography variant='body2'>
-          {`${dateM.getDay()}/${dateM.getMonth()}/${dateM.getFullYear()}`}
+          {getDateString(
+            entry.details.dateModifiedMs,
+            i18n.language as SupportedLangCode
+          )}
         </Typography>
       </Styled.DataField>
       <Styled.DataField sx={{ width: widths[2] }}>
