@@ -36,7 +36,7 @@ const Files = () => {
   };
 
   const handleSelect = (event: React.SyntheticEvent) => {
-    if (focused === '..') {
+    if (isOpenInteraction(event) && focused === '..') {
       setCurrentDirectory(path.join(currentDirectory, focused));
       return;
     }
