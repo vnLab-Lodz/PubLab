@@ -45,7 +45,7 @@ const Files = () => {
       openInDefaultApp(node.dirPath);
   };
   return (
-    <ViewContent>
+    <ViewContent sx={{ overflowY: 'scroll' }}>
       <Typography variant='h1'>{project.name}</Typography>
       <Breadcrumbs
         projectRootPath={project.dirPath}
