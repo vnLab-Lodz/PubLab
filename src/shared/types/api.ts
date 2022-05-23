@@ -5,22 +5,14 @@ export type IpcEventHandler<R = any> = (
   ...args: any[]
 ) => Promise<R>;
 
-export interface DirectoryEntryBase {
+export interface DirectoryEntryInfo {
   name: string;
-  details?: {
-    dateModifiedMs: number;
+  details?: { dateModifiedMs: number };
+  directory: {
+    isDirectory: boolean;
+    content: DirectoryEntryInfo[] | undefined;
   };
 }
-
-export interface FolderInfo extends DirectoryEntryBase {
-  directory: { isDirectory: true; content: DirectoryEntryInfo[] | undefined };
-}
-
-export interface FileInfo extends DirectoryEntryBase {
-  directory: { isDirectory: false; content: null };
-}
-
-export type DirectoryEntryInfo = FolderInfo | FileInfo;
 
 export const CHANNELS = {
   PUBLICATIONS: {

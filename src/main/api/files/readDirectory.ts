@@ -24,18 +24,16 @@ async function read(
   const output: DirectoryEntryInfo[] = await Promise.all(
     result.map(async (dirent) => {
       const isDirectory = dirent.isDirectory();
-      const directory: DirectoryEntryInfo['directory'] = isDirectory
-        ? {
-            isDirectory,
-            content:
-              options.depth === 0
-                ? undefined
-                : await read(path.join(dirPath, dirent.name), {
-                    depth: options.depth - 1,
-                    withDetails: options.withDetails,
-                  }),
-          }
-        : { isDirectory, content: null };
+      const directory: DirectoryEntryInfo['directory'] = {
+        isDirectory,
+        content:
+          isDirectory && options.depth !== 0
+            ? await read(path.join(dirPath, dirent.name), {
+                depth: options.depth - 1,
+                withDetails: options.withDetails,
+              })
+            : undefined,
+      };
 
       const stats =
         options.withDetails &&
