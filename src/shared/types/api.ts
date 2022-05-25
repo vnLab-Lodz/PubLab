@@ -5,6 +5,15 @@ export type IpcEventHandler<R = any> = (
   ...args: any[]
 ) => Promise<R>;
 
+export interface DirectoryEntryInfo {
+  name: string;
+  details?: { dateModifiedMs: number };
+  directory: {
+    isDirectory: boolean;
+    content: DirectoryEntryInfo[] | undefined;
+  };
+}
+
 export const CHANNELS = {
   PUBLICATIONS: {
     GENERATE: 'publications:generate',
@@ -26,6 +35,8 @@ export const CHANNELS = {
   },
   FILES: {
     VERIFY_PATH: 'files:verify-path',
+    READ_DIRECTORY: 'files:read-directory',
+    OPEN_DEFAULT: 'files:open-in-default-app',
   },
   GIT: {
     CLONE: 'git:clone',
