@@ -8403,12 +8403,7 @@ ignore-walk@^3.0.1:
   dependencies:
     minimatch "^3.0.4"
 
-ignore@^4.0.3, ignore@^4.0.6:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
-  integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
-
-ignore@^5.1.4, ignore@^5.1.8, ignore@^5.2.0:
+ignore@5.2.0, ignore@^4.0.3, ignore@^4.0.6, ignore@^5.1.4, ignore@^5.1.8, ignore@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.0.tgz#6d3bac8fa7fe0d45d9f9be7bac2fc279577e345a"
   integrity sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==
@@ -8962,10 +8957,10 @@ isobject@^4.0.0:
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-4.0.0.tgz#3f1c9155e73b192022a80819bacd0343711697b0"
   integrity sha512-S/2fF5wH8SJA/kmwr6HYhK/RI/OkhD84k8ntalo0iJjZikgq1XFvR5M8NPT1x5F7fBwCG3qHfnzeP/Vh/ZxCUA==
 
-isomorphic-git@^1.17.1:
-  version "1.17.1"
-  resolved "https://registry.yarnpkg.com/isomorphic-git/-/isomorphic-git-1.17.1.tgz#ac5a095b78cf5ceef51954f5df4b1bdd24943e5f"
-  integrity sha512-JLZzAmc78yELH6+bZgMzqV0KGEi2duo+URWmyEnSbhhibHwDsMIlUw5tr1ZVHjC2CUQtU0X/5EY9Sbzsyx7nug==
+isomorphic-git@^1.17.2:
+  version "1.17.2"
+  resolved "https://registry.yarnpkg.com/isomorphic-git/-/isomorphic-git-1.17.2.tgz#d49eda3122dfa3b860f0c68d651297c6403b715f"
+  integrity sha512-KtYyJye7Ad1XSgObsw7dwn3OaEcGUy04BHv6D+qBz2BWY7T7q7HXBzoSOiVvVMbOo+K2EZ2MUT+g2QkpJCPQLQ==
   dependencies:
     async-lock "^1.1.0"
     clean-git-ref "^2.0.1"
@@ -10308,10 +10303,15 @@ minimatch@^3.0.2, minimatch@^3.0.4, minimatch@^3.1.2:
   dependencies:
     brace-expansion "^1.1.7"
 
-minimist@^1.1.0, minimist@^1.1.1, minimist@^1.2.0, minimist@^1.2.5:
+minimist@^1.1.0, minimist@^1.1.1, minimist@^1.2.0:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
   integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
+
+minimist@^1.2.5:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.6.tgz#8637a5b759ea0d6e98702cfb3a9283323c93af44"
+  integrity sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==
 
 minimisted@^2.0.0:
   version "2.0.1"
