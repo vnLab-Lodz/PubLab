@@ -16,13 +16,14 @@ import {
 } from '../../../shared/types/api';
 import { createLogger } from '../../logger';
 import { LocalPublication } from '../../../shared/types';
+import { setStatusTree } from '../../../shared/redux/slices/repoStatusSlice';
 
-const getRepoStatus: IpcEventHandler = async () => {
+const updateRepoStatus: IpcEventHandler = async () => {
   const logger = createLogger();
   const publication = activePublication(store.getState()) as LocalPublication;
   if (!publication?.dirPath) {
     logger.appendError('No active publication or directory path is undefined');
-    return [];
+    return;
   }
 
   const result = await walk({
@@ -52,10 +53,10 @@ const getRepoStatus: IpcEventHandler = async () => {
       return Object.assign(parent, { children });
     },
   });
-  return result as GitRepoTreeItem;
+  store.dispatch(setStatusTree(result));
 };
 
-export default getRepoStatus;
+export default updateRepoStatus;
 
 interface WalkerEntries {
   head: WalkerEntry | null;
