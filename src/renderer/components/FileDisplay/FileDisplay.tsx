@@ -1,28 +1,35 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Typography, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import FileIcon from 'src/renderer/assets/FileIcon/FileIcon';
 import FolderIcon from 'src/renderer/assets/FolderIcon/FolderIcon';
-import { DirectoryEntryInfo } from '../../../shared/types/api';
+import path from 'path';
+import { GitRepoTreeItem } from '../../../shared/types/api';
 import * as Styled from './style';
 import { widths } from './Columns';
 import getDateString from '../../utils/getDateString';
 import i18n, { SupportedLangCode } from '../../internationalisation/i18next';
+import {
+  colorMap,
+  isChanged,
+  toStatusString,
+} from '../../../shared/utils/repoStatus/statusChecks';
+import { search } from '../../../shared/utils/repoStatus/tree';
 
 interface Props {
-  entry: Required<DirectoryEntryInfo>;
+  item: GitRepoTreeItem;
   treeLevel?: number;
 }
 
-const [statuses, colors] = [
-  ['added', 'modified', 'deleted', 'moved', 'unchanged'],
-  ['green', 'blue', 'red', 'orange', 'primary'],
-] as const; // placeholder
-
-const FileDisplay = ({ entry, treeLevel }: Props) => {
+const FileDisplay = ({ item, treeLevel }: Props) => {
   const { t } = useTranslation();
-  const statusIndex = useMemo(() => Math.floor(Math.random() * 5), []);
-  const statusColor = useTheme().palette[colors[statusIndex]].main;
+  const status = toStatusString(
+    item.isDirectory
+      ? search(item, (child) => isChanged(child.status))[0]?.status ||
+          'unchanged'
+      : item.status
+  );
+  const color = useTheme().palette[colorMap[status]].main;
   return (
     <Styled.DataContainer>
       <Styled.DataField
@@ -32,24 +39,25 @@ const FileDisplay = ({ entry, treeLevel }: Props) => {
           paddingLeft: `${treeLevel! * 2}rem`,
         }}
       >
-        {entry.directory.isDirectory ? (
-          <FolderIcon color={statusColor} />
+        {item.isDirectory ? (
+          <FolderIcon color={color} />
         ) : (
-          <FileIcon color={statusColor} />
+          <FileIcon color={color} />
         )}
-        <Typography ml='0.75rem'>{entry.name}</Typography>
+        <Typography ml='0.75rem'>{path.basename(item.filepath)}</Typography>
       </Styled.DataField>
       <Styled.DataField sx={{ width: widths[1] }}>
         <Typography variant='body2'>
-          {getDateString(
-            entry.details.dateModifiedMs,
-            i18n.language as SupportedLangCode
-          )}
+          {item.stats &&
+            getDateString(
+              item.stats.mtimeSeconds,
+              i18n.language as SupportedLangCode
+            )}
         </Typography>
       </Styled.DataField>
       <Styled.DataField sx={{ width: widths[2] }}>
-        <Typography color={statusColor} variant='body2'>
-          {t(`Files.status.${statuses[statusIndex]}`)}
+        <Typography color={color} variant='body2'>
+          {t(`Files.status.${status}`)}
         </Typography>
       </Styled.DataField>
     </Styled.DataContainer>

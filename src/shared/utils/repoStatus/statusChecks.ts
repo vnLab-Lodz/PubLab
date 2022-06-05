@@ -1,6 +1,13 @@
 import { GitFileStatus } from '../../types/api';
 
-export function statusString(status: GitFileStatus) {
+export const colorMap = {
+  modified: 'blue',
+  deleted: 'red',
+  added: 'green',
+  unchanged: 'primary',
+} as const;
+
+export function toStatusString(status: GitFileStatus): keyof typeof colorMap {
   if (isModified(status)) return 'modified';
   if (isDeleted(status)) return 'deleted';
   if (isAdded(status)) return 'added';

@@ -20,9 +20,12 @@ import {
 } from '../../../shared/types/eventTypeguards';
 import { openInDefaultApp } from '../../ipc';
 import Breadcrumbs from './subcomponents/Breadcrumbs/Breadcrumbs';
+import { selectRepoTree } from '../../../shared/redux/slices/repoStatusSlice';
+import { findByPath } from '../../../shared/utils/repoStatus/tree';
 
 const Files = () => {
   const project = useSelector(activePublication) as LocalPublication;
+  const RepoTree = useSelector(selectRepoTree);
   const [focused, setFocused] = React.useState<string>('');
   const [expanded, setExpanded] = React.useState<string[]>([]);
   const [currentDirectory, setCurrentDirectory] = React.useState(
@@ -44,6 +47,7 @@ const Files = () => {
     if (isOpenInteraction(event) && !node.isDirectory)
       openInDefaultApp(node.dirPath);
   };
+  if (RepoTree === undefined) return <></>;
   return (
     <ViewContent sx={{ overflowY: 'scroll' }}>
       <Typography variant='h1'>{project.name}</Typography>
@@ -72,16 +76,15 @@ const Files = () => {
             disabled={currentDirectory === project.dirPath}
           />
           <FileTreeItem
-            entry={{
-              name: project.name,
-              directory: { isDirectory: true, content: undefined },
-              details: { dateModifiedMs: 0 },
-            }}
-            dirPath={currentDirectory}
-            depth={1}
-            preload
+            item={
+              findByPath(
+                RepoTree,
+                path.join(path.relative(project.dirPath, currentDirectory))
+              ) || RepoTree
+            }
             treeLevel={0}
-            expandedNodes={expanded}
+            dirPath={project.dirPath}
+            notRendered
           />
         </TreeView>
       </Section>
