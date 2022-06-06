@@ -37,3 +37,7 @@ export function isFullyStaged({ workdir, stage }: GitFileStatus) {
 export function isPartiallyStaged({ stage }: GitFileStatus) {
   return stage === 3;
 }
+
+export function isStaged(status: GitFileStatus) {
+  return isFullyStaged(status) || isPartiallyStaged(status);
+}

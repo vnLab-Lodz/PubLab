@@ -7,6 +7,7 @@ import * as checkStatus from '../../../shared/utils/repoStatus/statusChecks';
 import * as repoTree from '../../../shared/utils/repoStatus/tree';
 import FileDisplay from '../../components/FileDisplay/FileDisplay';
 import ViewContent from '../../components/ViewContent/ViewContent';
+import ChangedFile from './subcomponents/ChangedFile/ChangedFile';
 
 const Changes = () => {
   const tree = useSelector(selectRepoTree);
@@ -14,8 +15,8 @@ const Changes = () => {
     <ViewContent>
       {tree &&
         repoTree
-          .search(tree, (node) => checkStatus.isModified(node.status))
-          .map((item) => checkStatus.toStatusString())}
+          .search(tree, (node) => checkStatus.isChanged(node.status))
+          .map((item) => <ChangedFile item={item} key={item.filepath} />)}
     </ViewContent>
   );
 };

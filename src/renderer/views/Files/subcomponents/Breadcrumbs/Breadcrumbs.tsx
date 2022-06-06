@@ -7,30 +7,33 @@ import path from 'path';
 import React from 'react';
 
 interface Props {
-  projectRootPath: string;
+  projectRootPath?: string;
   dirPath: string;
-  onClick: (path: string) => void;
+  onClick?: (path: string) => void;
 }
 
-export default function Breadcrumbs({
+const Breadcrumbs: React.FC<Props> = ({
   projectRootPath,
   dirPath,
   onClick,
-}: Props) {
+}) => {
   const splitPath = [
     '.',
-    ...path.relative(projectRootPath, dirPath).split(path.sep),
+    ...(projectRootPath
+      ? path.relative(projectRootPath, dirPath)
+      : dirPath
+    ).split(path.sep),
   ];
   const crumbs = splitPath.map((directory, index) => {
     const crumbPath = path.join(
-      projectRootPath,
+      projectRootPath || '.',
       ...splitPath.slice(0, index + 1)
     );
     return (
       <Button
         key={crumbPath}
-        onClick={() => onClick(crumbPath)}
-        disabled={splitPath.length === index + 1}
+        onClick={onClick ? () => onClick(crumbPath) : undefined}
+        disabled={!onClick || splitPath.length === index + 1}
         sx={{ minWidth: 0 }}
       >
         <Typography variant='body2' textTransform='lowercase' color='gray.dark'>
@@ -52,4 +55,8 @@ export default function Breadcrumbs({
       {crumbs}
     </MUIBreadcrumbs>
   );
-}
+};
+
+Breadcrumbs.defaultProps = { onClick: undefined, projectRootPath: undefined };
+
+export default Breadcrumbs;
