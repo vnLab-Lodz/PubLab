@@ -15,6 +15,7 @@ import updateConfig from './publications/updateConfig';
 import readDirectory from './files/readDirectory';
 import openInDefaultApp from './files/openInDefaultApp';
 import updateRepoStatus from './git/status';
+import stage from './git/stage';
 
 const registerApiHandlers = () => {
   ipc.handle(CHANNELS.PUBLICATIONS.GENERATE, generate);
@@ -32,6 +33,7 @@ const registerApiHandlers = () => {
   ipc.handle(CHANNELS.FILES.READ_DIRECTORY, readDirectory);
   ipc.handle(CHANNELS.GIT.CLONE, clone);
   ipc.handle(CHANNELS.GIT.REPO_STATUS, updateRepoStatus);
+  ipc.handle(CHANNELS.GIT.STAGE, stage);
 };
 
 export default registerApiHandlers;
