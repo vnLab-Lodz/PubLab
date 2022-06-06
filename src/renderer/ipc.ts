@@ -37,11 +37,16 @@ export async function updateConfig(dirPath: string, changes: Partial<Config>) {
 }
 
 export async function gitStage(item: GitRepoTreeItem) {
-  await ipcRenderer.invoke(CHANNELS.GIT.STAGE, 'add', item);
+  await ipcRenderer.invoke(CHANNELS.GIT.STAGE, 'stage', item);
   await ipcRenderer.invoke(CHANNELS.GIT.REPO_STATUS);
 }
 
 export async function gitUnstage(item: GitRepoTreeItem) {
-  await ipcRenderer.invoke(CHANNELS.GIT.STAGE, 'remove', item);
+  await ipcRenderer.invoke(CHANNELS.GIT.STAGE, 'unstage', item);
+  await ipcRenderer.invoke(CHANNELS.GIT.REPO_STATUS);
+}
+
+export async function gitCommit(message: string) {
+  await ipcRenderer.invoke(CHANNELS.GIT.COMMIT, message);
   await ipcRenderer.invoke(CHANNELS.GIT.REPO_STATUS);
 }
