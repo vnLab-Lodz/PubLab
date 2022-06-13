@@ -16,7 +16,8 @@
     "directory_not_existing": "Folder nie istnieje lub ścieżka jest błędna.",
     "invalid_folder_name": "Pole nie może zawerać znaków specjalnych i zarezerwowanych słów.",
     "notification": "Powiadomienie",
-    "change_date": "data modyfikacji"
+    "change_date": "data modyfikacji",
+    "all" : "all"
   },
   "notifications": {
     "directory_not_existing": "Folder {{dir}} nie istnieje lub ścieżka jest błędna. Sprawdź ścieżkę i spróbuj ponownie.",
@@ -180,6 +181,22 @@
       "deleted": "usunięty",
       "moved": "przeniesiony",
       "unchanged": "brak zmian"
+    }
+  },
+  "Changes": {
+    "current_changes" : "bieżące zmiany",
+    "history" : "historia",
+    "prompts" : {
+      "no_changes": "Nie ma jeszcze żadnych zmian.",
+      "which": "Które zmiany powinny zostać uwzględnione?",
+      "chosen": "Uwzględnione pliki",
+      "summary": "Napisz podsumowanie",
+      "description": "Napisz dokładny opis",
+      "success" : "Twój commit został dodany."
+    },
+    "buttons" : {
+      "create": "Stwórz commit",
+      "finalize": "Zatwierdź commit"
     }
   }
 }
