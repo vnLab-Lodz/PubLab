@@ -50,7 +50,7 @@ const FileDisplay = ({ item, treeLevel }: Props) => {
         <Typography variant='body2'>
           {item.stats &&
             getDateString(
-              item.stats.mtimeSeconds,
+              item.stats.mtimeSeconds * 1000,
               i18n.language as SupportedLangCode
             )}
         </Typography>

@@ -27,7 +27,7 @@ export function isDeleted({ head, workdir }: GitFileStatus) {
 }
 
 export function isAdded({ head, workdir }: GitFileStatus) {
-  return head === 0 && workdir === 1;
+  return head === 0 && workdir === 2;
 }
 
 export function isFullyStaged({ workdir, stage }: GitFileStatus) {
