@@ -23,12 +23,9 @@ interface Props {
 
 const FileDisplay = ({ item, treeLevel }: Props) => {
   const { t } = useTranslation();
-  const status = toStatusString(
-    item.isDirectory
-      ? search(item, (child) => isChanged(child.status))[0]?.status ||
-          'unchanged'
-      : item.status
-  );
+  const status = item.isDirectory
+    ? inferDirStatus(item)
+    : toStatusString(item.status);
   const color = useTheme().palette[colorMap[status]].main;
   return (
     <Styled.DataContainer>
@@ -69,3 +66,9 @@ FileDisplay.defaultProps = {
 };
 
 export default FileDisplay;
+
+function inferDirStatus(item: GitRepoTreeItem) {
+  return search(item, (child) => isChanged(child.status)).length
+    ? 'modified'
+    : 'unchanged';
+}
