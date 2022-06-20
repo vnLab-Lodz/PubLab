@@ -5,11 +5,16 @@ import { useTranslation } from 'react-i18next';
 import { selectRepoTree } from '../../../../../shared/redux/slices/repoStatusSlice';
 import * as checkStatus from '../../../../../shared/utils/repoStatus/statusChecks';
 import * as repoTree from '../../../../../shared/utils/repoStatus/tree';
-import ChangedFile from '../ChangedFile/ChangedFile';
 import * as Styled from './style';
 import { gitStage } from '../../../../ipc';
+import FilesByFolder from '../ChangedFiles/FilesByFolder';
+import Button from '../../../../components/Button/Button';
 
-const CurrentChanges = () => {
+interface Props {
+  openCommitForm: () => void;
+}
+
+const CurrentChanges: React.FC<Props> = ({ openCommitForm }) => {
   const { t } = useTranslation();
   const tree = useSelector(selectRepoTree);
   const changes = tree
@@ -29,10 +34,20 @@ const CurrentChanges = () => {
             {t('common.choose')} {t('common.all')}
           </Styled.TextButton>
           <Box mb={3}>
-            {changes.map((item) => (
-              <ChangedFile item={item} key={item.filepath} />
-            ))}
+            <FilesByFolder items={changes} />
           </Box>
+          <Button
+            variant='contained'
+            fullWidth
+            onClick={openCommitForm}
+            disabled={
+              !changes.some((changedFile) =>
+                checkStatus.isStaged(changedFile.status)
+              )
+            }
+          >
+            {t('Changes.buttons.create')}
+          </Button>
         </>
       ) : (
         <Typography variant='h1' component='h2'>

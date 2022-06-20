@@ -2,18 +2,19 @@ import { Box, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectRepoTree } from '../../../../../shared/redux/slices/repoStatusSlice';
 import * as checkStatus from '../../../../../shared/utils/repoStatus/statusChecks';
 import * as repoTree from '../../../../../shared/utils/repoStatus/tree';
 import Section from '../../../../components/Section/Section';
 import TextField from '../../../../components/TextField/TextField';
-import ChangedFile from '../ChangedFile/ChangedFile';
 import { validationSchema, FormFields } from './validationSchema';
 import * as Styled from './style';
 import Button from '../../../../components/Button/Button';
 import TextArea from '../../../../components/TextArea/TextArea';
 import { gitCommit } from '../../../../ipc';
+import FilesByFolder from '../ChangedFiles/FilesByFolder';
+import { sendNotification } from '../../../../../shared/redux/slices/notificationsSlice';
 
 interface Props {
   closeForm: () => void;
@@ -21,6 +22,7 @@ interface Props {
 
 const CommitForm: React.FC<Props> = ({ closeForm }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const formik = useFormik<FormFields>({
     initialValues: {
       summary: '',
@@ -31,6 +33,14 @@ const CommitForm: React.FC<Props> = ({ closeForm }) => {
       gitCommit(`${summary}\n\n${description}`);
       setSubmitting(false);
       closeForm();
+      dispatch(
+        sendNotification({
+          title: t('Notification.success'),
+          message: t('Changes.prompts.success'),
+          type: 'success',
+          autoDismiss: true, // if not set the default is false
+        })
+      );
     },
   });
   const tree = useSelector(selectRepoTree);
@@ -52,9 +62,7 @@ const CommitForm: React.FC<Props> = ({ closeForm }) => {
           {t('Changes.prompts.chosen')}:
         </Typography>
         <Box mb={2}>
-          {commited.map((item) => (
-            <ChangedFile item={item} key={item.filepath} noButton />
-          ))}
+          <FilesByFolder items={commited} noButtons />
         </Box>
       </Section>
       <form onSubmit={formik.handleSubmit}>
