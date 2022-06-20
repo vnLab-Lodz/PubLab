@@ -17,7 +17,8 @@
     "invalid_folder_name": "Field contains invalid characters or reserved keywords.",
     "notification": "Notification",
     "change_date": "change date",
-    "all" : "all"
+    "all" : "all",
+    "go_back": "go back"
   },
   "notifications": {
     "directory_not_existing": "{{dir}} directory does not exist or the path is invalid. Check the path and try again.",
@@ -197,6 +198,10 @@
     "buttons" : {
       "create": "create the commit",
       "finalize": "finalize the commit"
+    },
+    "placeholders" : {
+      "summary":"Your summary...",
+      "description":"Your description..."
     }
   }
 }

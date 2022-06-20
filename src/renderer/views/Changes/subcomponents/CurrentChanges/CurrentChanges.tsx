@@ -19,7 +19,9 @@ const CurrentChanges = () => {
     <>
       {changes.length ? (
         <>
-          <Typography variant='h1'>{t('Changes.prompts.which')}</Typography>
+          <Typography variant='h1' component='h2'>
+            {t('Changes.prompts.which')}
+          </Typography>
           <Styled.TextButton
             variant='text'
             onClick={() => changes.forEach((item) => gitStage(item))}
@@ -33,7 +35,9 @@ const CurrentChanges = () => {
           </Box>
         </>
       ) : (
-        <Typography variant='h1'>{t('Changes.prompts.no_changes')}</Typography>
+        <Typography variant='h1' component='h2'>
+          {t('Changes.prompts.no_changes')}
+        </Typography>
       )}
     </>
   );

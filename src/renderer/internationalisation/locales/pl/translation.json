@@ -17,7 +17,8 @@
     "invalid_folder_name": "Pole nie może zawerać znaków specjalnych i zarezerwowanych słów.",
     "notification": "Powiadomienie",
     "change_date": "data modyfikacji",
-    "all" : "wszystko"
+    "all" : "wszystko",
+    "go_back": "powrót"
   },
   "notifications": {
     "directory_not_existing": "Folder {{dir}} nie istnieje lub ścieżka jest błędna. Sprawdź ścieżkę i spróbuj ponownie.",
@@ -197,6 +198,10 @@
     "buttons" : {
       "create": "Stwórz commit",
       "finalize": "Zatwierdź commit"
+    },
+    "placeholders" : {
+      "summary":"Twoje podsumowanie...",
+      "description":"Twój opis..."
     }
   }
 }

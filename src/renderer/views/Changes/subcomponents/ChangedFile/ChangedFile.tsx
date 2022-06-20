@@ -14,38 +14,41 @@ import StageButton from './StageButton';
 
 interface Props {
   item: GitRepoTreeItem;
+  noButton?: boolean;
 }
 
-const ChangedFile: React.FC<Props> = ({ item }) => (
+const ChangedFile: React.FC<Props> = ({ item, noButton }) => (
   <Box>
     <Box sx={{ display: 'flex' }}>
-      <Box
-        mr={2}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-end',
-        }}
-      >
-        {isStaged(item.status) && (
-          <StageButton
-            onClick={() => {
-              gitUnstage(item);
-            }}
-          >
-            <ClearIcon fontSize='inherit' />
-          </StageButton>
-        )}
-        {!isFullyStaged(item.status) && (
-          <StageButton
-            onClick={() => {
-              gitStage(item);
-            }}
-          >
-            <AddIcon fontSize='inherit' />
-          </StageButton>
-        )}
-      </Box>
+      {!noButton && (
+        <Box
+          mr={2}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+          }}
+        >
+          {isStaged(item.status) && (
+            <StageButton
+              onClick={() => {
+                gitUnstage(item);
+              }}
+            >
+              <ClearIcon fontSize='inherit' />
+            </StageButton>
+          )}
+          {!isFullyStaged(item.status) && (
+            <StageButton
+              onClick={() => {
+                gitStage(item);
+              }}
+            >
+              <AddIcon fontSize='inherit' />
+            </StageButton>
+          )}
+        </Box>
+      )}
       <Box sx={{ flexGrow: '1' }}>
         <Header
           nameSubstitute={
@@ -63,6 +66,10 @@ const ChangedFile: React.FC<Props> = ({ item }) => (
     </Box>
   </Box>
 );
+
+ChangedFile.defaultProps = {
+  noButton: false,
+};
 
 export default ChangedFile;
 
