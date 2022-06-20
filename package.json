@@ -153,6 +153,6 @@
     "yup": "^0.32.11"
   },
   "resolutions": {
-    "ignore": "5.2.0"
+    "isomorphic-git/ignore": "^5.2.0"
 }
 }
