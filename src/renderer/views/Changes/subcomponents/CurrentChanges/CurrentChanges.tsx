@@ -8,7 +8,6 @@ import * as repoTree from '../../../../../shared/utils/repoStatus/tree';
 import ChangedFile from '../ChangedFile/ChangedFile';
 import * as Styled from './style';
 import { gitStage } from '../../../../ipc';
-import Button from '../../../../components/Button/Button';
 
 const CurrentChanges = () => {
   const { t } = useTranslation();
@@ -32,9 +31,6 @@ const CurrentChanges = () => {
               <ChangedFile item={item} key={item.filepath} />
             ))}
           </Box>
-          <Button variant='contained' fullWidth>
-            {t('Changes.buttons.create')}
-          </Button>
         </>
       ) : (
         <Typography variant='h1'>{t('Changes.prompts.no_changes')}</Typography>
