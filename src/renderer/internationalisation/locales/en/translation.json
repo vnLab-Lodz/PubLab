@@ -17,7 +17,7 @@
     "invalid_folder_name": "Field contains invalid characters or reserved keywords.",
     "notification": "Notification",
     "change_date": "change date",
-    "all" : "all",
+    "all": "all",
     "go_back": "go back"
   },
   "notifications": {
@@ -185,23 +185,23 @@
     }
   },
   "Changes": {
-    "current_changes" : "current changes",
-    "history" : "history",
-    "prompts" : {
+    "current_changes": "current changes",
+    "history": "history",
+    "prompts": {
       "no_changes": "No changes in this session yet.",
       "which": "Which changes should be added to a commit?",
       "chosen": "Files you’ve chosen to commit",
       "summary": "Write a summary",
       "description": "Write a description",
-      "success" : "Your commit has been added."
+      "success": "Your commit has been added."
     },
-    "buttons" : {
+    "buttons": {
       "create": "create the commit",
       "finalize": "finalize the commit"
     },
-    "placeholders" : {
-      "summary":"Your summary...",
-      "description":"Your description..."
+    "placeholders": {
+      "summary": "Your summary...",
+      "description": "Your description..."
     }
   }
 }
