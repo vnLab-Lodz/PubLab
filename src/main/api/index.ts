@@ -17,6 +17,7 @@ import openInDefaultApp from './files/openInDefaultApp';
 import updateRepoStatus from './git/status';
 import stage from './git/stage';
 import commit from './git/commit';
+import * as watchProjectDir from './files/watchProjectDirectory';
 
 const registerApiHandlers = () => {
   ipc.handle(CHANNELS.PUBLICATIONS.GENERATE, generate);
@@ -36,6 +37,8 @@ const registerApiHandlers = () => {
   ipc.handle(CHANNELS.GIT.REPO_STATUS, updateRepoStatus);
   ipc.handle(CHANNELS.GIT.STAGE, stage);
   ipc.handle(CHANNELS.GIT.COMMIT, commit);
+  ipc.handle(CHANNELS.FILES.WATCH_PROJECT_DIR.START, watchProjectDir.start);
+  ipc.handle(CHANNELS.FILES.WATCH_PROJECT_DIR.STOP, watchProjectDir.stop);
 };
 
 export default registerApiHandlers;

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import path from 'path';
 import { TreeView } from '@mui/lab';
 import { ArrowDropDown, ArrowRight } from '@mui/icons-material';
 import { Typography } from '@mui/material';
+import { ipcRenderer } from 'electron';
 import { activePublication } from '../../../shared/redux/slices/loadPublicationsSlice';
 import { LocalPublication } from '../../../shared/types';
 import FileTreeItem, {
@@ -22,6 +23,7 @@ import { openInDefaultApp } from '../../ipc';
 import Breadcrumbs from './subcomponents/Breadcrumbs/Breadcrumbs';
 import { selectRepoTree } from '../../../shared/redux/slices/repoStatusSlice';
 import { findByPath } from '../../../shared/utils/repoStatus/tree';
+import { CHANNELS } from '../../../shared/types/api';
 
 const Files = () => {
   const project = useSelector(activePublication) as LocalPublication;
@@ -31,6 +33,13 @@ const Files = () => {
   const [currentDirectory, setCurrentDirectory] = React.useState(
     path.join(project.dirPath, 'publication')
   );
+
+  useEffect(() => {
+    ipcRenderer.invoke(CHANNELS.FILES.WATCH_PROJECT_DIR.START);
+    return () => {
+      ipcRenderer.invoke(CHANNELS.FILES.WATCH_PROJECT_DIR.STOP);
+    };
+  }, []);
 
   const handleToggle = (event: React.SyntheticEvent, nodeIds: string[]) => {
     const node = parseNodeId(focused);

@@ -52,6 +52,10 @@ export const CHANNELS = {
     VERIFY_PATH: 'files:verify-path',
     READ_DIRECTORY: 'files:read-directory',
     OPEN_DEFAULT: 'files:open-in-default-app',
+    WATCH_PROJECT_DIR: {
+      START: 'files:watch-project-dir-start',
+      STOP: 'files:watch-project-dir-stop',
+    },
   },
   GIT: {
     CLONE: 'git:clone',

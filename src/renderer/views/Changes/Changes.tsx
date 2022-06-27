@@ -1,5 +1,5 @@
 import { IconButton, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { ipcRenderer } from 'electron';
@@ -12,6 +12,14 @@ import CommitForm from './subcomponents/CommitForm/CommitForm';
 const Changes = () => {
   const project = useSelector(activePublication);
   const [isCommitFormOpen, setCommitFormOpen] = useState(false);
+
+  useEffect(() => {
+    ipcRenderer.invoke(CHANNELS.FILES.WATCH_PROJECT_DIR.START);
+    return () => {
+      ipcRenderer.invoke(CHANNELS.FILES.WATCH_PROJECT_DIR.STOP);
+    };
+  }, []);
+
   return (
     <ViewContent>
       <Typography variant='h1' mb={4}>

@@ -18,7 +18,7 @@ import { createLogger } from '../../logger';
 import { LocalPublication } from '../../../shared/types';
 import { setStatusTree } from '../../../shared/redux/slices/repoStatusSlice';
 
-const updateRepoStatus: IpcEventHandler = async () => {
+export const handleUpdateRequest = async () => {
   const logger = createLogger();
   const publication = activePublication(store.getState()) as LocalPublication;
   if (!publication?.dirPath) {
@@ -54,6 +54,10 @@ const updateRepoStatus: IpcEventHandler = async () => {
     },
   });
   store.dispatch(setStatusTree(result));
+};
+
+const updateRepoStatus: IpcEventHandler = async () => {
+  await handleUpdateRequest();
 };
 
 export default updateRepoStatus;
