@@ -6,7 +6,7 @@ import { selectRepoTree } from '../../../../../shared/redux/slices/repoStatusSli
 import * as checkStatus from '../../../../../shared/utils/repoStatus/statusChecks';
 import * as repoTree from '../../../../../shared/utils/repoStatus/tree';
 import * as Styled from './style';
-import { gitStage } from '../../../../ipc';
+import { gitStage, gitUnstage } from '../../../../ipc';
 import FilesByFolder from '../ChangedFiles/FilesByFolder';
 import Button from '../../../../components/Button/Button';
 
@@ -20,6 +20,10 @@ const CurrentChanges: React.FC<Props> = ({ openCommitForm }) => {
   const changes = tree
     ? repoTree.search(tree, (node) => checkStatus.isChanged(node.status))
     : [];
+  const stagedCount = changes.reduce(
+    (count, change) => count + (checkStatus.isStaged(change.status) ? 1 : 0),
+    0
+  );
   return (
     <>
       {changes.length ? (
@@ -29,9 +33,16 @@ const CurrentChanges: React.FC<Props> = ({ openCommitForm }) => {
           </Typography>
           <Styled.TextButton
             variant='text'
-            onClick={() => changes.forEach((item) => gitStage(item))}
+            onClick={() =>
+              changes.forEach((item) =>
+                (stagedCount === changes.length ? gitUnstage : gitStage)(item)
+              )
+            }
           >
-            {t('common.choose')} {t('common.all')}
+            {t(
+              stagedCount === changes.length ? 'common.delete' : 'common.choose'
+            )}{' '}
+            {t('common.all')}
           </Styled.TextButton>
           <Box mb={3}>
             <FilesByFolder items={changes} />
@@ -40,11 +51,7 @@ const CurrentChanges: React.FC<Props> = ({ openCommitForm }) => {
             variant='contained'
             fullWidth
             onClick={openCommitForm}
-            disabled={
-              !changes.some((changedFile) =>
-                checkStatus.isStaged(changedFile.status)
-              )
-            }
+            disabled={!stagedCount}
           >
             {t('Changes.buttons.create')}
           </Button>
