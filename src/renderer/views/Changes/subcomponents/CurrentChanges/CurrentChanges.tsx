@@ -34,9 +34,7 @@ const CurrentChanges: React.FC<Props> = ({ openCommitForm }) => {
           <Styled.TextButton
             variant='text'
             onClick={() =>
-              changes.forEach((item) =>
-                (stagedCount === changes.length ? gitUnstage : gitStage)(item)
-              )
+              (stagedCount === changes.length ? gitUnstage : gitStage)(changes)
             }
           >
             {t(

@@ -30,7 +30,7 @@ const ChangedFile: React.FC<Props> = ({ item, noButton }) => (
         {isStaged(item.status) && (
           <StageButton
             onClick={() => {
-              gitUnstage(item);
+              gitUnstage([item]);
             }}
           >
             <ClearIcon fontSize='inherit' />
@@ -39,7 +39,7 @@ const ChangedFile: React.FC<Props> = ({ item, noButton }) => (
         {!isFullyStaged(item.status) && (
           <StageButton
             onClick={() => {
-              gitStage(item);
+              gitStage([item]);
             }}
           >
             <AddIcon fontSize='inherit' />

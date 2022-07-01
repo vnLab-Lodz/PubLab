@@ -9,7 +9,7 @@ import { createLogger } from '../../logger';
 const stage: IpcEventHandler = async (
   _,
   action: 'stage' | 'unstage',
-  item: GitRepoTreeItem
+  items: GitRepoTreeItem[]
 ) => {
   const logger = createLogger();
   const publication = activePublication(store.getState()) as LocalPublication;
@@ -18,20 +18,24 @@ const stage: IpcEventHandler = async (
     return;
   }
 
-  if (action === 'stage')
-    await updateIndex({
-      fs,
-      dir: publication.dirPath,
-      filepath: item.filepath,
-      add: true,
-      remove: !item.status.workdir,
-    });
-  else if (action === 'unstage')
-    await resetIndex({
-      fs,
-      dir: publication.dirPath,
-      filepath: item.filepath,
-    });
+  await Promise.all(
+    items.map(async (item) => {
+      if (action === 'stage')
+        await updateIndex({
+          fs,
+          dir: publication.dirPath,
+          filepath: item.filepath,
+          add: true,
+          remove: !item.status.workdir,
+        });
+      else if (action === 'unstage')
+        await resetIndex({
+          fs,
+          dir: publication.dirPath,
+          filepath: item.filepath,
+        });
+    })
+  );
 };
 
 export default stage;

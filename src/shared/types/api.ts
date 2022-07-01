@@ -56,6 +56,7 @@ export const CHANNELS = {
   GIT: {
     CLONE: 'git:clone',
     REPO_STATUS: 'git:repo-status',
+    FILES_STATUS: 'git:files-status',
     STAGE: 'git:stage',
     COMMIT: 'git:commit',
   },

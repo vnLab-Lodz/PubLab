@@ -79,7 +79,8 @@ const Files = () => {
             item={
               findByPath(
                 RepoTree,
-                path.join(path.relative(project.dirPath, currentDirectory))
+                path.join(path.relative(project.dirPath, currentDirectory)),
+                { targetPathSeparator: path.sep }
               ) || RepoTree
             }
             treeLevel={0}

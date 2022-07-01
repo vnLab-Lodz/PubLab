@@ -16,9 +16,12 @@ import {
 } from '../../../shared/types/api';
 import { createLogger } from '../../logger';
 import { LocalPublication } from '../../../shared/types';
-import { setStatusTree } from '../../../shared/redux/slices/repoStatusSlice';
+import {
+  replaceNode,
+  setStatusTree,
+} from '../../../shared/redux/slices/repoStatusSlice';
 
-const updateRepoStatus: IpcEventHandler = async () => {
+export const updateRepoStatus: IpcEventHandler = async () => {
   const logger = createLogger();
   const publication = activePublication(store.getState()) as LocalPublication;
   if (!publication?.dirPath) {
@@ -56,7 +59,56 @@ const updateRepoStatus: IpcEventHandler = async () => {
   store.dispatch(setStatusTree(result));
 };
 
-export default updateRepoStatus;
+export const updateFilesStatus: IpcEventHandler = async (
+  _,
+  paths: string[]
+) => {
+  const logger = createLogger();
+  const publication = activePublication(store.getState()) as LocalPublication;
+  if (!publication?.dirPath) {
+    logger.appendError('No active publication or directory path is undefined');
+    return;
+  }
+
+  const result = (await walk({
+    fs,
+    dir: publication.dirPath,
+    trees: [TREE({ ref: 'HEAD' }), WORKDIR(), STAGE()],
+    async map(
+      filepath,
+      [head, workdir, stage]
+    ): Promise<Omit<GitRepoTreeItem, 'children'> | null | undefined> {
+      if (
+        paths.some((path) => path.startsWith(filepath) && path !== filepath) ||
+        filepath === '.'
+      ) {
+        return undefined; // do not include the directory, but still walk its children
+      }
+
+      if (!paths.some((path) => filepath.startsWith(path))) {
+        return null;
+      }
+
+      if (!head && !stage && workdir) {
+        const isIgnored = await ignored({
+          fs,
+          dir: publication.dirPath,
+          filepath,
+        });
+        if (isIgnored) {
+          return null;
+        }
+      }
+      const details = await getDetails({ head, workdir, stage });
+      return { filepath, ...details };
+    },
+    async reduce(parent: GitRepoTreeItem, children: GitRepoTreeItem[]) {
+      if (parent === undefined) return children.flat();
+      return Object.assign(parent, { children });
+    },
+  })) as GitRepoTreeItem[];
+  result.forEach((node) => store.dispatch(replaceNode(node)));
+};
 
 interface WalkerEntries {
   head: WalkerEntry | null;
