@@ -22,7 +22,7 @@ const FilesByFolder: React.FC<Props> = ({ items, noButtons }) => {
     <>
       {Object.entries(groupedFiles).map(([key, files]) => (
         <Box key={key}>
-          <Box ml={noButtons ? 0 : 3}>
+          <Box ml={noButtons ? 0 : 3} mt={2}>
             <Header
               nameSubstitute={<Typography variant='body2'>{key}</Typography>}
             />
