@@ -1,14 +1,20 @@
 import { Box, Typography } from '@mui/material';
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuidv4 } from 'uuid';
 import { selectRepoTree } from '../../../../../shared/redux/slices/repoStatusSlice';
+import {
+  addLoader,
+  removeLoader,
+} from '../../../../../shared/redux/slices/loadersSlice';
 import * as checkStatus from '../../../../../shared/utils/repoStatus/statusChecks';
 import * as repoTree from '../../../../../shared/utils/repoStatus/tree';
 import * as Styled from './style';
 import { gitStage, gitUnstage } from '../../../../ipc';
 import FilesByFolder from '../ChangedFiles/FilesByFolder';
 import Button from '../../../../components/Button/Button';
+import LoaderOverlay from '../../../../components/LoaderOverlay/LoaderOverlay';
 
 interface Props {
   openCommitForm: () => void;
@@ -17,6 +23,8 @@ interface Props {
 const CurrentChanges: React.FC<Props> = ({ openCommitForm }) => {
   const { t } = useTranslation();
   const tree = useSelector(selectRepoTree);
+  const dispatch = useDispatch();
+  const [loaderId, setLoaderId] = useState('');
   const changes = tree
     ? repoTree.search(tree, (node) => checkStatus.isChanged(node.status))
     : [];
@@ -33,9 +41,15 @@ const CurrentChanges: React.FC<Props> = ({ openCommitForm }) => {
           </Typography>
           <Styled.TextButton
             variant='text'
-            onClick={() =>
-              (stagedCount === changes.length ? gitUnstage : gitStage)(changes)
-            }
+            onClick={async () => {
+              const id = uuidv4();
+              setLoaderId(id);
+              dispatch(addLoader({ id }));
+              await (stagedCount === changes.length ? gitUnstage : gitStage)(
+                changes
+              );
+              dispatch(removeLoader(id));
+            }}
           >
             {t(
               stagedCount === changes.length ? 'common.delete' : 'common.choose'
@@ -59,6 +73,7 @@ const CurrentChanges: React.FC<Props> = ({ openCommitForm }) => {
           {t('Changes.prompts.no_changes')}
         </Typography>
       )}
+      <LoaderOverlay id={loaderId} />
     </>
   );
 };
