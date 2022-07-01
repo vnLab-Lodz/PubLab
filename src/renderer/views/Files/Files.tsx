@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import path from 'path';
 import { TreeView } from '@mui/lab';
 import { ArrowDropDown, ArrowRight } from '@mui/icons-material';
-import { Typography } from '@mui/material';
 import { activePublication } from '../../../shared/redux/slices/loadPublicationsSlice';
 import { LocalPublication } from '../../../shared/types';
 import FileTreeItem, {
@@ -22,6 +21,7 @@ import { openInDefaultApp } from '../../ipc';
 import Breadcrumbs from './subcomponents/Breadcrumbs/Breadcrumbs';
 import { selectRepoTree } from '../../../shared/redux/slices/repoStatusSlice';
 import { findByPath } from '../../../shared/utils/repoStatus/tree';
+import PublicationHeader from '../../components/PublicationHeader/PublicationHeader';
 
 const Files = () => {
   const project = useSelector(activePublication) as LocalPublication;
@@ -50,7 +50,7 @@ const Files = () => {
   if (RepoTree === undefined) return <></>;
   return (
     <ViewContent sx={{ overflowY: 'scroll' }}>
-      <Typography variant='h1'>{project.name}</Typography>
+      <PublicationHeader />
       <Breadcrumbs
         projectRootPath={project.dirPath}
         dirPath={currentDirectory}

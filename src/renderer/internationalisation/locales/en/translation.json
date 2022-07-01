@@ -197,7 +197,8 @@
     },
     "buttons": {
       "create": "create the commit",
-      "finalize": "finalize the commit"
+      "finalize": "finalize the commit",
+      "refresh": "refresh status"
     },
     "placeholders": {
       "summary": "Your summary...",
