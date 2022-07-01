@@ -56,3 +56,7 @@ export async function gitCommit(message: string) {
   await ipcRenderer.invoke(CHANNELS.GIT.COMMIT, message);
   await ipcRenderer.invoke(CHANNELS.GIT.REPO_STATUS);
 }
+
+export async function gitPush(loaderId: string, remoteRef?: string) {
+  await ipcRenderer.invoke(CHANNELS.GIT.PUSH, { loaderId, remoteRef });
+}

@@ -1,8 +1,9 @@
 import { Box, Typography } from '@mui/material';
 import { useFormik } from 'formik';
-import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectRepoTree } from '../../../../../shared/redux/slices/repoStatusSlice';
 import * as checkStatus from '../../../../../shared/utils/repoStatus/statusChecks';
 import * as repoTree from '../../../../../shared/utils/repoStatus/tree';
@@ -12,9 +13,9 @@ import { validationSchema, FormFields } from './validationSchema';
 import * as Styled from './style';
 import Button from '../../../../components/Button/Button';
 import TextArea from '../../../../components/TextArea/TextArea';
-import { gitCommit } from '../../../../ipc';
+import { gitCommit, gitPush } from '../../../../ipc';
 import FilesByFolder from '../ChangedFiles/FilesByFolder';
-import { sendNotification } from '../../../../../shared/redux/slices/notificationsSlice';
+import LoaderOverlay from '../../../../components/LoaderOverlay/LoaderOverlay';
 
 interface Props {
   closeForm: () => void;
@@ -22,25 +23,20 @@ interface Props {
 
 const CommitForm: React.FC<Props> = ({ closeForm }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const [loaderId, setLoaderID] = useState('');
   const formik = useFormik<FormFields>({
     initialValues: {
       summary: '',
       description: '',
     },
     validationSchema,
-    onSubmit: ({ summary, description }, { setSubmitting }) => {
-      gitCommit(`${summary}\n\n${description}`);
+    onSubmit: async ({ summary, description }, { setSubmitting }) => {
+      const id = uuidv4();
+      setLoaderID(id);
+      await gitCommit(`${summary}\n\n${description}`);
       setSubmitting(false);
+      await gitPush(id);
       closeForm();
-      dispatch(
-        sendNotification({
-          title: t('Notification.success'),
-          message: t('Changes.prompts.success'),
-          type: 'success',
-          autoDismiss: true, // if not set the default is false
-        })
-      );
     },
   });
   const tree = useSelector(selectRepoTree);
@@ -122,6 +118,7 @@ const CommitForm: React.FC<Props> = ({ closeForm }) => {
           {t('Changes.buttons.finalize')}
         </Button>
       </form>
+      <LoaderOverlay id={loaderId} />
     </>
   );
 };
