@@ -1,4 +1,5 @@
 import { IpcMainInvokeEvent } from 'electron';
+import { Stat } from 'isomorphic-git';
 
 export type IpcEventHandler<R = any> = (
   event: IpcMainInvokeEvent,
@@ -12,6 +13,20 @@ export interface DirectoryEntryInfo {
     isDirectory: boolean;
     content: DirectoryEntryInfo[] | undefined;
   };
+}
+
+export interface GitFileStatus {
+  head: 0 | 1;
+  workdir: 0 | 1 | 2;
+  stage: 0 | 1 | 2 | 3;
+}
+
+export interface GitRepoTreeItem {
+  filepath: string;
+  status: GitFileStatus;
+  stats?: Stat;
+  isDirectory?: boolean;
+  children: GitRepoTreeItem[];
 }
 
 export const CHANNELS = {
@@ -40,5 +55,10 @@ export const CHANNELS = {
   },
   GIT: {
     CLONE: 'git:clone',
+    PUSH: 'git:push',
+    REPO_STATUS: 'git:repo-status',
+    FILES_STATUS: 'git:files-status',
+    STAGE: 'git:stage',
+    COMMIT: 'git:commit',
   },
 } as const;

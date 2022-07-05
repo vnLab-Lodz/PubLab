@@ -16,12 +16,16 @@
     "directory_not_existing": "Directory does not exist or the path is invalid.",
     "invalid_folder_name": "Field contains invalid characters or reserved keywords.",
     "notification": "Notification",
-    "change_date": "change date"
+    "change_date": "change date",
+    "all": "all",
+    "go_back": "go back"
   },
   "notifications": {
     "directory_not_existing": "{{dir}} directory does not exist or the path is invalid. Check the path and try again.",
     "github_clone_auth_failed": "GitHub authentication failed while cloning the repository. For more information check logs.",
     "clone_success": "{{name}} has been successfully cloned to {{dir}}",
+    "github_push_auth_failed": "GitHub authentication failed while pushing to the repository. For more information check logs.",
+    "push_success": "Your changes have been succesfully sent to the remote repository.",
     "error": "Something went wrong. For more information check logs."
   },
   "loaders": {
@@ -30,7 +34,8 @@
     "receiving_objects": "{{progress}} Receiving objects",
     "resolving_deltas": "{{progress}} Resolving deltas",
     "analyzing_workdir": "{{progress}} Analyzing workdir",
-    "updating_workdir": "{{progress}} Updating working directory"
+    "updating_workdir": "{{progress}} Updating working directory",
+    "pushing": "Pushing changes from {{dir}} to the remote repository"
   },
   "auth": {
     "in_progress": "Authentication in progress:",
@@ -180,6 +185,27 @@
       "deleted": "deleted",
       "moved": "moved",
       "unchanged": "unchanged"
+    }
+  },
+  "Changes": {
+    "current_changes": "current changes",
+    "history": "history",
+    "prompts": {
+      "no_changes": "No changes in this session yet.",
+      "which": "Which changes should be added to a commit?",
+      "chosen": "Files you’ve chosen to commit",
+      "summary": "Write a summary",
+      "description": "Write a description",
+      "success": "Your commit has been added."
+    },
+    "buttons": {
+      "create": "create the commit",
+      "finalize": "finalize the commit",
+      "refresh": "refresh status"
+    },
+    "placeholders": {
+      "summary": "Your summary...",
+      "description": "Your description..."
     }
   }
 }

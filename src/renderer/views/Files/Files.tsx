@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import path from 'path';
 import { TreeView } from '@mui/lab';
 import { ArrowDropDown, ArrowRight } from '@mui/icons-material';
-import { Typography } from '@mui/material';
 import { activePublication } from '../../../shared/redux/slices/loadPublicationsSlice';
 import { LocalPublication } from '../../../shared/types';
 import FileTreeItem, {
@@ -20,9 +19,13 @@ import {
 } from '../../../shared/types/eventTypeguards';
 import { openInDefaultApp } from '../../ipc';
 import Breadcrumbs from './subcomponents/Breadcrumbs/Breadcrumbs';
+import { selectRepoTree } from '../../../shared/redux/slices/repoStatusSlice';
+import { findByPath } from '../../../shared/utils/repoStatus/tree';
+import PublicationHeader from '../../components/PublicationHeader/PublicationHeader';
 
 const Files = () => {
   const project = useSelector(activePublication) as LocalPublication;
+  const RepoTree = useSelector(selectRepoTree);
   const [focused, setFocused] = React.useState<string>('');
   const [expanded, setExpanded] = React.useState<string[]>([]);
   const [currentDirectory, setCurrentDirectory] = React.useState(
@@ -44,9 +47,10 @@ const Files = () => {
     if (isOpenInteraction(event) && !node.isDirectory)
       openInDefaultApp(node.dirPath);
   };
+  if (RepoTree === undefined) return <></>;
   return (
     <ViewContent sx={{ overflowY: 'scroll' }}>
-      <Typography variant='h1'>{project.name}</Typography>
+      <PublicationHeader />
       <Breadcrumbs
         projectRootPath={project.dirPath}
         dirPath={currentDirectory}
@@ -72,16 +76,16 @@ const Files = () => {
             disabled={currentDirectory === project.dirPath}
           />
           <FileTreeItem
-            entry={{
-              name: project.name,
-              directory: { isDirectory: true, content: undefined },
-              details: { dateModifiedMs: 0 },
-            }}
-            dirPath={currentDirectory}
-            depth={1}
-            preload
+            item={
+              findByPath(
+                RepoTree,
+                path.join(path.relative(project.dirPath, currentDirectory)),
+                { targetPathSeparator: path.sep }
+              ) || RepoTree
+            }
             treeLevel={0}
-            expandedNodes={expanded}
+            dirPath={project.dirPath}
+            notRendered
           />
         </TreeView>
       </Section>

@@ -7,6 +7,7 @@ import publicationGenerationReducer from './slices/publicationGenerationSlice';
 import addPublicationWizardReducer from './slices/addPublicationWizardSlice';
 import notificationsReducer from './slices/notificationsSlice';
 import loadersReducer from './slices/loadersSlice';
+import repoStatusReducer from './slices/repoStatusSlice';
 
 const rootReducer = combineReducers({
   currentView: currentViewReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   addPublicationWizard: addPublicationWizardReducer,
   publicationGeneration: publicationGenerationReducer,
   loadedPublications: loadPublicationsReducer,
+  repoStatus: repoStatusReducer,
   notifications: notificationsReducer,
   loaders: loadersReducer,
 });

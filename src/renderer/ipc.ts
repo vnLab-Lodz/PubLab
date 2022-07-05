@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import { CHANNELS } from 'src/shared/types/api';
+import { CHANNELS, GitRepoTreeItem } from 'src/shared/types/api';
 import { DirectoryEntryInfo } from '../shared/types/api';
 import { Config } from '../main/lib/configurationFileHandler';
 
@@ -34,4 +34,29 @@ export async function updateConfig(dirPath: string, changes: Partial<Config>) {
     dirPath,
     changes
   );
+}
+
+export async function gitStage(items: GitRepoTreeItem[]) {
+  await ipcRenderer.invoke(CHANNELS.GIT.STAGE, 'stage', items);
+  await ipcRenderer.invoke(
+    CHANNELS.GIT.FILES_STATUS,
+    items.map((item) => item.filepath)
+  );
+}
+
+export async function gitUnstage(items: GitRepoTreeItem[]) {
+  await ipcRenderer.invoke(CHANNELS.GIT.STAGE, 'unstage', items);
+  await ipcRenderer.invoke(
+    CHANNELS.GIT.FILES_STATUS,
+    items.map((item) => item.filepath)
+  );
+}
+
+export async function gitCommit(message: string) {
+  await ipcRenderer.invoke(CHANNELS.GIT.COMMIT, message);
+  await ipcRenderer.invoke(CHANNELS.GIT.REPO_STATUS);
+}
+
+export async function gitPush(loaderId: string, remoteRef?: string) {
+  await ipcRenderer.invoke(CHANNELS.GIT.PUSH, { loaderId, remoteRef });
 }
