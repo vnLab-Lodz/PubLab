@@ -18,7 +18,8 @@
     "notification": "Notification",
     "change_date": "change date",
     "all": "all",
-    "go_back": "go back"
+    "go_back": "go back",
+    "search": "search"
   },
   "notifications": {
     "directory_not_existing": "{{dir}} directory does not exist or the path is invalid. Check the path and try again.",

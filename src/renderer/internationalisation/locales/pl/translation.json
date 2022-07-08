@@ -18,7 +18,8 @@
     "notification": "Powiadomienie",
     "change_date": "data modyfikacji",
     "all": "wszystko",
-    "go_back": "powrót"
+    "go_back": "powrót",
+    "search": "wyszukiwanie"
   },
   "notifications": {
     "directory_not_existing": "Folder {{dir}} nie istnieje lub ścieżka jest błędna. Sprawdź ścieżkę i spróbuj ponownie.",
