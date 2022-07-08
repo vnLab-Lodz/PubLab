@@ -28,6 +28,7 @@ declare module '@mui/material/styles' {
     pink: PaletteColor;
     red: PaletteColor;
     green: PaletteColor;
+    paleGreen: PaletteColor;
     orange: PaletteColor;
     blue: PaletteColor;
     salmon: PaletteColor;
@@ -38,6 +39,7 @@ declare module '@mui/material/styles' {
     pink?: PaletteColorOptions;
     red?: PaletteColorOptions;
     green?: PaletteColorOptions;
+    paleGreen: PaletteColorOptions;
     orange?: PaletteColorOptions;
     blue?: PaletteColorOptions;
     salmon?: PaletteColorOptions;
