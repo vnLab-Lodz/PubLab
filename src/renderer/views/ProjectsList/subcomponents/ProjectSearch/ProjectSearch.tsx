@@ -3,6 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Publication } from '../../../../../shared/types';
 import SearchField from '../../../../components/SearchField/SearchField';
+import { addPrefix } from '../../formatTags';
 
 interface Props {
   publications: Publication[];
@@ -36,7 +37,10 @@ export default ProjectSearch;
 function getAutocompleteOptions(publications: Publication[]) {
   const options = [] as string[];
   publications.forEach(({ tags }) => {
-    tags.forEach((tag) => !options.includes(tag) && options.push(`#${tag}`));
+    tags.forEach((tag) => {
+      const tagWithPrefix = addPrefix(tag);
+      if (!options.includes(tagWithPrefix)) options.push(tagWithPrefix);
+    });
   });
   return options;
 }

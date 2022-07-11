@@ -11,6 +11,7 @@ import { VIEWS } from '../../constants/Views';
 import { loadedPublicationsList } from '../../../shared/redux/slices/loadPublicationsSlice';
 import ProjectSearch from './subcomponents/ProjectSearch/ProjectSearch';
 import { Publication } from '../../../shared/types';
+import { hasTagPrefix, removePrefix } from './formatTags';
 
 const ProjectsList = () => {
   const { t } = useTranslation();
@@ -56,8 +57,8 @@ function searchFilter(publications: Publication[], terms: string[]) {
   if (terms.length === 0) return publications;
   return publications.filter((publication) =>
     terms.every((term) =>
-      term.startsWith('#')
-        ? publication.tags.includes(term.replace('#', ''))
+      hasTagPrefix(term)
+        ? publication.tags.includes(removePrefix(term))
         : publication.name
             .toLocaleLowerCase()
             .includes(term.toLocaleLowerCase())
