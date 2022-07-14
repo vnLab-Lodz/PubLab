@@ -127,6 +127,10 @@ export const mainTheme = createTheme({
       dark: '#33B150',
       contrastText: commonColors.black,
     },
+    paleGreen: {
+      main: '#EBF8EA',
+      contrastText: commonColors.black,
+    },
     orange: {
       main: '#d89e01',
       contrastText: commonColors.black,
