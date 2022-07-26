@@ -4,6 +4,7 @@ import { mainStore as store } from 'src/main';
 import { activePublication } from '../../../shared/redux/slices/loadPublicationsSlice';
 import { LocalPublication } from '../../../shared/types';
 import { GitRepoTreeItem, IpcEventHandler } from '../../../shared/types/api';
+import { absoluteToGitPath } from '../../../shared/utils/paths';
 import { createLogger } from '../../logger';
 
 const stage: IpcEventHandler = async (
@@ -20,11 +21,12 @@ const stage: IpcEventHandler = async (
 
   await Promise.all(
     items.map(async (item) => {
+      const filepath = absoluteToGitPath(item.filepath, publication.dirPath);
       if (action === 'stage')
         await updateIndex({
           fs,
           dir: publication.dirPath,
-          filepath: item.filepath,
+          filepath,
           add: true,
           remove: !item.status.workdir,
         });
@@ -32,7 +34,7 @@ const stage: IpcEventHandler = async (
         await resetIndex({
           fs,
           dir: publication.dirPath,
-          filepath: item.filepath,
+          filepath,
         });
     })
   );

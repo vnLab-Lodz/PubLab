@@ -1,4 +1,3 @@
-import path from 'path';
 import React from 'react';
 import { GitRepoTreeItem } from '../../../../../shared/types/api';
 import FileDisplay from '../../../../components/FileDisplay/FileDisplay';
@@ -12,10 +11,7 @@ interface Props {
 }
 
 const FileTreeItem = ({ item, treeLevel, dirPath, notRendered }: Props) => {
-  const nodeId = createNodeId(
-    path.join(dirPath, item.filepath),
-    item.isDirectory
-  );
+  const nodeId = createNodeId(item.filepath, item.isDirectory);
 
   if (notRendered) return <>{contentMap(item.children, treeLevel, dirPath)}</>;
 
