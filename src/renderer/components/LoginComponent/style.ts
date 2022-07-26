@@ -18,6 +18,7 @@ export const LangBox = styled(Box)(({ theme }) => ({
     content: '"/"',
     fontSize: theme.typography.body1.fontSize,
   },
+  marginTop: theme.spacing(1),
 }));
 
 export const ContainerBox = styled(Box)(({ theme }) => ({
@@ -25,4 +26,5 @@ export const ContainerBox = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   alignItems: 'center',
   gap: theme.spacing(3),
+  margin: theme.spacing(2, 0),
 }));
