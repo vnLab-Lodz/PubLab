@@ -1,6 +1,10 @@
 /* eslint-disable no-param-reassign */
+import fs from 'fs';
+import { updateIndex } from 'isomorphic-git';
 import path from 'path';
 import { IpcEventHandler } from 'src/shared/types/api';
+import { CONFIG_NAME, PACKAGE_NAME } from '../../../shared/constants';
+import { absoluteToGitPath } from '../../../shared/utils/paths';
 import createConfigFileHandler, {
   Config,
 } from '../../lib/configurationFileHandler';
@@ -15,6 +19,7 @@ const updateConfig: IpcEventHandler = async (
   const configHandler = createConfigFileHandler({ dirPath });
   const oldConfig = await configHandler.getConfig();
   await configHandler.setConfig({ ...oldConfig, ...changes });
+  await stageChanges(CONFIG_NAME, dirPath);
 
   if (changes.name || changes.description) {
     const options = {
@@ -34,6 +39,10 @@ const updateConfig: IpcEventHandler = async (
         );
       return data;
     });
+    await stageChanges(
+      absoluteToGitPath(gatsbyConfigHandler.getPath(), dirPath),
+      dirPath
+    );
 
     const packageHandler = createPackageHandler(options);
     await packageHandler.modifyPackage((packageJSON) => {
@@ -41,7 +50,17 @@ const updateConfig: IpcEventHandler = async (
         packageJSON.name = changes.name.toLowerCase().replaceAll(' ', '-');
       if (changes.description) packageJSON.description = changes.description;
     });
+
+    await stageChanges(PACKAGE_NAME, dirPath);
   }
 };
 
 export default updateConfig;
+
+async function stageChanges(filepath: string, dir: string) {
+  await updateIndex({
+    fs,
+    dir,
+    filepath,
+  });
+}
