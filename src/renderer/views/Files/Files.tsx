@@ -76,13 +76,7 @@ const Files = () => {
             disabled={currentDirectory === project.dirPath}
           />
           <FileTreeItem
-            item={
-              findByPath(
-                RepoTree,
-                path.join(path.relative(project.dirPath, currentDirectory)),
-                { targetPathSeparator: path.sep }
-              ) || RepoTree
-            }
+            item={findByPath(RepoTree, currentDirectory) || RepoTree}
             treeLevel={0}
             dirPath={project.dirPath}
             notRendered

@@ -1,3 +1,4 @@
+import path from 'path';
 import { GitRepoTreeItem } from '../../types/api';
 
 export function search(
@@ -14,12 +15,14 @@ export function search(
 export function findByPath(
   node: GitRepoTreeItem,
   targetPath: string,
-  { targetPathSeparator = '/', step = 0 } = {}
+  { targetPathSeparator = path.sep, step = 0 } = {}
 ): GitRepoTreeItem | undefined {
-  const target = targetPath.split(targetPathSeparator)[step];
-  if (target === undefined) return node;
+  const target = path
+    .relative(node.filepath, targetPath)
+    .split(targetPathSeparator)[0];
+  if (target === '') return node;
   const nextNode = node.children.find(
-    (child) => child.filepath.split('/')[step] === target
+    (child) => path.basename(child.filepath) === target
   );
   if (!nextNode) return undefined;
   return findByPath(nextNode, targetPath, {
@@ -31,12 +34,14 @@ export function findByPath(
 export function replaceChildNode(
   node: GitRepoTreeItem,
   payload: GitRepoTreeItem,
-  { targetPathSeparator = '/', step = 0 } = {}
+  { targetPathSeparator = path.sep, step = 0 } = {}
 ): GitRepoTreeItem | undefined {
-  const target = payload.filepath.split(targetPathSeparator)[step];
-  if (target === undefined) return payload;
+  const target = path
+    .relative(node.filepath, payload.filepath)
+    .split(targetPathSeparator)[0];
+  if (target === '') return payload;
   const nextNodeIndex = node.children.findIndex(
-    (child) => child.filepath.split('/')[step] === target
+    (child) => path.basename(child.filepath) === target
   );
   const nextNode = replaceChildNode(node.children[nextNodeIndex], payload, {
     targetPathSeparator,

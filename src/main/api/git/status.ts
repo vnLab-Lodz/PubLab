@@ -20,6 +20,10 @@ import {
   replaceNode,
   setStatusTree,
 } from '../../../shared/redux/slices/repoStatusSlice';
+import {
+  absoluteToGitPath,
+  gitPathToAbsolute,
+} from '../../../shared/utils/paths';
 
 export const updateRepoStatus: IpcEventHandler = async () => {
   const logger = createLogger();
@@ -49,8 +53,10 @@ export const updateRepoStatus: IpcEventHandler = async () => {
       }
 
       const details = await getDetails({ head, workdir, stage });
-
-      return { filepath, ...details };
+      return {
+        filepath: gitPathToAbsolute(filepath, publication.dirPath),
+        ...details,
+      };
     },
     async reduce(parent, children) {
       return Object.assign(parent, { children });
@@ -61,7 +67,7 @@ export const updateRepoStatus: IpcEventHandler = async () => {
 
 export const updateFilesStatus: IpcEventHandler = async (
   _,
-  paths: string[]
+  absolutePaths: string[]
 ) => {
   const logger = createLogger();
   const publication = activePublication(store.getState()) as LocalPublication;
@@ -69,6 +75,10 @@ export const updateFilesStatus: IpcEventHandler = async (
     logger.appendError('No active publication or directory path is undefined');
     return;
   }
+
+  const relativePaths = absolutePaths.map((path) =>
+    absoluteToGitPath(path, publication.dirPath)
+  );
 
   const result = (await walk({
     fs,
@@ -79,13 +89,15 @@ export const updateFilesStatus: IpcEventHandler = async (
       [head, workdir, stage]
     ): Promise<Omit<GitRepoTreeItem, 'children'> | null | undefined> {
       if (
-        paths.some((path) => path.startsWith(filepath) && path !== filepath) ||
+        relativePaths.some(
+          (path) => path.startsWith(filepath) && path !== filepath
+        ) ||
         filepath === '.'
       ) {
         return undefined; // do not include the directory, but still walk its children
       }
 
-      if (!paths.some((path) => filepath.startsWith(path))) {
+      if (!relativePaths.some((path) => filepath.startsWith(path))) {
         return null;
       }
 
@@ -100,7 +112,10 @@ export const updateFilesStatus: IpcEventHandler = async (
         }
       }
       const details = await getDetails({ head, workdir, stage });
-      return { filepath, ...details };
+      return {
+        filepath: gitPathToAbsolute(filepath, publication.dirPath),
+        ...details,
+      };
     },
     async reduce(parent: GitRepoTreeItem, children: GitRepoTreeItem[]) {
       if (parent === undefined) return children.flat();
