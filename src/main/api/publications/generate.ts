@@ -39,7 +39,7 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
     const packageHandler = createPackageHandler({ dirPath, name: repoName });
     store.dispatch(setStatus(STATUS.MODIFYING_PACKAGE_JSON));
     await packageHandler.modifyPackage((packageJSON) => {
-      packageJSON.name = name;
+      packageJSON.name = repoName;
       packageJSON.author = author;
       packageJSON.description = description;
     });
