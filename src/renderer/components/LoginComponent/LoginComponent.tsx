@@ -25,7 +25,7 @@ const LoginComponent = () => {
 
   return (
     <ThemeProvider theme={altTheme}>
-      <Styled.ViewContent>
+      <Styled.ViewContent contentBoxProps={{ sx: { m: 0 } }}>
         <Styled.LangBox>
           {supportedLocales.map((locale) => (
             <Button
