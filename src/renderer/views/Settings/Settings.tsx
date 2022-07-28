@@ -85,7 +85,7 @@ const Settings = () => {
               const id = uuidv4();
               setLoaderID(id);
               await updateConfig(project.dirPath, changes);
-              await gitCommit('Config update\n\n[publAB automatic commit]');
+              await gitCommit('Config update\n\n[PubLab automatic commit]');
               await gitPush(id);
               dispatch(updatePublication({ ...project, ...changes }));
               dispatch(
