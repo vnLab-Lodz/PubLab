@@ -21,38 +21,37 @@ const updateConfig: IpcEventHandler = async (
   await configHandler.setConfig({ ...oldConfig, ...changes });
   await stageChanges(CONFIG_NAME, dirPath);
 
-  if (changes.name || changes.description) {
-    const options = {
-      name: path.basename(dirPath),
-      dirPath: path.dirname(dirPath),
-      usesTypescript: oldConfig.useTypescript,
-    };
-    const gatsbyConfigHandler = createGatsbyConfigHandler(options);
-    await gatsbyConfigHandler.modifyConfig((originalData) => {
-      let data = originalData;
-      if (changes.name)
-        data = data.replace(/title: `(.*?)`,/g, `title: \`${changes.name}\`,`);
-      if (changes.description)
-        data = data.replace(
-          /description: `.*?`,/g,
-          `description: \`${changes.description}\`,`
-        );
-      return data;
-    });
-    await stageChanges(
-      absoluteToGitPath(gatsbyConfigHandler.getPath(), dirPath),
-      dirPath
-    );
+  if (!changes.name && !changes.description) return;
+  const options = {
+    name: path.basename(dirPath),
+    dirPath: path.dirname(dirPath),
+    usesTypescript: oldConfig.useTypescript,
+  };
+  const gatsbyConfigHandler = createGatsbyConfigHandler(options);
+  await gatsbyConfigHandler.modifyConfig((originalData) => {
+    let data = originalData;
+    if (changes.name)
+      data = data.replace(/title: `(.*?)`,/g, `title: \`${changes.name}\`,`);
+    if (changes.description)
+      data = data.replace(
+        /description: `.*?`,/g,
+        `description: \`${changes.description}\`,`
+      );
+    return data;
+  });
+  await stageChanges(
+    absoluteToGitPath(gatsbyConfigHandler.getPath(), dirPath),
+    dirPath
+  );
 
-    const packageHandler = createPackageHandler(options);
-    await packageHandler.modifyPackage((packageJSON) => {
-      if (changes.name)
-        packageJSON.name = changes.name.toLowerCase().replaceAll(' ', '-');
-      if (changes.description) packageJSON.description = changes.description;
-    });
+  const packageHandler = createPackageHandler(options);
+  await packageHandler.modifyPackage((packageJSON) => {
+    if (changes.name)
+      packageJSON.name = changes.name.toLowerCase().replaceAll(' ', '-');
+    if (changes.description) packageJSON.description = changes.description;
+  });
 
-    await stageChanges(PACKAGE_NAME, dirPath);
-  }
+  await stageChanges(PACKAGE_NAME, dirPath);
 };
 
 export default updateConfig;
