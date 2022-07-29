@@ -6,6 +6,7 @@ export interface GatsbyConfigHandler {
   getConfig: () => Promise<string>;
   setConfig: (config: string) => Promise<void>;
   modifyConfig: (modifier: (config: string) => string) => Promise<void>;
+  getPath: () => string;
 }
 
 const createGatsbyConfigHandler = (options: {
@@ -56,6 +57,9 @@ const createGatsbyConfigHandler = (options: {
         logger.appendError(`${error}`);
         throw new Error(error.message);
       }
+    },
+    getPath() {
+      return gatsbyConfigPath;
     },
   };
 };
