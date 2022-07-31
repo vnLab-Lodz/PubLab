@@ -78,9 +78,11 @@ const createPublicationFinder = (): PublicationFinder => {
       const token = store.getState().currentUser.auth.accessToken?.value;
       const { appSettings } = store.getState();
       const { syncLocations } = appSettings;
+      const publications: Publication[] = [];
+
+      if (!token) return publications;
 
       const { repos } = new Octokit({ auth: token }).rest;
-      const publications: Publication[] = [];
 
       const repositoryPromises = syncLocations
         .filter(({ enabled }) => enabled)
