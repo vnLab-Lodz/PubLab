@@ -9,6 +9,7 @@ import {
 } from 'src/shared/redux/slices/loadPublicationsSlice';
 import { selectCurrentUserData } from 'src/shared/redux/slices/currentUserSlice';
 import { Unsubscribe } from 'redux';
+import { selectReadPublicationsOptions } from 'src/shared/redux/helpers/utilSelectors';
 import { configStore } from '../../../shared/redux/configureStore';
 import Auth from '../Auth/Auth';
 import { mainTheme } from '../../theme';
@@ -17,7 +18,6 @@ import i18next from '../../internationalisation/i18next';
 import { setLocalStorageItem } from '../../../shared/redux/helpers/localStorage';
 import Outlet from '../Outlet/Outlet';
 import {
-  selectAllSettings,
   selectCurrentLocale,
   selectDefaultDirPath,
 } from '../../../shared/redux/slices/settingsSlice';
@@ -25,11 +25,16 @@ import {
 const store = configStore('renderer');
 
 const App = () => {
-  const readPublications = async (options: { findLocal: boolean }) => {
+  const readPublications = async (options: {
+    findLocal: boolean;
+    findRemote: boolean;
+  }) => {
     const local = options.findLocal
       ? await ipcRenderer.invoke(CHANNELS.PUBLICATIONS.FIND_LOCAL)
       : [];
-    const remote = await ipcRenderer.invoke(CHANNELS.PUBLICATIONS.FIND_REMOTE);
+    const remote = options.findRemote
+      ? await ipcRenderer.invoke(CHANNELS.PUBLICATIONS.FIND_REMOTE)
+      : [];
     const nextPublications = [...local, ...remote];
 
     store.dispatch(
@@ -63,8 +68,8 @@ const App = () => {
       }),
 
       // * Load publications
-      observeStore(store, selectAllSettings, ({ defaultDirPath }) => {
-        readPublications({ findLocal: !!defaultDirPath });
+      observeStore(store, selectReadPublicationsOptions, (options) => {
+        readPublications(options);
       }),
 
       // * Deactivate project when default dir path is changed
