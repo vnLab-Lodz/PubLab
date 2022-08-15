@@ -1,6 +1,8 @@
 import * as fs from 'fs';
 
-const logger = fs.createWriteStream('pub-lab.log', { flags: 'a' });
+const logger = fs
+  .createWriteStream('pub-lab.log', { flags: 'a' })
+  .addListener('error', console.error);
 const tzOffset = new Date().getTimezoneOffset() * 60000; // offset in milliseconds
 
 export function appendLog(msg: string): void {

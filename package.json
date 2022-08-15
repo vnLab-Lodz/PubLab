@@ -22,7 +22,16 @@
   "license": "MIT",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "protocols": [
+          {
+            "name": "PubLab",
+            "schemes": [
+              "publab"
+            ]
+          }
+        ]
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
@@ -154,5 +163,5 @@
   },
   "resolutions": {
     "ignore": "^5.2.0"
-}
+  }
 }
