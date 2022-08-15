@@ -40,9 +40,9 @@ From command line:
 
     2c. Pick name for the application (it won't affect the project) and specify **Home page URL** and **Authorization callback URL** and register your application
 
-        Home page URL: https://github.com/login/oauth/authorize
+        Home page URL: https://github.com/vnLab-Lodz/PubLab
 
-        Authorization callback URL: http://localhost/main_window
+        Authorization callback URL: publab://auth/callback
 
     2d. Inside **Client secrets** section generate a new client secret
 
