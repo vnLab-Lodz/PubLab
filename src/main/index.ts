@@ -15,13 +15,20 @@ const gotTheLock = app.requestSingleInstanceLock();
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) app.quit();
 
+// Deep links | Electron - example of protocol definition/handling
+// https://www.electronjs.org/docs/latest/tutorial/launch-app-from-url-in-another-app#main-process-mainjs
 if (process.defaultApp) {
+  // Check if arguments contain both exec path process.argv[0]
+  // and current js executable file path process.argv[1]
   if (process.argv.length >= 2) {
     app.setAsDefaultProtocolClient('publab', process.execPath, [
+      // This path will be passed to the executable as an argument
       path.resolve(process.argv[1]),
     ]);
   }
 } else {
+  // Defaults to process.execPath if no arguments need
+  // to be passed to the executable
   app.setAsDefaultProtocolClient('publab');
 }
 
