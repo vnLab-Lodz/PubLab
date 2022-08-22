@@ -8,7 +8,6 @@ import addPublicationWizardReducer from './slices/addPublicationWizardSlice';
 import notificationsReducer from './slices/notificationsSlice';
 import loadersReducer from './slices/loadersSlice';
 import repoStatusReducer from './slices/repoStatusSlice';
-import assetsReducer from './slices/assetsSlice';
 
 const rootReducer = combineReducers({
   currentView: currentViewReducer,
@@ -20,7 +19,6 @@ const rootReducer = combineReducers({
   repoStatus: repoStatusReducer,
   notifications: notificationsReducer,
   loaders: loadersReducer,
-  assets: assetsReducer,
 });
 
 // export state to use with selectors
