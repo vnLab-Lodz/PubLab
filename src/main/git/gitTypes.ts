@@ -10,7 +10,7 @@ export interface File {
 }
 
 export enum URLS {
-  REDIRECT_URI = 'http://localhost/main_window',
+  REDIRECT_URI = 'publab://auth/callback',
   AUTHORIZE_URL = 'https://github.com/login/oauth/authorize',
   ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token',
 }
