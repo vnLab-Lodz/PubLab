@@ -56,7 +56,7 @@ export default function ProjectDetailsInput({
         </InputLabel>
         <ImagePicker
           alt='Project cover'
-          image={formik.values.imagePath}
+          imagePath={formik.values.imagePath}
           onClick={() => {
             dialog
               .showOpenDialog({

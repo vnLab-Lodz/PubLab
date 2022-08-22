@@ -1,23 +1,26 @@
 import React from 'react';
+import useAssetURI from '../../hooks/useAssetURI';
 import * as Styled from './style';
 
 interface Props {
   alt: string;
-  image?: string;
+  imagePath?: string;
   onClick?: () => void;
   error?: boolean;
 }
 
-const ImagePicker: React.FC<Props> = ({ image, error, onClick, alt }) => {
+const ImagePicker: React.FC<Props> = ({ imagePath, error, onClick, alt }) => {
   const onKeyPress: React.KeyboardEventHandler = ({ key }) => {
     if (key !== 'Enter' || !onClick) return;
 
     onClick();
   };
 
-  return image ? (
+  const { uri: imageURI } = useAssetURI(imagePath);
+
+  return imageURI ? (
     <Styled.Img
-      src={image}
+      src={imageURI}
       alt={alt}
       onClick={onClick}
       onKeyPress={onKeyPress}
@@ -42,7 +45,7 @@ const ImagePicker: React.FC<Props> = ({ image, error, onClick, alt }) => {
 };
 
 ImagePicker.defaultProps = {
-  image: undefined,
+  imagePath: undefined,
   onClick: () => {},
   error: false,
 };

@@ -14,18 +14,18 @@ const Template: ComponentStory<typeof ImagePicker> = (args) => (
 
 export const ImgDefault = Template.bind({});
 ImgDefault.args = {
-  image: undefined,
+  imagePath: undefined,
   error: false,
 };
 
 export const ImgSelected = Template.bind({});
 ImgSelected.args = {
-  image: 'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg', // random picture
+  imagePath: 'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg', // random picture
   error: false,
 };
 
 export const ImgError = Template.bind({});
 ImgError.args = {
-  image: undefined,
+  imagePath: undefined,
   error: true,
 };
