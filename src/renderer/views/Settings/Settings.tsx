@@ -119,6 +119,8 @@ async function handleCoverImage(
   project: LocalPublication
 ) {
   if (changes.imagePath) {
+    if (project.imagePath)
+      await ipcRenderer.invoke(CHANNELS.FILES.REMOVE, project.imagePath);
     const { imagePath } = changes;
     const destination = path.resolve(
       project.dirPath,

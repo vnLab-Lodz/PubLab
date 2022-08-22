@@ -16,6 +16,7 @@ export interface FileIO {
   verifyPath: (path: string) => Promise<boolean>;
   openPath: (path: string) => Promise<void>;
   copyFile: (path: string, destination: string) => Promise<void>;
+  removeFile: (path: string) => Promise<void>;
 }
 
 const createFileIO = (): FileIO => {
@@ -107,12 +108,20 @@ const createFileIO = (): FileIO => {
     },
     async copyFile(path: string, destination: string) {
       try {
-        fs.copyFile(path, destination);
+        await fs.copyFile(path, destination);
       } catch (error: any) {
         logger.appendError(
           `Copying ${path} to ${destination} failed. Error: ${error}`
         );
         throw new Error(`Error copying ${path} to ${destination}`);
+      }
+    },
+    async removeFile(path: string) {
+      try {
+        await fs.unlink(path);
+      } catch (error: any) {
+        logger.appendError(`Removing ${path} failed. Error: ${error}`);
+        throw new Error(`Error removing ${path}`);
       }
     },
   };
