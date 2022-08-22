@@ -52,7 +52,7 @@ export default function ProjectDetailsInput({
 
   return (
     <Styled.GridContainer>
-      <div className='left-column'>
+      <Styled.LeftColumn className='left-column'>
         <InputLabel id='img-picker-label'>
           {t('ProjectDetails.projectPhoto')}:
         </InputLabel>
@@ -80,7 +80,7 @@ export default function ProjectDetailsInput({
             <Typography variant='body2'>{t('common.delete')}</Typography>
           </Button>
         )}
-      </div>
+      </Styled.LeftColumn>
       <div className='right-column'>
         <InputLabel id='project-name-label' error={Boolean(formik.errors.name)}>
           {t('ProjectDetails.projectName')}:
