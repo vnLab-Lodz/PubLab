@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
+import { Typography } from '@mui/material';
 import ImagePicker from '../ImagePicker/ImagePicker';
 import TextField from '../TextField/TextField';
 import TextArea from '../TextArea/TextArea';
@@ -9,6 +10,7 @@ import * as Styled from './style';
 import { FormFields, validationSchema } from './validationSchema';
 import { Publication } from '../../../shared/types';
 import { FILE_FILTERS } from '../../../shared/constants';
+import Button from '../Button/Button';
 
 const { dialog } = require('electron').remote;
 
@@ -69,6 +71,15 @@ export default function ProjectDetailsInput({
               });
           }}
         />
+        {formik.values.imagePath && (
+          <Button
+            onClick={() => formik.setFieldValue('imagePath', undefined)}
+            sx={{ mt: 0 }}
+            fullWidth
+          >
+            <Typography variant='body2'>{t('common.delete')}</Typography>
+          </Button>
+        )}
       </div>
       <div className='right-column'>
         <InputLabel id='project-name-label' error={Boolean(formik.errors.name)}>
