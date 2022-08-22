@@ -7,3 +7,20 @@ export const SETTINGS_FILE_PATH = `${userData}/publab-settings.json`;
 export const CONFIG_NAME = 'publab.config.json' as const;
 
 export const PACKAGE_NAME = 'package.json' as const;
+
+export const FILE_FILTERS = {
+  image: {
+    name: 'Image',
+    extensions: [
+      'jpg',
+      'jpeg',
+      'gif',
+      'bmp',
+      'png',
+      'tif',
+      'tiff',
+      'svg',
+      'ico',
+    ],
+  },
+};

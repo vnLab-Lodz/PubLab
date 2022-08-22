@@ -33,6 +33,9 @@ function Details(
             value: state.description,
           })
         );
+        dispatch(
+          setPublicationField({ field: 'imagePath', value: state.imagePath })
+        );
       }}
       state={props.publication}
     />

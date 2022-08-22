@@ -8,6 +8,9 @@ import InputLabel from '../InputLabel/InputLabel';
 import * as Styled from './style';
 import { FormFields, validationSchema } from './validationSchema';
 import { Publication } from '../../../shared/types';
+import { FILE_FILTERS } from '../../../shared/constants';
+
+const { dialog } = require('electron').remote;
 
 type State = Pick<Publication, 'name' | 'description' | 'imagePath'>;
 
@@ -28,10 +31,11 @@ export default function ProjectDetailsInput({
     initialValues: {
       name: state.name,
       description: state.description,
+      imagePath: state.imagePath,
     },
     validationSchema,
-    onSubmit: ({ name, description = '' }, { setSubmitting }) => {
-      onSubmit({ ...state, name, description });
+    onSubmit: ({ name, description = '', imagePath }, { setSubmitting }) => {
+      onSubmit({ ...state, name, description, imagePath });
       onValidationStateChange(true);
       setSubmitting(false);
     },
@@ -50,7 +54,21 @@ export default function ProjectDetailsInput({
         <InputLabel id='img-picker-label'>
           {t('ProjectDetails.projectPhoto')}:
         </InputLabel>
-        <ImagePicker alt='Project cover' image={state.imagePath} />
+        <ImagePicker
+          alt='Project cover'
+          image={formik.values.imagePath}
+          onClick={() => {
+            dialog
+              .showOpenDialog({
+                properties: ['openFile'],
+                filters: [FILE_FILTERS.image],
+              })
+              .then(({ filePaths }: any) => {
+                if (filePaths[0])
+                  formik.setFieldValue('imagePath', filePaths[0]);
+              });
+          }}
+        />
       </div>
       <div className='right-column'>
         <InputLabel id='project-name-label' error={Boolean(formik.errors.name)}>
