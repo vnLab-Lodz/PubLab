@@ -60,3 +60,7 @@ export async function gitCommit(message: string) {
 export async function gitPush(loaderId: string, remoteRef?: string) {
   await ipcRenderer.invoke(CHANNELS.GIT.PUSH, { loaderId, remoteRef });
 }
+
+export async function readAsset(path: string, encoding?: BufferEncoding) {
+  await ipcRenderer.invoke(CHANNELS.FILES.READ_ASSET, path, encoding);
+}

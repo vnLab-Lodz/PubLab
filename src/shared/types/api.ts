@@ -51,6 +51,7 @@ export const CHANNELS = {
   FILES: {
     VERIFY_PATH: 'files:verify-path',
     READ_DIRECTORY: 'files:read-directory',
+    READ_ASSET: 'files:read-asset',
     OPEN_DEFAULT: 'files:open-in-default-app',
   },
   GIT: {
