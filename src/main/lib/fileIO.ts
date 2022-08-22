@@ -42,12 +42,17 @@ const createFileIO = (): FileIO => {
       }
     },
     async readAsset(path: string, encoding = 'base64' as BufferEncoding) {
-      const data = await fs.readFile(path, { encoding });
-      return {
-        data,
-        mimeType: mimeLookup(extname(path)) || 'application/octet-stream',
-        encoding,
-      };
+      try {
+        const data = await fs.readFile(path, { encoding });
+        return {
+          data,
+          mimeType: mimeLookup(extname(path)) || 'application/octet-stream',
+          encoding,
+        };
+      } catch (error: any) {
+        logger.appendError(`Reading ${path} failed. Error: ${error}`);
+        throw new Error(`Error reading ${path}`);
+      }
     },
     async readJSON<T = Json>(path: string) {
       try {
