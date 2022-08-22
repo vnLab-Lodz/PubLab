@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
+import { Typography } from '@mui/material';
 import ImagePicker from '../ImagePicker/ImagePicker';
 import TextField from '../TextField/TextField';
 import TextArea from '../TextArea/TextArea';
@@ -8,6 +9,10 @@ import InputLabel from '../InputLabel/InputLabel';
 import * as Styled from './style';
 import { FormFields, validationSchema } from './validationSchema';
 import { Publication } from '../../../shared/types';
+import { FILE_FILTERS } from '../../../shared/constants';
+import Button from '../Button/Button';
+
+const { dialog } = require('electron').remote;
 
 type State = Pick<Publication, 'name' | 'description' | 'imagePath'>;
 
@@ -28,10 +33,11 @@ export default function ProjectDetailsInput({
     initialValues: {
       name: state.name,
       description: state.description,
+      imagePath: state.imagePath,
     },
     validationSchema,
-    onSubmit: ({ name, description = '' }, { setSubmitting }) => {
-      onSubmit({ ...state, name, description });
+    onSubmit: ({ name, description = '', imagePath }, { setSubmitting }) => {
+      onSubmit({ ...state, name, description, imagePath });
       onValidationStateChange(true);
       setSubmitting(false);
     },
@@ -46,12 +52,35 @@ export default function ProjectDetailsInput({
 
   return (
     <Styled.GridContainer>
-      <div className='left-column'>
+      <Styled.LeftColumn className='left-column'>
         <InputLabel id='img-picker-label'>
           {t('ProjectDetails.projectPhoto')}:
         </InputLabel>
-        <ImagePicker alt='Project cover' image={state.imagePath} />
-      </div>
+        <ImagePicker
+          alt='Project cover'
+          imagePath={formik.values.imagePath}
+          onClick={() => {
+            dialog
+              .showOpenDialog({
+                properties: ['openFile'],
+                filters: [FILE_FILTERS.image],
+              })
+              .then(({ filePaths }: any) => {
+                if (filePaths[0])
+                  formik.setFieldValue('imagePath', filePaths[0]);
+              });
+          }}
+        />
+        {formik.values.imagePath && (
+          <Button
+            onClick={() => formik.setFieldValue('imagePath', undefined)}
+            sx={{ mt: 0 }}
+            fullWidth
+          >
+            <Typography variant='body2'>{t('common.delete')}</Typography>
+          </Button>
+        )}
+      </Styled.LeftColumn>
       <div className='right-column'>
         <InputLabel id='project-name-label' error={Boolean(formik.errors.name)}>
           {t('ProjectDetails.projectName')}:

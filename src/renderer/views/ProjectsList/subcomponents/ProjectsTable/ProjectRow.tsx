@@ -4,6 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Publication } from '../../../../../shared/types';
 import TableCell from '../../../../components/TableCell/TableCell';
+import useAssetURI from '../../../../hooks/useAssetURI';
 import { SupportedLangCode } from '../../../../internationalisation/i18next';
 import { mainTheme, altTheme } from '../../../../theme';
 import getDateString from '../../../../utils/getDateString';
@@ -16,6 +17,7 @@ interface Props {
 
 const ProjectRow: React.FC<Props> = ({ publication, isSelected }) => {
   const { t, i18n } = useTranslation();
+  const { uri: coverImage } = useAssetURI(publication.imagePath);
 
   return (
     <ThemeProvider theme={isSelected ? mainTheme : altTheme}>
@@ -26,6 +28,7 @@ const ProjectRow: React.FC<Props> = ({ publication, isSelected }) => {
         >
           {isSelected && <HighlightBox />}
           <Avatar
+            src={coverImage}
             sx={{
               width: '6rem',
               height: '6rem',

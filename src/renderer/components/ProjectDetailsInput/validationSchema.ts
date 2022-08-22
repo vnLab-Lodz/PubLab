@@ -15,6 +15,7 @@ const validationSchema = object({
     )
     .required('common.field_required'),
   description: string().max(220),
+  imagePath: string(),
 });
 
 type FormFields = InferType<typeof validationSchema>;

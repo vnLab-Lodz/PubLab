@@ -7,6 +7,7 @@ export const Img = styled('img')(({ theme: { palette } }) => ({
   height: '9em',
   width: '9em',
   cursor: 'pointer',
+  objectFit: 'cover',
 }));
 
 export const OuterCircle = styled(Box, {

@@ -17,12 +17,16 @@ import {
   loadPublication,
   setActivePublication,
 } from 'src/shared/redux/slices/loadPublicationsSlice';
+import path from 'path';
+import { COVER_PIC_FILENAME } from '../../../shared/constants';
+import createFileIO from '../../lib/fileIO';
 
 const generate: IpcEventHandler = async (_, params: PublicationBase) => {
   const logger = createLogger();
 
   try {
-    const { name, description, collaborators, useTypescript } = params;
+    const { name, description, collaborators, useTypescript, imagePath } =
+      params;
     const author = createAuthorFromCollaborators(collaborators);
     const repoName = name.toLowerCase().replaceAll(' ', '-');
     const { defaultDirPath: dirPath } = store.getState().appSettings;
@@ -31,8 +35,23 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
     store.dispatch(setStatus(STATUS.GENERATING_GATSBY_PROJECT));
     await projectGenerator.generate(dirPath, repoName);
 
+    let config = params;
+    if (imagePath) {
+      const destination = path.resolve(
+        dirPath,
+        repoName,
+        `${COVER_PIC_FILENAME}${path.extname(imagePath)}`
+      );
+
+      const io = createFileIO();
+      await io.copyFile(
+        imagePath,
+        path.resolve(dirPath, repoName, destination)
+      );
+      config = { ...config, imagePath: destination };
+    }
+
     const configHandler = createConfigFileHandler({ dirPath, name: repoName });
-    const { imagePath, ...config } = params;
     store.dispatch(setStatus(STATUS.CREATING_CONFIGURATION_FILE));
     const savedConfig = await configHandler.createConfigFile(config);
 

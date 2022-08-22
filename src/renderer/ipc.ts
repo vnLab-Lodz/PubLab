@@ -2,6 +2,7 @@ import { ipcRenderer } from 'electron';
 import { CHANNELS, GitRepoTreeItem } from 'src/shared/types/api';
 import { DirectoryEntryInfo } from '../shared/types/api';
 import { Config } from '../main/lib/configurationFileHandler';
+import { AssetObject } from '../shared/types';
 
 export async function verifyPath(path: string) {
   const result = (await ipcRenderer.invoke(
@@ -59,4 +60,13 @@ export async function gitCommit(message: string) {
 
 export async function gitPush(loaderId: string, remoteRef?: string) {
   await ipcRenderer.invoke(CHANNELS.GIT.PUSH, { loaderId, remoteRef });
+}
+
+export async function readAsset(path: string, encoding?: BufferEncoding) {
+  const result = await ipcRenderer.invoke(
+    CHANNELS.FILES.READ_ASSET,
+    path,
+    encoding
+  );
+  return result as AssetObject | undefined;
 }

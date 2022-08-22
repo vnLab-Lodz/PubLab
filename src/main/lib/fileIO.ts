@@ -1,17 +1,22 @@
-import { Json } from 'src/shared/types';
+import { AssetObject, Json } from 'src/shared/types';
 import { Dirent, promises as fs, Stats } from 'fs';
 import { shell } from 'electron';
+import { lookup as mimeLookup } from 'mime-types';
+import { extname } from 'path';
 import { createLogger } from '../logger';
 
 export interface FileIO {
   readDirectory: (path: string) => Promise<Dirent[]>;
   getDetails: (path: string) => Promise<Stats>;
+  readAsset: (path: string, encoding: BufferEncoding) => Promise<AssetObject>;
   readJSON: <T = Json>(path: string) => Promise<T>;
   writeJSON: <T = Json>(path: string, content: T) => Promise<void>;
   readString: (path: string) => Promise<string>;
   writeString: (path: string, content: string) => Promise<void>;
   verifyPath: (path: string) => Promise<boolean>;
   openPath: (path: string) => Promise<void>;
+  copyFile: (path: string, destination: string) => Promise<void>;
+  removeFile: (path: string) => Promise<void>;
 }
 
 const createFileIO = (): FileIO => {
@@ -36,6 +41,19 @@ const createFileIO = (): FileIO => {
           `Reading directory content at ${path} failed. Error: ${error}`
         );
         throw new Error(`Error writing ${path}`);
+      }
+    },
+    async readAsset(path: string, encoding = 'base64' as BufferEncoding) {
+      try {
+        const data = await fs.readFile(path, { encoding });
+        return {
+          data,
+          mimeType: mimeLookup(extname(path)) || 'application/octet-stream',
+          encoding,
+        };
+      } catch (error: any) {
+        logger.appendError(`Reading ${path} failed. Error: ${error}`);
+        throw new Error(`Error reading ${path}`);
       }
     },
     async readJSON<T = Json>(path: string) {
@@ -86,6 +104,24 @@ const createFileIO = (): FileIO => {
       } catch (error: any) {
         logger.appendError(`Opening ${path} failed. Error: ${error}`);
         throw new Error(`Error opening ${path}`);
+      }
+    },
+    async copyFile(path: string, destination: string) {
+      try {
+        await fs.copyFile(path, destination);
+      } catch (error: any) {
+        logger.appendError(
+          `Copying ${path} to ${destination} failed. Error: ${error}`
+        );
+        throw new Error(`Error copying ${path} to ${destination}`);
+      }
+    },
+    async removeFile(path: string) {
+      try {
+        await fs.unlink(path);
+      } catch (error: any) {
+        logger.appendError(`Removing ${path} failed. Error: ${error}`);
+        throw new Error(`Error removing ${path}`);
       }
     },
   };
