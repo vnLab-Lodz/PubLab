@@ -51,3 +51,9 @@ export interface RemotePublication extends IPublication {
 }
 
 export type Publication = LocalPublication | RemotePublication;
+
+export interface AssetObject {
+  data: string;
+  mimeType: string;
+  encoding: string;
+}

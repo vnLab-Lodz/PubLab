@@ -1,11 +1,14 @@
-import { Json } from 'src/shared/types';
+import { AssetObject, Json } from 'src/shared/types';
 import { Dirent, promises as fs, Stats } from 'fs';
 import { shell } from 'electron';
+import { lookup as mimeLookup } from 'mime-types';
+import { extname } from 'path';
 import { createLogger } from '../logger';
 
 export interface FileIO {
   readDirectory: (path: string) => Promise<Dirent[]>;
   getDetails: (path: string) => Promise<Stats>;
+  readAsset: (path: string, encoding: BufferEncoding) => Promise<AssetObject>;
   readJSON: <T = Json>(path: string) => Promise<T>;
   writeJSON: <T = Json>(path: string, content: T) => Promise<void>;
   readString: (path: string) => Promise<string>;
@@ -37,6 +40,14 @@ const createFileIO = (): FileIO => {
         );
         throw new Error(`Error writing ${path}`);
       }
+    },
+    async readAsset(path: string, encoding = 'base64' as BufferEncoding) {
+      const data = await fs.readFile(path, { encoding });
+      return {
+        data,
+        mimeType: mimeLookup(extname(path)) || 'application/octet-stream',
+        encoding,
+      };
     },
     async readJSON<T = Json>(path: string) {
       try {
