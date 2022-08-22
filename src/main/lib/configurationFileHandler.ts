@@ -1,32 +1,24 @@
 import path from 'path';
 import { CONFIG_NAME } from 'src/shared/constants';
-import { Collaborator, Publication, PublicationBase } from 'src/shared/types';
+import { Publication, PublicationBase } from 'src/shared/types';
 import { promises as fs, constants } from 'fs';
 import { createLogger } from '../logger';
 import createFileIO from './fileIO';
 
 export type Config = Omit<
   Publication,
-  | 'imagePath'
-  | 'lastUpdate'
-  | 'status'
-  | 'keepSnippetsVisible'
-  | 'keepDescriptionVisible'
+  'lastUpdate' | 'status' | 'keepSnippetsVisible' | 'keepDescriptionVisible'
 >;
 
-type UpdateConfigFieldParams =
-  | {
-      field: keyof Pick<Config, 'collaborators'>;
-      value: Collaborator[];
-    }
-  | {
-      field: keyof Pick<Config, 'useTypescript' | 'useSass'>;
-      value: boolean;
-    }
-  | {
-      field: keyof Omit<Config, 'collaborators' | 'useSass' | 'useTypescript'>;
-      value: string;
+type UpdateConfigFieldParams = Exclude<
+  {
+    [FieldName in keyof Config]: {
+      field: FieldName;
+      value: Publication[FieldName];
     };
+  }[keyof Config],
+  undefined
+>;
 
 export interface ConfigFileHandler {
   getConfig: () => Promise<Config>;
@@ -51,7 +43,7 @@ const createConfigFileHandler = (options: {
         logger.appendLog(`Reading ${CONFIG_NAME}...`);
         const data = await io.readJSON<Config>(configPath);
         logger.appendLog(`Reading ${CONFIG_NAME} successful.`);
-        return data;
+        return imagePathToAbsolute(data, configPath);
       } catch (error) {
         logger.appendError(`Reading ${CONFIG_NAME} failed.`);
         logger.appendError(`${error}`);
@@ -61,7 +53,7 @@ const createConfigFileHandler = (options: {
     async setConfig(config: Config) {
       try {
         logger.appendLog(`Writing ${CONFIG_NAME}...`);
-        await io.writeJSON(configPath, config);
+        await io.writeJSON(configPath, imagePathToRelative(config, configPath));
         logger.appendLog(`Writing ${CONFIG_NAME} successful.`);
       } catch (error) {
         logger.appendError(`Writing ${CONFIG_NAME} failed.`);
@@ -117,3 +109,21 @@ const createConfigFileHandler = (options: {
 };
 
 export default createConfigFileHandler;
+
+function imagePathToAbsolute(config: Config, configPath: string) {
+  return {
+    ...config,
+    imagePath: config.imagePath
+      ? path.resolve(path.dirname(configPath), config.imagePath)
+      : undefined,
+  };
+}
+
+function imagePathToRelative(config: Config, configPath: string) {
+  return {
+    ...config,
+    imagePath: config.imagePath
+      ? path.relative(path.dirname(configPath), config.imagePath)
+      : undefined,
+  };
+}

@@ -6,6 +6,8 @@ export const SETTINGS_FILE_PATH = `${userData}/publab-settings.json`;
 
 export const CONFIG_NAME = 'publab.config.json' as const;
 
+export const COVER_PIC_FILENAME = 'cover';
+
 export const PACKAGE_NAME = 'package.json' as const;
 
 export const FILE_FILTERS = {

@@ -53,6 +53,7 @@ export const CHANNELS = {
     READ_DIRECTORY: 'files:read-directory',
     READ_ASSET: 'files:read-asset',
     OPEN_DEFAULT: 'files:open-in-default-app',
+    COPY: 'files:copy',
   },
   GIT: {
     CLONE: 'git:clone',

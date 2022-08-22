@@ -3,6 +3,8 @@ import React, { useReducer, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import path from 'path';
+import { ipcRenderer } from 'electron';
 import {
   activePublication,
   updatePublication,
@@ -19,6 +21,8 @@ import { sendNotification } from '../../../shared/redux/slices/notificationsSlic
 import TagsManager from './subcomponents/TagsManager/TagsManager';
 import SnippetsManager from './subcomponents/SnippetsManager/SnippetsManager';
 import LoaderOverlay from '../../components/LoaderOverlay/LoaderOverlay';
+import { CHANNELS } from '../../../shared/types/api';
+import { COVER_PIC_FILENAME } from '../../../shared/constants';
 
 const Settings = () => {
   const { t } = useTranslation();
@@ -84,7 +88,8 @@ const Settings = () => {
             onClick={async () => {
               const id = uuidv4();
               setLoaderID(id);
-              await updateConfig(project.dirPath, changes);
+              const processedChanges = await handleCoverImage(changes, project);
+              await updateConfig(project.dirPath, processedChanges);
               await gitCommit('Config update\n\n[PubLab automatic commit]');
               await gitPush(id);
               dispatch(updatePublication({ ...project, ...changes }));
@@ -108,3 +113,19 @@ const Settings = () => {
 };
 
 export default Settings;
+
+async function handleCoverImage(
+  changes: Partial<Config>,
+  project: LocalPublication
+) {
+  if (changes.imagePath) {
+    const { imagePath } = changes;
+    const destination = path.resolve(
+      project.dirPath,
+      `${COVER_PIC_FILENAME}${path.extname(imagePath)}`
+    );
+    await ipcRenderer.invoke(CHANNELS.FILES.COPY, imagePath, destination);
+    return { ...changes, imagePath: destination };
+  }
+  return changes;
+}

@@ -15,6 +15,7 @@ export interface FileIO {
   writeString: (path: string, content: string) => Promise<void>;
   verifyPath: (path: string) => Promise<boolean>;
   openPath: (path: string) => Promise<void>;
+  copyFile: (path: string, destination: string) => Promise<void>;
 }
 
 const createFileIO = (): FileIO => {
@@ -102,6 +103,16 @@ const createFileIO = (): FileIO => {
       } catch (error: any) {
         logger.appendError(`Opening ${path} failed. Error: ${error}`);
         throw new Error(`Error opening ${path}`);
+      }
+    },
+    async copyFile(path: string, destination: string) {
+      try {
+        fs.copyFile(path, destination);
+      } catch (error: any) {
+        logger.appendError(
+          `Copying ${path} to ${destination} failed. Error: ${error}`
+        );
+        throw new Error(`Error copying ${path} to ${destination}`);
       }
     },
   };
