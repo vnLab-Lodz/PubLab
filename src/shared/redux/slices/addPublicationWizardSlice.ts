@@ -11,23 +11,15 @@ export type AddPublicationWizard = {
 // type created to avoid an issue with both unclear modification type
 // and index access writes on union of keys, which would complicate the
 // code significantly more
-type PublicationModification =
-  | {
-      field: keyof Omit<
-        PublicationBase,
-        'useTypescript' | 'useSass' | 'collaborators'
-      >;
-      value: string;
-    }
-  | {
-      field: keyof Pick<PublicationBase, 'useTypescript' | 'useSass'>;
-      value: boolean;
-    }
-  | {
-      field: keyof Pick<PublicationBase, 'packageManager'>;
-      value: PublicationBase['packageManager'];
+type PublicationModification = Exclude<
+  {
+    [FieldName in keyof PublicationBase]: {
+      field: FieldName;
+      value: PublicationBase[FieldName];
     };
-
+  }[keyof PublicationBase],
+  undefined
+>;
 const initialState: AddPublicationWizard = {
   data: {
     id: uuidv4(),
