@@ -40,7 +40,7 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
       const destination = path.resolve(
         dirPath,
         repoName,
-        `${COVER_PIC_FILENAME}.${path.extname(imagePath)}`
+        `${COVER_PIC_FILENAME}${path.extname(imagePath)}`
       );
 
       const io = createFileIO();
