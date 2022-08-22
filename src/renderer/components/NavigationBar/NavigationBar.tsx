@@ -11,6 +11,7 @@ import {
 import * as Styled from './style';
 import { altTheme } from '../../theme';
 import { activePublication } from '../../../shared/redux/slices/loadPublicationsSlice';
+import useAssetURI from '../../hooks/useAssetURI';
 
 interface IButton {
   abbreviation: string;
@@ -40,6 +41,7 @@ const NavigationBar = () => {
   const dispatch = useDispatch();
   const currentView = useSelector(selectCurrentView);
   const activeProject = useSelector(activePublication);
+  const { uri: coverImage } = useAssetURI(activeProject?.imagePath);
   const { t, i18n } = useTranslation();
 
   const onNavigationButtonClick = (button: IButton) => () => {
@@ -64,7 +66,7 @@ const NavigationBar = () => {
         isActive={isButtonActive(button)}
         startIcon={
           options?.isProjectButton ? (
-            <Avatar src={activeProject?.imagePath} alt='Project'>
+            <Avatar src={coverImage} alt='Project'>
               {activeProject?.name.charAt(0) || '-'}
             </Avatar>
           ) : (
