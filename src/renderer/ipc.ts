@@ -1,5 +1,6 @@
 import { ipcRenderer } from 'electron';
 import { CHANNELS, GitRepoTreeItem } from 'src/shared/types/api';
+import { RestEndpointMethodTypes } from '@octokit/rest';
 import { DirectoryEntryInfo } from '../shared/types/api';
 import { Config } from '../main/lib/configurationFileHandler';
 import { AssetObject } from '../shared/types';
@@ -69,4 +70,10 @@ export async function readAsset(path: string, encoding?: BufferEncoding) {
     encoding
   );
   return result as AssetObject | undefined;
+}
+
+export async function getPublicUserData(username: string) {
+  const result: RestEndpointMethodTypes['users']['getByUsername']['response'] =
+    await ipcRenderer.invoke(CHANNELS.GITHUB.GET_USER_PUBLIC, username);
+  return result;
 }

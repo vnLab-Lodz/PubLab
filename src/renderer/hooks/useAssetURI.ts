@@ -6,13 +6,13 @@ export default function useAssetURI(path?: string, encoding?: BufferEncoding) {
   const [asset, error, isPending] = usePromiseSubscription<
     AssetObject | undefined
   >(
-    (async () => {
+    async () => {
       let loadedAsset;
       if (path) {
         loadedAsset = await readAsset(path, encoding);
       }
       return loadedAsset;
-    })(),
+    },
     undefined,
     [path]
   );
