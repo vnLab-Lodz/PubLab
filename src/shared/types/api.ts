@@ -64,4 +64,7 @@ export const CHANNELS = {
     STAGE: 'git:stage',
     COMMIT: 'git:commit',
   },
+  GITHUB: {
+    GET_USER_PUBLIC: 'github:get-user-public',
+  },
 } as const;
