@@ -66,7 +66,13 @@ const CollabPicker: React.FC<Props> = ({
         {buttonText}
       </Button>
     </Box>
-    {error && <Typography color='error'>{error}</Typography>}
+    <Box height={({ typography }) => typography.body2.fontSize}>
+      {error && (
+        <Typography variant='body2' color='error'>
+          {error}
+        </Typography>
+      )}
+    </Box>
   </Box>
 );
 
