@@ -18,7 +18,8 @@ interface Props {
   value: Value;
   options?: Option[];
   buttonText: string;
-  error?: string;
+  prompt?: string;
+  isError?: boolean;
   selectPlaceholder?: string;
   textFieldPlaceholder?: string;
   onChange: (value: Value | undefined) => void;
@@ -31,7 +32,8 @@ const CollabPicker: React.FC<Props> = ({
   onChange,
   onAdd,
   buttonText,
-  error,
+  prompt,
+  isError,
   selectPlaceholder,
   textFieldPlaceholder,
 }) => (
@@ -67,9 +69,9 @@ const CollabPicker: React.FC<Props> = ({
       </Button>
     </Box>
     <Box height={({ typography }) => typography.body2.fontSize}>
-      {error && (
-        <Typography variant='body2' color='error'>
-          {error}
+      {prompt && (
+        <Typography variant='body2' color={isError ? 'error' : undefined}>
+          {prompt}
         </Typography>
       )}
     </Box>
@@ -81,7 +83,8 @@ CollabPicker.defaultProps = {
   selectPlaceholder: '',
   textFieldPlaceholder: '',
   onAdd: () => {},
-  error: undefined,
+  prompt: undefined,
+  isError: false,
 };
 
 export default CollabPicker;

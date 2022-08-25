@@ -117,7 +117,8 @@
       "editor": "Edytor",
       "add_button": "Dodaj",
       "wrong_username_prompt": "Upewnij się, że nazwa użytkownika jest poprawna.",
-      "user_exists_prompt": "Ten użytkownik jest już dodany."
+      "user_exists_prompt": "Ten użytkownik jest już dodany.",
+      "username_verification_pending": "Sprawdzanie poprawności..."
     },
     "PackageManager": {
       "message": "Wybierz managera pakietów:"

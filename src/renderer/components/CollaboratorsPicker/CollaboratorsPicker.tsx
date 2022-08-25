@@ -38,27 +38,28 @@ const CollaboratorsPicker = ({ onAdd, onDelete, state, compact }: Props) => {
   ];
 
   const [shouldRunVerification, runVerification] = React.useState(false);
-  const [verifiedUsername, verificationError] = usePromiseSubscription(
-    async () => {
-      if (!shouldRunVerification || !currentCollaborator.username) {
-        if (verificationError) throw new Error(verificationError.message); // persist error message
-        return undefined;
-      }
-      const { data: userData } = await getPublicUserData(
-        currentCollaborator.username
-      );
-      if (
-        state.collaborators.some(
-          (collaborator) => collaborator.githubUsername === userData.login
-        )
-      ) {
-        throw new Error('duplicate');
-      }
-      return (userData.login as string) || undefined;
-    },
-    undefined,
-    [shouldRunVerification]
-  );
+  const [verifiedUsername, verificationError, verificationPending] =
+    usePromiseSubscription(
+      async () => {
+        if (!shouldRunVerification || !currentCollaborator.username) {
+          if (verificationError) throw new Error(verificationError.message); // persist error message
+          return undefined;
+        }
+        const { data: userData } = await getPublicUserData(
+          currentCollaborator.username
+        );
+        if (
+          state.collaborators.some(
+            (collaborator) => collaborator.githubUsername === userData.login
+          )
+        ) {
+          throw new Error('duplicate');
+        }
+        return (userData.login as string) || undefined;
+      },
+      undefined,
+      [shouldRunVerification]
+    );
   useEffect(() => {
     runVerification(false);
     if (verificationError) return;
@@ -75,7 +76,8 @@ const CollaboratorsPicker = ({ onAdd, onDelete, state, compact }: Props) => {
   const Picker = (
     <CollabPicker
       value={currentCollaborator}
-      error={getErrorPrompt(verificationError?.message)}
+      prompt={getPrompt(verificationError?.message, verificationPending)}
+      isError={!!verificationError && !verificationPending}
       onChange={(value) =>
         setCurrentCollaborator(value || { username: '', role: '' })
       }
@@ -134,9 +136,11 @@ CollaboratorsPicker.defaultProps = {
 
 export default CollaboratorsPicker;
 
-function getErrorPrompt(errorMessage: string | undefined) {
-  if (!errorMessage) return undefined;
-  if (errorMessage === 'duplicate')
+function getPrompt(message: string | undefined, isPending: boolean) {
+  if (!message) return undefined;
+  if (isPending)
+    return i18n.t('AddProject.AddCollaborators.username_verification_pending');
+  if (message === 'duplicate')
     return i18n.t('AddProject.AddCollaborators.user_exists_prompt');
   return i18n.t('AddProject.AddCollaborators.wrong_username_prompt');
 }
