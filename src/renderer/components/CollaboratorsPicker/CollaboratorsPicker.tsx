@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Typography } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 import { Collaborator, Publication, USER_ROLES } from 'src/shared/types';
-import CollabPicker, { Value } from '../CollabPicker/CollabPicker';
+import CollabPicker from '../CollabPicker/CollabPicker';
 import CollabTable from '../CollabTable/CollabTable';
+import usePromiseSubscription from '../../hooks/usePromiseSubscription';
+import { getPublicUserData } from '../../ipc';
 
 type State = Pick<Publication, 'collaborators'>;
 
@@ -34,19 +36,51 @@ const CollaboratorsPicker = ({ onAdd, onDelete, state, compact }: Props) => {
     },
   ];
 
-  const handleAdd = (value: Value) => {
-    onAdd({
-      id: uuid(),
-      githubUsername: value.username,
-      role: value.role as USER_ROLES,
-    });
-  };
+  const [shouldRunVerification, runVerification] = React.useState(false);
+  const [verifiedUsername, verificationError] = usePromiseSubscription(
+    async () => {
+      if (!shouldRunVerification || !currentCollaborator.username) {
+        if (verificationError) throw new Error(verificationError.message); // persist error message
+        return undefined;
+      }
+      const { data: userData } = await getPublicUserData(
+        currentCollaborator.username
+      );
+      if (
+        state.collaborators.some(
+          (collaborator) => collaborator.githubUsername === userData.login
+        )
+      ) {
+        throw new Error('repeated');
+      }
+      return (userData.login as string) || undefined;
+    },
+    undefined,
+    [shouldRunVerification]
+  );
+  useEffect(() => {
+    runVerification(false);
+    if (verificationError) return;
+    if (verifiedUsername) {
+      onAdd({
+        id: uuid(),
+        githubUsername: verifiedUsername,
+        role: currentCollaborator.role as USER_ROLES,
+      });
+      setCurrentCollaborator({ username: '', role: '' });
+    }
+  }, [verifiedUsername, verificationError]);
 
   const Picker = (
     <CollabPicker
       value={currentCollaborator}
-      onChange={() => setCurrentCollaborator(currentCollaborator)}
-      onAdd={handleAdd}
+      error={verificationError?.message || undefined}
+      onChange={(value) =>
+        setCurrentCollaborator(value || { username: '', role: '' })
+      }
+      onAdd={() => {
+        runVerification(true);
+      }}
       options={options}
       buttonText={t(
         'AddProject.AddCollaborators.add_button'
