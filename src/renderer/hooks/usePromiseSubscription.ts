@@ -13,6 +13,7 @@ export default function usePromiseSubscription<T>(
 
   React.useEffect(() => {
     let isSubscribed = true;
+    setState(({ value, error }) => ({ value, error, isPending: true }));
     asyncFunction()
       .then((value) =>
         isSubscribed ? setState({ value, error: null, isPending: false }) : null
