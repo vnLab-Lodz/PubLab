@@ -7,6 +7,7 @@ import CollabPicker from '../CollabPicker/CollabPicker';
 import CollabTable from '../CollabTable/CollabTable';
 import usePromiseSubscription from '../../hooks/usePromiseSubscription';
 import { getPublicUserData } from '../../ipc';
+import i18n from '../../internationalisation/i18next';
 
 type State = Pick<Publication, 'collaborators'>;
 
@@ -51,7 +52,7 @@ const CollaboratorsPicker = ({ onAdd, onDelete, state, compact }: Props) => {
           (collaborator) => collaborator.githubUsername === userData.login
         )
       ) {
-        throw new Error('repeated');
+        throw new Error('duplicate');
       }
       return (userData.login as string) || undefined;
     },
@@ -74,7 +75,7 @@ const CollaboratorsPicker = ({ onAdd, onDelete, state, compact }: Props) => {
   const Picker = (
     <CollabPicker
       value={currentCollaborator}
-      error={verificationError?.message || undefined}
+      error={getErrorPrompt(verificationError?.message)}
       onChange={(value) =>
         setCurrentCollaborator(value || { username: '', role: '' })
       }
@@ -132,3 +133,10 @@ CollaboratorsPicker.defaultProps = {
 };
 
 export default CollaboratorsPicker;
+
+function getErrorPrompt(errorMessage: string | undefined) {
+  if (!errorMessage) return undefined;
+  if (errorMessage === 'duplicate')
+    return i18n.t('AddProject.AddCollaborators.user_exists_prompt');
+  return i18n.t('AddProject.AddCollaborators.wrong_username_prompt');
+}
