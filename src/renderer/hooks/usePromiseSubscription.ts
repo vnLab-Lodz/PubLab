@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function usePromiseSubscription<T>(
-  promise: Promise<T>,
+  asyncFunction: () => Promise<T>,
   defaultValue: T,
   deps: any[]
 ): [T, Error | null, boolean] {
@@ -13,7 +13,8 @@ export default function usePromiseSubscription<T>(
 
   React.useEffect(() => {
     let isSubscribed = true;
-    promise
+    setState(({ value, error }) => ({ value, error, isPending: true }));
+    asyncFunction()
       .then((value) =>
         isSubscribed ? setState({ value, error: null, isPending: false }) : null
       )

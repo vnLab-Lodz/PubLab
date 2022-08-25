@@ -115,7 +115,10 @@
       "role": "Role",
       "developer": "Developer",
       "editor": "Editor",
-      "add_button": "Add"
+      "add_button": "Add",
+      "wrong_username_prompt": "Make sure that the username is correct.",
+      "user_exists_prompt": "This user is already added.",
+      "username_verification_pending": "Validating..."
     },
     "PackageManager": {
       "message": "Choose the Package Manager:"
