@@ -16,7 +16,7 @@ import ViewContent from '../../components/ViewContent/ViewContent';
 import Button from '../../components/Button/Button';
 import { LocalPublication } from '../../../shared/types';
 import { Config } from '../../../main/lib/configurationFileHandler';
-import { gitCommit, gitPush, updateConfig } from '../../ipc';
+import { gitCommit, gitPush, gitStage, updateConfig } from '../../ipc';
 import { sendNotification } from '../../../shared/redux/slices/notificationsSlice';
 import TagsManager from './subcomponents/TagsManager/TagsManager';
 import SnippetsManager from './subcomponents/SnippetsManager/SnippetsManager';
@@ -91,8 +91,9 @@ const Settings = () => {
               const processedChanges = await handleCoverImage(changes, project);
               await updateConfig(project.dirPath, processedChanges);
               await gitCommit('Config update\n\n[PubLab automatic commit]');
+              ipcRenderer.invoke(CHANNELS.GIT.REPO_STATUS);
               await gitPush(id);
-              dispatch(updatePublication({ ...project, ...changes }));
+              dispatch(updatePublication({ ...project, ...processedChanges }));
               dispatch(
                 sendNotification({
                   title: t('ProjectSettings.notification.title'),
@@ -118,15 +119,37 @@ async function handleCoverImage(
   changes: Partial<Config>,
   project: LocalPublication
 ) {
-  if (changes.imagePath) {
-    if (project.imagePath)
+  if (changes.imagePath !== project.imagePath) {
+    if (project.imagePath) {
       await ipcRenderer.invoke(CHANNELS.FILES.REMOVE, project.imagePath);
+      await gitStage(
+        [
+          {
+            filepath: project.imagePath,
+            status: { head: 1, workdir: 0, stage: 1 },
+            children: [],
+          },
+        ],
+        { refresh: false }
+      );
+    }
+    if (!changes.imagePath) return changes;
     const { imagePath } = changes;
     const destination = path.resolve(
       project.dirPath,
       `${COVER_PIC_FILENAME}${path.extname(imagePath)}`
     );
     await ipcRenderer.invoke(CHANNELS.FILES.COPY, imagePath, destination);
+    await gitStage(
+      [
+        {
+          filepath: destination,
+          status: { head: 0, workdir: 2, stage: 0 },
+          children: [],
+        },
+      ],
+      { refresh: false }
+    );
     return { ...changes, imagePath: destination };
   }
   return changes;

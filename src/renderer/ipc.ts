@@ -38,16 +38,24 @@ export async function updateConfig(dirPath: string, changes: Partial<Config>) {
   );
 }
 
-export async function gitStage(items: GitRepoTreeItem[]) {
+export async function gitStage(
+  items: GitRepoTreeItem[],
+  opts = { refresh: true }
+) {
   await ipcRenderer.invoke(CHANNELS.GIT.STAGE, 'stage', items);
+  if (opts.refresh)
   await ipcRenderer.invoke(
     CHANNELS.GIT.FILES_STATUS,
     items.map((item) => item.filepath)
   );
 }
 
-export async function gitUnstage(items: GitRepoTreeItem[]) {
+export async function gitUnstage(
+  items: GitRepoTreeItem[],
+  opts = { refresh: true }
+) {
   await ipcRenderer.invoke(CHANNELS.GIT.STAGE, 'unstage', items);
+  if (opts.refresh)
   await ipcRenderer.invoke(
     CHANNELS.GIT.FILES_STATUS,
     items.map((item) => item.filepath)
