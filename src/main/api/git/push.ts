@@ -12,13 +12,14 @@ import app from '../../../shared/utils/app';
 
 interface Options {
   loaderId: string;
-  remoteRef?: string;
+  branchRef?: string;
 }
 
-const push: IpcEventHandler = async (_, { loaderId, remoteRef }: Options) => {
+const push: IpcEventHandler = async (_, { loaderId, branchRef }: Options) => {
   const logger = createLogger();
   const { dirPath } = activePublication(store.getState()) as LocalPublication;
   const username = store.getState().currentUser.auth.accessToken?.value;
+  const ref = branchRef || username;
 
   // https://isomorphic-git.org/docs/en/onAuth
   const onAuth: AuthCallback = () => (username ? { username } : undefined);
@@ -45,7 +46,7 @@ const push: IpcEventHandler = async (_, { loaderId, remoteRef }: Options) => {
     await git.push({
       fs,
       http,
-      remoteRef: app.isPackaged ? remoteRef : 'publab-dev-tests',
+      remoteRef: app.isPackaged ? ref : `publab-dev-tests-${ref}`,
       dir: dirPath,
       onAuth,
       onAuthFailure,

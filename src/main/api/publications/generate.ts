@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-param-reassign */
+import fs from 'fs';
+import http from 'isomorphic-git/http/node';
 import { createLogger } from 'src/main/logger';
 import { mainStore as store } from 'src/main';
-import { PublicationBase } from 'src/shared/types';
+import { PublicationBase, USER_ROLES } from 'src/shared/types';
 import { IpcEventHandler } from 'src/shared/types/api';
 import createAuthorFromCollaborators from 'src/shared/utils/createAuthorFromCollaborators';
 import createGatsbyProjectGenerator from 'src/main/lib/gatsbyProjectGenerator';
-import createConfigFileHandler from 'src/main/lib/configurationFileHandler';
+import createConfigFileHandler, {
+  Config,
+} from 'src/main/lib/configurationFileHandler';
 import createPackageHandler from 'src/main/lib/packageHandler';
 import createGatsbyConfigHandler from 'src/main/lib/gatsbyConfigHandler';
 import {
@@ -18,8 +22,10 @@ import {
   setActivePublication,
 } from 'src/shared/redux/slices/loadPublicationsSlice';
 import path from 'path';
-import { COVER_PIC_FILENAME } from '../../../shared/constants';
+import git from 'isomorphic-git';
+import { CONFIG_NAME, COVER_PIC_FILENAME } from '../../../shared/constants';
 import createFileIO from '../../lib/fileIO';
+import createGitHubHandler from '../../lib/gitHubHandler';
 
 const generate: IpcEventHandler = async (_, params: PublicationBase) => {
   const logger = createLogger();
@@ -44,10 +50,7 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
       );
 
       const io = createFileIO();
-      await io.copyFile(
-        imagePath,
-        path.resolve(dirPath, repoName, destination)
-      );
+      await io.copyFile(imagePath, destination);
       config = { ...config, imagePath: destination };
     }
 
@@ -81,6 +84,8 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
       })
     );
     store.dispatch(setActivePublication(savedConfig.id));
+    await commitConfigChanges(savedConfig, dirPath, repoName);
+    await handleRemoteSetup(savedConfig, dirPath, repoName);
 
     logger.appendLog(`Publication generation successful.`);
     store.dispatch(setStatus(STATUS.SUCCESS));
@@ -91,3 +96,65 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
 };
 
 export default generate;
+
+async function commitConfigChanges(
+  config: Config,
+  dirPath: string,
+  repoName: string
+) {
+  const repoPath = path.resolve(dirPath, repoName);
+  const username = store.getState().currentUser.data?.nick;
+  await Promise.all(
+    [path.basename(config.imagePath || ''), CONFIG_NAME].map(
+      (filepath) =>
+        filepath &&
+        git.updateIndex({
+          fs,
+          dir: repoPath,
+          filepath,
+          add: true,
+        })
+    )
+  );
+
+  await git.commit({
+    fs,
+    dir: path.resolve(dirPath, repoName),
+    message: 'Initial config\n\n[PubLab automatic commit]',
+    author: { name: username },
+  });
+}
+
+async function handleRemoteSetup(
+  config: Config,
+  dirPath: string,
+  repoName: string
+) {
+  const token = store.getState().currentUser.auth.accessToken?.value;
+  const username = store.getState().currentUser.data?.nick;
+  if (!username || !token) throw new Error('User not logged in!');
+
+  const repoId = { name: repoName, owner: username };
+  const repoPath = path.resolve(dirPath, repoName);
+
+  const gitHubHandler = createGitHubHandler(token);
+
+  const { data: repoData } = await gitHubHandler.createRepo(repoName);
+
+  await git.addRemote({
+    fs,
+    dir: repoPath,
+    remote: 'origin',
+    url: repoData.clone_url,
+  });
+
+  await git.push({
+    fs,
+    http,
+    remoteRef: 'main',
+    dir: repoPath,
+    onAuth: () => ({ username: token }),
+  });
+  await gitHubHandler.createBranch('development', repoId);
+  await gitHubHandler.updateCollaborators(config.collaborators, repoId);
+}

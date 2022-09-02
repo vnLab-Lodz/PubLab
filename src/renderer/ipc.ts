@@ -44,10 +44,10 @@ export async function gitStage(
 ) {
   await ipcRenderer.invoke(CHANNELS.GIT.STAGE, 'stage', items);
   if (opts.refresh)
-  await ipcRenderer.invoke(
-    CHANNELS.GIT.FILES_STATUS,
-    items.map((item) => item.filepath)
-  );
+    await ipcRenderer.invoke(
+      CHANNELS.GIT.FILES_STATUS,
+      items.map((item) => item.filepath)
+    );
 }
 
 export async function gitUnstage(
@@ -56,10 +56,10 @@ export async function gitUnstage(
 ) {
   await ipcRenderer.invoke(CHANNELS.GIT.STAGE, 'unstage', items);
   if (opts.refresh)
-  await ipcRenderer.invoke(
-    CHANNELS.GIT.FILES_STATUS,
-    items.map((item) => item.filepath)
-  );
+    await ipcRenderer.invoke(
+      CHANNELS.GIT.FILES_STATUS,
+      items.map((item) => item.filepath)
+    );
 }
 
 export async function gitCommit(message: string) {

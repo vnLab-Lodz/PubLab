@@ -66,5 +66,6 @@ export const CHANNELS = {
   },
   GITHUB: {
     GET_USER_PUBLIC: 'github:get-user-public',
+    UPDATE_COLLABORATORS: 'github:update-collaborators',
   },
 } as const;

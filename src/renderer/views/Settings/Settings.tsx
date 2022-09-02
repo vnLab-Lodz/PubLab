@@ -92,6 +92,11 @@ const Settings = () => {
               await updateConfig(project.dirPath, processedChanges);
               await gitCommit('Config update\n\n[PubLab automatic commit]');
               ipcRenderer.invoke(CHANNELS.GIT.REPO_STATUS);
+              if (processedChanges)
+                await ipcRenderer.invoke(
+                  CHANNELS.GITHUB.UPDATE_COLLABORATORS,
+                  processedChanges.collaborators
+                );
               await gitPush(id);
               dispatch(updatePublication({ ...project, ...processedChanges }));
               dispatch(
