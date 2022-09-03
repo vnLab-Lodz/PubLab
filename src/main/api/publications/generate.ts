@@ -91,8 +91,15 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
       })
     );
     store.dispatch(setActivePublication(savedConfig.id));
-    await commitConfigChanges(savedConfig, dirPath, repoName);
-    await handleRemoteSetup(savedConfig, dirPath, repoName);
+    await git.renameBranch({
+      fs,
+      dir: repoPath,
+      ref: MAIN_BRANCH,
+      oldref: 'master',
+      checkout: true,
+    });
+    await commitConfigChanges(savedConfig, repoPath);
+    await handleRemoteSetup(savedConfig, repoPath, repoName);
 
     logger.appendLog(`Publication generation successful.`);
     store.dispatch(setStatus(STATUS.SUCCESS));
@@ -107,7 +114,7 @@ export default generate;
 async function commitConfigChanges(config: Config, repoPath: string) {
   const username = store.getState().currentUser.data?.nick;
   await Promise.all(
-    [path.basename(config.imagePath || ''), CONFIG_NAME].map(
+    [path.basename(config.imagePath || ''), CONFIG_NAME, PACKAGE_NAME].map(
       (filepath) =>
         filepath &&
         git.updateIndex({
@@ -137,7 +144,6 @@ async function handleRemoteSetup(
   if (!username || !token) throw new Error('User not logged in!');
 
   const repoId = { name: repoName, owner: username };
-  const repoPath = path.resolve(dirPath, repoName);
 
   const gitHubHandler = createGitHubHandler(token);
 
@@ -159,4 +165,9 @@ async function handleRemoteSetup(
   });
   await gitHubHandler.createBranch('development', repoId);
   await gitHubHandler.updateCollaborators(config.collaborators, repoId);
+  await git.fetch({
+    fs,
+    http,
+    dir: repoPath,
+  });
 }
