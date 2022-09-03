@@ -8,7 +8,6 @@ import { mainStore as store } from 'src/main';
 import { sendNotification } from 'src/shared/redux/slices/notificationsSlice';
 import git, { AuthCallback, AuthFailureCallback } from 'isomorphic-git';
 import { addLoader, removeLoader } from 'src/shared/redux/slices/loadersSlice';
-import app from '../../../shared/utils/app';
 
 interface Options {
   loaderId: string;
@@ -47,7 +46,7 @@ const push: IpcEventHandler = async (_, { loaderId, branchRef }: Options) => {
     await git.push({
       fs,
       http,
-      remoteRef: app.isPackaged ? ref : `publab-dev-tests-${ref}`,
+      remoteRef: ref,
       dir: dirPath,
       onAuth,
       onAuthFailure,
