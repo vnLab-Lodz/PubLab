@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import path from 'path';
 import { Collaborator, Publication } from 'src/shared/types';
 import { RootState } from '../rootReducer';
 
@@ -95,8 +96,13 @@ const loadPublicationsSlice = createSlice({
           return publication;
         }
 
-        const { repoName, cloneUrl, status, ...rest } = publication;
-        return { ...rest, status: 'cloned', dirPath: payload.dir };
+        const { repoName, cloneUrl, status, imagePath, ...rest } = publication;
+        return {
+          ...rest,
+          status: 'cloned',
+          dirPath: payload.dir,
+          imagePath: imagePath ? path.join(payload.dir, imagePath) : undefined,
+        };
       });
     },
     deleteCollaborator: (
