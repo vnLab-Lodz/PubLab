@@ -75,12 +75,14 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
         .replace(/author: `.*?`,/g, `author: \`${author}\`,`)
         .replace(/description: `.*?`,/g, `description: \`${description}\`,`)
     );
-
     store.dispatch(
       loadPublication({
         ...savedConfig,
         status: 'cloned',
         lastUpdate: savedConfig.creationDate,
+        dirPath: path.resolve(dirPath, repoName),
+        keepDescriptionVisible: false,
+        keepSnippetsVisible: false,
       })
     );
     store.dispatch(setActivePublication(savedConfig.id));
