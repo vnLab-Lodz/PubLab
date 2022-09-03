@@ -18,11 +18,12 @@ interface Options {
 const push: IpcEventHandler = async (_, { loaderId, branchRef }: Options) => {
   const logger = createLogger();
   const { dirPath } = activePublication(store.getState()) as LocalPublication;
-  const username = store.getState().currentUser.auth.accessToken?.value;
+  const username = store.getState().currentUser.data?.nick;
+  const token = store.getState().currentUser.auth.accessToken?.value;
   const ref = branchRef || username;
 
   // https://isomorphic-git.org/docs/en/onAuth
-  const onAuth: AuthCallback = () => (username ? { username } : undefined);
+  const onAuth: AuthCallback = () => (token ? { username: token } : undefined);
 
   const onAuthFailure: AuthFailureCallback = (message) => {
     logger.appendError(message);
