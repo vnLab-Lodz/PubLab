@@ -83,30 +83,50 @@ class GitHubHandler {
 
   async updateCollaborators(collaborators: Collaborator[], repo: RepoParams) {
     try {
-      const { data: existingCollaborators } =
-        await this.octokit.rest.repos.listCollaborators({
-          owner: repo.owner,
-          repo: repo.name,
-        });
+      const [{ data: existingCollaborators }, pendingInvitations] =
+        await Promise.all([
+          this.octokit.rest.repos.listCollaborators({
+            owner: repo.owner,
+            repo: repo.name,
+          }),
+          this.octokit.rest.repos.listInvitations({
+            owner: repo.owner,
+            repo: repo.name,
+          }),
+        ]);
+
       const toRemove = existingCollaborators.filter(
         (collaborator) =>
           !collaborators.some(
             ({ githubUsername }) => githubUsername === collaborator.login
           )
       );
+      const invitationsToRemove = pendingInvitations.data.filter(
+        (invitation) =>
+          !collaborators.some(
+            ({ githubUsername }) => githubUsername === invitation.invitee?.login
+          )
+      );
+
       const toAdd = collaborators.filter(
         (collaborator) =>
           !existingCollaborators.some(
             ({ login }) => login === collaborator.githubUsername
           )
       );
-
       await Promise.allSettled([
         ...toRemove.map((collaborator) =>
           this.octokit.rest.repos.removeCollaborator({
             owner: repo.owner,
             repo: repo.name,
             username: collaborator.login,
+          })
+        ),
+        ...invitationsToRemove.map((invitation) =>
+          this.octokit.rest.repos.deleteInvitation({
+            owner: repo.owner,
+            repo: repo.name,
+            invitation_id: invitation.id,
           })
         ),
         ...toAdd.map((collaborator) =>
