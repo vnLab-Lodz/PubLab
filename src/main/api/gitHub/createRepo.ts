@@ -6,6 +6,7 @@ import { activePublication } from 'src/shared/redux/slices/loadPublicationsSlice
 import git, { AuthCallback } from 'isomorphic-git';
 import createGitHubHandler from '../../lib/gitHubHandler';
 import { LocalPublication } from '../../../shared/types';
+import { MAIN_BRANCH } from '../../../shared/constants';
 
 const createRepo: IpcEventHandler = async (_, name: string) => {
   const token = store.getState().currentUser.auth.accessToken?.value;
@@ -23,7 +24,7 @@ const createRepo: IpcEventHandler = async (_, name: string) => {
     fs,
     http,
     url: repo.data.clone_url,
-    remoteRef: 'main',
+    remoteRef: MAIN_BRANCH,
     dir: dirPath,
     onAuth,
   });

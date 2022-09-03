@@ -23,7 +23,12 @@ import {
 } from 'src/shared/redux/slices/loadPublicationsSlice';
 import path from 'path';
 import git from 'isomorphic-git';
-import { CONFIG_NAME, COVER_PIC_FILENAME } from '../../../shared/constants';
+import {
+  CONFIG_NAME,
+  COVER_PIC_FILENAME,
+  MAIN_BRANCH,
+  PACKAGE_NAME,
+} from '../../../shared/constants';
 import createFileIO from '../../lib/fileIO';
 import createGitHubHandler from '../../lib/gitHubHandler';
 
@@ -36,6 +41,7 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
     const author = createAuthorFromCollaborators(collaborators);
     const repoName = name.toLowerCase().replaceAll(' ', '-');
     const { defaultDirPath: dirPath } = store.getState().appSettings;
+    const repoPath = path.resolve(dirPath, repoName);
 
     const projectGenerator = createGatsbyProjectGenerator(params);
     store.dispatch(setStatus(STATUS.GENERATING_GATSBY_PROJECT));
@@ -44,8 +50,7 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
     let config = params;
     if (imagePath) {
       const destination = path.resolve(
-        dirPath,
-        repoName,
+        repoPath,
         `${COVER_PIC_FILENAME}${path.extname(imagePath)}`
       );
 
@@ -80,7 +85,7 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
         ...savedConfig,
         status: 'cloned',
         lastUpdate: savedConfig.creationDate,
-        dirPath: path.resolve(dirPath, repoName),
+        dirPath: repoPath,
         keepDescriptionVisible: false,
         keepSnippetsVisible: false,
       })
@@ -99,12 +104,7 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
 
 export default generate;
 
-async function commitConfigChanges(
-  config: Config,
-  dirPath: string,
-  repoName: string
-) {
-  const repoPath = path.resolve(dirPath, repoName);
+async function commitConfigChanges(config: Config, repoPath: string) {
   const username = store.getState().currentUser.data?.nick;
   await Promise.all(
     [path.basename(config.imagePath || ''), CONFIG_NAME].map(
@@ -121,7 +121,7 @@ async function commitConfigChanges(
 
   await git.commit({
     fs,
-    dir: path.resolve(dirPath, repoName),
+    dir: repoPath,
     message: 'Initial config\n\n[PubLab automatic commit]',
     author: { name: username },
   });
@@ -129,7 +129,7 @@ async function commitConfigChanges(
 
 async function handleRemoteSetup(
   config: Config,
-  dirPath: string,
+  repoPath: string,
   repoName: string
 ) {
   const token = store.getState().currentUser.auth.accessToken?.value;
@@ -153,7 +153,7 @@ async function handleRemoteSetup(
   await git.push({
     fs,
     http,
-    remoteRef: 'main',
+    remoteRef: MAIN_BRANCH,
     dir: repoPath,
     onAuth: () => ({ username: token }),
   });
