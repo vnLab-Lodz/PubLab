@@ -17,9 +17,7 @@ interface Options {
 const push: IpcEventHandler = async (_, { loaderId, branchRef }: Options) => {
   const logger = createLogger();
   const { dirPath } = activePublication(store.getState()) as LocalPublication;
-  const username = store.getState().currentUser.data?.nick;
   const token = store.getState().currentUser.auth.accessToken?.value;
-  const ref = branchRef || username;
 
   // https://isomorphic-git.org/docs/en/onAuth
   const onAuth: AuthCallback = () => (token ? { username: token } : undefined);
@@ -46,7 +44,7 @@ const push: IpcEventHandler = async (_, { loaderId, branchRef }: Options) => {
     await git.push({
       fs,
       http,
-      remoteRef: ref,
+      remoteRef: branchRef,
       dir: dirPath,
       onAuth,
       onAuthFailure,
