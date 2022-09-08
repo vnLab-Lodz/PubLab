@@ -91,13 +91,18 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
       })
     );
     store.dispatch(setActivePublication(savedConfig.id));
-    await git.renameBranch({
-      fs,
-      dir: repoPath,
-      ref: MAIN_BRANCH,
-      oldref: 'master',
-      checkout: true,
-    });
+    const currentBranchName = await git.currentBranch({ fs, dir: repoPath });
+    if (!currentBranchName) {
+      throw new Error(`Repo initialization failed - no current branch`);
+    }
+    if (currentBranchName !== MAIN_BRANCH)
+      await git.renameBranch({
+        fs,
+        dir: repoPath,
+        ref: MAIN_BRANCH,
+        oldref: currentBranchName,
+        checkout: true,
+      });
     await commitConfigChanges(savedConfig, repoPath);
     await handleRemoteSetup(savedConfig, repoPath, repoName);
 
