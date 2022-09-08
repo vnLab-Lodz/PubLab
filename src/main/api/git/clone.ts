@@ -77,7 +77,6 @@ const clone: IpcEventHandler = async (
       url,
       dir,
       depth: 10,
-      singleBranch: true,
       onProgress,
       onAuth,
       onAuthFailure,

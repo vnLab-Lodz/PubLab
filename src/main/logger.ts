@@ -12,7 +12,7 @@ export function appendLog(msg: string): void {
   );
 }
 
-interface Logger {
+export interface Logger {
   appendLog: (msg: string) => void;
   appendError: (msg: string) => void;
 }

@@ -8,20 +8,19 @@ import { mainStore as store } from 'src/main';
 import { sendNotification } from 'src/shared/redux/slices/notificationsSlice';
 import git, { AuthCallback, AuthFailureCallback } from 'isomorphic-git';
 import { addLoader, removeLoader } from 'src/shared/redux/slices/loadersSlice';
-import app from '../../../shared/utils/app';
 
 interface Options {
   loaderId: string;
-  remoteRef?: string;
+  branchRef?: string;
 }
 
-const push: IpcEventHandler = async (_, { loaderId, remoteRef }: Options) => {
+const push: IpcEventHandler = async (_, { loaderId, branchRef }: Options) => {
   const logger = createLogger();
   const { dirPath } = activePublication(store.getState()) as LocalPublication;
-  const username = store.getState().currentUser.auth.accessToken?.value;
+  const token = store.getState().currentUser.auth.accessToken?.value;
 
   // https://isomorphic-git.org/docs/en/onAuth
-  const onAuth: AuthCallback = () => (username ? { username } : undefined);
+  const onAuth: AuthCallback = () => (token ? { username: token } : undefined);
 
   const onAuthFailure: AuthFailureCallback = (message) => {
     logger.appendError(message);
@@ -45,7 +44,7 @@ const push: IpcEventHandler = async (_, { loaderId, remoteRef }: Options) => {
     await git.push({
       fs,
       http,
-      remoteRef: app.isPackaged ? remoteRef : 'publab-dev-tests',
+      remoteRef: branchRef,
       dir: dirPath,
       onAuth,
       onAuthFailure,

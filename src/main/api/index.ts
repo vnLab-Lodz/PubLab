@@ -22,6 +22,7 @@ import readAsset from './files/readAsset';
 import copyFile from './files/copyFile';
 import removeFile from './files/removeFile';
 import getPublicUserData from './gitHub/getPublicUserData';
+import updateCollaborators from './gitHub/updateCollaborators';
 
 const registerApiHandlers = () => {
   ipc.handle(CHANNELS.PUBLICATIONS.GENERATE, generate);
@@ -47,6 +48,7 @@ const registerApiHandlers = () => {
   ipc.handle(CHANNELS.GIT.STAGE, stage);
   ipc.handle(CHANNELS.GIT.COMMIT, commit);
   ipc.handle(CHANNELS.GITHUB.GET_USER_PUBLIC, getPublicUserData);
+  ipc.handle(CHANNELS.GITHUB.UPDATE_COLLABORATORS, updateCollaborators);
 };
 
 export default registerApiHandlers;
