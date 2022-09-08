@@ -20,7 +20,7 @@ type PublicationModification = Exclude<
   }[keyof PublicationBase],
   undefined
 >;
-const initialState: AddPublicationWizard = {
+const initialState = (): AddPublicationWizard => ({
   data: {
     id: uuidv4(),
     collaborators: [],
@@ -31,13 +31,13 @@ const initialState: AddPublicationWizard = {
     useTypescript: false,
   },
   step: 1,
-};
+});
 
 const addPublicationSlice = createSlice({
   name: 'addPublicationWizard',
-  initialState,
+  initialState: initialState(),
   reducers: {
-    deleteDraft: () => initialState,
+    deleteDraft: () => initialState(),
     setPublicationField: (
       state: AddPublicationWizard,
       action: PayloadAction<PublicationModification>
