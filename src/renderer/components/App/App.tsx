@@ -9,7 +9,10 @@ import {
 } from 'src/shared/redux/slices/loadPublicationsSlice';
 import { selectCurrentUserData } from 'src/shared/redux/slices/currentUserSlice';
 import { Unsubscribe } from 'redux';
-import { selectReadPublicationsOptions } from 'src/shared/redux/helpers/utilSelectors';
+import {
+  selectFirstTimeViewCondition,
+  selectReadPublicationsOptions,
+} from 'src/shared/redux/helpers/utilSelectors';
 import { updateCurrentView } from 'src/shared/redux/slices/currentViewSlice';
 import { VIEWS } from 'src/renderer/constants/Views';
 import { configStore } from '../../../shared/redux/configureStore';
@@ -65,13 +68,14 @@ const App = () => {
       }),
 
       // * Handle first app launch (set flag for first time view)
-      observeStore(store, selectDefaultDirPath, (dirPath) => {
-        setLocalStorageItem('initialConfigFlag', !!dirPath);
-        const { view } = store.getState().currentView;
-        const nextView =
-          !!dirPath && view === VIEWS.FIRST_TIME ? VIEWS.PROJECT : view;
-        store.dispatch(updateCurrentView(nextView));
-      }),
+      observeStore(
+        store,
+        selectFirstTimeViewCondition,
+        ({ flag, shouldRedirect }) => {
+          setLocalStorageItem('initialConfigFlag', flag);
+          if (shouldRedirect) store.dispatch(updateCurrentView(VIEWS.PROJECT));
+        }
+      ),
 
       // * Load publications
       observeStore(store, selectReadPublicationsOptions, (options) => {
