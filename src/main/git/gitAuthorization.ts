@@ -92,5 +92,5 @@ export async function requestAccessToken(code: string): Promise<any> {
 }
 
 export const terminateSession = async (): Promise<void> => {
-  await session.defaultSession.clearStorageData();
+  await session.defaultSession.clearStorageData({ storages: ['cookies'] });
 };

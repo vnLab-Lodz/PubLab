@@ -14,16 +14,16 @@ export type CurrentView = {
   subview: ISubview;
 };
 
-const initialState: CurrentView = {
+const getInitialState = (): CurrentView => ({
   view: getLocalStorageItem<boolean>('initialConfigFlag', JSON.parse)
     ? VIEWS.PROJECT
     : VIEWS.FIRST_TIME,
   subview: { element: SUBVIEWS.NONE },
-};
+});
 
 const CurrentViewSlice = createSlice({
   name: 'CurrentView',
-  initialState,
+  initialState: getInitialState(),
   reducers: {
     updateCurrentView: (state: CurrentView, action: PayloadAction<VIEWS>) => {
       state.view = action.payload;
@@ -34,7 +34,7 @@ const CurrentViewSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(terminateSessionFulfilled, () => initialState);
+    builder.addCase(terminateSessionFulfilled, () => getInitialState());
   },
 });
 
