@@ -25,7 +25,7 @@ const FirstTime = () => {
     initialValues: { dir: '' },
     validationSchema,
     onSubmit: () => {
-      setLocalStorageItem('initialConfigFlag', false);
+      setLocalStorageItem('initialConfigFlag', true);
       dispatch(updateCurrentView(VIEWS.PROJECTS_LIST));
     },
   });
