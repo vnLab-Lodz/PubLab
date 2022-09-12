@@ -73,6 +73,10 @@ const App = () => {
         selectFirstTimeViewCondition,
         ({ flag, shouldRedirect }) => {
           setLocalStorageItem('initialConfigFlag', flag);
+          if (!flag) {
+            store.dispatch(updateCurrentView(VIEWS.FIRST_TIME));
+            return;
+          }
           if (shouldRedirect) store.dispatch(updateCurrentView(VIEWS.PROJECT));
         }
       ),
