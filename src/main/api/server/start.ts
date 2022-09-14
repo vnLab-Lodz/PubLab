@@ -1,5 +1,5 @@
 import { spawn } from 'child_process';
-import { ipcMain } from 'electron';
+import { ipcMain, shell } from 'electron';
 import kill from 'tree-kill';
 import { IpcEventHandler } from 'src/shared/types/api';
 
@@ -67,7 +67,10 @@ const start: IpcEventHandler = async (event, cwd: string) => {
     event.sender.send('terminal-write', 'Starting development server...');
 
     developProcess.stdout?.on('data', (data) => {
-      event.sender.send('terminal-write', data.toString());
+      const line: string = data.toString();
+      event.sender.send('terminal-write', line);
+      const uri = line.match(/http:\/\/localhost:\d+\/(?!.)/);
+      if (uri && uri[0]) shell.openExternal(uri[0]);
     });
 
     developProcess.stderr?.on('data', (data) => {
