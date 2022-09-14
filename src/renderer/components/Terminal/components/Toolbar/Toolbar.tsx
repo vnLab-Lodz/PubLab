@@ -45,20 +45,20 @@ const Toolbar: React.FC<Props> = ({ project }) => {
 
   const stopServer = async () => {
     setState(SERVER.STOPPING);
-    await ipcRenderer.invoke('terminal-stop');
+    await ipcRenderer.invoke(CHANNELS.SERVER.STOP);
     setState(SERVER.IDLE);
   };
 
   const restartServer = async () => {
     setState(SERVER.STOPPING);
-    await ipcRenderer.invoke('terminal-stop');
+    await ipcRenderer.invoke(CHANNELS.SERVER.STOP);
     ipcRenderer.invoke(CHANNELS.SERVER.START, project.dirPath);
     setState(SERVER.SERVER_RUNNING);
   };
 
   const hardResetServer = async () => {
     setState(SERVER.STOPPING);
-    await ipcRenderer.invoke('terminal-stop');
+    await ipcRenderer.invoke(CHANNELS.SERVER.STOP);
     setState(SERVER.CLEARING_CACHE);
     await ipcRenderer.invoke(CHANNELS.SERVER.CLEAR_CACHE, project.dirPath);
     ipcRenderer.invoke(CHANNELS.SERVER.START, project.dirPath);

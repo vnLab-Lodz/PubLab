@@ -1,7 +1,7 @@
 import { useTheme } from '@mui/material';
 import { ipcRenderer, shell } from 'electron';
 import React, { useEffect, useRef, useMemo } from 'react';
-import { IpcRendererEventHandler } from 'src/shared/types/api';
+import { CHANNELS, IpcRendererEventHandler } from 'src/shared/types/api';
 import { Terminal as XTerm, ITerminalOptions } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
 import { WebLinksAddon } from 'xterm-addon-web-links';
@@ -43,15 +43,15 @@ const Output: React.FC = () => {
 
     const resizeListener = () => fitAddon.fit();
 
-    ipcRenderer.on('terminal-write', terminalWriteListener);
+    ipcRenderer.on(CHANNELS.SERVER.WRITE, terminalWriteListener);
     window.addEventListener('resize', resizeListener);
 
     return () => {
-      ipcRenderer.off('terminal-write', terminalWriteListener);
+      ipcRenderer.off(CHANNELS.SERVER.WRITE, terminalWriteListener);
       window.removeEventListener('resize', resizeListener);
       terminal.current?.dispose();
       fitAddon.dispose();
-      ipcRenderer.invoke('terminal-stop').catch((e) => {
+      ipcRenderer.invoke(CHANNELS.SERVER.STOP).catch((e) => {
         console.info('Attempted to stop a running process but none found.');
         console.error(e);
       });

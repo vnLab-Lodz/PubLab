@@ -77,5 +77,7 @@ export const CHANNELS = {
     INSTALL: 'server:install',
     START: 'server:start',
     CLEAR_CACHE: 'server:clear-cache',
+    STOP: 'server:stop',
+    WRITE: 'server:write',
   },
 } as const;
