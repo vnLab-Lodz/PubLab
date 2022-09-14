@@ -6,12 +6,13 @@ import {
   RotateLeft,
 } from '@mui/icons-material';
 import { Box, IconButton, Tooltip, Typography, useTheme } from '@mui/material';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, shell } from 'electron';
 import React, { useEffect, useRef } from 'react';
 import { LocalPublication } from 'src/shared/types';
 import { CHANNELS, IpcRendererEventHandler } from 'src/shared/types/api';
 import { Terminal as XTerm } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
+import { WebLinksAddon } from 'xterm-addon-web-links';
 import 'xterm/css/xterm.css';
 import * as Styled from './style';
 
@@ -37,6 +38,12 @@ const Terminal: React.FC<Props> = ({ project }) => {
       lineHeight: 1.5,
     });
     terminal.current.loadAddon(fitAddon);
+    terminal.current.loadAddon(
+      new WebLinksAddon((e, uri) => {
+        e.preventDefault();
+        shell.openExternal(uri);
+      })
+    );
     terminal.current.open(ref.current);
     fitAddon.fit();
 

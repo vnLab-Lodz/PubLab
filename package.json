@@ -164,6 +164,7 @@
     "uuid": "^8.3.2",
     "xterm": "^4.19.0",
     "xterm-addon-fit": "^0.5.0",
+    "xterm-addon-web-links": "^0.6.0",
     "yup": "^0.32.11"
   },
   "resolutions": {
