@@ -15,6 +15,7 @@ const Output: React.FC = () => {
 
   const options = useMemo<ITerminalOptions>(
     () => ({
+      fontFamily: "'Source Code Pro', monospace",
       fontSize: 10,
       lineHeight: 1.1,
       theme: { background: background.default, foreground: text.primary },
