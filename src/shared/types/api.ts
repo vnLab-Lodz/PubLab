@@ -1,8 +1,13 @@
-import { IpcMainInvokeEvent } from 'electron';
+import { IpcMainInvokeEvent, IpcRendererEvent } from 'electron';
 import { Stat } from 'isomorphic-git';
 
 export type IpcEventHandler<R = any> = (
   event: IpcMainInvokeEvent,
+  ...args: any[]
+) => Promise<R>;
+
+export type IpcRendererEventHandler<R = any> = (
+  event: IpcRendererEvent,
   ...args: any[]
 ) => Promise<R>;
 
@@ -67,5 +72,9 @@ export const CHANNELS = {
   GITHUB: {
     GET_USER_PUBLIC: 'github:get-user-public',
     UPDATE_COLLABORATORS: 'github:update-collaborators',
+  },
+  SERVER: {
+    START: 'server:start',
+    CLEAR_CACHE: 'server:clear-cache',
   },
 } as const;

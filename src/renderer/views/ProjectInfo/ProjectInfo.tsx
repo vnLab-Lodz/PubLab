@@ -1,6 +1,8 @@
 import { ThemeProvider } from '@mui/material';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import Terminal from 'src/renderer/components/Terminal/Terminal';
+import { isLocalPublication } from 'src/shared/utils/typeChecks';
 import { updateSubview } from '../../../shared/redux/slices/currentViewSlice';
 import { Publication } from '../../../shared/types';
 import { SUBVIEWS } from '../../constants/Views';
@@ -66,6 +68,7 @@ const ProjectInfo = ({ project, useMainTheme, showAllSubsections }: Props) => {
             <Snippets project={project} />
           </Styled.Section>
         )}
+        {isLocalPublication(project) && <Terminal project={project} />}
       </ViewContent>
     </ThemeProvider>
   );
