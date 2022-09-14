@@ -35,7 +35,7 @@ const Terminal: React.FC<Props> = ({ project }) => {
         background: theme.palette.primary.contrastText,
         foreground: theme.palette.primary.main,
       },
-      lineHeight: 1.5,
+      lineHeight: 1.1,
     });
     terminal.current.loadAddon(fitAddon);
     terminal.current.loadAddon(
