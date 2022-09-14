@@ -5,7 +5,7 @@ import {
   RestartAlt,
   RotateLeft,
 } from '@mui/icons-material';
-import { Box, IconButton, Tooltip, Typography, useTheme } from '@mui/material';
+import { Box, IconButton, Typography, useTheme } from '@mui/material';
 import { ipcRenderer, shell } from 'electron';
 import React, { useEffect, useRef } from 'react';
 import { LocalPublication } from 'src/shared/types';
@@ -14,6 +14,7 @@ import { Terminal as XTerm } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
 import { WebLinksAddon } from 'xterm-addon-web-links';
 import 'xterm/css/xterm.css';
+import Tooltip from '../Tooltip/Tooltip';
 import * as Styled from './style';
 
 type Props = {
@@ -94,7 +95,7 @@ const Terminal: React.FC<Props> = ({ project }) => {
         >
           Server controls
         </Typography>
-        <Tooltip title='Start development server' arrow>
+        <Tooltip title='Start development server' arrow placement='top-start'>
           <IconButton
             size='small'
             type='button'
@@ -110,7 +111,7 @@ const Terminal: React.FC<Props> = ({ project }) => {
             />
           </IconButton>
         </Tooltip>
-        <Tooltip title='Stop development server' arrow>
+        <Tooltip title='Stop development server' arrow placement='top-start'>
           <IconButton
             size='small'
             type='button'
@@ -126,7 +127,7 @@ const Terminal: React.FC<Props> = ({ project }) => {
             />
           </IconButton>
         </Tooltip>
-        <Tooltip title='Restart development server' arrow>
+        <Tooltip title='Restart development server' arrow placement='top-start'>
           <IconButton
             size='small'
             type='button'
@@ -143,7 +144,11 @@ const Terminal: React.FC<Props> = ({ project }) => {
             />
           </IconButton>
         </Tooltip>
-        <Tooltip title='Hard reset development server' arrow>
+        <Tooltip
+          title='Hard reset development server'
+          arrow
+          placement='top-start'
+        >
           <IconButton
             size='small'
             type='button'
@@ -164,7 +169,7 @@ const Terminal: React.FC<Props> = ({ project }) => {
             />
           </IconButton>
         </Tooltip>
-        <Tooltip title='Clear cache' arrow>
+        <Tooltip title='Clear cache' arrow placement='top-start'>
           <IconButton
             size='small'
             type='button'
