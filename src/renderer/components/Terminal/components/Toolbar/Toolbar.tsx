@@ -13,13 +13,14 @@ import {
 } from '@mui/icons-material';
 import Tooltip from 'src/renderer/components/Tooltip/Tooltip';
 import IconButton from 'src/renderer/components/IconButton/IconButton';
+import { useTranslation, CustomTypeOptions } from 'react-i18next';
 import * as Styled from './style';
 
 type Props = {
   project: LocalPublication;
 };
 
-enum TERMINAL_STATE {
+enum SERVER {
   IDLE = 'idle',
   INSTALLING = 'installing',
   SERVER_RUNNING = 'running',
@@ -28,40 +29,63 @@ enum TERMINAL_STATE {
 }
 
 const Toolbar: React.FC<Props> = ({ project }) => {
-  const [state, setState] = useState<TERMINAL_STATE>(TERMINAL_STATE.IDLE);
+  const [state, setState] = useState<SERVER>(SERVER.IDLE);
+  const { t } = useTranslation('translation');
+
+  const canStopProcess = state === SERVER.IDLE || state === SERVER.STOPPING;
+  const canStartServer = state !== SERVER.IDLE;
+  const canRestartServer = state !== SERVER.SERVER_RUNNING;
+  const canHardResetServer = state !== SERVER.SERVER_RUNNING;
+  const canClearCache = state !== SERVER.IDLE;
 
   const startServer = () => {
     ipcRenderer.invoke(CHANNELS.SERVER.START, project.dirPath);
-    setState(TERMINAL_STATE.SERVER_RUNNING);
+    setState(SERVER.SERVER_RUNNING);
   };
 
   const stopServer = async () => {
-    setState(TERMINAL_STATE.STOPPING);
+    setState(SERVER.STOPPING);
     await ipcRenderer.invoke('terminal-stop');
-    setState(TERMINAL_STATE.IDLE);
+    setState(SERVER.IDLE);
   };
 
   const restartServer = async () => {
-    setState(TERMINAL_STATE.STOPPING);
+    setState(SERVER.STOPPING);
     await ipcRenderer.invoke('terminal-stop');
     ipcRenderer.invoke(CHANNELS.SERVER.START, project.dirPath);
-    setState(TERMINAL_STATE.SERVER_RUNNING);
+    setState(SERVER.SERVER_RUNNING);
   };
 
   const hardResetServer = async () => {
-    setState(TERMINAL_STATE.STOPPING);
+    setState(SERVER.STOPPING);
     await ipcRenderer.invoke('terminal-stop');
-    setState(TERMINAL_STATE.CLEARING_CACHE);
+    setState(SERVER.CLEARING_CACHE);
     await ipcRenderer.invoke(CHANNELS.SERVER.CLEAR_CACHE, project.dirPath);
     ipcRenderer.invoke(CHANNELS.SERVER.START, project.dirPath);
-    setState(TERMINAL_STATE.SERVER_RUNNING);
+    setState(SERVER.SERVER_RUNNING);
   };
 
   const clearCache = async () => {
-    setState(TERMINAL_STATE.CLEARING_CACHE);
+    setState(SERVER.CLEARING_CACHE);
     await ipcRenderer.invoke(CHANNELS.SERVER.CLEAR_CACHE, project.dirPath);
-    setState(TERMINAL_STATE.IDLE);
+    setState(SERVER.IDLE);
   };
+
+  const getTooltip = (
+    key: keyof Pick<
+      CustomTypeOptions['resources']['translation']['Terminal'],
+      'start' | 'stop' | 'restart' | 'hard_reset' | 'clear_cache'
+    >
+  ) => (
+    <>
+      <Typography variant='caption' component='h5' mb='1rem' fontWeight='bold'>
+        {t(`Terminal.${key}`)}
+      </Typography>
+      <Typography variant='caption' component='p'>
+        {t(`Terminal.${key}_info`)}
+      </Typography>
+    </>
+  );
 
   return (
     <Styled.TerminalToolbar
@@ -75,93 +99,87 @@ const Toolbar: React.FC<Props> = ({ project }) => {
         textTransform='uppercase'
         mr='auto'
       >
-        Server controls
+        {t('Terminal.controls')}
       </Typography>
-      <Tooltip title='Start development server' arrow placement='top-start'>
+      <Tooltip title={getTooltip('start')} arrow placement='top-start'>
         <span>
           <IconButton
             size='small'
             type='button'
-            disabled={state !== TERMINAL_STATE.IDLE}
+            disabled={canStartServer}
             onClick={startServer}
           >
             <PlayArrow
               role='img'
-              aria-label='Start development server'
+              aria-label={t('Terminal.start')}
               color='primary'
               fontSize='small'
             />
           </IconButton>
         </span>
       </Tooltip>
-      <Tooltip title='Stop development server' arrow placement='top-start'>
+      <Tooltip title={getTooltip('stop')} arrow placement='top-start'>
         <span>
           <IconButton
             size='small'
             type='button'
-            disabled={
-              state === TERMINAL_STATE.IDLE || state === TERMINAL_STATE.STOPPING
-            }
+            disabled={canStopProcess}
             onClick={stopServer}
           >
             <Block
               role='img'
-              aria-label='Stop development server'
+              aria-label={t('Terminal.stop')}
               color='primary'
               fontSize='small'
             />
           </IconButton>
         </span>
       </Tooltip>
-      <Tooltip title='Restart development server' arrow placement='top-start'>
+      <Tooltip title={getTooltip('restart')} arrow placement='top-start'>
         <span>
           <IconButton
             size='small'
             type='button'
-            disabled={state !== TERMINAL_STATE.SERVER_RUNNING}
+            disabled={canRestartServer}
             onClick={restartServer}
           >
             <RestartAlt
               role='img'
-              aria-label='Restart development server'
+              aria-label={t('Terminal.restart')}
               color='primary'
               fontSize='small'
             />
           </IconButton>
         </span>
       </Tooltip>
-      <Tooltip
-        title='Hard reset development server'
-        arrow
-        placement='top-start'
-      >
+      <Tooltip title={getTooltip('hard_reset')} arrow placement='top-start'>
         <span>
           <IconButton
             size='small'
             type='button'
-            disabled={state !== TERMINAL_STATE.SERVER_RUNNING}
+            disabled={canHardResetServer}
             onClick={hardResetServer}
           >
             <RotateLeft
               role='img'
-              aria-label='Hard reset development server'
+              aria-label={t('Terminal.hard_reset')}
               color='primary'
               fontSize='small'
             />
           </IconButton>
         </span>
       </Tooltip>
-      <Tooltip title='Clear cache' arrow placement='top-start'>
+      <Tooltip title={getTooltip('clear_cache')} arrow placement='top-start'>
         <span>
           <IconButton
             size='small'
             type='button'
-            disabled={state !== TERMINAL_STATE.IDLE}
+            disabled={canClearCache}
             onClick={clearCache}
           >
             <DeleteSweep
               role='img'
-              aria-label='Clear cache'
+              aria-label={t('Terminal.clear_cache')}
               color='primary'
               fontSize='small'
             />

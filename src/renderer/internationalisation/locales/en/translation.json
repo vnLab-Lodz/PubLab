@@ -211,5 +211,18 @@
       "summary": "Your summary...",
       "description": "Your description..."
     }
+  },
+  "Terminal": {
+    "controls": "Server controls",
+    "start": "Start development server",
+    "start_info": "Use to run the project and see it in the browser. Project should automatically open in the browser. If it does not happen press the url visible in the terminal output.",
+    "stop": "Stop running process",
+    "stop_info": "Use to stop the process that is currently running in the terminal.",
+    "restart": "Restart development server",
+    "restart_info": "Use to restart the project. Handy when publication files have been moved while project was running.",
+    "hard_reset": "Hard reset development server",
+    "hard_reset_info": "Use in cases when normal reset does not help. This will clear all build publication files and recreate it from ground up.",
+    "clear_cache": "Clear cache",
+    "clear_cache_info": "Use to clear all build files manually."
   }
 }
