@@ -196,4 +196,4 @@ const Terminal: React.FC<Props> = ({ project }) => {
   );
 };
 
-export default Terminal;
+export default React.memo(Terminal);
