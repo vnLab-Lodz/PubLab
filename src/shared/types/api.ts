@@ -74,6 +74,7 @@ export const CHANNELS = {
     UPDATE_COLLABORATORS: 'github:update-collaborators',
   },
   SERVER: {
+    INSTALL: 'server:install',
     START: 'server:start',
     CLEAR_CACHE: 'server:clear-cache',
   },
