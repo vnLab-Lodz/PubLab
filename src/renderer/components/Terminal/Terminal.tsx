@@ -7,7 +7,7 @@ import {
 } from '@mui/icons-material';
 import { Box, IconButton, Typography, useTheme } from '@mui/material';
 import { ipcRenderer, shell } from 'electron';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { LocalPublication } from 'src/shared/types';
 import { CHANNELS, IpcRendererEventHandler } from 'src/shared/types/api';
 import { Terminal as XTerm } from 'xterm';
@@ -24,20 +24,22 @@ type Props = {
 const Terminal: React.FC<Props> = ({ project }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const terminal = useRef<InstanceType<typeof XTerm>>();
-  const theme = useTheme();
+  const { background, text } = useTheme().palette;
+
+  const options = useMemo(
+    () => ({
+      fontSize: 10,
+      lineHeight: 1.1,
+      theme: { background: background.default, foreground: text.primary },
+    }),
+    [background.default, text.primary]
+  );
 
   useEffect(() => {
     if (!ref.current) return undefined;
 
     const fitAddon = new FitAddon();
-    terminal.current = new XTerm({
-      fontSize: 10,
-      theme: {
-        background: theme.palette.primary.contrastText,
-        foreground: theme.palette.primary.main,
-      },
-      lineHeight: 1.1,
-    });
+    terminal.current = new XTerm(options);
     terminal.current.loadAddon(fitAddon);
     terminal.current.loadAddon(
       new WebLinksAddon((e, uri) => {
@@ -62,7 +64,7 @@ const Terminal: React.FC<Props> = ({ project }) => {
       terminal.current?.dispose();
       fitAddon.dispose();
     };
-  }, [ref.current]);
+  }, [ref.current, options]);
 
   return (
     <Box
