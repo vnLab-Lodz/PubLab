@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import path from 'path';
 import { Collaborator, Publication } from 'src/shared/types';
+import storage from 'electron-settings';
 import { RootState } from '../rootReducer';
 
 // type created to avoid an issue with both unclear modification type
@@ -38,7 +39,7 @@ const loadPublicationsSlice = createSlice({
   initialState,
   reducers: {
     setPublicationsList: (state, action: PayloadAction<Publication[]>) => {
-      state.publications = action.payload;
+      state.publications = action.payload.map(assignKeepStatuses);
     },
     setActivePublication: (state, action: PayloadAction<string | null>) => {
       state.activePublicationId = action.payload;
@@ -47,7 +48,7 @@ const loadPublicationsSlice = createSlice({
       state: PublicationsState,
       action: PayloadAction<Publication>
     ) => {
-      state.publications.push(action.payload);
+      state.publications.push(assignKeepStatuses(action.payload));
     },
     deletePublication: (
       state: PublicationsState,
@@ -71,11 +72,16 @@ const loadPublicationsSlice = createSlice({
       state: PublicationsState,
       action: PayloadAction<PublicationModification>
     ) => {
-      const chosenPubIndex = state.publications.findIndex(
-        (publication) => publication.id === action.payload.id
-      );
-      (state.publications[chosenPubIndex][action.payload.field] as any) =
-        action.payload.value;
+      const { id, value, field } = action.payload;
+      const index = state.publications.findIndex((p) => p.id === id);
+      if (!state.publications[index]) return;
+
+      (state.publications[index][field] as any) = value;
+
+      const { id: pid } = state.publications[index];
+      if (!field.includes('keep') || typeof value !== 'boolean') return;
+
+      storage.set(`${pid}.${field}`, value);
     },
     addCollaborator: (
       state: PublicationsState,
@@ -148,3 +154,14 @@ export const activePublication = (state: RootState) => {
 export default loadPublicationsSlice.reducer;
 
 export type { PublicationModification, CollaboratorListModification };
+
+function assignKeepStatuses(base: Publication) {
+  const publication = { ...base };
+
+  const stored = storage.getSync(publication.id) as any;
+  publication.keepDescriptionVisible = !!stored?.keepDescriptionVisible;
+  publication.keepSnippetsVisible = !!stored?.keepSnippetsVisible;
+  publication.keepServerVisible = !!stored?.keepServerVisible;
+
+  return publication;
+}
