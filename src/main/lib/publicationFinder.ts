@@ -53,6 +53,7 @@ const createPublicationFinder = (): PublicationFinder => {
               dirPath: path.join(dirPath, name),
               keepDescriptionVisible: false,
               keepSnippetsVisible: false,
+              keepServerVisible: false,
             });
           }
         };
@@ -124,6 +125,7 @@ const createPublicationFinder = (): PublicationFinder => {
                   repoName: repo.name,
                   keepDescriptionVisible: false,
                   keepSnippetsVisible: false,
+                  keepServerVisible: false,
                 });
               } else {
                 logger.appendLog(

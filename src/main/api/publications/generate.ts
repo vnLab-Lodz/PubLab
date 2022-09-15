@@ -88,6 +88,7 @@ const generate: IpcEventHandler = async (_, params: PublicationBase) => {
         dirPath: repoPath,
         keepDescriptionVisible: false,
         keepSnippetsVisible: false,
+        keepServerVisible: false,
       })
     );
     store.dispatch(setActivePublication(savedConfig.id));

@@ -223,6 +223,8 @@
     "hard_reset": "Hard reset development server",
     "hard_reset_info": "Use in cases when normal reset does not help. This will clear all build publication files and recreate it from ground up.",
     "clear_cache": "Clear cache",
-    "clear_cache_info": "Use to clear all build files manually."
+    "clear_cache_info": "Use to clear all build files manually.",
+    "project_server": "Project server",
+    "info": "Run the project server to display the publication in a browser. This will allow for working on it in a hot-reload environment. Hover on the controls for more information on each action."
   }
 }

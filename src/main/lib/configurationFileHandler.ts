@@ -7,7 +7,11 @@ import createFileIO from './fileIO';
 
 export type Config = Omit<
   Publication,
-  'lastUpdate' | 'status' | 'keepSnippetsVisible' | 'keepDescriptionVisible'
+  | 'lastUpdate'
+  | 'status'
+  | 'keepSnippetsVisible'
+  | 'keepDescriptionVisible'
+  | 'keepServerVisible'
 >;
 
 type UpdateConfigFieldParams = Exclude<

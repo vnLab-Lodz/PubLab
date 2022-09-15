@@ -22,6 +22,11 @@ interface Props {
 const ProjectInfo = ({ project, useMainTheme, showAllSubsections }: Props) => {
   const dispatch = useDispatch();
 
+  const isTerminalVisible =
+    isLocalPublication(project) &&
+    project.keepServerVisible &&
+    !showAllSubsections;
+
   return (
     <ThemeProvider theme={useMainTheme ? mainTheme : altTheme}>
       <ViewContent isSubview>
@@ -68,7 +73,22 @@ const ProjectInfo = ({ project, useMainTheme, showAllSubsections }: Props) => {
             <Snippets project={project} />
           </Styled.Section>
         )}
-        {isLocalPublication(project) && <Terminal project={project} />}
+        {isTerminalVisible && (
+          <Styled.Section>
+            <Styled.CloseButton
+              onClick={() =>
+                dispatch(
+                  updatePublicationField({
+                    id: project.id,
+                    field: 'keepServerVisible',
+                    value: false,
+                  })
+                )
+              }
+            />
+            <Terminal project={project} />
+          </Styled.Section>
+        )}
       </ViewContent>
     </ThemeProvider>
   );

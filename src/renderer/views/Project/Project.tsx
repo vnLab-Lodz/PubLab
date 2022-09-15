@@ -1,6 +1,6 @@
-import { Typography } from '@mui/material';
-import { t } from 'i18next';
+import { Box, Typography } from '@mui/material';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   activePublication,
@@ -15,6 +15,7 @@ import ViewContent from '../../components/ViewContent/ViewContent';
 const Description = () => {
   const project = useSelector(activePublication);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   return (
     <ViewContent>
@@ -69,6 +70,36 @@ const Description = () => {
               })}
             </Button>
             <Snippets project={project} isAccordion noLabel />
+          </SeparatedSection>
+
+          <SeparatedSection>
+            <Typography
+              variant='body2'
+              component='h2'
+              textTransform='uppercase'
+            >
+              {t('Terminal.project_server')}:
+            </Typography>
+            <Button
+              fullWidth
+              variant='contained'
+              onClick={() =>
+                dispatch(
+                  updatePublicationField({
+                    id: project.id,
+                    field: 'keepServerVisible',
+                    value: true,
+                  })
+                )
+              }
+            >
+              {t('ProjectInfo.buttonText', {
+                label: t('Terminal.project_server'),
+              })}
+            </Button>
+            <Box mt={1} mb={3}>
+              <Typography variant='subtitle1'>{t('Terminal.info')}</Typography>
+            </Box>
           </SeparatedSection>
 
           <SeparatedSection>
