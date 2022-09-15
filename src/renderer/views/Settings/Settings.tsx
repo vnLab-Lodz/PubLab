@@ -38,7 +38,7 @@ const Settings = () => {
   const [canSubmit, setCanSubmit] = useState(true);
   const [loaderId, setLoaderID] = useState('');
 
-  const projectSettings = { ...project, ...changes };
+  const projectSettings = { ...stripPublication(project), ...changes };
 
   return (
     <>
@@ -120,38 +120,55 @@ async function handleCoverImage(
   changes: Partial<Config>,
   project: LocalPublication
 ) {
-  if (changes.imagePath !== project.imagePath) {
-    if (project.imagePath) {
-      await ipcRenderer.invoke(CHANNELS.FILES.REMOVE, project.imagePath);
-      await gitStage(
-        [
-          {
-            filepath: project.imagePath,
-            status: { head: 1, workdir: 0, stage: 1 },
-            children: [],
-          },
-        ],
-        { refresh: false }
-      );
-    }
-    if (!changes.imagePath) return changes;
-    const { imagePath } = changes;
-    const destination = path.resolve(
-      project.dirPath,
-      `${COVER_PIC_FILENAME}${path.extname(imagePath)}`
-    );
-    await ipcRenderer.invoke(CHANNELS.FILES.COPY, imagePath, destination);
+  if (changes.imagePath === project.imagePath) return changes;
+
+  if (project.imagePath) {
+    await ipcRenderer.invoke(CHANNELS.FILES.REMOVE, project.imagePath);
     await gitStage(
       [
         {
-          filepath: destination,
-          status: { head: 0, workdir: 2, stage: 0 },
+          filepath: project.imagePath,
+          status: { head: 1, workdir: 0, stage: 1 },
           children: [],
         },
       ],
       { refresh: false }
     );
-    return { ...changes, imagePath: destination };
   }
-  return changes;
+
+  if (!changes.imagePath) return changes;
+
+  const { imagePath } = changes;
+  const destination = path.resolve(
+    project.dirPath,
+    `${COVER_PIC_FILENAME}${path.extname(imagePath)}`
+  );
+  await ipcRenderer.invoke(CHANNELS.FILES.COPY, imagePath, destination);
+  await gitStage(
+    [
+      {
+        filepath: destination,
+        status: { head: 0, workdir: 2, stage: 0 },
+        children: [],
+      },
+    ],
+    { refresh: false }
+  );
+  return { ...changes, imagePath: destination };
+}
+
+// TODO: Some better settings typing and a different selector could be a more robust long term solution
+// ! Temporary fix for: https://github.com/vnLab-Lodz/PubLab/issues/249
+function stripPublication(publication: LocalPublication) {
+  const {
+    status,
+    lastUpdate,
+    dirPath,
+    keepDescriptionVisible,
+    keepSnippetsVisible,
+    keepServerVisible,
+    ...stripped
+  } = publication;
+
+  return stripped;
 }
