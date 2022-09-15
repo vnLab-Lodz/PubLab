@@ -113,9 +113,8 @@ const createPublicationFinder = (): PublicationFinder => {
 
               if ('content' in contents && contents.encoding === 'base64') {
                 const buffer = Buffer.from(contents.content, contents.encoding);
-                const decoded = buffer.toString('ascii');
+                const decoded = buffer.toString('utf-8');
                 const config: Config = JSON.parse(decoded);
-                // TODO: handle the last update parameter
                 publications.push({
                   ...config,
                   status: 'remote',
