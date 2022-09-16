@@ -35,4 +35,6 @@ export const SubviewContentBox = styled(Box)(() => ({
   margin: '2rem 2rem 12rem',
   width: '100%',
   position: 'relative',
+  height: 'fit-content',
+  overflow: 'hidden',
 }));

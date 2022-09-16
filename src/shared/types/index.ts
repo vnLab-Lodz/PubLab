@@ -37,6 +37,7 @@ export interface IPublication extends PublicationBase {
   snippets: Snippet[];
   keepDescriptionVisible: boolean;
   keepSnippetsVisible: boolean;
+  keepServerVisible: boolean;
 }
 
 export interface LocalPublication extends IPublication {

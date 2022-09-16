@@ -1,6 +1,8 @@
 import { ThemeProvider } from '@mui/material';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import Terminal from 'src/renderer/components/Terminal/Terminal';
+import { isLocalPublication } from 'src/shared/utils/typeChecks';
 import { updateSubview } from '../../../shared/redux/slices/currentViewSlice';
 import { Publication } from '../../../shared/types';
 import { SUBVIEWS } from '../../constants/Views';
@@ -19,6 +21,11 @@ interface Props {
 
 const ProjectInfo = ({ project, useMainTheme, showAllSubsections }: Props) => {
   const dispatch = useDispatch();
+
+  const isTerminalVisible =
+    isLocalPublication(project) &&
+    project.keepServerVisible &&
+    !showAllSubsections;
 
   return (
     <ThemeProvider theme={useMainTheme ? mainTheme : altTheme}>
@@ -64,6 +71,22 @@ const ProjectInfo = ({ project, useMainTheme, showAllSubsections }: Props) => {
             )}
 
             <Snippets project={project} />
+          </Styled.Section>
+        )}
+        {isTerminalVisible && (
+          <Styled.Section>
+            <Styled.CloseButton
+              onClick={() =>
+                dispatch(
+                  updatePublicationField({
+                    id: project.id,
+                    field: 'keepServerVisible',
+                    value: false,
+                  })
+                )
+              }
+            />
+            <Terminal project={project} />
           </Styled.Section>
         )}
       </ViewContent>

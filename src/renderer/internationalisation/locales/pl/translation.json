@@ -211,5 +211,20 @@
       "summary": "Twoje podsumowanie...",
       "description": "Twój opis..."
     }
+  },
+  "Terminal": {
+    "controls": "Akcje serwera",
+    "start": "Uruchom serwer roboczy",
+    "start_info": "Uruchamia serwer i otwiera projekt. Projekt powinien automatycznie otworzyć się w przeglądarce. Jeśli to sie nie stanie kliknij link w terminalu.",
+    "stop": "Zatrzymaj działający proces",
+    "stop_info": "Zatrzymuje proces obecnie działający w terminalu.",
+    "restart": "Zrestartuj serwer roboczy",
+    "restart_info": "Restartuje serwer roboczy publikacji. Użyteczne w przpadku zmiany struktury publikacji w czasie działania serwera.",
+    "hard_reset": "Twardo zresetuj serwer roboczy",
+    "hard_reset_info": "Użyj gdy zwykły reset nie pomaga. Ta akcja wyczyści pamięć podręczną i uruchomi serwer od nowa.",
+    "clear_cache": "Wyczyść pamięć podręczną",
+    "clear_cache_info": "Użyj by manualnie wyczyścić pamięć podręczna zbudowanej publikacji.",
+    "project_server": "Serwer projektu",
+    "info": "Uruchom serwer projektu by wyświetlić publikację w przeglądarce. To pozwoli na pracę nad nią w środowisku automatycznie reagującym na zmiany. Najedź na kontroli by dowiedzieć się więcej na temat poszczególnych akcji."
   }
 }

@@ -15,7 +15,8 @@ const useViewRedirects = (currentView: CurrentView): CurrentView => {
   const isProjectView = projectViews.includes(currentView.view);
   const isProjectInfoDisplayed =
     activePublication?.keepDescriptionVisible ||
-    activePublication?.keepSnippetsVisible;
+    activePublication?.keepSnippetsVisible ||
+    activePublication?.keepServerVisible;
 
   if (isProjectView && !isProjectActive) {
     redirectedView = { ...currentView, view: VIEWS.NO_ACTIVE_PROJECT };
