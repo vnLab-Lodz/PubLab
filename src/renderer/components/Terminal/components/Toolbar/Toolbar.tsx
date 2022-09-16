@@ -32,11 +32,11 @@ const Toolbar: React.FC<Props> = ({ project }) => {
   const [state, setState] = useState<SERVER>(SERVER.IDLE);
   const { t } = useTranslation('translation');
 
-  const canStopProcess = state === SERVER.IDLE || state === SERVER.STOPPING;
-  const canStartServer = state !== SERVER.IDLE;
-  const canRestartServer = state !== SERVER.SERVER_RUNNING;
-  const canHardResetServer = state !== SERVER.SERVER_RUNNING;
-  const canClearCache = state !== SERVER.IDLE;
+  const isStopBtnDisabled = state === SERVER.IDLE || state === SERVER.STOPPING;
+  const isStartBtnDisabled = state !== SERVER.IDLE;
+  const isRestartBtnDisabled = state !== SERVER.SERVER_RUNNING;
+  const isHardResetBtnDisabled = state !== SERVER.SERVER_RUNNING;
+  const isClearCacheBtnDisabled = state !== SERVER.IDLE;
 
   const startServer = () => {
     ipcRenderer.invoke(CHANNELS.SERVER.START, project.dirPath);
@@ -106,7 +106,7 @@ const Toolbar: React.FC<Props> = ({ project }) => {
           <IconButton
             size='small'
             type='button'
-            disabled={canStartServer}
+            disabled={isStartBtnDisabled}
             onClick={startServer}
           >
             <PlayArrow
@@ -123,7 +123,7 @@ const Toolbar: React.FC<Props> = ({ project }) => {
           <IconButton
             size='small'
             type='button'
-            disabled={canStopProcess}
+            disabled={isStopBtnDisabled}
             onClick={stopServer}
           >
             <Block
@@ -140,7 +140,7 @@ const Toolbar: React.FC<Props> = ({ project }) => {
           <IconButton
             size='small'
             type='button'
-            disabled={canRestartServer}
+            disabled={isRestartBtnDisabled}
             onClick={restartServer}
           >
             <RestartAlt
@@ -157,7 +157,7 @@ const Toolbar: React.FC<Props> = ({ project }) => {
           <IconButton
             size='small'
             type='button'
-            disabled={canHardResetServer}
+            disabled={isHardResetBtnDisabled}
             onClick={hardResetServer}
           >
             <RotateLeft
@@ -174,7 +174,7 @@ const Toolbar: React.FC<Props> = ({ project }) => {
           <IconButton
             size='small'
             type='button'
-            disabled={canClearCache}
+            disabled={isClearCacheBtnDisabled}
             onClick={clearCache}
           >
             <DeleteSweep
