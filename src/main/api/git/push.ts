@@ -1,13 +1,12 @@
-import fs from 'fs';
-import http from 'isomorphic-git/http/node';
 import { activePublication } from 'src/shared/redux/slices/loadPublicationsSlice';
 import { createLogger } from 'src/main/logger';
 import { IpcEventHandler } from 'src/shared/types/api';
 import { LocalPublication } from 'src/shared/types/';
 import { mainStore as store } from 'src/main';
 import { sendNotification } from 'src/shared/redux/slices/notificationsSlice';
-import git, { AuthCallback, AuthFailureCallback } from 'isomorphic-git';
+import { AuthFailureCallback } from 'isomorphic-git';
 import { addLoader, removeLoader } from 'src/shared/redux/slices/loadersSlice';
+import createGitRepoHandler from '../../lib/gitRepoHandler';
 
 interface Options {
   loaderId: string;
@@ -16,11 +15,10 @@ interface Options {
 
 const push: IpcEventHandler = async (_, { loaderId, branchRef }: Options) => {
   const logger = createLogger();
-  const { dirPath } = activePublication(store.getState()) as LocalPublication;
-  const token = store.getState().currentUser.auth.accessToken?.value;
-
-  // https://isomorphic-git.org/docs/en/onAuth
-  const onAuth: AuthCallback = () => (token ? { username: token } : undefined);
+  const publication = activePublication(store.getState()) as LocalPublication;
+  const { dirPath } = publication;
+  const repoHandler = createGitRepoHandler(publication);
+  const token = store.getState().currentUser.auth.accessToken?.value as string;
 
   const onAuthFailure: AuthFailureCallback = (message) => {
     logger.appendError(message);
@@ -40,13 +38,9 @@ const push: IpcEventHandler = async (_, { loaderId, branchRef }: Options) => {
         i18n: { key: 'loaders.pushing', params: { dir: dirPath } },
       })
     );
-
-    await git.push({
-      fs,
-      http,
+    await repoHandler.push({
+      authToken: token,
       remoteRef: branchRef,
-      dir: dirPath,
-      onAuth,
       onAuthFailure,
     });
 

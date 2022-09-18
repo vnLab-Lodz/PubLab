@@ -17,6 +17,7 @@ import {
   removeLoader,
 } from 'src/shared/redux/slices/loadersSlice';
 
+// TODO: probably this also should be moved to src\main\lib\gitRepoHandler.ts
 interface Options {
   loaderId: string;
 }
