@@ -54,7 +54,8 @@ const ProjectTable: React.FC<Props> = ({ publications }) => {
       );
     }
     dispatch(setActivePublication(publication.id));
-    ipcRenderer.invoke(CHANNELS.GIT.REPO_STATUS);
+    await ipcRenderer.invoke(CHANNELS.GIT.REPO_STATUS);
+    await ipcRenderer.invoke(CHANNELS.GIT.CHECKOUT);
     dispatch(updateCurrentView(VIEWS.PROJECT));
   };
 

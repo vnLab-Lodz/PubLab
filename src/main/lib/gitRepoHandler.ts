@@ -84,6 +84,26 @@ const createGitRepoHandler = (publication: LocalPublication) => {
       );
     },
 
+    checkout: async (branch: string) => {
+      try {
+        await git.checkout({
+          fs,
+          dir: publication.dirPath,
+          ref: branch,
+        });
+      } catch (e) {
+        if ((e as any).code === 'NotFoundError') {
+          logger.appendLog(`${(e as Error).message} 'Creating new branch.`);
+          await git.branch({
+            fs,
+            dir: publication.dirPath,
+            ref: branch,
+            checkout: true,
+          });
+        }
+      }
+    },
+  };
 };
 
 export default createGitRepoHandler;

@@ -23,6 +23,7 @@ import copyFile from './files/copyFile';
 import removeFile from './files/removeFile';
 import getPublicUserData from './gitHub/getPublicUserData';
 import updateCollaborators from './gitHub/updateCollaborators';
+import checkout from './git/checkout';
 import start from './server/start';
 import clearCache from './server/clearCache';
 
@@ -49,6 +50,7 @@ const registerApiHandlers = () => {
   ipc.handle(CHANNELS.GIT.FILES_STATUS, updateFilesStatus);
   ipc.handle(CHANNELS.GIT.STAGE, stage);
   ipc.handle(CHANNELS.GIT.COMMIT, commit);
+  ipc.handle(CHANNELS.GIT.CHECKOUT, checkout);
   ipc.handle(CHANNELS.GITHUB.GET_USER_PUBLIC, getPublicUserData);
   ipc.handle(CHANNELS.GITHUB.UPDATE_COLLABORATORS, updateCollaborators);
   ipc.handle(CHANNELS.SERVER.START, start);
