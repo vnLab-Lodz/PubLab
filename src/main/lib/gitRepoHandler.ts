@@ -5,6 +5,7 @@ import { LocalPublication } from '../../shared/types';
 import { createLogger } from '../logger';
 import { GitRepoTreeItem } from '../../shared/types/api';
 import { absoluteToGitPath } from '../../shared/utils/paths';
+import { MAIN_BRANCH } from '../../shared/constants';
 
 const createGitRepoHandler = (publication: LocalPublication) => {
   const logger = createLogger();
@@ -94,6 +95,11 @@ const createGitRepoHandler = (publication: LocalPublication) => {
       } catch (e) {
         if ((e as any).code === 'NotFoundError') {
           logger.appendLog(`${(e as Error).message} 'Creating new branch.`);
+          await git.checkout({
+            fs,
+            dir: publication.dirPath,
+            ref: MAIN_BRANCH,
+          });
           await git.branch({
             fs,
             dir: publication.dirPath,
