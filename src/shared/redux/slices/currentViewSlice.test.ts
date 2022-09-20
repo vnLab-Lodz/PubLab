@@ -20,10 +20,10 @@ describe('currentViewSlice', () => {
 
   it('handles updateSubview action', () => {
     expect(
-      reducer(testView, updateSubview({ element: SUBVIEWS.NO_PROJECTS }))
+      reducer(testView, updateSubview({ element: SUBVIEWS.PROJECT_INFO }))
     ).toEqual({
       view: VIEWS.PROJECT,
-      subview: { element: SUBVIEWS.NO_PROJECTS },
+      subview: { element: SUBVIEWS.PROJECT_INFO },
     });
   });
 });

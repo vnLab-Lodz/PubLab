@@ -4,3 +4,11 @@ jest.mock('./app', () => ({
     getPath: jest.fn(() => './'),
   },
 }));
+
+jest.mock('electron-settings', () => ({
+  __esModule: true,
+  default: {
+    getSync: jest.fn(() => ''),
+    set: jest.fn(() => {}),
+  },
+}));

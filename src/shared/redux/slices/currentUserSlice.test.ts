@@ -203,7 +203,7 @@ describe('currentUserSlice', () => {
     const userData = {
       nick: 'user',
       avatar: 'http://google.com',
-      company: 'PubLab',
+      organizations: [],
     };
     const initialState: CurrentUser = {
       data: null,
@@ -223,7 +223,7 @@ describe('currentUserSlice', () => {
       data: {
         nick: 'user',
         avatar: 'http://google.com',
-        company: 'PubLab',
+        organizations: [],
       },
       auth: {
         code: 'code',
@@ -275,7 +275,7 @@ describe('currentUserSlice', () => {
       data: {
         nick: 'user',
         avatar: 'http://google.com',
-        company: 'PubLab',
+        organizations: [],
       },
       auth: {
         code: 'code',

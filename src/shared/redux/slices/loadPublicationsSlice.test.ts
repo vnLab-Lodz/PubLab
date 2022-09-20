@@ -30,6 +30,10 @@ const publication: Publication = {
   packageManager: 'npm',
   useSass: true,
   useTypescript: true,
+  snippets: [],
+  keepDescriptionVisible: false,
+  keepSnippetsVisible: false,
+  keepServerVisible: false,
 };
 
 describe('loadPublicationsSlice', () => {
