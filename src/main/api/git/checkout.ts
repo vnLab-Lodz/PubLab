@@ -11,7 +11,6 @@ import createGitRepoHandler from '../../lib/gitRepoHandler';
 import { createLogger } from '../../logger';
 
 const checkout: IpcEventHandler = async () => {
-  console.log('run');
   const logger = createLogger();
   const storeState = store.getState();
   const publication = activePublication(storeState) as LocalPublication;
