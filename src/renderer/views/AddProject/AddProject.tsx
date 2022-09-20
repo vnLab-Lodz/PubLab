@@ -26,6 +26,7 @@ import {
   deleteDraft,
   increaseStep,
   newPublication,
+  setPublicationField,
 } from '../../../shared/redux/slices/addPublicationWizardSlice';
 import steps from './subcomponents/Steps/Steps';
 
@@ -51,6 +52,8 @@ const AddProject = () => {
 
   useEffect(() => {
     if (!user) return;
+
+    dispatch(setPublicationField({ field: 'owner', value: user.nick }));
 
     dispatch(
       addCollaborator({
