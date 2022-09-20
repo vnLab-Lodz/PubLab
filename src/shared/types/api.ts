@@ -68,6 +68,7 @@ export const CHANNELS = {
     FILES_STATUS: 'git:files-status',
     STAGE: 'git:stage',
     COMMIT: 'git:commit',
+    CHECKOUT: 'git:checkout',
   },
   GITHUB: {
     GET_USER_PUBLIC: 'github:get-user-public',

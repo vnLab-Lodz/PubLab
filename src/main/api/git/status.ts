@@ -25,6 +25,8 @@ import {
   gitPathToAbsolute,
 } from '../../../shared/utils/paths';
 
+// TODO: probably this also should be moved to src\main\lib\gitRepoHandler.ts
+
 export const updateRepoStatus: IpcEventHandler = async () => {
   const logger = createLogger();
   const publication = activePublication(store.getState()) as LocalPublication;
