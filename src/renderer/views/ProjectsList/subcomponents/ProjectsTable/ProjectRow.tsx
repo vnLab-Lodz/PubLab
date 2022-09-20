@@ -36,7 +36,7 @@ const ProjectRow: React.FC<Props> = ({ publication, isSelected }) => {
               fontSize: '2rem',
             }}
           >
-            {publication.name.charAt(0)}
+            {publication.name.charAt(0).toUpperCase()}
           </Avatar>
         </TableCell>
         <TableCell border sx={{ wordBreak: 'break-all', paddingLeft: '1rem' }}>

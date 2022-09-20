@@ -67,7 +67,7 @@ const NavigationBar = () => {
         startIcon={
           options?.isProjectButton ? (
             <Avatar src={coverImage} alt='Project'>
-              {activeProject?.name.charAt(0) || '-'}
+              {activeProject?.name.charAt(0).toUpperCase() || '-'}
             </Avatar>
           ) : (
             <Typography variant='subtitle1'>{abbreviation}</Typography>
