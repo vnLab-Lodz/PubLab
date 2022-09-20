@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { GitRepoTreeItem } from '../../types/api';
 import { RootState } from '../rootReducer';
 import * as repoTree from '../../utils/repoStatus/tree';
+import { setActivePublication } from './loadPublicationsSlice';
 
 interface RepoStatus {
   tree: GitRepoTreeItem | undefined;
@@ -23,6 +24,9 @@ const repoStatusSlice = createSlice({
       if (!state.tree || !action.payload) return;
       state.tree = repoTree.replaceChildNode(state.tree, action.payload);
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(setActivePublication, () => initialState);
   },
 });
 
