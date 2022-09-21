@@ -55,7 +55,8 @@
   },
   "technology-picker": {
     "message": "Would you like to use technology extensions?",
-    "ts-tooltip": "All projects are TypeScript compliant."
+    "ts-tooltip": "All projects are TypeScript compliant.",
+    "sass-tooltip": "Sass is included by default in multilingual projects."
   },
   "first-time-view": {
     "title": "Choose directory",
@@ -124,6 +125,11 @@
     "PackageManager": {
       "message": "Choose the Package Manager:",
       "yarn-tooltip": "Initialization with yarn is not supported yet."
+    },
+    "LanguagesPicker": {
+      "message": "Choose language support:",
+      "single": "Single language",
+      "multi": "Multilingual"
     }
   },
   "ProjectDetails": {

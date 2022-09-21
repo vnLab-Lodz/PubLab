@@ -1,11 +1,14 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Publication } from '../../../shared/types';
+import { AddPublicationWizard } from 'src/shared/redux/slices/addPublicationWizardSlice';
 import StyledSwitch from '../Switch/Switch';
 import Tooltip from '../Tooltip/Tooltip';
 
-type State = Pick<Publication, 'useSass' | 'useTypescript'>;
+type State = Pick<
+  AddPublicationWizard['data'],
+  'useSass' | 'useTypescript' | 'multilingual'
+>;
 
 interface Props {
   onSubmit: (state: State) => void;
@@ -15,9 +18,16 @@ interface Props {
 const TechnologiesPicker = ({ onSubmit, state }: Props) => {
   const { t } = useTranslation();
 
+  const sassTooltip = state.multilingual
+    ? t('technology-picker.sass-tooltip')
+    : '';
+
+  const sassLabelColor = state.multilingual ? 'gray.dark' : undefined;
+
   const toggleSass = () => {
     onSubmit({ ...state, useSass: !state.useSass });
   };
+
   const toggleTypescript = () => {
     onSubmit({ ...state, useTypescript: !state.useTypescript });
   };
@@ -30,14 +40,19 @@ const TechnologiesPicker = ({ onSubmit, state }: Props) => {
 
       <Box>
         <Box mb={2}>
-          <StyledSwitch
-            size='small'
-            checked={state.useSass}
-            onChange={toggleSass}
-          />
-          <Typography variant='body2' ml={1}>
-            SCSS
-          </Typography>
+          <Tooltip title={sassTooltip} arrow placement='top-start'>
+            <span>
+              <StyledSwitch
+                size='small'
+                checked={state.multilingual || state.useSass}
+                onChange={toggleSass}
+                disabled={state.multilingual}
+              />
+              <Typography variant='body2' ml={1} color={sassLabelColor}>
+                SCSS
+              </Typography>
+            </span>
+          </Tooltip>
         </Box>
         <Box>
           <Tooltip
