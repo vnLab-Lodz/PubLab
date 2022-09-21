@@ -1,5 +1,8 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Provider } from 'react-redux';
+import notificationsSlice from 'src/shared/redux/slices/notificationsSlice';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import Notification, {
   NotificationText,
   NotificationTitle,
@@ -13,7 +16,13 @@ export default {
 } as ComponentMeta<typeof Notification>;
 
 const Template: ComponentStory<typeof Notification> = (args) => (
-  <Notification {...args} />
+  <Provider
+    store={configureStore({
+      reducer: combineReducers({ notifications: notificationsSlice }),
+    })}
+  >
+    <Notification {...args} />
+  </Provider>
 );
 
 const children = (
@@ -26,7 +35,7 @@ const children = (
 );
 
 export const Blank = Template.bind({});
-Blank.args = { type: NOTIFICATION_TYPES.INFO };
+Blank.args = { type: NOTIFICATION_TYPES.INFO, children };
 
 export const Info = Template.bind({});
 Info.args = { type: NOTIFICATION_TYPES.INFO, children };

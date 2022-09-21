@@ -14,5 +14,5 @@ Normal.args = { disabled: false };
 Normal.parameters = { backgrounds: { default: 'dark' } };
 
 export const Disabled = Template.bind({});
-Disabled.args = { disabled: true };
+Disabled.args = { disabled: true, checked: true };
 Disabled.parameters = { backgrounds: { default: 'dark' } };

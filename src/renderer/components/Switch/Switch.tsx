@@ -1,7 +1,7 @@
 import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material';
 
-const StyledSwitch = styled(Switch)(({ theme, size }) => ({
+const StyledSwitch = styled(Switch)(({ theme, size, disabled }) => ({
   width: size === 'small' ? '4rem' : '6rem',
   height: size === 'small' ? '2.4rem' : '3rem',
   padding: 0,
@@ -14,14 +14,15 @@ const StyledSwitch = styled(Switch)(({ theme, size }) => ({
     '&.Mui-checked': {
       transform: size === 'small' ? 'translate(16px)' : 'translateX(150%)',
       '& + .MuiSwitch-track': {
-        backgroundColor: theme.palette.green.main,
+        backgroundColor: disabled ? '#002f23' : theme.palette.green.main,
         opacity: 1,
       },
     },
   },
 
   '& .MuiSwitch-thumb': {
-    color: theme.palette.primary.main,
+    color: disabled ? theme.palette.text.disabled : theme.palette.primary.main,
+    opacity: disabled ? 1 : 1,
     width: size === 'small' ? '1.6rem' : '2rem',
     height: size === 'small' ? '1.6rem' : '2rem',
   },
@@ -29,8 +30,10 @@ const StyledSwitch = styled(Switch)(({ theme, size }) => ({
   '& .MuiSwitch-track': {
     borderRadius: '2rem',
     backgroundColor: 'transparent',
-    opacity: 1,
-    border: `1px solid ${theme.palette.primary.main}`,
+    border: `1px solid ${
+      disabled ? theme.palette.text.disabled : theme.palette.primary.main
+    }`,
+    opacity: disabled ? 1 : 1,
   },
 }));
 
