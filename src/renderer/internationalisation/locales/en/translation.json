@@ -54,7 +54,8 @@
     "created": "Created by:"
   },
   "technology-picker": {
-    "message": "Would you like to use technology extensions?"
+    "message": "Would you like to use technology extensions?",
+    "ts-tooltip": "All projects are TypeScript compliant."
   },
   "first-time-view": {
     "title": "Choose directory",
@@ -121,7 +122,8 @@
       "username_verification_pending": "Validating..."
     },
     "PackageManager": {
-      "message": "Choose the Package Manager:"
+      "message": "Choose the Package Manager:",
+      "yarn-tooltip": "Initialization with yarn is not supported yet."
     }
   },
   "ProjectDetails": {

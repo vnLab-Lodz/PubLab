@@ -54,7 +54,8 @@
     "created": "Stworzony przez:"
   },
   "technology-picker": {
-    "message": "Czy chciałbyś używać następujących rozszerzeń technologii?"
+    "message": "Czy chciałbyś używać następujących rozszerzeń technologii?",
+    "ts-tooltip": "Wszystkie projekty mają wsparcie dla TypeScript."
   },
   "first-time-view": {
     "title": "Wybierz folder",
@@ -121,7 +122,8 @@
       "username_verification_pending": "Sprawdzanie poprawności..."
     },
     "PackageManager": {
-      "message": "Wybierz managera pakietów:"
+      "message": "Wybierz managera pakietów:",
+      "yarn-tooltip": "Generacja z użyciem yarn nie jest obecnie wspierana."
     }
   },
   "ProjectDetails": {

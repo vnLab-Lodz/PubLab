@@ -28,7 +28,7 @@ const initialState = (): AddPublicationWizard => ({
     name: '',
     packageManager: 'npm',
     useSass: false,
-    useTypescript: false,
+    useTypescript: true,
   },
   step: 1,
 });

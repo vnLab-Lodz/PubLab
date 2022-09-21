@@ -3,6 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Publication } from '../../../shared/types';
 import StyledSwitch from '../Switch/Switch';
+import Tooltip from '../Tooltip/Tooltip';
 
 type State = Pick<Publication, 'useSass' | 'useTypescript'>;
 
@@ -39,14 +40,23 @@ const TechnologiesPicker = ({ onSubmit, state }: Props) => {
           </Typography>
         </Box>
         <Box>
-          <StyledSwitch
-            size='small'
-            checked={state.useTypescript}
-            onChange={toggleTypescript}
-          />
-          <Typography variant='body2' ml={1}>
-            TYPESCRIPT
-          </Typography>
+          <Tooltip
+            title={t('technology-picker.ts-tooltip')}
+            arrow
+            placement='top-start'
+          >
+            <span>
+              <StyledSwitch
+                size='small'
+                checked={state.useTypescript}
+                onChange={toggleTypescript}
+                disabled
+              />
+              <Typography variant='body2' ml={1} color='gray.dark'>
+                TYPESCRIPT
+              </Typography>
+            </span>
+          </Tooltip>
         </Box>
       </Box>
     </Box>
