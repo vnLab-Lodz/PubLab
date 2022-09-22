@@ -1,97 +1,83 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
-import path from 'path';
-import { TreeView } from '@mui/lab';
-import { ArrowDropDown, ArrowRight } from '@mui/icons-material';
+import { Autocomplete } from '@mui/material';
+import { Close } from '@mui/icons-material';
+import SearchField from 'src/renderer/components/SearchField/SearchField';
+import IconButton from 'src/renderer/components/IconButton/IconButton';
 import { activePublication } from '../../../shared/redux/slices/loadPublicationsSlice';
 import { LocalPublication } from '../../../shared/types';
-import FileTreeItem, {
-  parseNodeId,
-} from './subcomponents/FileTreeItem/FileTreeItem';
 import ViewContent from '../../components/ViewContent/ViewContent';
-import { Header } from '../../components/FileDisplay/Columns';
-import Section from '../../components/Section/Section';
-import { TreeItem } from './subcomponents/FileTreeItem/style';
-import ToParentFolder from './subcomponents/ToParentFolder/ToParentFolder';
-import {
-  isClickEvent,
-  isKeyboardEvent,
-} from '../../../shared/types/eventTypeguards';
-import { openInDefaultApp } from '../../ipc';
-import Breadcrumbs from './subcomponents/Breadcrumbs/Breadcrumbs';
 import { selectRepoTree } from '../../../shared/redux/slices/repoStatusSlice';
-import { findByPath } from '../../../shared/utils/repoStatus/tree';
 import PublicationHeader from '../../components/PublicationHeader/PublicationHeader';
+import FileExplorer from './subcomponents/FileExplorer/FileExplorer';
+import FileSearchExplorer from './subcomponents/FileSearchExplorer/FileSearchExplorer';
 
 const Files = () => {
   const project = useSelector(activePublication) as LocalPublication;
   const RepoTree = useSelector(selectRepoTree);
-  const [focused, setFocused] = React.useState<string>('');
-  const [expanded, setExpanded] = React.useState<string[]>([]);
-  const [currentDirectory, setCurrentDirectory] = React.useState(
-    path.join(project.dirPath, 'publication')
-  );
+  const [searchTerm, setSearchTerm] = React.useState<string | null>(null);
+  const ref = useRef<any>(null);
 
-  const handleToggle = (event: React.SyntheticEvent, nodeIds: string[]) => {
-    const node = parseNodeId(focused);
-    if (isOpenInteraction(event)) setCurrentDirectory(node.dirPath);
-    else setExpanded(nodeIds);
+  const handleClear = () => {
+    setSearchTerm(null);
+    if (!ref.current) return;
+
+    const clearBtn = ref.current.getElementsByClassName(
+      'MuiAutocomplete-clearIndicator'
+    )[0];
+    clearBtn.click();
   };
 
-  const handleSelect = (event: React.SyntheticEvent) => {
-    if (isOpenInteraction(event) && focused === '..') {
-      setCurrentDirectory(path.join(currentDirectory, focused));
-      return;
-    }
-    const node = parseNodeId(focused);
-    if (isOpenInteraction(event) && !node.isDirectory)
-      openInDefaultApp(node.dirPath);
-  };
   if (RepoTree === undefined) return <></>;
+
   return (
     <ViewContent sx={{ overflowY: 'scroll' }}>
-      <PublicationHeader />
-      <Breadcrumbs
-        projectRootPath={project.dirPath}
-        dirPath={currentDirectory}
-        onClick={setCurrentDirectory}
-      />
-      <Section>
-        <Header />
-        <TreeView
-          expanded={expanded}
-          selected='' // disable default selection behavior
-          defaultCollapseIcon={<ArrowDropDown />}
-          defaultExpandIcon={<ArrowRight />}
-          onNodeFocus={(e, value) => {
-            setFocused(value);
-          }}
-          onNodeToggle={handleToggle}
-          onNodeSelect={handleSelect}
-        >
-          <TreeItem
-            label={<ToParentFolder />}
-            nodeId='..'
-            treeLevel={0}
-            disabled={currentDirectory === project.dirPath}
-          />
-          <FileTreeItem
-            item={findByPath(RepoTree, currentDirectory) || RepoTree}
-            treeLevel={0}
-            dirPath={project.dirPath}
-            notRendered
-          />
-        </TreeView>
-      </Section>
+      <PublicationHeader dimmedIcon={false}>
+        <Autocomplete
+          ref={ref}
+          options={[]}
+          onChange={(_, value) => setSearchTerm(value)}
+          renderInput={(params) => (
+            <SearchField
+              {...params}
+              InputProps={{
+                'aria-label': 'Search',
+                sx: { overflow: 'hidden' },
+                ...params.InputProps,
+              }}
+            />
+          )}
+          size='small'
+          freeSolo
+          sx={{ mr: (theme) => (!searchTerm ? theme.spacing(1) : undefined) }}
+        />
+        {searchTerm && (
+          <IconButton
+            size='small'
+            sx={{
+              borderRadius: 0,
+              padding: 0,
+              color: 'text.primary',
+              mr: (theme) => theme.spacing(1),
+              ml: '0.5rem',
+            }}
+            onClick={handleClear}
+          >
+            <Close />
+          </IconButton>
+        )}
+      </PublicationHeader>
+      {!searchTerm ? (
+        <FileExplorer RepoTree={RepoTree} project={project} />
+      ) : (
+        <FileSearchExplorer
+          searchTerm={searchTerm}
+          RepoTree={RepoTree}
+          project={project}
+        />
+      )}
     </ViewContent>
   );
 };
 
 export default Files;
-
-function isOpenInteraction(event: React.SyntheticEvent) {
-  return (
-    (isKeyboardEvent(event) && event?.key === 'Enter') ||
-    (isClickEvent(event) && event.detail === 2)
-  );
-}

@@ -189,6 +189,14 @@
       "deleted": "usunięty",
       "moved": "przeniesiony",
       "unchanged": "brak zmian"
+    },
+    "search": {
+      "results": "Wyniki wyszukiwania dla",
+      "no_directories": "folder",
+      "directories": "foldery",
+      "no_files": "plik",
+      "files": "pliki",
+      "no_match": "Żaden {{target}} nie pasuje do wyszukanej frazy"
     }
   },
   "Changes": {

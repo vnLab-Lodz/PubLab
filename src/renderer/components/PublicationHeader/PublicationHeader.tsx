@@ -8,9 +8,14 @@ import { CHANNELS } from '../../../shared/types/api';
 
 interface Props {
   sx?: SxProps<Theme>;
+  dimmedIcon?: boolean;
 }
 
-const PublicationHeader: React.FC<Props> = ({ sx = [] }) => {
+const PublicationHeader: React.FC<Props> = ({
+  children,
+  dimmedIcon,
+  sx = [],
+}) => {
   const publication = useSelector(activePublication);
   return (
     <Box
@@ -20,13 +25,14 @@ const PublicationHeader: React.FC<Props> = ({ sx = [] }) => {
       ]}
     >
       <Typography variant='h1'>{publication?.name}</Typography>
-      <Box>
+      <Box display='flex' alignItems='center'>
+        {children}
         <IconButton
           size='small'
           sx={{ borderRadius: 0, padding: 0, color: 'text.primary' }}
           onClick={() => ipcRenderer.invoke(CHANNELS.GIT.REPO_STATUS)}
         >
-          <RefreshIcon sx={{ opacity: 0.5 }} />
+          <RefreshIcon sx={{ opacity: dimmedIcon ? 0.5 : 1 }} />
         </IconButton>
       </Box>
     </Box>
@@ -35,6 +41,7 @@ const PublicationHeader: React.FC<Props> = ({ sx = [] }) => {
 
 PublicationHeader.defaultProps = {
   sx: [],
+  dimmedIcon: true,
 };
 
 export default PublicationHeader;
