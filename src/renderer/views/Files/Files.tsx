@@ -4,6 +4,8 @@ import { Autocomplete } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import SearchField from 'src/renderer/components/SearchField/SearchField';
 import IconButton from 'src/renderer/components/IconButton/IconButton';
+import { createSelector } from '@reduxjs/toolkit';
+import { GitRepoTreeItem } from 'src/shared/types/api';
 import { activePublication } from '../../../shared/redux/slices/loadPublicationsSlice';
 import { LocalPublication } from '../../../shared/types';
 import ViewContent from '../../components/ViewContent/ViewContent';
@@ -12,9 +14,26 @@ import PublicationHeader from '../../components/PublicationHeader/PublicationHea
 import FileExplorer from './subcomponents/FileExplorer/FileExplorer';
 import FileSearchExplorer from './subcomponents/FileSearchExplorer/FileSearchExplorer';
 
+const selectSortedTree = createSelector<
+  [typeof selectRepoTree],
+  GitRepoTreeItem | undefined
+>([selectRepoTree], (RepoTree) => {
+  if (!RepoTree) return undefined;
+
+  const collator = new Intl.Collator([], { numeric: true });
+  const traverse = (tree: GitRepoTreeItem): GitRepoTreeItem => ({
+    ...tree,
+    children: tree.children
+      .map(traverse)
+      .sort((a, b) => collator.compare(a.filepath, b.filepath)),
+  });
+
+  return traverse(RepoTree);
+});
+
 const Files = () => {
   const project = useSelector(activePublication) as LocalPublication;
-  const RepoTree = useSelector(selectRepoTree);
+  const RepoTree = useSelector(selectSortedTree);
   const [searchTerm, setSearchTerm] = React.useState<string | null>(null);
   const ref = useRef<any>(null);
 
