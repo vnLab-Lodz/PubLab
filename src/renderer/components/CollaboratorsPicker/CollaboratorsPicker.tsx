@@ -16,9 +16,16 @@ interface Props {
   onDelete: (id: string) => void;
   state: State;
   compact?: boolean;
+  disabled?: boolean;
 }
 
-const CollaboratorsPicker = ({ onAdd, onDelete, state, compact }: Props) => {
+const CollaboratorsPicker = ({
+  onAdd,
+  onDelete,
+  state,
+  compact,
+  disabled,
+}: Props) => {
   const { t } = useTranslation();
 
   const [currentCollaborator, setCurrentCollaborator] = React.useState({
@@ -73,7 +80,11 @@ const CollaboratorsPicker = ({ onAdd, onDelete, state, compact }: Props) => {
     }
   }, [verifiedUsername, verificationError]);
 
-  const Picker = (
+  const Picker = disabled ? (
+    <Typography variant='body2'>
+      {t('AddProject.AddCollaborators.not_owner_msg')}
+    </Typography>
+  ) : (
     <CollabPicker
       value={currentCollaborator}
       prompt={getPrompt(verificationError?.message, verificationPending)}
@@ -122,6 +133,7 @@ const CollaboratorsPicker = ({ onAdd, onDelete, state, compact }: Props) => {
           <CollabTable
             collaborators={state.collaborators}
             onDelete={onDelete}
+            isDeleteDisabled={disabled}
           />
         </Box>
       )}
@@ -132,6 +144,7 @@ const CollaboratorsPicker = ({ onAdd, onDelete, state, compact }: Props) => {
 
 CollaboratorsPicker.defaultProps = {
   compact: false,
+  disabled: false,
 };
 
 export default CollaboratorsPicker;

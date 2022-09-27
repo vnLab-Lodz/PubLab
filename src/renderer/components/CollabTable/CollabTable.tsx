@@ -14,9 +14,14 @@ import TableCell from '../TableCell/TableCell';
 interface Props {
   collaborators: Collaborator[];
   onDelete: (id: string) => void;
+  isDeleteDisabled?: boolean;
 }
 
-const CollabTable: React.FC<Props> = ({ collaborators, onDelete }) => {
+const CollabTable: React.FC<Props> = ({
+  collaborators,
+  onDelete,
+  isDeleteDisabled,
+}) => {
   const { t } = useTranslation();
   const user = useSelector(selectCurrentUserData);
 
@@ -68,7 +73,10 @@ const CollabTable: React.FC<Props> = ({ collaborators, onDelete }) => {
                   sx={{ borderLeft: '1px solid' }}
                 >
                   <IconButton
-                    disabled={collaborator.githubUsername === user?.nick}
+                    disabled={
+                      collaborator.githubUsername === user?.nick ||
+                      isDeleteDisabled
+                    }
                     color='primary'
                     size='small'
                     aria-label='delete collaborator'
@@ -89,6 +97,10 @@ const CollabTable: React.FC<Props> = ({ collaborators, onDelete }) => {
       </Table>
     </Styled.Container>
   );
+};
+
+CollabTable.defaultProps = {
+  isDeleteDisabled: false,
 };
 
 export default CollabTable;
