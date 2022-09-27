@@ -36,7 +36,8 @@
     "resolving_deltas": "{{progress}} Resolving deltas",
     "analyzing_workdir": "{{progress}} Analyzing workdir",
     "updating_workdir": "{{progress}} Updating working directory",
-    "pushing": "Pushing changes from {{dir}} to the remote repository"
+    "pushing": "Pushing changes from {{dir}} to the remote repository",
+    "opening": "Opening project: \"{{title}}\". This may take a while."
   },
   "auth": {
     "in_progress": "Authentication in progress:",
