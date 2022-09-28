@@ -121,7 +121,8 @@
       "add_button": "Dodaj",
       "wrong_username_prompt": "Upewnij się, że nazwa użytkownika jest poprawna.",
       "user_exists_prompt": "Ten użytkownik jest już dodany.",
-      "username_verification_pending": "Sprawdzanie poprawności..."
+      "username_verification_pending": "Sprawdzanie poprawności...",
+      "not_owner_msg": "Musisz być właścicielem repozytorium aby modyfikować listę współpracowników."
     },
     "PackageManager": {
       "message": "Wybierz managera pakietów:",

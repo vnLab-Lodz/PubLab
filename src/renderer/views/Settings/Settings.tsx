@@ -23,11 +23,13 @@ import SnippetsManager from './subcomponents/SnippetsManager/SnippetsManager';
 import LoaderOverlay from '../../components/LoaderOverlay/LoaderOverlay';
 import { CHANNELS } from '../../../shared/types/api';
 import { COVER_PIC_FILENAME } from '../../../shared/constants';
+import { selectCurrentUserData } from '../../../shared/redux/slices/currentUserSlice';
 
 const Settings = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const project = useSelector(activePublication) as LocalPublication;
+  const username = useSelector(selectCurrentUserData)?.nick;
   const [changes, handleChange] = useReducer(
     (state: Partial<Config>, update: Partial<Config>): Partial<Config> => ({
       ...state,
@@ -60,6 +62,7 @@ const Settings = () => {
           <CollaboratorsPicker
             state={projectSettings}
             compact
+            disabled={project.owner !== username}
             onAdd={(collaborator) =>
               handleChange({
                 collaborators: [...projectSettings.collaborators, collaborator],
@@ -72,6 +75,16 @@ const Settings = () => {
                 ),
               })
             }
+            onCurrentUserRoleChange={(currentUser) => {
+              handleChange({
+                collaborators: [
+                  ...projectSettings.collaborators.filter(
+                    (collaborator) => !(collaborator.id === currentUser.id)
+                  ),
+                  currentUser,
+                ],
+              });
+            }}
           />
         </SeparatedSection>
         <SeparatedSection pb={3}>

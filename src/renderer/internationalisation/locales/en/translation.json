@@ -121,7 +121,8 @@
       "add_button": "Add",
       "wrong_username_prompt": "Make sure that the username is correct.",
       "user_exists_prompt": "This user is already added.",
-      "username_verification_pending": "Validating..."
+      "username_verification_pending": "Validating...",
+      "not_owner_msg": "You have to be the repository owner to change the collaborators list."
     },
     "PackageManager": {
       "message": "Choose the Package Manager:",

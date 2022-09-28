@@ -25,6 +25,7 @@ export interface PublicationBase {
   name: string;
   description: string;
   collaborators: Collaborator[];
+  owner: string;
   packageManager: 'npm' | 'yarn';
   useSass: boolean;
   useTypescript: boolean;

@@ -8,13 +8,15 @@ interface AddedProps {
   border?: boolean;
   align?: string;
   width?: string;
+  noPadding?: boolean;
 }
 
 type InnerProps = AddedProps & TableCellProps;
 
 const TableCell = styled(MUITableCell, {
   // Configure which props should be forwarded on DOM
-  shouldForwardProp: (prop) => prop !== 'border' && prop !== 'usernameColumn',
+  shouldForwardProp: (prop) =>
+    prop !== 'border' && prop !== 'usernameColumn' && prop !== 'noPadding',
 })<InnerProps>`
   text-align: ${(props) => props.align ?? 'left'};
   border: ${(props) =>
@@ -22,7 +24,7 @@ const TableCell = styled(MUITableCell, {
   border-left: none;
   width: ${(props) => props.width};
   overflow: hidden;
-  padding: 0.5rem;
+  padding: ${(props) => (props.noPadding ? '0' : '0.5rem')};
 `;
 
 export default TableCell;

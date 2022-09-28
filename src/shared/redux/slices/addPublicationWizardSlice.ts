@@ -24,6 +24,7 @@ const initialState = (): AddPublicationWizard => ({
   data: {
     id: uuidv4(),
     collaborators: [],
+    owner: '',
     description: '',
     name: '',
     packageManager: 'npm',
