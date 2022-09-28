@@ -53,76 +53,84 @@ const CollabTable: React.FC<Props> = ({
         </TableHead>
         <TableBody>
           {collaborators &&
-            collaborators.map((collaborator) => (
-              <Styled.Row key={collaborator.id}>
-                <TableCell align='center' width='3rem'>
-                  <Avatar
-                    sx={{
-                      width: '2.5rem',
-                      height: '2.5rem',
-                      fontSize: '1.3rem',
-                    }}
-                  >
-                    {collaborator.githubUsername.charAt(0)}
-                  </Avatar>
-                </TableCell>
-                <TableCell border>{collaborator.githubUsername}</TableCell>
-                <TableCell border>
-                  {collaborator.githubUsername === user?.nick ? (
-                    <Select
-                      value={collaborator.role}
-                      onChange={(e) =>
-                        onCurrentUserRoleChange({
-                          ...collaborator,
-                          role: e.target.value,
-                        })
-                      }
-                      fullWidth
-                      variant='standard'
+            collaborators.map((collaborator) => {
+              const isCurrentUser = user?.nick === collaborator.githubUsername;
+              return (
+                <Styled.Row key={collaborator.id}>
+                  <TableCell align='center' width='3rem'>
+                    <Avatar
                       sx={{
-                        '&&& .MuiSelect-select': {
-                          padding: ' 0.2rem 0',
-                        },
+                        width: '2.5rem',
+                        height: '2.5rem',
+                        fontSize: '1.3rem',
                       }}
                     >
-                      {roleOptions.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  ) : (
-                    t(`AddProject.AddCollaborators.${collaborator.role}` as any)
-                  )}
-                </TableCell>
-                <TableCell width='3rem' />
-                <TableCell
-                  border
-                  align='center'
-                  width='3rem'
-                  sx={{ borderLeft: '1px solid' }}
-                >
-                  <IconButton
-                    disabled={
-                      collaborator.githubUsername === user?.nick ||
-                      isDeleteDisabled
-                    }
-                    color='primary'
-                    size='small'
-                    aria-label='delete collaborator'
-                    onClick={() => onDelete(collaborator.id)}
-                    sx={(theme) => ({
-                      cursor: 'pointer',
-                      '&:disabled': {
-                        color: alpha(theme.palette.text.primary, 0.3),
-                      },
-                    })}
+                      {collaborator.githubUsername.charAt(0)}
+                    </Avatar>
+                  </TableCell>
+                  <TableCell border>{collaborator.githubUsername}</TableCell>
+                  <TableCell border noPadding={isCurrentUser}>
+                    {isCurrentUser ? (
+                      <Select
+                        value={collaborator.role}
+                        onChange={(e) =>
+                          onCurrentUserRoleChange({
+                            ...collaborator,
+                            role: e.target.value,
+                          })
+                        }
+                        fullWidth
+                        sx={(theme) => ({
+                          '&&& .MuiSelect-select': {
+                            padding: ' 0.5rem',
+                            fontSize: theme.typography.body2.fontSize,
+                          },
+                          '& .MuiOutlinedInput-notchedOutline': {
+                            border: 'none',
+                          },
+                        })}
+                      >
+                        {roleOptions.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    ) : (
+                      t(
+                        `AddProject.AddCollaborators.${collaborator.role}` as any
+                      )
+                    )}
+                  </TableCell>
+                  <TableCell width='3rem' />
+                  <TableCell
+                    border
+                    align='center'
+                    width='3rem'
+                    sx={{ borderLeft: '1px solid' }}
                   >
-                    <ClearIcon fontSize='inherit' />
-                  </IconButton>
-                </TableCell>
-              </Styled.Row>
-            ))}
+                    <IconButton
+                      disabled={
+                        collaborator.githubUsername === user?.nick ||
+                        isDeleteDisabled
+                      }
+                      color='primary'
+                      size='small'
+                      aria-label='delete collaborator'
+                      onClick={() => onDelete(collaborator.id)}
+                      sx={(theme) => ({
+                        cursor: 'pointer',
+                        '&:disabled': {
+                          color: alpha(theme.palette.text.primary, 0.3),
+                        },
+                      })}
+                    >
+                      <ClearIcon fontSize='inherit' />
+                    </IconButton>
+                  </TableCell>
+                </Styled.Row>
+              );
+            })}
         </TableBody>
       </Table>
     </Styled.Container>
