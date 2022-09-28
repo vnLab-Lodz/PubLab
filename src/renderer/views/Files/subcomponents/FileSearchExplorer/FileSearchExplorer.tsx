@@ -6,6 +6,7 @@ import Section from 'src/renderer/components/Section/Section';
 import { Box, Typography } from '@mui/material';
 import { LocalPublication } from 'src/shared/types';
 import { useTranslation } from 'react-i18next';
+import { formatPath } from 'src/renderer/utils/formatPath';
 import FileTreeItem from '../FileTreeItem/FileTreeItem';
 import FileTree from '../FileTree/FileTree';
 
@@ -27,8 +28,7 @@ const SearchResultTree: React.FC<{
     <Box my={(theme) => theme.spacing(2)}>
       <Box sx={{ margin: '1rem 0' }}>
         <Typography variant='caption'>
-          . /{' '}
-          {path.relative(project.dirPath, treePath).replaceAll(path.sep, ' / ')}
+          {formatPath(treePath, project.dirPath)}
         </Typography>
       </Box>
       <FileTree
