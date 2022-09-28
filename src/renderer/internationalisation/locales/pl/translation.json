@@ -54,7 +54,9 @@
     "created": "Stworzony przez:"
   },
   "technology-picker": {
-    "message": "Czy chciałbyś używać następujących rozszerzeń technologii?"
+    "message": "Czy chciałbyś używać następujących rozszerzeń technologii?",
+    "ts-tooltip": "Wszystkie projekty mają wsparcie dla TypeScript.",
+    "sass-tooltip": "Projekty wielojęzyczne domyślnie posiadają wsparcie dla technologii Sass."
   },
   "first-time-view": {
     "title": "Wybierz folder",
@@ -121,7 +123,13 @@
       "username_verification_pending": "Sprawdzanie poprawności..."
     },
     "PackageManager": {
-      "message": "Wybierz managera pakietów:"
+      "message": "Wybierz managera pakietów:",
+      "yarn-tooltip": "Generacja z użyciem yarn nie jest obecnie wspierana."
+    },
+    "LanguagesPicker": {
+      "message": "Wybierz wsparcie językowe:",
+      "single": "Jednojęzyczny",
+      "multi": "Wielojęzyczny"
     }
   },
   "ProjectDetails": {

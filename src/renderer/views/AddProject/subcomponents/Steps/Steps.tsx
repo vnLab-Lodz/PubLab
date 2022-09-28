@@ -1,18 +1,19 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import LanguagesPicker from 'src/renderer/components/Languages/LanguagesPicker';
 import {
   addCollaborator,
+  AddPublicationWizard,
   deleteCollaborator,
   setPublicationField,
 } from '../../../../../shared/redux/slices/addPublicationWizardSlice';
-import { PublicationBase } from '../../../../../shared/types';
 import CollaboratorsPicker from '../../../../components/CollaboratorsPicker/CollaboratorsPicker';
 import PackageManagerPicker from '../../../../components/PackageManagerPicker/PackageManagerPicker';
 import ProjectDetailsInput from '../../../../components/ProjectDetailsInput/ProjectDetailsInput';
 import TechnologiesPicker from '../../../../components/TechnologiesPicker/TechnologiesPicker';
 
 interface Props {
-  publication: PublicationBase;
+  publication: AddPublicationWizard['data'];
 }
 
 function Details(
@@ -84,6 +85,24 @@ function Technologies(props: Props) {
   );
 }
 
+function Languages(props: Props) {
+  const dispatch = useDispatch();
+
+  return (
+    <LanguagesPicker
+      onSubmit={(state) => {
+        dispatch(
+          setPublicationField({
+            field: 'multilingual',
+            value: state.multilingual,
+          })
+        );
+      }}
+      state={props.publication}
+    />
+  );
+}
+
 function Collaborators(props: Props) {
   const dispatch = useDispatch();
 
@@ -100,4 +119,10 @@ function Collaborators(props: Props) {
   );
 }
 
-export default [Details, PackageManager, Technologies, Collaborators];
+export default [
+  Details,
+  PackageManager,
+  Languages,
+  Technologies,
+  Collaborators,
+];

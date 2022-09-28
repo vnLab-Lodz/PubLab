@@ -82,6 +82,7 @@ describe('addPublicationWizardSlice', () => {
         packageManager: 'npm',
         useSass: false,
         useTypescript: false,
+        multilingual: false,
       },
       step: 1,
     };
@@ -110,6 +111,7 @@ describe('addPublicationWizardSlice', () => {
         packageManager: 'npm',
         useSass: false,
         useTypescript: false,
+        multilingual: false,
       },
       step: 3,
     };
@@ -122,6 +124,7 @@ describe('addPublicationWizardSlice', () => {
         packageManager: 'npm',
         useSass: false,
         useTypescript: false,
+        multilingual: false,
       },
       step: 4,
     });
@@ -138,6 +141,7 @@ describe('addPublicationWizardSlice', () => {
         packageManager: 'npm',
         useSass: false,
         useTypescript: false,
+        multilingual: false,
       },
       step: 3,
     };

@@ -1,8 +1,9 @@
-import { Box, FormControlLabel, RadioGroup, Typography } from '@mui/material';
+import { Box, RadioGroup, Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Publication, PublicationBase } from 'src/shared/types';
-import RadioBtn from '../RadioButton/RadioBtn';
+import RadioBtn, { RadioFormControl } from '../RadioButton/RadioBtn';
+import Tooltip from '../Tooltip/Tooltip';
 
 type State = Pick<Publication, 'packageManager'>;
 
@@ -27,17 +28,23 @@ const PackageManagerPicker = ({ onSubmit, state }: Props) => {
 
       <Box mb={2}>
         <RadioGroup defaultValue={state.packageManager} onChange={handleChange}>
-          <FormControlLabel
+          <RadioFormControl
             value='npm'
             control={<RadioBtn />}
             label={<Typography variant='body2'>NPM</Typography>}
           />
-          <FormControlLabel
-            disabled
-            value='yarn'
-            control={<RadioBtn />}
-            label={<Typography variant='body2'>YARN</Typography>}
-          />
+          <Tooltip
+            title={t('AddProject.PackageManager.yarn-tooltip')}
+            arrow
+            placement='top-start'
+          >
+            <RadioFormControl
+              disabled
+              value='yarn'
+              control={<RadioBtn />}
+              label={<Typography variant='body2'>YARN</Typography>}
+            />
+          </Tooltip>
         </RadioGroup>
       </Box>
     </Box>

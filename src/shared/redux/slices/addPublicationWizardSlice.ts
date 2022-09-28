@@ -5,7 +5,7 @@ import { RootState } from '../rootReducer';
 
 export type AddPublicationWizard = {
   step: number;
-  data: PublicationBase;
+  data: PublicationBase & { multilingual: boolean };
 };
 
 // type created to avoid an issue with both unclear modification type
@@ -13,11 +13,11 @@ export type AddPublicationWizard = {
 // code significantly more
 type PublicationModification = Exclude<
   {
-    [FieldName in keyof PublicationBase]: {
+    [FieldName in keyof AddPublicationWizard['data']]: {
       field: FieldName;
-      value: PublicationBase[FieldName];
+      value: AddPublicationWizard['data'][FieldName];
     };
-  }[keyof PublicationBase],
+  }[keyof AddPublicationWizard['data']],
   undefined
 >;
 const initialState = (): AddPublicationWizard => ({
@@ -28,7 +28,8 @@ const initialState = (): AddPublicationWizard => ({
     name: '',
     packageManager: 'npm',
     useSass: false,
-    useTypescript: false,
+    useTypescript: true,
+    multilingual: false,
   },
   step: 1,
 });
@@ -62,7 +63,7 @@ const addPublicationSlice = createSlice({
       state.data.collaborators = updatedCollaborators;
     },
     increaseStep: (state: AddPublicationWizard) => {
-      if (state.step < 5) state.step += 1;
+      if (state.step < 6) state.step += 1;
     },
     decreaseStep: (state: AddPublicationWizard) => {
       if (state.step > 1) state.step -= 1;

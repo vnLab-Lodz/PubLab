@@ -4,7 +4,7 @@ import fs from 'fs';
 import http from 'isomorphic-git/http/node';
 import { createLogger } from 'src/main/logger';
 import { mainStore as store } from 'src/main';
-import { PublicationBase, USER_ROLES } from 'src/shared/types';
+import { PublicationBase } from 'src/shared/types';
 import { IpcEventHandler } from 'src/shared/types/api';
 import createAuthorFromCollaborators from 'src/shared/utils/createAuthorFromCollaborators';
 import createGatsbyProjectGenerator from 'src/main/lib/gatsbyProjectGenerator';
@@ -23,6 +23,7 @@ import {
 } from 'src/shared/redux/slices/loadPublicationsSlice';
 import path from 'path';
 import git from 'isomorphic-git';
+import { AddPublicationWizard } from 'src/shared/redux/slices/addPublicationWizardSlice';
 import {
   CONFIG_NAME,
   COVER_PIC_FILENAME,
@@ -32,7 +33,10 @@ import {
 import createFileIO from '../../lib/fileIO';
 import createGitHubHandler from '../../lib/gitHubHandler';
 
-const generate: IpcEventHandler = async (_, params: PublicationBase) => {
+const generate: IpcEventHandler = async (
+  _,
+  params: AddPublicationWizard['data']
+) => {
   const logger = createLogger();
 
   try {
