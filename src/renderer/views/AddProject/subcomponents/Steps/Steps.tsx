@@ -95,6 +95,10 @@ function Collaborators(props: Props) {
       onDelete={(id) => {
         dispatch(deleteCollaborator(id));
       }}
+      onCurrentUserRoleChange={(state) => {
+        dispatch(deleteCollaborator(state.id));
+        dispatch(addCollaborator(state));
+      }}
       state={props.publication}
     />
   );

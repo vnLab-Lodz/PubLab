@@ -4,23 +4,28 @@ import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { alpha, Avatar, IconButton, Typography } from '@mui/material';
+import { alpha, Avatar, IconButton, MenuItem, Typography } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
-import { Collaborator } from 'src/shared/types';
+import { Collaborator, USER_ROLES } from 'src/shared/types';
 import { selectCurrentUserData } from 'src/shared/redux/slices/currentUserSlice';
 import * as Styled from './style';
 import TableCell from '../TableCell/TableCell';
+import Select from '../Select/Select';
 
 interface Props {
   collaborators: Collaborator[];
   onDelete: (id: string) => void;
   isDeleteDisabled?: boolean;
+  onCurrentUserRoleChange: (data: Collaborator) => void;
+  roleOptions: { value: USER_ROLES; label: string }[];
 }
 
 const CollabTable: React.FC<Props> = ({
   collaborators,
   onDelete,
   isDeleteDisabled,
+  onCurrentUserRoleChange,
+  roleOptions,
 }) => {
   const { t } = useTranslation();
   const user = useSelector(selectCurrentUserData);
@@ -63,7 +68,32 @@ const CollabTable: React.FC<Props> = ({
                 </TableCell>
                 <TableCell border>{collaborator.githubUsername}</TableCell>
                 <TableCell border>
-                  {t(`AddProject.AddCollaborators.${collaborator.role}` as any)}
+                  {collaborator.githubUsername === user?.nick ? (
+                    <Select
+                      value={collaborator.role}
+                      onChange={(e) =>
+                        onCurrentUserRoleChange({
+                          ...collaborator,
+                          role: e.target.value,
+                        })
+                      }
+                      fullWidth
+                      variant='standard'
+                      sx={{
+                        '&&& .MuiSelect-select': {
+                          padding: ' 0.2rem 0',
+                        },
+                      }}
+                    >
+                      {roleOptions.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  ) : (
+                    t(`AddProject.AddCollaborators.${collaborator.role}` as any)
+                  )}
                 </TableCell>
                 <TableCell width='3rem' />
                 <TableCell

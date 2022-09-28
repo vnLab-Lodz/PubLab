@@ -14,6 +14,7 @@ type State = Pick<Publication, 'collaborators'>;
 interface Props {
   onAdd: (value: Collaborator) => void;
   onDelete: (id: string) => void;
+  onCurrentUserRoleChange: (data: Collaborator) => void;
   state: State;
   compact?: boolean;
   disabled?: boolean;
@@ -25,6 +26,7 @@ const CollaboratorsPicker = ({
   state,
   compact,
   disabled,
+  onCurrentUserRoleChange,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -134,6 +136,8 @@ const CollaboratorsPicker = ({
             collaborators={state.collaborators}
             onDelete={onDelete}
             isDeleteDisabled={disabled}
+            roleOptions={options}
+            onCurrentUserRoleChange={onCurrentUserRoleChange}
           />
         </Box>
       )}

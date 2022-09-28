@@ -75,6 +75,16 @@ const Settings = () => {
                 ),
               })
             }
+            onCurrentUserRoleChange={(currentUser) => {
+              handleChange({
+                collaborators: [
+                  ...projectSettings.collaborators.filter(
+                    (collaborator) => !(collaborator.id === currentUser.id)
+                  ),
+                  currentUser,
+                ],
+              });
+            }}
           />
         </SeparatedSection>
         <SeparatedSection pb={3}>
