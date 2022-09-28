@@ -5,6 +5,8 @@ import { ipcRenderer } from 'electron';
 import { CHANNELS } from 'src/shared/types/api';
 import { v4 as uuidv4 } from 'uuid';
 import LoaderOverlay from 'src/renderer/components/LoaderOverlay/LoaderOverlay';
+import { addLoader, removeLoader } from 'src/shared/redux/slices/loadersSlice';
+import { useTranslation } from 'react-i18next';
 import { Publication } from '../../../../../shared/types';
 import { SUBVIEWS, VIEWS } from '../../../../constants/Views';
 import ProjectRow from './ProjectRow';
@@ -27,6 +29,7 @@ interface Props {
 const ProjectTable: React.FC<Props> = ({ publications }) => {
   const dispatch = useDispatch();
   const [loaderId, setLoaderId] = useState('');
+  const { t } = useTranslation();
 
   const selectedProject: Publication | undefined =
     useSelector(selectCurrentView).subview.props?.project;
@@ -53,9 +56,21 @@ const ProjectTable: React.FC<Props> = ({ publications }) => {
         { loaderId: uid }
       );
     }
+
     dispatch(setActivePublication(publication.id));
+
+    const uid = uuidv4();
+    setLoaderId(uid);
+    dispatch(
+      addLoader({
+        id: uid,
+        message: t('loaders.opening', { title: publication.name }),
+      })
+    );
     await ipcRenderer.invoke(CHANNELS.GIT.REPO_STATUS);
     await ipcRenderer.invoke(CHANNELS.GIT.CHECKOUT);
+    setLoaderId('');
+    dispatch(removeLoader(uid));
     dispatch(updateCurrentView(VIEWS.PROJECT));
   };
 

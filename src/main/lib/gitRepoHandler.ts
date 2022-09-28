@@ -87,6 +87,13 @@ const createGitRepoHandler = (publication: LocalPublication) => {
 
     checkout: async (branch: string) => {
       try {
+        const currentBranch = await git.currentBranch({
+          fs,
+          dir: publication.dirPath,
+        });
+
+        if (currentBranch === branch) return;
+
         await git.checkout({
           fs,
           dir: publication.dirPath,
