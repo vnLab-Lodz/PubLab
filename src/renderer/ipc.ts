@@ -1,13 +1,9 @@
 import { ipcRenderer } from 'electron';
-import {
-  BranchComparison,
-  CHANNELS,
-  GitRepoTreeItem,
-} from 'src/shared/types/api';
+import { CHANNELS, GitRepoTreeItem } from 'src/shared/types/api';
 import { RestEndpointMethodTypes } from '@octokit/rest';
 import { DirectoryEntryInfo } from '../shared/types/api';
 import { Config } from '../main/lib/configurationFileHandler';
-import { AssetObject } from '../shared/types';
+import { AssetObject, BranchComparison } from '../shared/types';
 
 export async function verifyPath(path: string) {
   const result = (await ipcRenderer.invoke(

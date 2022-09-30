@@ -34,11 +34,6 @@ export interface GitRepoTreeItem {
   children: GitRepoTreeItem[];
 }
 
-export interface BranchComparison {
-  isAhead: boolean;
-  isBehind: boolean;
-}
-
 export const CHANNELS = {
   PUBLICATIONS: {
     GENERATE: 'publications:generate',
@@ -75,6 +70,7 @@ export const CHANNELS = {
     STAGE: 'git:stage',
     COMMIT: 'git:commit',
     CHECKOUT: 'git:checkout',
+    MERGE: 'git:merge',
   },
   GITHUB: {
     GET_USER_PUBLIC: 'github:get-user-public',
