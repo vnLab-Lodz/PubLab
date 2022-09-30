@@ -7,17 +7,16 @@ import { IpcEventHandler } from '../../../shared/types/api';
 
 const updateCollaborators: IpcEventHandler = async () => {
   const publication = activePublication(store.getState()) as LocalPublication;
-  const username = store.getState().currentUser.data?.nick;
   const token = store.getState().currentUser.auth.accessToken?.value;
   if (!publication) {
     throw new Error('No active publication!');
   }
-  if (!token || !username) {
+  if (!token) {
     throw new Error('No user is logged in!');
   }
   const githubHandler = createGitHubHandler(token);
   await githubHandler.updateCollaborators(publication.collaborators, {
-    owner: username,
+    owner: publication.owner,
     name: path.basename(publication.dirPath),
   });
 };
