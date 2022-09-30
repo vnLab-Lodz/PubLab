@@ -27,6 +27,7 @@ import checkout from './git/checkout';
 import start from './server/start';
 import clearCache from './server/clearCache';
 import compareBranches from './gitHub/compareBranches';
+import pull from './git/pull';
 
 const registerApiHandlers = () => {
   ipc.handle(CHANNELS.PUBLICATIONS.GENERATE, generate);
@@ -47,6 +48,7 @@ const registerApiHandlers = () => {
   ipc.handle(CHANNELS.FILES.REMOVE, removeFile);
   ipc.handle(CHANNELS.GIT.CLONE, clone);
   ipc.handle(CHANNELS.GIT.PUSH, push);
+  ipc.handle(CHANNELS.GIT.PULL, pull);
   ipc.handle(CHANNELS.GIT.REPO_STATUS, updateRepoStatus);
   ipc.handle(CHANNELS.GIT.FILES_STATUS, updateFilesStatus);
   ipc.handle(CHANNELS.GIT.STAGE, stage);

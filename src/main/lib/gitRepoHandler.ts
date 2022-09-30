@@ -51,6 +51,17 @@ const createGitRepoHandler = (publication: LocalPublication) => {
       });
     },
 
+    pull: async (author: string, ref?: string) => {
+      await git.pull({
+        fs,
+        http,
+        dir: publication.dirPath,
+        ref,
+        singleBranch: true,
+        author: { name: author },
+      });
+    },
+
     stage: async (items: GitRepoTreeItem[]) => {
       await Promise.all(
         items.map(async (item) => {
