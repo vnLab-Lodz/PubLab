@@ -116,6 +116,14 @@ const createGitRepoHandler = (publication: LocalPublication) => {
         }
       }
     },
+    log: async (ref?: string) => {
+      const result = await git.log({
+        fs,
+        dir: publication.dirPath,
+        ref,
+      });
+      return result;
+    },
   };
 };
 

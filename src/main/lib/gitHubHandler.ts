@@ -1,4 +1,5 @@
 import { Octokit } from '@octokit/rest';
+import { MAIN_BRANCH } from '../../shared/constants';
 import { Collaborator, USER_ROLES } from '../../shared/types';
 import { createLogger } from '../logger';
 
@@ -76,6 +77,22 @@ class GitHubHandler {
     } catch (error) {
       this.logger.appendError(
         `Failed creating GitHub branch "${name}" \nError:\n ${error}`
+      );
+      return Promise.reject(error);
+    }
+  }
+
+  async getCommits(repo: RepoParams, ref?: string) {
+    try {
+      const commits = await this.octokit.rest.repos.listCommits({
+        owner: repo.owner,
+        repo: repo.name,
+        sha: ref || MAIN_BRANCH,
+      });
+      return commits.data;
+    } catch (error) {
+      this.logger.appendError(
+        `Failed fetching commits of repository "${repo.name}" \nError:\n ${error}`
       );
       return Promise.reject(error);
     }

@@ -1,5 +1,9 @@
 import { ipcRenderer } from 'electron';
-import { CHANNELS, GitRepoTreeItem } from 'src/shared/types/api';
+import {
+  BranchComparison,
+  CHANNELS,
+  GitRepoTreeItem,
+} from 'src/shared/types/api';
 import { RestEndpointMethodTypes } from '@octokit/rest';
 import { DirectoryEntryInfo } from '../shared/types/api';
 import { Config } from '../main/lib/configurationFileHandler';
@@ -83,5 +87,24 @@ export async function readAsset(path: string, encoding?: BufferEncoding) {
 export async function getPublicUserData(username: string) {
   const result: RestEndpointMethodTypes['users']['getByUsername']['response'] =
     await ipcRenderer.invoke(CHANNELS.GITHUB.GET_USER_PUBLIC, username);
+  return result;
+}
+
+/** Compares currently checked out branch with main branch by default */
+export async function compareBranches({
+  referenceBranch,
+  targetBranch,
+  useRemote,
+}: {
+  referenceBranch?: string;
+  targetBranch?: string;
+  useRemote?: boolean;
+}) {
+  const result: BranchComparison = await ipcRenderer.invoke(
+    CHANNELS.GITHUB.COMPARE_BRANCHES,
+    referenceBranch,
+    targetBranch,
+    { useRemote }
+  );
   return result;
 }

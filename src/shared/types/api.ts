@@ -34,6 +34,11 @@ export interface GitRepoTreeItem {
   children: GitRepoTreeItem[];
 }
 
+export interface BranchComparison {
+  isAhead: boolean;
+  isBehind: boolean;
+}
+
 export const CHANNELS = {
   PUBLICATIONS: {
     GENERATE: 'publications:generate',
@@ -73,6 +78,7 @@ export const CHANNELS = {
   GITHUB: {
     GET_USER_PUBLIC: 'github:get-user-public',
     UPDATE_COLLABORATORS: 'github:update-collaborators',
+    COMPARE_BRANCHES: 'github:compare-branches',
   },
   SERVER: {
     INSTALL: 'server:install',
