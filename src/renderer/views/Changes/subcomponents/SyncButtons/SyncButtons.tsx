@@ -51,6 +51,7 @@ const SyncButtons: React.FC<Props> = () => {
           );
           await mergeMain();
           dispatch(removeLoader(id));
+          setLoaderID('');
         }}
       >
         {t('Changes.repoSync.button_sync')}
@@ -102,6 +103,7 @@ const SyncButtons: React.FC<Props> = () => {
               );
               await publish(syncStatus);
               dispatch(removeLoader(id));
+              setLoaderID('');
             }}
             autoFocus
             variant='contained'
