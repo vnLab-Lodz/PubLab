@@ -1,5 +1,14 @@
+import {
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  Typography,
+} from '@mui/material';
 import { ipcRenderer } from 'electron';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { MAIN_BRANCH } from '../../../../../shared/constants';
 import { selectMainBranchSync } from '../../../../../shared/redux/slices/mainBranchSyncSlice';
@@ -12,8 +21,11 @@ interface Props {}
 const SyncButtons: React.FC<Props> = () => {
   const syncStatus = useSelector(selectMainBranchSync).status;
   const { t } = useTranslation();
+
+  const [isPublishDialogOpen, setPublishDialogOpen] = React.useState(false);
+
   return (
-    <>
+    <Box sx={(theme) => ({ my: theme.spacing(3) })}>
       <Button
         variant='contained'
         fullWidth
@@ -26,11 +38,45 @@ const SyncButtons: React.FC<Props> = () => {
         variant='contained'
         fullWidth
         disabled={!syncStatus.behind}
-        {t('Changes.repoSync.button_publish')}
+        onClick={() => setPublishDialogOpen(true)}
       >
-        {`Publish changes, behind by ${syncStatus.behind}`}
+        {t('Changes.repoSync.button_publish')}
       </Button>
-    </>
+      <Dialog
+        open={isPublishDialogOpen}
+        aria-describedby='publish-dialog-description'
+        PaperProps={{
+          sx: ({ palette }) => ({
+            background: palette.background.default,
+            borderRadius: '0',
+          }),
+        }}
+        fullWidth
+      >
+        <DialogContent>
+          <DialogContentText id='publish-dialog-description'>
+            <Typography color='primary'>
+              {t('Changes.repoSync.tooltip_publish')}
+            </Typography>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setPublishDialogOpen(false)}>
+            {t('common.go_back')}
+          </Button>
+          <Button
+            onClick={() => {
+              setPublishDialogOpen(false);
+              publish(syncStatus);
+            }}
+            autoFocus
+            variant='contained'
+          >
+            {t('common.go')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 };
 
