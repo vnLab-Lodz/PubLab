@@ -7,22 +7,30 @@ import {
   Typography,
 } from '@mui/material';
 import { ipcRenderer } from 'electron';
-import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MAIN_BRANCH } from '../../../../../shared/constants';
 import { selectMainBranchSync } from '../../../../../shared/redux/slices/mainBranchSyncSlice';
 import { BranchComparison } from '../../../../../shared/types';
 import { CHANNELS } from '../../../../../shared/types/api';
 import Button from '../../../../components/Button/Button';
+import {
+  addLoader,
+  removeLoader,
+} from '../../../../../shared/redux/slices/loadersSlice';
+import LoaderOverlay from '../../../../components/LoaderOverlay/LoaderOverlay';
 
 interface Props {}
 
 const SyncButtons: React.FC<Props> = () => {
   const syncStatus = useSelector(selectMainBranchSync).status;
+  const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const [isPublishDialogOpen, setPublishDialogOpen] = React.useState(false);
+  const [isPublishDialogOpen, setPublishDialogOpen] = useState(false);
+  const [loaderId, setLoaderID] = useState('');
 
   return (
     <Box sx={(theme) => ({ my: theme.spacing(3) })}>
@@ -30,7 +38,20 @@ const SyncButtons: React.FC<Props> = () => {
         variant='contained'
         fullWidth
         disabled={!syncStatus.ahead}
-        onClick={() => mergeMain()}
+        onClick={async () => {
+          const id = uuidv4();
+          setLoaderID(id);
+          dispatch(
+            addLoader({
+              id,
+              i18n: {
+                key: t('Changes.repoSync.loaders.sync'),
+              },
+            })
+          );
+          await mergeMain();
+          dispatch(removeLoader(id));
+        }}
       >
         {t('Changes.repoSync.button_sync')}
       </Button>
@@ -38,7 +59,9 @@ const SyncButtons: React.FC<Props> = () => {
         variant='contained'
         fullWidth
         disabled={!syncStatus.behind}
-        onClick={() => setPublishDialogOpen(true)}
+        onClick={() => {
+          setPublishDialogOpen(true);
+        }}
       >
         {t('Changes.repoSync.button_publish')}
       </Button>
@@ -65,9 +88,20 @@ const SyncButtons: React.FC<Props> = () => {
             {t('common.go_back')}
           </Button>
           <Button
-            onClick={() => {
+            onClick={async () => {
+              const id = uuidv4();
+              setLoaderID(id);
               setPublishDialogOpen(false);
-              publish(syncStatus);
+              dispatch(
+                addLoader({
+                  id,
+                  i18n: {
+                    key: t('Changes.repoSync.loaders.publish'),
+                  },
+                })
+              );
+              await publish(syncStatus);
+              dispatch(removeLoader(id));
             }}
             autoFocus
             variant='contained'
@@ -76,6 +110,7 @@ const SyncButtons: React.FC<Props> = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      <LoaderOverlay id={loaderId} />
     </Box>
   );
 };
