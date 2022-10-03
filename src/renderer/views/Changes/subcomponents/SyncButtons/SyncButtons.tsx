@@ -50,6 +50,7 @@ const SyncButtons: React.FC<Props> = () => {
             })
           );
           await mergeMain();
+          ipcRenderer.invoke(CHANNELS.GIT.RUN_SYNC_CHECK);
           dispatch(removeLoader(id));
           setLoaderID('');
         }}
@@ -102,6 +103,7 @@ const SyncButtons: React.FC<Props> = () => {
                 })
               );
               await publish(syncStatus);
+              ipcRenderer.invoke(CHANNELS.GIT.RUN_SYNC_CHECK);
               dispatch(removeLoader(id));
               setLoaderID('');
             }}

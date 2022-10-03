@@ -69,6 +69,7 @@ const ProjectTable: React.FC<Props> = ({ publications }) => {
     );
     await ipcRenderer.invoke(CHANNELS.GIT.REPO_STATUS);
     await ipcRenderer.invoke(CHANNELS.GIT.CHECKOUT);
+    await ipcRenderer.invoke(CHANNELS.GIT.RUN_SYNC_CHECK);
     setLoaderId('');
     dispatch(removeLoader(uid));
     dispatch(updateCurrentView(VIEWS.PROJECT));

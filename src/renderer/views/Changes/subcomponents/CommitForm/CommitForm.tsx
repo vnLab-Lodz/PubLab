@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { ipcRenderer } from 'electron';
 import { selectRepoTree } from '../../../../../shared/redux/slices/repoStatusSlice';
 import * as checkStatus from '../../../../../shared/utils/repoStatus/statusChecks';
 import * as repoTree from '../../../../../shared/utils/repoStatus/tree';
@@ -16,6 +17,7 @@ import TextArea from '../../../../components/TextArea/TextArea';
 import { gitCommit, gitPush } from '../../../../ipc';
 import FilesByFolder from '../ChangedFiles/FilesByFolder';
 import LoaderOverlay from '../../../../components/LoaderOverlay/LoaderOverlay';
+import { CHANNELS } from '../../../../../shared/types/api';
 
 interface Props {
   closeForm: () => void;
@@ -36,6 +38,7 @@ const CommitForm: React.FC<Props> = ({ closeForm }) => {
       await gitCommit(`${summary}\n\n${description}`);
       setSubmitting(false);
       await gitPush(id);
+      ipcRenderer.invoke(CHANNELS.GIT.RUN_SYNC_CHECK);
       closeForm();
     },
   });
