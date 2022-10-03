@@ -83,7 +83,7 @@ const SyncButtons: React.FC<Props> = () => {
 export default SyncButtons;
 
 async function mergeMain() {
-  await ipcRenderer.invoke(CHANNELS.GIT.MERGE, `remotes/origin/${MAIN_BRANCH}`);
+  await ipcRenderer.invoke(CHANNELS.GIT.MERGE, MAIN_BRANCH);
   await ipcRenderer.invoke(CHANNELS.GIT.CHECKOUT);
 }
 async function publish(mainBranchStatus: BranchComparison) {
@@ -92,9 +92,5 @@ async function publish(mainBranchStatus: BranchComparison) {
   }
   const userBranch = await ipcRenderer.invoke(CHANNELS.GIT.CURRENT_BRANCH);
   await ipcRenderer.invoke(CHANNELS.GIT.MERGE, userBranch, MAIN_BRANCH);
-  await ipcRenderer.invoke(
-    CHANNELS.GIT.MERGE,
-    `remotes/origin/${MAIN_BRANCH}`,
-    userBranch
-  );
+  await ipcRenderer.invoke(CHANNELS.GIT.MERGE, MAIN_BRANCH, userBranch);
 }

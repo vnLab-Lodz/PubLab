@@ -7,7 +7,8 @@ import createGitRepoHandler from '../../lib/gitRepoHandler';
 const currentBranch: IpcEventHandler = async () => {
   const publication = activePublication(store.getState()) as LocalPublication;
   const repoHandler = createGitRepoHandler(publication);
-  await repoHandler.currentBranch();
+  const branchName = await repoHandler.currentBranch();
+  return branchName;
 };
 
 export default currentBranch;
