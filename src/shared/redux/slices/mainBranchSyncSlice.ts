@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { BranchComparison } from '../../types';
 import { RootState } from '../rootReducer';
+import { setActivePublication } from './loadPublicationsSlice';
 
 const initialState: {
   status: BranchComparison;
@@ -17,6 +18,9 @@ const mainBranchSyncSlice = createSlice({
     setWasUserNotified: (state, action: PayloadAction<boolean>) => {
       state.wasUserNotified = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(setActivePublication, () => initialState);
   },
 });
 
