@@ -7,46 +7,57 @@ import { activePublication } from '../../../shared/redux/slices/loadPublications
 import { BranchComparison, LocalPublication } from '../../../shared/types';
 import createGitHubHandler from '../../lib/gitHubHandler';
 import createGitRepoHandler from '../../lib/gitRepoHandler';
+import { createLogger } from '../../logger';
 
-const compareBranches = async (
-  branchA?: string,
-  branchB?: string,
-  opts?: { useRemote?: boolean }
-): Promise<BranchComparison> => {
-  const publication = activePublication(store.getState()) as LocalPublication;
-  const token = store.getState().currentUser.auth.accessToken?.value;
-  if (!publication) {
-    throw new Error('No active publication!');
+const compareBranches = async ({
+  referenceBranch,
+  targetBranch,
+  useRemote,
+}: {
+  referenceBranch?: string;
+  targetBranch?: string;
+  useRemote?: boolean;
+}): Promise<BranchComparison> => {
+  const logger = createLogger();
+  try {
+    const publication = activePublication(store.getState()) as LocalPublication;
+    const token = store.getState().currentUser.auth.accessToken?.value;
+    if (!publication) {
+      throw new Error('No active publication!');
+    }
+    if (!token) {
+      throw new Error('No user is logged in!');
+    }
+
+    const repoHandler = createGitRepoHandler(publication);
+    const githubHandler = createGitHubHandler(token);
+    const [commitsA, commitsB] = await Promise.all([
+      (await repoHandler.log(referenceBranch)).map(normalizeCommitData),
+      (useRemote
+        ? await githubHandler.getCommits(
+            {
+              owner: publication.owner,
+              name: path.basename(publication.dirPath),
+            },
+            targetBranch
+          )
+        : await repoHandler.log(targetBranch || MAIN_BRANCH)
+      ).map(normalizeCommitData),
+    ]);
+
+    const result = {
+      ahead: commitsB.filter(
+        (commitB) => !commitsA.some((commitA) => commitA.sha === commitB.sha)
+      ).length,
+      behind: commitsA.filter(
+        (commitA) => !commitsB.some((commitB) => commitA.sha === commitB.sha)
+      ).length,
+    };
+    return result;
+  } catch (err) {
+    logger.appendError(err as string);
+    return { ahead: 0, behind: 0 };
   }
-  if (!token) {
-    throw new Error('No user is logged in!');
-  }
-
-  const repoHandler = createGitRepoHandler(publication);
-  const githubHandler = createGitHubHandler(token);
-  const [commitsA, commitsB] = await Promise.all([
-    (await repoHandler.log(branchA)).map(normalizeCommitData),
-    (opts?.useRemote
-      ? await githubHandler.getCommits(
-          {
-            owner: publication.owner,
-            name: path.basename(publication.dirPath),
-          },
-          branchB
-        )
-      : await repoHandler.log(branchB || MAIN_BRANCH)
-    ).map(normalizeCommitData),
-  ]);
-
-  const result = {
-    ahead: commitsB.filter(
-      (commitB) => !commitsA.some((commitA) => commitA.sha === commitB.sha)
-    ).length,
-    behind: commitsA.filter(
-      (commitA) => !commitsB.some((commitB) => commitA.sha === commitB.sha)
-    ).length,
-  };
-  return result;
 };
 
 export default compareBranches;

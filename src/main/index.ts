@@ -3,6 +3,7 @@ import { app, BrowserWindow } from 'electron';
 import installDevToolsExtensions from './devToolsExtensions';
 import registerApiHandlers from './api';
 import { configStore } from '../shared/redux/configureStore';
+import syncCheck from './utils/git/syncCheck';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: any;
@@ -45,6 +46,8 @@ const createWindow = async (): Promise<void> => {
       defaultFontSize: 10,
     },
   });
+
+  mainWindow.on('focus', () => syncCheck(mainStore));
 
   // and load the index.html of the app.
   await mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);

@@ -27,6 +27,7 @@
     "clone_success": "{{name}} has been successfully cloned to {{dir}}",
     "github_push_auth_failed": "GitHub authentication failed while pushing to the repository. For more information check logs.",
     "push_success": "Your changes have been succesfully sent to the remote repository.",
+    "new_changes": "There are new changes in the remote repository. Go to changes view to synchronise them.",
     "error": "Something went wrong. For more information check logs."
   },
   "loaders": {

@@ -27,6 +27,7 @@
     "clone_success": "{{name}} zostało pomyślnie zklonowane do {{dir}}",
     "github_push_auth_failed": "Uwierzytelnianie w czasie synchronizacji zmian z repozytorium z GitHuba nie powiodło się. Sprawdź logi by uzyskać więcej informacji.",
     "push_success": "Twoje zmiany zostały poprawnie umieszczone w zdalnym repozytorium",
+    "new_changes": "W zdalnym repozytorium są nowe zmiany. Przejdź do widoku zmian, aby je zsynchronizować.",
     "error": "Coś poszło nie tak. Sprawdź logi by uzyskać więcej informacji."
   },
   "loaders": {
