@@ -11,6 +11,7 @@ interface Props {}
 
 const SyncButtons: React.FC<Props> = () => {
   const syncStatus = useSelector(selectMainBranchSync).status;
+  const { t } = useTranslation();
   return (
     <>
       <Button
@@ -19,13 +20,13 @@ const SyncButtons: React.FC<Props> = () => {
         disabled={!syncStatus.ahead}
         onClick={() => mergeMain()}
       >
-        {`Sync main, ahead by ${syncStatus.ahead}`}
+        {t('Changes.repoSync.button_sync')}
       </Button>
       <Button
         variant='contained'
         fullWidth
         disabled={!syncStatus.behind}
-        onClick={() => publish(syncStatus)}
+        {t('Changes.repoSync.button_publish')}
       >
         {`Publish changes, behind by ${syncStatus.behind}`}
       </Button>

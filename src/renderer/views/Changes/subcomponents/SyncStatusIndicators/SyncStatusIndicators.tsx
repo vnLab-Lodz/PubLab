@@ -3,6 +3,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { useSelector } from 'react-redux';
 import { Box, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { selectMainBranchSync } from '../../../../../shared/redux/slices/mainBranchSyncSlice';
 import Tooltip from '../../../../components/Tooltip/Tooltip';
 
@@ -10,8 +11,13 @@ interface Props {}
 
 const SyncStatusIndicators: React.FC<Props> = () => {
   const { status } = useSelector(selectMainBranchSync);
+  const { t } = useTranslation();
   return (
-    <Tooltip title='Commit changes before using' arrow placement='top-start'>
+    <Tooltip
+      title={t('Changes.repoSync.indicator_tooltip')}
+      arrow
+      placement='top-start'
+    >
       <Box display='flex' mr='0.2rem'>
         <Indicator value={status.ahead} Icon={ArrowDownwardIcon} />
         <Indicator value={status.behind} Icon={ArrowUpwardIcon} />

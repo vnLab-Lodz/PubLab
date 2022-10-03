@@ -229,6 +229,16 @@
     "placeholders": {
       "summary": "Your summary...",
       "description": "Your description..."
+    },
+    "repoSync": {
+      "button_publish": "Publish your commited changes",
+      "button_sync": "Update your project with new changes",
+      "tooltip_publish": "This will first update your project with any already published changes, then publish your commited changes. Are you sure they are finished?",
+      "indicator_tooltip": "Arrow turns green when your project has commits to sync/publish. If you have WIP changes, commit them to see the buttons.",
+      "loaders": {
+        "publish": "Publishing your changes...",
+        "sync": "Updating your project with new changes..."
+      }
     }
   },
   "Terminal": {

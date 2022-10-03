@@ -229,6 +229,16 @@
     "placeholders": {
       "summary": "Twoje podsumowanie...",
       "description": "Twój opis..."
+    },
+    "repoSync": {
+      "button_publish": "Opublikuj zmiany",
+      "button_sync": "Aktualizuj projekt o nowe zmiany",
+      "tooltip_publish": "Twój projekt zostanie najpierw zaktualizowany, a następnie twoje zmiany zostaną opublikowane. Czy jesteś pewnie, że są dokończone?",
+      "indicator_tooltip": "Zielona strzałka oznacza, że projekt ma commity, które można opublikować/zsynchronizować. Jeśli masz robocze zmiany, zrób commita żeby zobaczyć przyciski.",
+      "loaders": {
+        "publish": "Publikowanie zmian...",
+        "sync": "Synchronizacja projektu..."
+      }
     }
   },
   "Terminal": {
