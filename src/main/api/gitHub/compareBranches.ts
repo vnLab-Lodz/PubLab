@@ -4,11 +4,17 @@ import compareBranchesUtil from '../../utils/git/compareBranches';
 
 const compareBranches: IpcEventHandler<BranchComparison> = async (
   _,
-  branchA?: string,
-  branchB?: string,
-  opts?: { useRemote?: boolean }
+  {
+    referenceBranch,
+    targetBranch,
+    useRemote,
+  }: { referenceBranch?: string; targetBranch?: string; useRemote?: boolean }
 ) => {
-  const result = await compareBranchesUtil(branchA, branchB, opts);
+  const result = await compareBranchesUtil({
+    referenceBranch,
+    targetBranch,
+    useRemote,
+  });
   return result;
 };
 

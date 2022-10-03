@@ -71,6 +71,7 @@ export const CHANNELS = {
     COMMIT: 'git:commit',
     CHECKOUT: 'git:checkout',
     MERGE: 'git:merge',
+    CURRENT_BRANCH: 'git:current-branch',
   },
   GITHUB: {
     GET_USER_PUBLIC: 'github:get-user-public',

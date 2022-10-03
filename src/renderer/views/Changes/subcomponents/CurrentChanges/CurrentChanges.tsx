@@ -15,6 +15,7 @@ import { gitStage, gitUnstage } from '../../../../ipc';
 import FilesByFolder from '../ChangedFiles/FilesByFolder';
 import Button from '../../../../components/Button/Button';
 import LoaderOverlay from '../../../../components/LoaderOverlay/LoaderOverlay';
+import SyncButtons from '../SyncButtons/SyncButtons';
 
 interface Props {
   openCommitForm: () => void;
@@ -69,9 +70,12 @@ const CurrentChanges: React.FC<Props> = ({ openCommitForm }) => {
           </Button>
         </>
       ) : (
-        <Typography variant='h1' component='h2'>
-          {t('Changes.prompts.no_changes')}
-        </Typography>
+        <>
+          <Typography variant='h1' component='h2'>
+            {t('Changes.prompts.no_changes')}
+          </Typography>
+          <SyncButtons />
+        </>
       )}
       <LoaderOverlay id={loaderId} />
     </>

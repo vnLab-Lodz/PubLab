@@ -135,6 +135,26 @@ const createGitRepoHandler = (publication: LocalPublication) => {
       });
       return result;
     },
+    merge: async (
+      author: string,
+      branchToMerge: string,
+      targetBranch?: string
+    ) => {
+      await git.merge({
+        fs,
+        dir: publication.dirPath,
+        ours: targetBranch,
+        theirs: branchToMerge,
+        author: { name: author },
+      });
+    },
+    currentBranch: async () => {
+      const result = await git.currentBranch({
+        fs,
+        dir: publication.dirPath,
+      });
+      return result;
+    },
   };
 };
 
