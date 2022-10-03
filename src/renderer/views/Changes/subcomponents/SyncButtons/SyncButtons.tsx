@@ -43,7 +43,11 @@ async function publish(mainBranchStatus: BranchComparison) {
   if (mainBranchStatus.ahead) {
     await mergeMain();
   }
-  const branch = ipcRenderer.invoke(CHANNELS.GIT.CURRENT_BRANCH);
-  console.log(branch);
-  await ipcRenderer.invoke(CHANNELS.GIT.MERGE, branch, `${MAIN_BRANCH}`);
+  const userBranch = await ipcRenderer.invoke(CHANNELS.GIT.CURRENT_BRANCH);
+  await ipcRenderer.invoke(CHANNELS.GIT.MERGE, userBranch, MAIN_BRANCH);
+  await ipcRenderer.invoke(
+    CHANNELS.GIT.MERGE,
+    `remotes/origin/${MAIN_BRANCH}`,
+    userBranch
+  );
 }

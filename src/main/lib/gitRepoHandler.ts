@@ -135,17 +135,25 @@ const createGitRepoHandler = (publication: LocalPublication) => {
       });
       return result;
     },
-    merge: async (
+    async mergeAndSync(
       author: string,
+      authToken: string,
       branchToMerge: string,
-      targetBranch?: string
-    ) => {
+      targetBranch: string
+    ) {
+      await this.checkout(`remotes/origin/${targetBranch}`);
       await git.merge({
         fs,
         dir: publication.dirPath,
         ours: targetBranch,
         theirs: branchToMerge,
         author: { name: author },
+      });
+      await this.checkout(targetBranch);
+      await this.push({
+        authToken,
+        remoteRef: targetBranch,
+        onAuthFailure: (message) => logger.appendError(message),
       });
     },
     currentBranch: async () => {

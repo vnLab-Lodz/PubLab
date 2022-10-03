@@ -13,8 +13,9 @@ const merge: IpcEventHandler = async (
 ) => {
   const logger = createLogger();
   const user = selectCurrentUser(store.getState()).data;
+  const token = selectCurrentUser(store.getState()).auth.accessToken?.value;
 
-  if (!user) {
+  if (!user || !token) {
     const msg = 'No active user';
     logger.appendError(msg);
     throw new Error(msg);
@@ -22,7 +23,12 @@ const merge: IpcEventHandler = async (
 
   const publication = activePublication(store.getState()) as LocalPublication;
   const repoHandler = createGitRepoHandler(publication);
-  await repoHandler.merge(user.nick, branchToMerge, targetBranch);
+  await repoHandler.mergeAndSync(
+    user.nick,
+    token,
+    branchToMerge,
+    targetBranch || (await repoHandler.currentBranch())!
+  );
 };
 
 export default merge;
