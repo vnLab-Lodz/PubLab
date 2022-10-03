@@ -23,6 +23,7 @@
   "config": {
     "forge": {
       "packagerConfig": {
+        "icon": "./public/logo",
         "protocols": [
           {
             "name": "PubLab",
