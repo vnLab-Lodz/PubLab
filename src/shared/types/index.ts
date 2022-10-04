@@ -59,3 +59,8 @@ export interface AssetObject {
   mimeType: string;
   encoding: string;
 }
+
+export interface BranchComparison {
+  ahead: number;
+  behind: number;
+}

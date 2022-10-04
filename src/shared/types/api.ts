@@ -64,15 +64,20 @@ export const CHANNELS = {
   GIT: {
     CLONE: 'git:clone',
     PUSH: 'git:push',
+    PULL: 'git:pull',
     REPO_STATUS: 'git:repo-status',
     FILES_STATUS: 'git:files-status',
     STAGE: 'git:stage',
     COMMIT: 'git:commit',
     CHECKOUT: 'git:checkout',
+    MERGE: 'git:merge',
+    CURRENT_BRANCH: 'git:current-branch',
+    RUN_SYNC_CHECK: 'git:run-sync-check',
   },
   GITHUB: {
     GET_USER_PUBLIC: 'github:get-user-public',
     UPDATE_COLLABORATORS: 'github:update-collaborators',
+    COMPARE_BRANCHES: 'github:compare-branches',
   },
   SERVER: {
     INSTALL: 'server:install',

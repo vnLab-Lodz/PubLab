@@ -6,6 +6,8 @@ export const SETTINGS_FILE_PATH = `${userData}/publab-settings.json`;
 
 export const CONFIG_NAME = 'publab.config.json' as const;
 
+export const GATSBY_CONFIG_NAME = 'gatsby-config.ts' as const;
+
 export const COVER_PIC_FILENAME = 'cover';
 
 export const PACKAGE_NAME = 'package.json' as const;

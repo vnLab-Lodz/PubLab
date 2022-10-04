@@ -51,6 +51,17 @@ const createGitRepoHandler = (publication: LocalPublication) => {
       });
     },
 
+    pull: async (author: string, ref?: string) => {
+      await git.pull({
+        fs,
+        http,
+        dir: publication.dirPath,
+        ref,
+        singleBranch: true,
+        author: { name: author },
+      });
+    },
+
     stage: async (items: GitRepoTreeItem[]) => {
       await Promise.all(
         items.map(async (item) => {
@@ -115,6 +126,50 @@ const createGitRepoHandler = (publication: LocalPublication) => {
           });
         }
       }
+    },
+
+    log: async (ref?: string) => {
+      const result = await git.log({
+        fs,
+        dir: publication.dirPath,
+        ref,
+      });
+      return result;
+    },
+
+    fetch: async () => {
+      await git.fetch({ fs, http, dir: publication.dirPath });
+    },
+
+    async mergeAndSync(
+      author: string,
+      authToken: string,
+      branchToMerge: string,
+      targetBranch: string
+    ) {
+      await this.fetch();
+      await this.checkout(`remotes/origin/${targetBranch}`);
+      await git.merge({
+        fs,
+        dir: publication.dirPath,
+        ours: targetBranch,
+        theirs: branchToMerge,
+        author: { name: author },
+      });
+      await this.checkout(targetBranch);
+      await this.push({
+        authToken,
+        remoteRef: targetBranch,
+        onAuthFailure: (message) => logger.appendError(message),
+      });
+    },
+
+    currentBranch: async () => {
+      const result = await git.currentBranch({
+        fs,
+        dir: publication.dirPath,
+      });
+      return result;
     },
   };
 };

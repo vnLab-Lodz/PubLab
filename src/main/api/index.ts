@@ -26,6 +26,11 @@ import updateCollaborators from './gitHub/updateCollaborators';
 import checkout from './git/checkout';
 import start from './server/start';
 import clearCache from './server/clearCache';
+import compareBranches from './gitHub/compareBranches';
+import pull from './git/pull';
+import merge from './git/merge';
+import currentBranch from './git/currentBranch';
+import runSyncCheck from './git/syncCheck';
 
 const registerApiHandlers = () => {
   ipc.handle(CHANNELS.PUBLICATIONS.GENERATE, generate);
@@ -46,13 +51,18 @@ const registerApiHandlers = () => {
   ipc.handle(CHANNELS.FILES.REMOVE, removeFile);
   ipc.handle(CHANNELS.GIT.CLONE, clone);
   ipc.handle(CHANNELS.GIT.PUSH, push);
+  ipc.handle(CHANNELS.GIT.PULL, pull);
   ipc.handle(CHANNELS.GIT.REPO_STATUS, updateRepoStatus);
   ipc.handle(CHANNELS.GIT.FILES_STATUS, updateFilesStatus);
   ipc.handle(CHANNELS.GIT.STAGE, stage);
   ipc.handle(CHANNELS.GIT.COMMIT, commit);
   ipc.handle(CHANNELS.GIT.CHECKOUT, checkout);
+  ipc.handle(CHANNELS.GIT.MERGE, merge);
+  ipc.handle(CHANNELS.GIT.CURRENT_BRANCH, currentBranch);
+  ipc.handle(CHANNELS.GIT.RUN_SYNC_CHECK, runSyncCheck);
   ipc.handle(CHANNELS.GITHUB.GET_USER_PUBLIC, getPublicUserData);
   ipc.handle(CHANNELS.GITHUB.UPDATE_COLLABORATORS, updateCollaborators);
+  ipc.handle(CHANNELS.GITHUB.COMPARE_BRANCHES, compareBranches);
   ipc.handle(CHANNELS.SERVER.START, start);
   ipc.handle(CHANNELS.SERVER.CLEAR_CACHE, clearCache);
 };

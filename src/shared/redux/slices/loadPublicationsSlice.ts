@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import path from 'path';
 import { Collaborator, Publication } from 'src/shared/types';
 import storage from 'electron-settings';
@@ -141,8 +141,14 @@ export const {
   convertPublicationToLocal,
 } = loadPublicationsSlice.actions;
 
-export const loadedPublicationsList = (state: RootState) =>
-  state.loadedPublications.publications;
+export const loadedPublicationsList = createSelector(
+  [(state: RootState) => state.loadedPublications.publications],
+  (publications) => {
+    const collator = new Intl.Collator([], { numeric: true });
+    const list = [...publications];
+    return list.sort((a, b) => collator.compare(a.name, b.name));
+  }
+);
 
 export const activePublication = (state: RootState) => {
   const { publications, activePublicationId } = state.loadedPublications;
