@@ -1,3 +1,5 @@
+import createGitRepoHandler from 'src/main/lib/gitRepoHandler';
+import { LocalPublication } from 'src/shared/types';
 import { activePublication } from '../../../shared/redux/slices/loadPublicationsSlice';
 import {
   selectMainBranchSync,
@@ -8,7 +10,11 @@ import { sendNotification } from '../../../shared/redux/slices/notificationsSlic
 import compareBranches from './compareBranches';
 
 const syncCheck = async (store: any) => {
-  if (!activePublication(store.getState())) return;
+  const publication = activePublication(store.getState()) as LocalPublication;
+  if (!publication) return;
+
+  const gitHandler = createGitRepoHandler(publication);
+  gitHandler.fetch();
 
   const state = selectMainBranchSync(store.getState());
   const status = await compareBranches({ useRemote: true });

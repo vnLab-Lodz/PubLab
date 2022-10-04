@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+import { Octokit } from '@octokit/rest';
 import { ReadCommitResult } from 'isomorphic-git';
 import path from 'path';
 import { mainStore as store } from 'src/main';
@@ -9,7 +11,6 @@ import createGitHubHandler from '../../lib/gitHubHandler';
 import createGitRepoHandler from '../../lib/gitRepoHandler';
 import { createLogger } from '../../logger';
 
-// TODO(FIX): This method does not work properly due to github returning paginated responses
 const compareBranches = async ({
   referenceBranch,
   targetBranch,
@@ -26,28 +27,32 @@ const compareBranches = async ({
     if (!publication) throw new Error('No active publication!');
     if (!token) throw new Error('No user is logged in!');
 
-    const repoHandler = createGitRepoHandler(publication);
-    const githubHandler = createGitHubHandler(token);
-    const promises = await Promise.all([
-      repoHandler.log(referenceBranch),
-      useRemote
-        ? githubHandler.getCommits(
-            {
-              owner: publication.owner,
-              name: path.basename(publication.dirPath),
-            },
-            targetBranch
-          )
-        : repoHandler.log(targetBranch || MAIN_BRANCH),
-    ]);
-    const [commitsA, commitsB] = promises.map((p) =>
-      p.map(normalizeCommitData)
-    );
+    const { log, currentBranch } = createGitRepoHandler(publication);
 
-    return {
-      ahead: shaCompare(commitsB, commitsA),
-      behind: shaCompare(commitsA, commitsB),
-    };
+    if (!useRemote) {
+      const promises = [log(referenceBranch), log(targetBranch ?? MAIN_BRANCH)];
+      const [commitsA, commitsB] = (await Promise.all(promises)).map(
+        (commits) => commits.map(normalizeCommitData)
+      );
+
+      return {
+        ahead: shaCompare(commitsB, commitsA),
+        behind: shaCompare(commitsA, commitsB),
+      };
+    }
+
+    const octokit = new Octokit({ auth: token });
+    const base = referenceBranch ?? (await currentBranch());
+    const head = targetBranch ?? MAIN_BRANCH;
+    const { data } = await octokit.rest.repos.compareCommitsWithBasehead({
+      owner: publication.owner,
+      repo: path.basename(publication.dirPath),
+      basehead: `${base}...${head}`,
+    });
+
+    const { ahead_by: ahead, behind_by: behind } = data;
+
+    return { ahead, behind };
   } catch (err) {
     logger.appendError(err as string);
     return { ahead: 0, behind: 0 };
@@ -63,15 +68,14 @@ type GitHubHandlerGetCommitResult = ArrElement<
 function normalizeCommitData(
   data: ReadCommitResult | GitHubHandlerGetCommitResult
 ) {
-  if ('oid' in data) return { sha: data.oid };
-  return { sha: data.sha };
+  if ('oid' in data) return data.oid;
+  return data.sha;
 }
 
 type ShaData = ReturnType<typeof normalizeCommitData>;
 
 function shaCompare(ref: ShaData[], target: ShaData[]) {
   return ref.filter(
-    (refCommit) =>
-      !target.some((targetCommit) => targetCommit.sha === refCommit.sha)
+    (refCommit) => !target.some((targetCommit) => targetCommit === refCommit)
   ).length;
 }

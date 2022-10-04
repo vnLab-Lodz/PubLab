@@ -137,12 +137,17 @@ const createGitRepoHandler = (publication: LocalPublication) => {
       return result;
     },
 
+    fetch: async () => {
+      await git.fetch({ fs, http, dir: publication.dirPath });
+    },
+
     async mergeAndSync(
       author: string,
       authToken: string,
       branchToMerge: string,
       targetBranch: string
     ) {
+      await this.fetch();
       await this.checkout(`remotes/origin/${targetBranch}`);
       await git.merge({
         fs,
