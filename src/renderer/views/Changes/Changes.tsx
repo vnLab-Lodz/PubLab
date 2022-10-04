@@ -11,7 +11,12 @@ const Changes = () => {
   const [isCommitFormOpen, setCommitFormOpen] = useState(false);
 
   useEffect(() => {
-    ipcRenderer.invoke(CHANNELS.GIT.RUN_SYNC_CHECK);
+    const fetch = async () => {
+      await ipcRenderer.invoke(CHANNELS.GIT.REPO_STATUS);
+      await ipcRenderer.invoke(CHANNELS.GIT.RUN_SYNC_CHECK);
+    };
+
+    fetch();
   }, []);
 
   return (
