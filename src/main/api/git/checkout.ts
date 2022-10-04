@@ -28,7 +28,7 @@ const checkout: IpcEventHandler = async () => {
   }
   const changes = repoTreeSearch(repoTree, (node) => isChanged(node.status));
 
-  if (changes) {
+  if (changes.length > 0) {
     await repoHandler.commit({
       message:
         'WIP\n\n[PubLab automatic commit]\nThis commit was created by PubLab to prevent data loss when switching branches.',
