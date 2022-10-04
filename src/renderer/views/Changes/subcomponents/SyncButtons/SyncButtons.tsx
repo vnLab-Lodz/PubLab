@@ -124,12 +124,12 @@ export default SyncButtons;
 async function mergeMain() {
   await ipcRenderer.invoke(CHANNELS.GIT.MERGE, MAIN_BRANCH);
   await ipcRenderer.invoke(CHANNELS.GIT.CHECKOUT);
+  await ipcRenderer.invoke(CHANNELS.GIT.REPO_STATUS);
 }
 async function publish(mainBranchStatus: BranchComparison) {
-  if (mainBranchStatus.ahead) {
-    await mergeMain();
-  }
+  if (mainBranchStatus.ahead) await mergeMain();
+
   const userBranch = await ipcRenderer.invoke(CHANNELS.GIT.CURRENT_BRANCH);
   await ipcRenderer.invoke(CHANNELS.GIT.MERGE, userBranch, MAIN_BRANCH);
-  await ipcRenderer.invoke(CHANNELS.GIT.MERGE, MAIN_BRANCH, userBranch);
+  await ipcRenderer.invoke(CHANNELS.GIT.REPO_STATUS);
 }
