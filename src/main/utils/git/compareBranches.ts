@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import { Octokit } from '@octokit/rest';
 import { ReadCommitResult } from 'isomorphic-git';
 import path from 'path';
