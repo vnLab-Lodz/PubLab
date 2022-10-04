@@ -27,6 +27,7 @@ import { AddPublicationWizard } from 'src/shared/redux/slices/addPublicationWiza
 import {
   CONFIG_NAME,
   COVER_PIC_FILENAME,
+  GATSBY_CONFIG_NAME,
   MAIN_BRANCH,
   PACKAGE_NAME,
 } from '../../../shared/constants';
@@ -124,7 +125,12 @@ export default generate;
 async function commitConfigChanges(config: Config, repoPath: string) {
   const username = store.getState().currentUser.data?.nick;
   await Promise.all(
-    [path.basename(config.imagePath || ''), CONFIG_NAME, PACKAGE_NAME].map(
+    [
+      path.basename(config.imagePath || ''),
+      CONFIG_NAME,
+      PACKAGE_NAME,
+      `config/${GATSBY_CONFIG_NAME}`,
+    ].map(
       (filepath) =>
         filepath &&
         git.updateIndex({
