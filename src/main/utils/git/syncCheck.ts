@@ -8,13 +8,10 @@ import { sendNotification } from '../../../shared/redux/slices/notificationsSlic
 import compareBranches from './compareBranches';
 
 const syncCheck = async (store: any) => {
-  if (!activePublication(store.getState())) {
-    return;
-  }
+  if (!activePublication(store.getState())) return;
+
   const state = selectMainBranchSync(store.getState());
-  const status = await compareBranches({
-    useRemote: true,
-  });
+  const status = await compareBranches({ useRemote: true });
 
   if (
     status.ahead &&

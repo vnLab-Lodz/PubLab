@@ -127,6 +127,7 @@ const createGitRepoHandler = (publication: LocalPublication) => {
         }
       }
     },
+
     log: async (ref?: string) => {
       const result = await git.log({
         fs,
@@ -135,6 +136,7 @@ const createGitRepoHandler = (publication: LocalPublication) => {
       });
       return result;
     },
+
     async mergeAndSync(
       author: string,
       authToken: string,
@@ -156,6 +158,7 @@ const createGitRepoHandler = (publication: LocalPublication) => {
         onAuthFailure: (message) => logger.appendError(message),
       });
     },
+
     currentBranch: async () => {
       const result = await git.currentBranch({
         fs,

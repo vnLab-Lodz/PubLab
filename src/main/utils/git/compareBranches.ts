@@ -1,7 +1,7 @@
-import { RestEndpointMethodTypes } from '@octokit/rest';
 import { ReadCommitResult } from 'isomorphic-git';
 import path from 'path';
 import { mainStore as store } from 'src/main';
+import { ArrElement } from 'src/shared/types/util';
 import { MAIN_BRANCH } from '../../../shared/constants';
 import { activePublication } from '../../../shared/redux/slices/loadPublicationsSlice';
 import { BranchComparison, LocalPublication } from '../../../shared/types';
@@ -9,6 +9,7 @@ import createGitHubHandler from '../../lib/gitHubHandler';
 import createGitRepoHandler from '../../lib/gitRepoHandler';
 import { createLogger } from '../../logger';
 
+// TODO(FIX): This method does not work properly due to github returning paginated responses
 const compareBranches = async ({
   referenceBranch,
   targetBranch,
@@ -22,38 +23,31 @@ const compareBranches = async ({
   try {
     const publication = activePublication(store.getState()) as LocalPublication;
     const token = store.getState().currentUser.auth.accessToken?.value;
-    if (!publication) {
-      throw new Error('No active publication!');
-    }
-    if (!token) {
-      throw new Error('No user is logged in!');
-    }
+    if (!publication) throw new Error('No active publication!');
+    if (!token) throw new Error('No user is logged in!');
 
     const repoHandler = createGitRepoHandler(publication);
     const githubHandler = createGitHubHandler(token);
-    const [commitsA, commitsB] = await Promise.all([
-      (await repoHandler.log(referenceBranch)).map(normalizeCommitData),
-      (useRemote
-        ? await githubHandler.getCommits(
+    const promises = await Promise.all([
+      repoHandler.log(referenceBranch),
+      useRemote
+        ? githubHandler.getCommits(
             {
               owner: publication.owner,
               name: path.basename(publication.dirPath),
             },
             targetBranch
           )
-        : await repoHandler.log(targetBranch || MAIN_BRANCH)
-      ).map(normalizeCommitData),
+        : repoHandler.log(targetBranch || MAIN_BRANCH),
     ]);
+    const [commitsA, commitsB] = promises.map((p) =>
+      p.map(normalizeCommitData)
+    );
 
-    const result = {
-      ahead: commitsB.filter(
-        (commitB) => !commitsA.some((commitA) => commitA.sha === commitB.sha)
-      ).length,
-      behind: commitsA.filter(
-        (commitA) => !commitsB.some((commitB) => commitA.sha === commitB.sha)
-      ).length,
+    return {
+      ahead: shaCompare(commitsB, commitsA),
+      behind: shaCompare(commitsA, commitsB),
     };
-    return result;
   } catch (err) {
     logger.appendError(err as string);
     return { ahead: 0, behind: 0 };
@@ -62,17 +56,22 @@ const compareBranches = async ({
 
 export default compareBranches;
 
+type GitHubHandlerGetCommitResult = ArrElement<
+  Awaited<ReturnType<ReturnType<typeof createGitHubHandler>['getCommits']>>
+>;
+
 function normalizeCommitData(
-  data:
-    | ReadCommitResult
-    | RestEndpointMethodTypes['repos']['listCommits']['response']['data'][0]
+  data: ReadCommitResult | GitHubHandlerGetCommitResult
 ) {
-  if ('oid' in data) {
-    return {
-      sha: data.oid,
-    };
-  }
-  return {
-    sha: data.sha,
-  };
+  if ('oid' in data) return { sha: data.oid };
+  return { sha: data.sha };
+}
+
+type ShaData = ReturnType<typeof normalizeCommitData>;
+
+function shaCompare(ref: ShaData[], target: ShaData[]) {
+  return ref.filter(
+    (refCommit) =>
+      !target.some((targetCommit) => targetCommit.sha === refCommit.sha)
+  ).length;
 }
