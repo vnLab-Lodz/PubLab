@@ -4,7 +4,12 @@ import fs from 'fs';
 import http from 'isomorphic-git/http/node';
 import { createLogger } from 'src/main/logger';
 import { mainStore as store } from 'src/main';
-import { PublicationBase } from 'src/shared/types';
+import {
+  LocalPublication,
+  Publication,
+  PublicationBase,
+  USER_ROLES,
+} from 'src/shared/types';
 import { IpcEventHandler } from 'src/shared/types/api';
 import createAuthorFromCollaborators from 'src/shared/utils/createAuthorFromCollaborators';
 import createGatsbyProjectGenerator from 'src/main/lib/gatsbyProjectGenerator';
@@ -24,6 +29,7 @@ import {
 import path from 'path';
 import git from 'isomorphic-git';
 import { AddPublicationWizard } from 'src/shared/redux/slices/addPublicationWizardSlice';
+import createGitRepoHandler from 'src/main/lib/gitRepoHandler';
 import {
   CONFIG_NAME,
   COVER_PIC_FILENAME,
@@ -85,17 +91,17 @@ const generate: IpcEventHandler = async (
         .replace(/author: `.*?`,/g, `author: \`${author}\`,`)
         .replace(/description: `.*?`,/g, `description: \`${description}\`,`)
     );
-    store.dispatch(
-      loadPublication({
-        ...savedConfig,
-        status: 'cloned',
-        lastUpdate: savedConfig.creationDate,
-        dirPath: repoPath,
-        keepDescriptionVisible: false,
-        keepSnippetsVisible: false,
-        keepServerVisible: false,
-      })
-    );
+
+    const publication: Publication = {
+      ...savedConfig,
+      status: 'cloned',
+      lastUpdate: savedConfig.creationDate,
+      dirPath: repoPath,
+      keepDescriptionVisible: false,
+      keepSnippetsVisible: false,
+      keepServerVisible: false,
+    };
+    store.dispatch(loadPublication(publication));
     store.dispatch(setActivePublication(savedConfig.id));
     const currentBranchName = await git.currentBranch({ fs, dir: repoPath });
     if (!currentBranchName) {
@@ -111,6 +117,7 @@ const generate: IpcEventHandler = async (
       });
     await commitConfigChanges(savedConfig, repoPath);
     await handleRemoteSetup(savedConfig, repoPath, repoName);
+    await checkoutBranch(publication);
 
     logger.appendLog(`Publication generation successful.`);
     store.dispatch(setStatus(STATUS.SUCCESS));
@@ -186,4 +193,16 @@ async function handleRemoteSetup(
     http,
     dir: repoPath,
   });
+}
+
+async function checkoutBranch(publication: LocalPublication) {
+  const { collaborators, owner } = publication;
+
+  const role = collaborators.find(
+    (collaborator) => owner === collaborator.githubUsername
+  )?.role;
+
+  const repoHandler = createGitRepoHandler(publication);
+  const branch = role === USER_ROLES.EDITOR ? `editor-${owner}` : MAIN_BRANCH;
+  await repoHandler.checkout(branch);
 }
