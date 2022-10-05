@@ -137,8 +137,13 @@ const createGitRepoHandler = (publication: LocalPublication) => {
       return result;
     },
 
-    fetch: async () => {
-      await git.fetch({ fs, http, dir: publication.dirPath });
+    fetch: async (authToken: string) => {
+      await git.fetch({
+        fs,
+        http,
+        dir: publication.dirPath,
+        onAuth: () => ({ username: authToken }),
+      });
     },
 
     async mergeAndSync(
@@ -147,7 +152,7 @@ const createGitRepoHandler = (publication: LocalPublication) => {
       branchToMerge: string,
       targetBranch: string
     ) {
-      await this.fetch();
+      await this.fetch(authToken);
       await this.checkout(`remotes/origin/${targetBranch}`);
       await git.merge({
         fs,

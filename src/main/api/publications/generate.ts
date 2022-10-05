@@ -192,6 +192,7 @@ async function handleRemoteSetup(
     fs,
     http,
     dir: repoPath,
+    onAuth: () => ({ username: token }),
   });
 }
 
