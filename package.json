@@ -5,7 +5,7 @@
     "name": "vnLab",
     "url": "http://vnlab.filmschool.lodz.pl/"
   },
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Tool aiming to ease the creation and adoption of interactive web publications.",
   "main": ".webpack/main",
   "scripts": {
