@@ -10,9 +10,10 @@ import { search as repoTreeSearch } from '../../../shared/utils/repoStatus/tree'
 import createGitRepoHandler from '../../lib/gitRepoHandler';
 import { createLogger } from '../../logger';
 
-const checkout: IpcEventHandler = async () => {
+const checkout: IpcEventHandler = async (_, publishBranch?: boolean) => {
   const logger = createLogger();
   const storeState = store.getState();
+  const token = storeState.currentUser.auth.accessToken?.value;
   const publication = activePublication(storeState) as LocalPublication;
   const repoHandler = createGitRepoHandler(publication);
   const user = selectCurrentUserData(storeState);
@@ -41,7 +42,8 @@ const checkout: IpcEventHandler = async () => {
   )?.role;
 
   await repoHandler.checkout(
-    userRole === USER_ROLES.EDITOR ? `editor-${user.nick}` : MAIN_BRANCH
+    userRole === USER_ROLES.EDITOR ? `editor-${user.nick}` : MAIN_BRANCH,
+    publishBranch ? token : undefined
   );
 };
 export default checkout;

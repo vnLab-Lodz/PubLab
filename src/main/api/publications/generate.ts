@@ -197,6 +197,8 @@ async function handleRemoteSetup(
 }
 
 async function checkoutBranch(publication: LocalPublication) {
+  const token = store.getState().currentUser.auth.accessToken?.value;
+
   const { collaborators, owner } = publication;
 
   const role = collaborators.find(
@@ -205,5 +207,5 @@ async function checkoutBranch(publication: LocalPublication) {
 
   const repoHandler = createGitRepoHandler(publication);
   const branch = role === USER_ROLES.EDITOR ? `editor-${owner}` : MAIN_BRANCH;
-  await repoHandler.checkout(branch);
+  await repoHandler.checkout(branch, token);
 }

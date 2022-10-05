@@ -96,7 +96,7 @@ const createGitRepoHandler = (publication: LocalPublication) => {
       );
     },
 
-    checkout: async (branch: string) => {
+    async checkout(branch: string, authToken?: string) {
       try {
         const currentBranch = await git.currentBranch({
           fs,
@@ -123,6 +123,13 @@ const createGitRepoHandler = (publication: LocalPublication) => {
             dir: publication.dirPath,
             ref: branch,
             checkout: true,
+          });
+          if (!authToken) return;
+
+          this.push({
+            authToken,
+            remoteRef: branch,
+            onAuthFailure: (message) => logger.appendError(message),
           });
         }
       }
