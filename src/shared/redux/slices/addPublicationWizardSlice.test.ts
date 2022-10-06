@@ -23,7 +23,9 @@ describe('addPublicationWizardSlice', () => {
       collaborators: [],
       packageManager: 'npm',
       useSass: false,
-      useTypescript: false,
+      useTypescript: true,
+      multilingual: false,
+      owner: '',
     });
   });
 
@@ -42,7 +44,9 @@ describe('addPublicationWizardSlice', () => {
       collaborators: [],
       packageManager: 'npm',
       useSass: true,
-      useTypescript: false,
+      useTypescript: true,
+      owner: '',
+      multilingual: false,
     });
   });
 
@@ -62,7 +66,9 @@ describe('addPublicationWizardSlice', () => {
       collaborators: [collaborator],
       packageManager: 'npm',
       useSass: false,
-      useTypescript: false,
+      useTypescript: true,
+      owner: '',
+      multilingual: false,
     });
   });
 
@@ -77,11 +83,12 @@ describe('addPublicationWizardSlice', () => {
       data: {
         name: '',
         id,
+        owner: 'vnLab-Lodz',
         description: '',
         collaborators: [collaborator],
         packageManager: 'npm',
         useSass: false,
-        useTypescript: false,
+        useTypescript: true,
         multilingual: false,
       },
       step: 1,
@@ -94,7 +101,9 @@ describe('addPublicationWizardSlice', () => {
         collaborators: [],
         packageManager: 'npm',
         useSass: false,
-        useTypescript: false,
+        owner: 'vnLab-Lodz',
+        useTypescript: true,
+        multilingual: false,
       },
       step: 1,
     });
@@ -106,11 +115,12 @@ describe('addPublicationWizardSlice', () => {
       data: {
         id,
         name: '',
+        owner: 'vnLab-Lodz',
         description: '',
         collaborators: [],
         packageManager: 'npm',
         useSass: false,
-        useTypescript: false,
+        useTypescript: true,
         multilingual: false,
       },
       step: 3,
@@ -119,11 +129,12 @@ describe('addPublicationWizardSlice', () => {
       data: {
         id,
         name: '',
+        owner: 'vnLab-Lodz',
         description: '',
         collaborators: [],
         packageManager: 'npm',
         useSass: false,
-        useTypescript: false,
+        useTypescript: true,
         multilingual: false,
       },
       step: 4,
@@ -136,11 +147,12 @@ describe('addPublicationWizardSlice', () => {
       data: {
         id,
         name: '',
+        owner: 'vnLab-Lodz',
         description: '',
         collaborators: [],
         packageManager: 'npm',
         useSass: false,
-        useTypescript: false,
+        useTypescript: true,
         multilingual: false,
       },
       step: 3,
@@ -149,11 +161,13 @@ describe('addPublicationWizardSlice', () => {
       data: {
         id,
         name: '',
+        owner: 'vnLab-Lodz',
+        multilingual: false,
         description: '',
         collaborators: [],
         packageManager: 'npm',
         useSass: false,
-        useTypescript: false,
+        useTypescript: true,
       },
       step: 2,
     });

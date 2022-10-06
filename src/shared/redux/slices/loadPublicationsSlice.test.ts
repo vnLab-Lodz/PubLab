@@ -34,6 +34,7 @@ const publication: Publication = {
   keepDescriptionVisible: false,
   keepSnippetsVisible: false,
   keepServerVisible: false,
+  owner: 'vnLab-Lodz',
 };
 
 describe('loadPublicationsSlice', () => {
