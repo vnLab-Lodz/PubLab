@@ -149,6 +149,7 @@
     "electron-redux": "^1.5.4",
     "electron-settings": "^4.0.2",
     "electron-squirrel-startup": "^1.0.0",
+    "fix-path": "3.0.0",
     "formik": "^2.2.9",
     "i18next": "^21.6.0",
     "is-plain-object": "5.0.0",
