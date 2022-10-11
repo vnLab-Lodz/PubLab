@@ -4,7 +4,7 @@ import installDevToolsExtensions from './devToolsExtensions';
 import registerApiHandlers from './api';
 import { configStore } from '../shared/redux/configureStore';
 import syncCheck from './utils/git/syncCheck';
-import fixPath from 'fix-path'
+import fixPath from 'fix-path';
 
 fixPath(); // solves process.env.PATH issues on macOS
 
