@@ -1,9 +1,12 @@
 import path from 'path';
 import { app, BrowserWindow } from 'electron';
+import fixPath from 'fix-path';
 import installDevToolsExtensions from './devToolsExtensions';
 import registerApiHandlers from './api';
 import { configStore } from '../shared/redux/configureStore';
 import syncCheck from './utils/git/syncCheck';
+
+fixPath(); // solves process.env.PATH issues on macOS
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: any;
