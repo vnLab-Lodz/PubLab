@@ -255,5 +255,13 @@
     "clear_cache_info": "Użyj by manualnie wyczyścić pamięć podręczna zbudowanej publikacji.",
     "project_server": "Serwer projektu",
     "info": "Uruchom serwer projektu by wyświetlić publikację w przeglądarce. To pozwoli na pracę nad nią w środowisku automatycznie reagującym na zmiany. Najedź na kontroli by dowiedzieć się więcej na temat poszczególnych akcji."
+  },
+  "NoNodeDialog" : {
+    "message": "PubLab wymaga Node.js zainstalowanego na twoim komputerze. Bez tego nie będzie można stworzyć nowej publikacji ani uruchomić podglądu zmian. Zainstaluj Node.js i uruchom PubLab ponownie.",
+    "buttons": {
+      "ignore": "Ignoruj i kontynuuj",
+      "restart": "Uruchojm ponownie",
+      "instructions": "Instalacja Node.js"
+    }
   }
 }
