@@ -13,25 +13,21 @@ import app from '../../../shared/utils/app';
 import usePromiseSubscription from '../../hooks/usePromiseSubscription';
 import Button from '../Button/Button';
 
-interface Props {}
-
 const DESCRIPTION_ID = 'no-node-dialog-description';
 const NODE_URL = 'https://nodejs.org';
 
-const NoNodeDialog: React.FC<Props> = () => {
+const NoNodeDialog: React.FC = () => {
+  const [ignore, setIgnore] = React.useState(false);
+
   const [isNodeInstalled] = usePromiseSubscription(
-    () => {
-      const result = ipcRenderer.invoke(CHANNELS.NODE.VERIFY);
-      return result;
-    },
+    () => ipcRenderer.invoke(CHANNELS.NODE.VERIFY),
     true,
     []
   );
 
-  const [ignore, setIgnore] = React.useState(false);
-
   return (
     <Dialog
+      fullWidth
       open={!isNodeInstalled && !ignore}
       aria-describedby={DESCRIPTION_ID}
       PaperProps={{
@@ -40,7 +36,6 @@ const NoNodeDialog: React.FC<Props> = () => {
           borderRadius: '0',
         }),
       }}
-      fullWidth
     >
       <DialogContent>
         <DialogContentText id={DESCRIPTION_ID}>
