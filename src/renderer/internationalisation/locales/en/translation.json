@@ -255,5 +255,13 @@
     "clear_cache_info": "Use to clear all build files manually.",
     "project_server": "Project server",
     "info": "Run the project server to display the publication in a browser. This will allow for working on it in a hot-reload environment. Hover on the controls for more information on each action."
+  },
+  "NoNodeDialog": {
+    "message": "PubLab requires Node.js to be installed on your computer. Without it, you won't be able to create new publication or preview your changes. Please install it and restart the application.",
+    "buttons": {
+      "ignore": "Continue anyway",
+      "restart": "Restart",
+      "instructions": "Go to Node.js installation"
+    }
   }
 }
