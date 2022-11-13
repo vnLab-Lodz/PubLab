@@ -7,6 +7,7 @@ import ButtonRow from './ButtonRow';
 import TableHeader from './TableHeaders';
 import useSelectedProject from './hooks/useSelectedProject';
 import useActivePublication from './hooks/useActivePublication';
+import useProcessedProjectsList from './hooks/useProcessedProjectList';
 
 interface Props {
   publications: Publication[];
@@ -16,12 +17,14 @@ const ProjectTable: React.FC<Props> = ({ publications }) => {
   const [selectedProject, selectProject] = useSelectedProject();
   const { activePublicationData, activatePublication, loaderId } =
     useActivePublication();
+  const { projectsList, setSortParams, setFilterParams } =
+    useProcessedProjectsList(publications);
   return (
     <>
       <Table sx={{ position: 'relative', zIndex: 1 }}>
         <TableHeader />
 
-        {publications.map((publication) => {
+        {projectsList.map((publication) => {
           const isDescriptionVisible = selectedProject?.id === publication.id;
           const isActive = activePublicationData?.id === publication.id;
 
