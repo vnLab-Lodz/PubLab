@@ -1,83 +1,21 @@
 import { Table, TableBody } from '@mui/material';
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { ipcRenderer } from 'electron';
-import { CHANNELS } from 'src/shared/types/api';
-import { v4 as uuidv4 } from 'uuid';
+import React from 'react';
 import LoaderOverlay from 'src/renderer/components/LoaderOverlay/LoaderOverlay';
-import { addLoader, removeLoader } from 'src/shared/redux/slices/loadersSlice';
-import { useTranslation } from 'react-i18next';
 import { Publication } from '../../../../../shared/types';
-import { SUBVIEWS, VIEWS } from '../../../../constants/Views';
 import ProjectRow from './ProjectRow';
 import ButtonRow from './ButtonRow';
 import TableHeader from './TableHeaders';
-import {
-  selectCurrentView,
-  updateCurrentView,
-  updateSubview,
-} from '../../../../../shared/redux/slices/currentViewSlice';
-import {
-  activePublication,
-  setActivePublication,
-} from '../../../../../shared/redux/slices/loadPublicationsSlice';
+import useSelectedProject from './hooks/useSelectedProject';
+import useActivePublication from './hooks/useActivePublication';
 
 interface Props {
   publications: Publication[];
 }
 
 const ProjectTable: React.FC<Props> = ({ publications }) => {
-  const dispatch = useDispatch();
-  const [loaderId, setLoaderId] = useState('');
-  const { t } = useTranslation();
-
-  const selectedProject: Publication | undefined =
-    useSelector(selectCurrentView).subview.props?.project;
-
-  const selectProject = (project: Publication | undefined) => {
-    dispatch(
-      updateSubview({
-        element: project ? SUBVIEWS.PROJECT_INFO : SUBVIEWS.NONE,
-        props: { project, useMainTheme: true, showAllSubsections: true },
-      })
-    );
-  };
-
-  const activatePublication = async (publication: Publication) => {
-    if (publication.status === 'remote') {
-      const uid = uuidv4();
-      setLoaderId(uid);
-
-      await ipcRenderer.invoke(
-        CHANNELS.GIT.CLONE,
-        publication.id,
-        publication.repoName,
-        publication.cloneUrl,
-        { loaderId: uid }
-      );
-    }
-
-    dispatch(setActivePublication(publication.id));
-
-    const uid = uuidv4();
-    setLoaderId(uid);
-    dispatch(
-      addLoader({
-        id: uid,
-        message: t('loaders.opening', { title: publication.name }),
-      })
-    );
-    await ipcRenderer.invoke(CHANNELS.GIT.REPO_STATUS);
-    await ipcRenderer.invoke(CHANNELS.GIT.CHECKOUT, true);
-    await ipcRenderer.invoke(CHANNELS.GIT.RUN_SYNC_CHECK);
-    setLoaderId('');
-    dispatch(removeLoader(uid));
-    dispatch(updateCurrentView(VIEWS.PROJECT));
-  };
-
-  const activePublicationID: string | undefined =
-    useSelector(activePublication)?.id;
-
+  const [selectedProject, selectProject] = useSelectedProject();
+  const { activePublicationData, activatePublication, loaderId } =
+    useActivePublication();
   return (
     <>
       <Table sx={{ position: 'relative', zIndex: 1 }}>
@@ -85,7 +23,7 @@ const ProjectTable: React.FC<Props> = ({ publications }) => {
 
         {publications.map((publication) => {
           const isDescriptionVisible = selectedProject?.id === publication.id;
-          const isActive = activePublicationID === publication.id;
+          const isActive = activePublicationData?.id === publication.id;
 
           return (
             <TableBody key={publication.id}>
