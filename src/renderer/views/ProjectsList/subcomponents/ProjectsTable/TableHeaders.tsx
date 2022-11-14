@@ -34,10 +34,20 @@ const TableHeader = ({
     <TableRow>
       <TableCell />
       {(Object.values(SORTABLE_FIELD) as SORTABLE_FIELD[]).map((field) => (
-        <TableCell key={field}>
+        <TableCell
+          key={field}
+          sx={{
+            paddingLeft: '1rem',
+            textAlign: field === 'title' ? 'left' : 'center',
+          }}
+        >
           <Button
             variant='text'
-            sx={{ padding: 0, minWidth: 0, textAlign: 'left' }}
+            sx={{
+              padding: 0,
+              minWidth: 0,
+              textAlign: field === 'title' ? 'left' : 'center',
+            }}
             onClick={() =>
               setSortParams({
                 field,
@@ -61,7 +71,12 @@ const TableHeader = ({
           </Button>
         </TableCell>
       ))}
-      <TableCell>
+      <TableCell
+        sx={{
+          paddingLeft: '1rem',
+          textAlign: 'center',
+        }}
+      >
         <HeaderFilterSelect
           placeholder={t(`publication.status`).toLocaleUpperCase()}
           value={statusFilterValue || undefined}

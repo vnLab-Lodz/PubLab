@@ -24,6 +24,9 @@ export const HeaderFilterSelect = styled(Select)(({ theme }) => ({
   '&&& .MuiSelect-select': {
     fontSize: theme.typography.caption.fontSize,
     padding: '0',
-    paddingRight: '2.8rem',
+    paddingRight: '1.5rem',
+  },
+  '& .MuiSelect-icon': {
+    right: '-0.5rem',
   },
 }));
