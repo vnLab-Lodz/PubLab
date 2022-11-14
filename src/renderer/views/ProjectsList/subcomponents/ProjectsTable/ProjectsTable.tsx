@@ -17,12 +17,12 @@ const ProjectTable: React.FC<Props> = ({ publications }) => {
   const [selectedProject, selectProject] = useSelectedProject();
   const { activePublicationData, activatePublication, loaderId } =
     useActivePublication();
-  const { projectsList, setSortParams, setFilterParams } =
-    useProcessedProjectsList(publications);
+  const ProcessedProjectsList = useProcessedProjectsList(publications);
+  const { projectsList } = ProcessedProjectsList;
   return (
     <>
       <Table sx={{ position: 'relative', zIndex: 1 }}>
-        <TableHeader />
+        <TableHeader {...ProcessedProjectsList} />
 
         {projectsList.map((publication) => {
           const isDescriptionVisible = selectedProject?.id === publication.id;
