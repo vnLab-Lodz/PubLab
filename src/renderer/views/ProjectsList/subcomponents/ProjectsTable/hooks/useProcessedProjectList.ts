@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Publication } from 'src/shared/types';
 import { SORTABLE_FIELD, SortParams } from '../../../types';
 
@@ -13,7 +13,6 @@ const compareFunctions = {
 };
 
 export default function useProcessedProjectsList(publications: Publication[]) {
-  const [projectsList, setProjectList] = useState(publications);
   const [sortParams, setSortParams] = useState({
     field: SORTABLE_FIELD.TITLE,
     direction: 'ascending',
@@ -22,13 +21,13 @@ export default function useProcessedProjectsList(publications: Publication[]) {
     null as Publication['status'] | null
   );
 
-  useEffect(() => {
+  const projectsList = useMemo(() => {
     const list = statusFilterValue
       ? publications.filter((project) => project.status === statusFilterValue)
       : [...publications];
     list.sort(compareFunctions[sortParams.field]);
     if (sortParams.direction === 'descending') list.reverse();
-    setProjectList(list);
+    return list;
   }, [publications, sortParams, statusFilterValue]);
 
   return {
