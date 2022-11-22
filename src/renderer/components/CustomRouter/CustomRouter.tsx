@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentView } from '../../../shared/redux/slices/currentViewSlice';
 import { routerComponents } from '../../constants/RouterComponents';
 import { SUBVIEWS } from '../../constants/Views';
+import SubviewPanel from '../SubviewPanel/SubviewPanel';
 import useViewRedirects from './redirects';
 
 const CustomRouter = () => {
@@ -17,16 +18,9 @@ const CustomRouter = () => {
         <View />
       </Box>
       {subview.element !== SUBVIEWS.NONE && (
-        <Box
-          component='aside'
-          className='subview'
-          sx={{
-            minWidth: '30rem',
-            maxWidth: '30rem',
-          }}
-        >
+        <SubviewPanel>
           <Subview {...(subview.props || {})} />
-        </Box>
+        </SubviewPanel>
       )}
     </>
   );
