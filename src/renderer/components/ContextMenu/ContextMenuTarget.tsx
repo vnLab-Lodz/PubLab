@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
-import { MenuContext } from './ContextMenu';
+import React from 'react';
 import { ContextData } from './types';
+import useContextMenu from './useContextMenu';
 
 interface Props extends ContextData {
   children: React.ReactNode;
 }
 
 const ContextMenuTarget: React.FC<Props> = ({ children, ...rest }: Props) => {
-  const openContextMenu = useContext(MenuContext);
-  return <div onContextMenu={(e) => openContextMenu(e, rest)}>{children}</div>;
+  const contextMenuHandler = useContextMenu(rest);
+  return <div onContextMenu={contextMenuHandler}>{children}</div>;
 };
 
 export default ContextMenuTarget;

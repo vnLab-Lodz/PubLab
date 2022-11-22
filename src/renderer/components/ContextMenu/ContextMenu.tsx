@@ -9,9 +9,13 @@ interface Props {
   children: React.ReactNode[];
 }
 
-type OpenFunction = (event: React.MouseEvent, data: ContextData) => void;
+type HandlerFunctionCreator = (
+  data: ContextData
+) => (event: React.MouseEvent) => void;
 
-export const MenuContext = createContext<OpenFunction>(() => {});
+export const MenuContext = createContext<HandlerFunctionCreator>(
+  () => () => {}
+);
 
 export default function ContextMenu({ children }: Props) {
   const { t } = useTranslation();
@@ -22,14 +26,14 @@ export default function ContextMenu({ children }: Props) {
     mouseY: number;
   } | null>(null);
 
-  const openContextMenu = useMemo(
-    () => (event: React.MouseEvent, data: ContextData) => {
+  const createContextMenuHandler = useMemo(
+    () => (data?: ContextData) => (event: React.MouseEvent) => {
       event.preventDefault();
       event.stopPropagation();
       setContextMenu(
         contextMenu === null
           ? {
-              data,
+              data: data || {},
               element: document.activeElement || event.currentTarget,
               mouseX: event.clientX + 2,
               mouseY: event.clientY - 6,
@@ -46,12 +50,10 @@ export default function ContextMenu({ children }: Props) {
 
   return (
     <div
-      onContextMenu={(event) => {
-        openContextMenu(event, {});
-      }}
+      onContextMenu={createContextMenuHandler()}
       style={{ cursor: 'context-menu' }}
     >
-      <MenuContext.Provider value={openContextMenu}>
+      <MenuContext.Provider value={createContextMenuHandler}>
         {...children}
       </MenuContext.Provider>
       <Styled.Menu

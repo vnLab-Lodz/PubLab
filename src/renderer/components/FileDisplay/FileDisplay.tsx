@@ -16,7 +16,7 @@ import {
   toStatusString,
 } from '../../../shared/utils/repoStatus/statusChecks';
 import { search } from '../../../shared/utils/repoStatus/tree';
-import ContextMenuTarget from '../ContextMenu/ContextMenuTarget';
+import useContextMenu from '../ContextMenu/useContextMenu';
 
 interface Props {
   item: GitRepoTreeItem;
@@ -29,50 +29,49 @@ const FileDisplay = ({ item, treeLevel }: Props) => {
     ? inferDirStatus(item)
     : toStatusString(item.status);
   const color = useTheme().palette[colorMap[status]].main;
-  return (
-    <ContextMenuTarget
-      extraMenuItems={[
-        {
-          label: t('Files.context_menu.view_explorer'),
-          onClick: () => {
-            openInDefaultApp(
-              path.resolve(item.filepath, item.isDirectory ? '' : '..')
-            );
-          },
+  const contextMenuHandler = useContextMenu({
+    extraMenuItems: [
+      {
+        label: t('Files.context_menu.view_explorer'),
+        onClick: () => {
+          openInDefaultApp(
+            path.resolve(item.filepath, item.isDirectory ? '' : '..')
+          );
         },
-      ]}
-    >
-      <Styled.DataContainer>
-        <Styled.DataField
-          sx={{
-            width: widths[0],
-            justifyContent: 'start',
-            paddingLeft: `${treeLevel! * 2}rem`,
-          }}
-        >
-          {item.isDirectory ? (
-            <FolderIcon color={color} />
-          ) : (
-            <FileIcon color={color} />
-          )}
-          <Typography ml='0.75rem'>{path.basename(item.filepath)}</Typography>
-        </Styled.DataField>
-        <Styled.DataField sx={{ width: widths[1] }}>
-          <Typography variant='body2'>
-            {item.stats &&
-              getDateString(
-                item.stats.mtimeSeconds * 1000,
-                i18n.language as SupportedLangCode
-              )}
-          </Typography>
-        </Styled.DataField>
-        <Styled.DataField sx={{ width: widths[2] }}>
-          <Typography color={color} variant='body2'>
-            {t(`Files.status.${status}`)}
-          </Typography>
-        </Styled.DataField>
-      </Styled.DataContainer>
-    </ContextMenuTarget>
+      },
+    ],
+  });
+  return (
+    <Styled.DataContainer onContextMenu={contextMenuHandler}>
+      <Styled.DataField
+        sx={{
+          width: widths[0],
+          justifyContent: 'start',
+          paddingLeft: `${treeLevel! * 2}rem`,
+        }}
+      >
+        {item.isDirectory ? (
+          <FolderIcon color={color} />
+        ) : (
+          <FileIcon color={color} />
+        )}
+        <Typography ml='0.75rem'>{path.basename(item.filepath)}</Typography>
+      </Styled.DataField>
+      <Styled.DataField sx={{ width: widths[1] }}>
+        <Typography variant='body2'>
+          {item.stats &&
+            getDateString(
+              item.stats.mtimeSeconds * 1000,
+              i18n.language as SupportedLangCode
+            )}
+        </Typography>
+      </Styled.DataField>
+      <Styled.DataField sx={{ width: widths[2] }}>
+        <Typography color={color} variant='body2'>
+          {t(`Files.status.${status}`)}
+        </Typography>
+      </Styled.DataField>
+    </Styled.DataContainer>
   );
 };
 
