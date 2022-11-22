@@ -1,8 +1,8 @@
 import React, { createContext, useMemo, useState } from 'react';
-import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { clipboard } from 'electron';
 import { ContextData } from './types';
+import * as Styled from './style';
 
 interface Props {
   children: React.ReactNode[];
@@ -52,7 +52,7 @@ export default function ContextMenu({ children }: Props) {
       <MenuContext.Provider value={openContextMenu}>
         {...children}
       </MenuContext.Provider>
-      <Menu
+      <Styled.Menu
         open={contextMenu !== null}
         onClose={handleClose}
         anchorReference='anchorPosition'
@@ -104,7 +104,7 @@ export default function ContextMenu({ children }: Props) {
             Paste
           </MenuItem>
         )}
-      </Menu>
+      </Styled.Menu>
     </div>
   );
 }
