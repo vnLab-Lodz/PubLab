@@ -33,9 +33,7 @@ const FileDisplay = ({ item, treeLevel }: Props) => {
     <ContextMenuTarget
       extraMenuItems={[
         {
-          label: item.isDirectory
-            ? 'Open in explorer'
-            : 'Open containing folder in explorer',
+          label: t('Files.context_menu.view_explorer'),
           onClick: () => {
             openInDefaultApp(
               path.resolve(item.filepath, item.isDirectory ? '' : '..')

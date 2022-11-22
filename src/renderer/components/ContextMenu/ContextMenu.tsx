@@ -1,6 +1,7 @@
 import React, { createContext, useMemo, useState } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import { clipboard } from 'electron';
+import { useTranslation } from 'react-i18next';
 import { ContextData } from './types';
 import * as Styled from './style';
 
@@ -13,6 +14,7 @@ type OpenFunction = (event: React.MouseEvent, data: ContextData) => void;
 export const MenuContext = createContext<OpenFunction>(() => {});
 
 export default function ContextMenu({ children }: Props) {
+  const { t } = useTranslation();
   const [contextMenu, setContextMenu] = useState<{
     data: ContextData;
     element: Element;
@@ -81,7 +83,7 @@ export default function ContextMenu({ children }: Props) {
             handleClose();
           }}
         >
-          Copy
+          {t('ContextMenu.copy')}
         </MenuItem>
         {['TEXTAREA', 'INPUT'].includes(
           contextMenu?.element.nodeName as string
@@ -101,7 +103,7 @@ export default function ContextMenu({ children }: Props) {
               handleClose();
             }}
           >
-            Paste
+            {t('ContextMenu.paste')}
           </MenuItem>
         )}
       </Styled.Menu>

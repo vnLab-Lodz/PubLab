@@ -208,6 +208,9 @@
       "no_files": "files",
       "files": "files",
       "no_match": "No {{target}} match the search phrase"
+    },
+    "context_menu": {
+      "view_explorer": "View in the default explorer"
     }
   },
   "Changes": {
@@ -263,5 +266,9 @@
       "restart": "Restart",
       "instructions": "Go to Node.js installation"
     }
+  },
+  "ContextMenu": {
+    "copy": "Copy",
+    "paste": "Paste"
   }
 }
