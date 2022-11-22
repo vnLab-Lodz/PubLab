@@ -36,7 +36,7 @@ const PackageManagerPicker = ({ onSubmit, state }: Props) => {
           <Tooltip
             title={t('AddProject.PackageManager.yarn-tooltip')}
             arrow
-            placement='top-start'
+            placement='right-start'
           >
             <RadioFormControl
               disabled

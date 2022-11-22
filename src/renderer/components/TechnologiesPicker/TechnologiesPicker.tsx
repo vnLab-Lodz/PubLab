@@ -40,7 +40,7 @@ const TechnologiesPicker = ({ onSubmit, state }: Props) => {
 
       <Box>
         <Box mb={2}>
-          <Tooltip title={sassTooltip} arrow placement='top-start'>
+          <Tooltip title={sassTooltip} arrow placement='right-start'>
             <span>
               <StyledSwitch
                 size='small'
@@ -58,7 +58,7 @@ const TechnologiesPicker = ({ onSubmit, state }: Props) => {
           <Tooltip
             title={t('technology-picker.ts-tooltip')}
             arrow
-            placement='top-start'
+            placement='right-start'
           >
             <span>
               <StyledSwitch
