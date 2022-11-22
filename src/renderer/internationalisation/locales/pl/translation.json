@@ -209,8 +209,8 @@
       "files": "pliki",
       "no_match": "Żaden {{target}} nie pasuje do wyszukanej frazy"
     },
-    "context_menu" : {
-      "view_explorer" : "Wyświetl w domyślnym menadżerze plików"
+    "context_menu": {
+      "view_explorer": "Wyświetl w domyślnym menadżerze plików"
     }
   },
   "Changes": {
@@ -269,6 +269,6 @@
   },
   "ContextMenu": {
     "copy": "Kopiuj",
-    "paste" : "Wklej"
+    "paste": "Wklej"
   }
 }
