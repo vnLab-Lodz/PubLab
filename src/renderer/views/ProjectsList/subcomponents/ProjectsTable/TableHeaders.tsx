@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   MenuItem,
   TableHead,
@@ -20,8 +21,8 @@ interface Props {
 }
 
 const orderSymbols: { [key in SortParams['direction']]: string } = {
-  ascending: '\xa0↑',
-  descending: '\xa0↓',
+  ascending: '↑',
+  descending: '↓',
 };
 
 const TableHeader = ({
@@ -58,16 +59,24 @@ const TableHeader = ({
               })
             }
           >
-            <Typography variant='caption' component='p'>
-              {t(`publication.${field}`)}
-              {sortParams.field === field ? (
-                orderSymbols[sortParams.direction]
-              ) : (
-                <span style={{ visibility: 'hidden' }}>
-                  {orderSymbols.ascending}
-                </span>
-              )}
-            </Typography>
+            <Box display='flex'>
+              <Typography
+                variant='caption'
+                pl={field === 'title' ? undefined : '1em'}
+              >
+                {t(`publication.${field}`)}
+              </Typography>
+              <Typography
+                variant='caption'
+                display='flex'
+                alignItems='center'
+                justifyContent='center'
+                sx={{ minWidth: '1em' }}
+              >
+                {sortParams.field === field &&
+                  orderSymbols[sortParams.direction]}
+              </Typography>
+            </Box>
           </Button>
         </TableCell>
       ))}
