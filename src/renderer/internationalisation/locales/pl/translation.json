@@ -208,6 +208,9 @@
       "no_files": "plik",
       "files": "pliki",
       "no_match": "Żaden {{target}} nie pasuje do wyszukanej frazy"
+    },
+    "context_menu": {
+      "view_explorer": "Wyświetl w domyślnym menadżerze plików"
     }
   },
   "Changes": {
@@ -263,5 +266,9 @@
       "restart": "Uruchom ponownie",
       "instructions": "Przejdź do instalacji Node.js"
     }
+  },
+  "ContextMenu": {
+    "copy": "Kopiuj",
+    "paste": "Wklej"
   }
 }

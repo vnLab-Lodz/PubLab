@@ -3,6 +3,7 @@ import { Typography, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import FileIcon from 'src/renderer/assets/FileIcon/FileIcon';
 import FolderIcon from 'src/renderer/assets/FolderIcon/FolderIcon';
+import { openInDefaultApp } from 'src/renderer/ipc';
 import path from 'path';
 import { GitRepoTreeItem } from '../../../shared/types/api';
 import * as Styled from './style';
@@ -15,6 +16,7 @@ import {
   toStatusString,
 } from '../../../shared/utils/repoStatus/statusChecks';
 import { search } from '../../../shared/utils/repoStatus/tree';
+import useContextMenu from '../ContextMenu/useContextMenu';
 
 interface Props {
   item: GitRepoTreeItem;
@@ -27,8 +29,20 @@ const FileDisplay = ({ item, treeLevel }: Props) => {
     ? inferDirStatus(item)
     : toStatusString(item.status);
   const color = useTheme().palette[colorMap[status]].main;
+  const contextMenuHandler = useContextMenu({
+    extraMenuItems: [
+      {
+        label: t('Files.context_menu.view_explorer'),
+        onClick: () => {
+          openInDefaultApp(
+            path.resolve(item.filepath, item.isDirectory ? '' : '..')
+          );
+        },
+      },
+    ],
+  });
   return (
-    <Styled.DataContainer>
+    <Styled.DataContainer onContextMenu={contextMenuHandler}>
       <Styled.DataField
         sx={{
           width: widths[0],

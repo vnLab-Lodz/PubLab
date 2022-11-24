@@ -26,6 +26,7 @@ import {
   selectCurrentLocale,
   selectDefaultDirPath,
 } from '../../../shared/redux/slices/settingsSlice';
+import ContextMenu from '../ContextMenu/ContextMenu';
 
 const store = configStore('renderer');
 
@@ -98,10 +99,12 @@ const App = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={mainTheme}>
-        <CssBaseline />
-        <Auth>
-          <Outlet />
-        </Auth>
+        <ContextMenu>
+          <CssBaseline />
+          <Auth>
+            <Outlet />
+          </Auth>
+        </ContextMenu>
       </ThemeProvider>
     </Provider>
   );
