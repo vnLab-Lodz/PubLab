@@ -13,8 +13,8 @@ type HandlerFunctionCreator = (
   data: ContextData
 ) => (event: React.MouseEvent) => void;
 
-export const MenuContext = createContext<HandlerFunctionCreator>(
-  () => () => {}
+export const MenuContext = createContext<HandlerFunctionCreator  | undefined>(
+  undefined
 );
 
 export default function ContextMenu({ children }: Props) {
