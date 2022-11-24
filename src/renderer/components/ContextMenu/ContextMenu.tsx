@@ -1,4 +1,4 @@
-import React, { createContext, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useState } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import { clipboard } from 'electron';
 import { useTranslation } from 'react-i18next';
