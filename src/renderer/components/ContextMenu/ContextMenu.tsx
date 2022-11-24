@@ -26,8 +26,8 @@ export default function ContextMenu({ children }: Props) {
     mouseY: number;
   } | null>(null);
 
-  const createContextMenuHandler = useMemo(
-    () => (data?: ContextData) => (event: React.MouseEvent) => {
+  const createContextMenuHandler = useCallback(
+    (data?: ContextData) => (event: React.MouseEvent) => {
       event.preventDefault();
       event.stopPropagation();
       setContextMenu(
