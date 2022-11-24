@@ -17,16 +17,7 @@ const CustomRouter = () => {
         <View />
       </Box>
       {subview.element !== SUBVIEWS.NONE && (
-        <Box
-          component='aside'
-          className='subview'
-          sx={{
-            minWidth: '30rem',
-            maxWidth: '30rem',
-          }}
-        >
-          <Subview {...(subview.props || {})} />
-        </Box>
+        <Subview {...(subview.props || {})} />
       )}
     </>
   );
