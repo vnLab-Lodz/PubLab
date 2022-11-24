@@ -12,7 +12,7 @@ export const Panel = styled(Box)<{ isExpanded?: boolean }>(
       display: 'flex',
       minWidth: isExpanded ? width : `${buttonWidth}rem`,
       maxWidth: isExpanded ? width : `${buttonWidth}rem`,
-      background: theme.palette.primary.main,
+      background: theme.palette.background.default,
       transition: 'all 0.3s',
     };
   }
@@ -25,8 +25,6 @@ export const PanelButton = styled(Button, {
   padding: 0,
   width: `${buttonWidth}rem`,
   minWidth: `${buttonWidth}rem`,
-  borderLeft: theme.palette.text.secondary,
-  color: theme.palette.text.secondary,
   '&&&:hover': {
     background: 'rgba(255, 255, 255, 0.1)',
   },
