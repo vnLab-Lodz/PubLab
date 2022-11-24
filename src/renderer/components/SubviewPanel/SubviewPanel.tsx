@@ -11,13 +11,10 @@ const SubviewPanel: React.FC<Props> = ({ children }) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
   return (
     <Styled.Panel isExpanded={isExpanded} component='aside' className='subview'>
-      <Styled.PanelButton
-        isExpanded={isExpanded}
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
+      <Styled.PanelButton onClick={() => setIsExpanded(!isExpanded)}>
         {isExpanded ? <ChevronRightIcon /> : <ChevronLeftIcon />}
       </Styled.PanelButton>
-      <Styled.SubviewBox isExpanded={isExpanded}>{children}</Styled.SubviewBox>
+      <Styled.SubviewBox>{children}</Styled.SubviewBox>
     </Styled.Panel>
   );
 };
